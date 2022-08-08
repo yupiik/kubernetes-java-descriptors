@@ -1,0 +1,75 @@
+package io.yupiik.kubernetes.bindings.v1_24_0.v1;
+
+import java.util.List;
+import java.util.Objects;
+
+public class StatefulSetSpecTemplateSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution {
+    private StatefulSetSpecTemplateSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector labelSelector;
+    private StatefulSetSpecTemplateSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelector namespaceSelector;
+    private List<String> namespaces;
+    private String topologyKey;
+
+    public StatefulSetSpecTemplateSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution() {
+        // no-op
+    }
+
+    public StatefulSetSpecTemplateSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution(final StatefulSetSpecTemplateSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector labelSelector,
+                                                                                                            final StatefulSetSpecTemplateSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelector namespaceSelector,
+                                                                                                            final List<String> namespaces,
+                                                                                                            final String topologyKey) {
+        // no-op
+    }
+
+    public StatefulSetSpecTemplateSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector getLabelSelector() {
+        return labelSelector;
+    }
+
+    public void setLabelSelector(final StatefulSetSpecTemplateSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionLabelSelector labelSelector) {
+        this.labelSelector = labelSelector;
+    }
+
+    public StatefulSetSpecTemplateSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelector getNamespaceSelector() {
+        return namespaceSelector;
+    }
+
+    public void setNamespaceSelector(final StatefulSetSpecTemplateSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelector namespaceSelector) {
+        this.namespaceSelector = namespaceSelector;
+    }
+
+    public List<String> getNamespaces() {
+        return namespaces;
+    }
+
+    public void setNamespaces(final List<String> namespaces) {
+        this.namespaces = namespaces;
+    }
+
+    public String getTopologyKey() {
+        return topologyKey;
+    }
+
+    public void setTopologyKey(final String topologyKey) {
+        this.topologyKey = topologyKey;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                labelSelector,
+                namespaceSelector,
+                namespaces,
+                topologyKey);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof StatefulSetSpecTemplateSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution)) {
+            return false;
+        }
+        final StatefulSetSpecTemplateSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution __otherCasted = (StatefulSetSpecTemplateSpecAffinityPodAntiAffinityRequiredDuringSchedulingIgnoredDuringExecution) __other;
+        return Objects.equals(labelSelector, __otherCasted.labelSelector) &&
+            Objects.equals(namespaceSelector, __otherCasted.namespaceSelector) &&
+            Objects.equals(namespaces, __otherCasted.namespaces) &&
+            Objects.equals(topologyKey, __otherCasted.topologyKey);
+    }
+}

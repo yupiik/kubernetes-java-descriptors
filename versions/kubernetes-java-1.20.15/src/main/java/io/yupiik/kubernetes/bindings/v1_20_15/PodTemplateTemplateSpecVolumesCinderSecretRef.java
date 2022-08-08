@@ -1,0 +1,38 @@
+package io.yupiik.kubernetes.bindings.v1_20_15;
+
+import java.util.Objects;
+
+public class PodTemplateTemplateSpecVolumesCinderSecretRef {
+    private String name;
+
+    public PodTemplateTemplateSpecVolumesCinderSecretRef() {
+        // no-op
+    }
+
+    public PodTemplateTemplateSpecVolumesCinderSecretRef(final String name) {
+        // no-op
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                name);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof PodTemplateTemplateSpecVolumesCinderSecretRef)) {
+            return false;
+        }
+        final PodTemplateTemplateSpecVolumesCinderSecretRef __otherCasted = (PodTemplateTemplateSpecVolumesCinderSecretRef) __other;
+        return Objects.equals(name, __otherCasted.name);
+    }
+}

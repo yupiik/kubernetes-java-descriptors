@@ -1,0 +1,87 @@
+package io.yupiik.kubernetes.bindings.v1_23_2;
+
+import java.util.List;
+import java.util.Objects;
+
+public class CronJobSpecJobTemplateSpecTemplateSpecContainersLifecyclePreStopHttpGet {
+    private String host;
+    private List<CronJobSpecJobTemplateSpecTemplateSpecContainersLifecyclePreStopHttpGetHttpHeaders> httpHeaders;
+    private String path;
+    private String port;
+    private CronJobSpecJobTemplateSpecTemplateSpecContainersLifecyclePreStopHttpGetScheme scheme;
+
+    public CronJobSpecJobTemplateSpecTemplateSpecContainersLifecyclePreStopHttpGet() {
+        // no-op
+    }
+
+    public CronJobSpecJobTemplateSpecTemplateSpecContainersLifecyclePreStopHttpGet(final String host,
+                                                                                   final List<CronJobSpecJobTemplateSpecTemplateSpecContainersLifecyclePreStopHttpGetHttpHeaders> httpHeaders,
+                                                                                   final String path,
+                                                                                   final String port,
+                                                                                   final CronJobSpecJobTemplateSpecTemplateSpecContainersLifecyclePreStopHttpGetScheme scheme) {
+        // no-op
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(final String host) {
+        this.host = host;
+    }
+
+    public List<CronJobSpecJobTemplateSpecTemplateSpecContainersLifecyclePreStopHttpGetHttpHeaders> getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public void setHttpHeaders(final List<CronJobSpecJobTemplateSpecTemplateSpecContainersLifecyclePreStopHttpGetHttpHeaders> httpHeaders) {
+        this.httpHeaders = httpHeaders;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(final String path) {
+        this.path = path;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(final String port) {
+        this.port = port;
+    }
+
+    public CronJobSpecJobTemplateSpecTemplateSpecContainersLifecyclePreStopHttpGetScheme getScheme() {
+        return scheme;
+    }
+
+    public void setScheme(final CronJobSpecJobTemplateSpecTemplateSpecContainersLifecyclePreStopHttpGetScheme scheme) {
+        this.scheme = scheme;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                host,
+                httpHeaders,
+                path,
+                port,
+                scheme);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof CronJobSpecJobTemplateSpecTemplateSpecContainersLifecyclePreStopHttpGet)) {
+            return false;
+        }
+        final CronJobSpecJobTemplateSpecTemplateSpecContainersLifecyclePreStopHttpGet __otherCasted = (CronJobSpecJobTemplateSpecTemplateSpecContainersLifecyclePreStopHttpGet) __other;
+        return Objects.equals(host, __otherCasted.host) &&
+            Objects.equals(httpHeaders, __otherCasted.httpHeaders) &&
+            Objects.equals(path, __otherCasted.path) &&
+            Objects.equals(port, __otherCasted.port) &&
+            Objects.equals(scheme, __otherCasted.scheme);
+    }
+}

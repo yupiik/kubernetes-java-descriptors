@@ -1,0 +1,87 @@
+package io.yupiik.kubernetes.bindings.v1_23_2;
+
+import java.util.List;
+import java.util.Objects;
+
+public class ReplicationControllerListItemsSpecTemplateSpecEphemeralContainersReadinessProbeHttpGet {
+    private String host;
+    private List<ReplicationControllerListItemsSpecTemplateSpecEphemeralContainersReadinessProbeHttpGetHttpHeaders> httpHeaders;
+    private String path;
+    private String port;
+    private ReplicationControllerListItemsSpecTemplateSpecEphemeralContainersReadinessProbeHttpGetScheme scheme;
+
+    public ReplicationControllerListItemsSpecTemplateSpecEphemeralContainersReadinessProbeHttpGet() {
+        // no-op
+    }
+
+    public ReplicationControllerListItemsSpecTemplateSpecEphemeralContainersReadinessProbeHttpGet(final String host,
+                                                                                                  final List<ReplicationControllerListItemsSpecTemplateSpecEphemeralContainersReadinessProbeHttpGetHttpHeaders> httpHeaders,
+                                                                                                  final String path,
+                                                                                                  final String port,
+                                                                                                  final ReplicationControllerListItemsSpecTemplateSpecEphemeralContainersReadinessProbeHttpGetScheme scheme) {
+        // no-op
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(final String host) {
+        this.host = host;
+    }
+
+    public List<ReplicationControllerListItemsSpecTemplateSpecEphemeralContainersReadinessProbeHttpGetHttpHeaders> getHttpHeaders() {
+        return httpHeaders;
+    }
+
+    public void setHttpHeaders(final List<ReplicationControllerListItemsSpecTemplateSpecEphemeralContainersReadinessProbeHttpGetHttpHeaders> httpHeaders) {
+        this.httpHeaders = httpHeaders;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(final String path) {
+        this.path = path;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(final String port) {
+        this.port = port;
+    }
+
+    public ReplicationControllerListItemsSpecTemplateSpecEphemeralContainersReadinessProbeHttpGetScheme getScheme() {
+        return scheme;
+    }
+
+    public void setScheme(final ReplicationControllerListItemsSpecTemplateSpecEphemeralContainersReadinessProbeHttpGetScheme scheme) {
+        this.scheme = scheme;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                host,
+                httpHeaders,
+                path,
+                port,
+                scheme);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof ReplicationControllerListItemsSpecTemplateSpecEphemeralContainersReadinessProbeHttpGet)) {
+            return false;
+        }
+        final ReplicationControllerListItemsSpecTemplateSpecEphemeralContainersReadinessProbeHttpGet __otherCasted = (ReplicationControllerListItemsSpecTemplateSpecEphemeralContainersReadinessProbeHttpGet) __other;
+        return Objects.equals(host, __otherCasted.host) &&
+            Objects.equals(httpHeaders, __otherCasted.httpHeaders) &&
+            Objects.equals(path, __otherCasted.path) &&
+            Objects.equals(port, __otherCasted.port) &&
+            Objects.equals(scheme, __otherCasted.scheme);
+    }
+}

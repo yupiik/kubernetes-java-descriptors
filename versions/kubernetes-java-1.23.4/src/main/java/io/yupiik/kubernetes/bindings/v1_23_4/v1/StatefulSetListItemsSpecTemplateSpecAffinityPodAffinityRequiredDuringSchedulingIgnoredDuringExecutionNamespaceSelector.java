@@ -1,0 +1,52 @@
+package io.yupiik.kubernetes.bindings.v1_23_4.v1;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+public class StatefulSetListItemsSpecTemplateSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelector {
+    private List<StatefulSetListItemsSpecTemplateSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelectorMatchExpressions> matchExpressions;
+    private Map<String, String> matchLabels;
+
+    public StatefulSetListItemsSpecTemplateSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelector() {
+        // no-op
+    }
+
+    public StatefulSetListItemsSpecTemplateSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelector(final List<StatefulSetListItemsSpecTemplateSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelectorMatchExpressions> matchExpressions,
+                                                                                                                                  final Map<String, String> matchLabels) {
+        // no-op
+    }
+
+    public List<StatefulSetListItemsSpecTemplateSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelectorMatchExpressions> getMatchExpressions() {
+        return matchExpressions;
+    }
+
+    public void setMatchExpressions(final List<StatefulSetListItemsSpecTemplateSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelectorMatchExpressions> matchExpressions) {
+        this.matchExpressions = matchExpressions;
+    }
+
+    public Map<String, String> getMatchLabels() {
+        return matchLabels;
+    }
+
+    public void setMatchLabels(final Map<String, String> matchLabels) {
+        this.matchLabels = matchLabels;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                matchExpressions,
+                matchLabels);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof StatefulSetListItemsSpecTemplateSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelector)) {
+            return false;
+        }
+        final StatefulSetListItemsSpecTemplateSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelector __otherCasted = (StatefulSetListItemsSpecTemplateSpecAffinityPodAffinityRequiredDuringSchedulingIgnoredDuringExecutionNamespaceSelector) __other;
+        return Objects.equals(matchExpressions, __otherCasted.matchExpressions) &&
+            Objects.equals(matchLabels, __otherCasted.matchLabels);
+    }
+}

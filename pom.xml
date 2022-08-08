@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>io.yupiik.kubernetes</groupId>
+  <artifactId>kubernetes-java-descriptors</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>Kubernetes Java Descriptors</name>
+
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <bundlebee.kubernetes.schemas.url>https://github.com/yupiik/bundlebee/archive/refs/heads/gh-pages.zip</bundlebee.kubernetes.schemas.url>
+    <bundlebee.kubernetes.schemas.base>generated/kubernetes/jsonschema</bundlebee.kubernetes.schemas.base>
+  </properties>
+
+  <profiles>
+    <profile> <!-- only used to generate/update the other modules -->
+      <id>generator</id>
+      <modules>
+        <module>generator</module>
+      </modules>
+    </profile>
+    <profile> <!-- in an IDE it is better to ignore versions/ folder and these modules, makes it faster to work -->
+      <id>versions</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>versions</module>
+      </modules>
+    </profile>
+  </profiles>
+</project>

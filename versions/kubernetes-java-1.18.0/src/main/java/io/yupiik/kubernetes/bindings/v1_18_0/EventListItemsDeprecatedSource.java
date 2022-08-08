@@ -1,0 +1,50 @@
+package io.yupiik.kubernetes.bindings.v1_18_0;
+
+import java.util.Objects;
+
+public class EventListItemsDeprecatedSource {
+    private String component;
+    private String host;
+
+    public EventListItemsDeprecatedSource() {
+        // no-op
+    }
+
+    public EventListItemsDeprecatedSource(final String component,
+                                          final String host) {
+        // no-op
+    }
+
+    public String getComponent() {
+        return component;
+    }
+
+    public void setComponent(final String component) {
+        this.component = component;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(final String host) {
+        this.host = host;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                component,
+                host);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof EventListItemsDeprecatedSource)) {
+            return false;
+        }
+        final EventListItemsDeprecatedSource __otherCasted = (EventListItemsDeprecatedSource) __other;
+        return Objects.equals(component, __otherCasted.component) &&
+            Objects.equals(host, __otherCasted.host);
+    }
+}
