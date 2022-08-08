@@ -1,0 +1,140 @@
+package io.yupiik.kubernetes.bindings.v1_13_11.v1alpha1;
+
+import io.yupiik.kubernetes.bindings.v1_13_11.Validable;
+import io.yupiik.kubernetes.bindings.v1_13_11.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public class VolumeMount implements Validable<VolumeMount> {
+    private String mountPath;
+    private String mountPropagation;
+    private String name;
+    private Boolean readOnly;
+    private String subPath;
+
+    public VolumeMount() {
+        // no-op
+    }
+
+    public VolumeMount(final String mountPath,
+                       final String mountPropagation,
+                       final String name,
+                       final Boolean readOnly,
+                       final String subPath) {
+        // no-op
+    }
+
+    public String getMountPath() {
+        return mountPath;
+    }
+
+    public void setMountPath(final String mountPath) {
+        this.mountPath = mountPath;
+    }
+
+    public String getMountPropagation() {
+        return mountPropagation;
+    }
+
+    public void setMountPropagation(final String mountPropagation) {
+        this.mountPropagation = mountPropagation;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public Boolean getReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(final Boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
+    public String getSubPath() {
+        return subPath;
+    }
+
+    public void setSubPath(final String subPath) {
+        this.subPath = subPath;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                mountPath,
+                mountPropagation,
+                name,
+                readOnly,
+                subPath);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof VolumeMount)) {
+            return false;
+        }
+        final VolumeMount __otherCasted = (VolumeMount) __other;
+        return Objects.equals(mountPath, __otherCasted.mountPath) &&
+            Objects.equals(mountPropagation, __otherCasted.mountPropagation) &&
+            Objects.equals(name, __otherCasted.name) &&
+            Objects.equals(readOnly, __otherCasted.readOnly) &&
+            Objects.equals(subPath, __otherCasted.subPath);
+    }
+
+    public VolumeMount mountPath(final String mountPath) {
+        this.mountPath = mountPath;
+        return this;
+    }
+
+    public VolumeMount mountPropagation(final String mountPropagation) {
+        this.mountPropagation = mountPropagation;
+        return this;
+    }
+
+    public VolumeMount name(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    public VolumeMount readOnly(final Boolean readOnly) {
+        this.readOnly = readOnly;
+        return this;
+    }
+
+    public VolumeMount subPath(final String subPath) {
+        this.subPath = subPath;
+        return this;
+    }
+
+    @Override
+    public VolumeMount validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (mountPath == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "mountPath", "mountPath",
+                "Missing 'mountPath' attribute.", true));
+        }
+        if (name == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "name", "name",
+                "Missing 'name' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
+    }
+}

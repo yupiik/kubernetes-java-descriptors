@@ -1,0 +1,89 @@
+package io.yupiik.kubernetes.bindings.v1_17_3.v1;
+
+import io.yupiik.kubernetes.bindings.v1_17_3.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_3.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public class AttachedVolume implements Validable<AttachedVolume> {
+    private String devicePath;
+    private String name;
+
+    public AttachedVolume() {
+        // no-op
+    }
+
+    public AttachedVolume(final String devicePath,
+                          final String name) {
+        // no-op
+    }
+
+    public String getDevicePath() {
+        return devicePath;
+    }
+
+    public void setDevicePath(final String devicePath) {
+        this.devicePath = devicePath;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                devicePath,
+                name);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof AttachedVolume)) {
+            return false;
+        }
+        final AttachedVolume __otherCasted = (AttachedVolume) __other;
+        return Objects.equals(devicePath, __otherCasted.devicePath) &&
+            Objects.equals(name, __otherCasted.name);
+    }
+
+    public AttachedVolume devicePath(final String devicePath) {
+        this.devicePath = devicePath;
+        return this;
+    }
+
+    public AttachedVolume name(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    @Override
+    public AttachedVolume validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (devicePath == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "devicePath", "devicePath",
+                "Missing 'devicePath' attribute.", true));
+        }
+        if (name == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "name", "name",
+                "Missing 'name' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
+    }
+}
