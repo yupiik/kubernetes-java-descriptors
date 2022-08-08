@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_16_11.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_16_11.Validable;
+import io.yupiik.kubernetes.bindings.v1_16_11.ValidationException;
 import jakarta.json.JsonObject;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class ControllerRevision {
+public class ControllerRevision implements Validable<ControllerRevision> {
     private String apiVersion;
     private JsonObject data;
     private String kind;
-    private ControllerRevisionMetadata metadata;
+    private ObjectMeta metadata;
     private int revision;
 
     public ControllerRevision() {
@@ -17,7 +21,7 @@ public class ControllerRevision {
     public ControllerRevision(final String apiVersion,
                               final JsonObject data,
                               final String kind,
-                              final ControllerRevisionMetadata metadata,
+                              final ObjectMeta metadata,
                               final int revision) {
         // no-op
     }
@@ -46,11 +50,11 @@ public class ControllerRevision {
         this.kind = kind;
     }
 
-    public ControllerRevisionMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ControllerRevisionMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -83,5 +87,35 @@ public class ControllerRevision {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(revision, __otherCasted.revision);
+    }
+
+    public ControllerRevision apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ControllerRevision data(final JsonObject data) {
+        this.data = data;
+        return this;
+    }
+
+    public ControllerRevision kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ControllerRevision metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public ControllerRevision revision(final int revision) {
+        this.revision = revision;
+        return this;
+    }
+
+    @Override
+    public ControllerRevision validate() {
+        return this;
     }
 }

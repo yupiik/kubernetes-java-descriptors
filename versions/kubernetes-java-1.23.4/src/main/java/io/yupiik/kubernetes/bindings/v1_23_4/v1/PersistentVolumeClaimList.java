@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_23_4.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_4.Validable;
+import io.yupiik.kubernetes.bindings.v1_23_4.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PersistentVolumeClaimList {
+public class PersistentVolumeClaimList implements Validable<PersistentVolumeClaimList> {
     private String apiVersion;
-    private List<PersistentVolumeClaimListItems> items;
+    private List<PersistentVolumeClaim> items;
     private String kind;
-    private PersistentVolumeClaimListMetadata metadata;
+    private ListMeta metadata;
 
     public PersistentVolumeClaimList() {
         // no-op
     }
 
     public PersistentVolumeClaimList(final String apiVersion,
-                                     final List<PersistentVolumeClaimListItems> items,
+                                     final List<PersistentVolumeClaim> items,
                                      final String kind,
-                                     final PersistentVolumeClaimListMetadata metadata) {
+                                     final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class PersistentVolumeClaimList {
         this.apiVersion = apiVersion;
     }
 
-    public List<PersistentVolumeClaimListItems> getItems() {
+    public List<PersistentVolumeClaim> getItems() {
         return items;
     }
 
-    public void setItems(final List<PersistentVolumeClaimListItems> items) {
+    public void setItems(final List<PersistentVolumeClaim> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class PersistentVolumeClaimList {
         this.kind = kind;
     }
 
-    public PersistentVolumeClaimListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final PersistentVolumeClaimListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class PersistentVolumeClaimList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public PersistentVolumeClaimList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public PersistentVolumeClaimList items(final List<PersistentVolumeClaim> items) {
+        this.items = items;
+        return this;
+    }
+
+    public PersistentVolumeClaimList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public PersistentVolumeClaimList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public PersistentVolumeClaimList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

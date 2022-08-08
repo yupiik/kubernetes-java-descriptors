@@ -1,8 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_11_2.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_11_2.Validable;
+import io.yupiik.kubernetes.bindings.v1_11_2.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class ScaleSpec {
+public class ScaleSpec implements Validable<ScaleSpec> {
     private Integer replicas;
 
     public ScaleSpec() {
@@ -34,5 +38,15 @@ public class ScaleSpec {
         }
         final ScaleSpec __otherCasted = (ScaleSpec) __other;
         return Objects.equals(replicas, __otherCasted.replicas);
+    }
+
+    public ScaleSpec replicas(final Integer replicas) {
+        this.replicas = replicas;
+        return this;
+    }
+
+    @Override
+    public ScaleSpec validate() {
+        return this;
     }
 }

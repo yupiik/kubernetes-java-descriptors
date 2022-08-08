@@ -1,23 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_10_5.v1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_10_5.Validable;
+import io.yupiik.kubernetes.bindings.v1_10_5.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class LimitRangeList {
+public class LimitRangeList implements Validable<LimitRangeList> {
     private String apiVersion;
-    private List<JsonValue> items;
+    private List<LimitRange> items;
     private String kind;
-    private LimitRangeListMetadata metadata;
+    private ListMeta metadata;
 
     public LimitRangeList() {
         // no-op
     }
 
     public LimitRangeList(final String apiVersion,
-                          final List<JsonValue> items,
+                          final List<LimitRange> items,
                           final String kind,
-                          final LimitRangeListMetadata metadata) {
+                          final ListMeta metadata) {
         // no-op
     }
 
@@ -29,11 +31,11 @@ public class LimitRangeList {
         this.apiVersion = apiVersion;
     }
 
-    public List<JsonValue> getItems() {
+    public List<LimitRange> getItems() {
         return items;
     }
 
-    public void setItems(final List<JsonValue> items) {
+    public void setItems(final List<LimitRange> items) {
         this.items = items;
     }
 
@@ -45,11 +47,11 @@ public class LimitRangeList {
         this.kind = kind;
     }
 
-    public LimitRangeListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final LimitRangeListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -72,5 +74,42 @@ public class LimitRangeList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public LimitRangeList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public LimitRangeList items(final List<LimitRange> items) {
+        this.items = items;
+        return this;
+    }
+
+    public LimitRangeList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public LimitRangeList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public LimitRangeList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

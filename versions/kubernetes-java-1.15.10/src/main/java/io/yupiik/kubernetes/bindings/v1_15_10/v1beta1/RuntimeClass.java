@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_15_10.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_15_10.Validable;
+import io.yupiik.kubernetes.bindings.v1_15_10.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class RuntimeClass {
+public class RuntimeClass implements Validable<RuntimeClass> {
     private String apiVersion;
     private String handler;
     private String kind;
-    private RuntimeClassMetadata metadata;
+    private ObjectMeta metadata;
 
     public RuntimeClass() {
         // no-op
@@ -15,7 +19,7 @@ public class RuntimeClass {
     public RuntimeClass(final String apiVersion,
                         final String handler,
                         final String kind,
-                        final RuntimeClassMetadata metadata) {
+                        final ObjectMeta metadata) {
         // no-op
     }
 
@@ -43,11 +47,11 @@ public class RuntimeClass {
         this.kind = kind;
     }
 
-    public RuntimeClassMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final RuntimeClassMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -70,5 +74,42 @@ public class RuntimeClass {
             Objects.equals(handler, __otherCasted.handler) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public RuntimeClass apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public RuntimeClass handler(final String handler) {
+        this.handler = handler;
+        return this;
+    }
+
+    public RuntimeClass kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public RuntimeClass metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public RuntimeClass validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (handler == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "handler", "handler",
+                "Missing 'handler' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

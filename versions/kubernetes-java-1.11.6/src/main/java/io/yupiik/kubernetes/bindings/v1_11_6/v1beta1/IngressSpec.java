@@ -1,45 +1,47 @@
 package io.yupiik.kubernetes.bindings.v1_11_6.v1beta1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_11_6.Validable;
+import io.yupiik.kubernetes.bindings.v1_11_6.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class IngressSpec {
-    private IngressSpecBackend backend;
-    private List<JsonValue> rules;
-    private List<JsonValue> tls;
+public class IngressSpec implements Validable<IngressSpec> {
+    private IngressBackend backend;
+    private List<IngressRule> rules;
+    private List<IngressTLS> tls;
 
     public IngressSpec() {
         // no-op
     }
 
-    public IngressSpec(final IngressSpecBackend backend,
-                       final List<JsonValue> rules,
-                       final List<JsonValue> tls) {
+    public IngressSpec(final IngressBackend backend,
+                       final List<IngressRule> rules,
+                       final List<IngressTLS> tls) {
         // no-op
     }
 
-    public IngressSpecBackend getBackend() {
+    public IngressBackend getBackend() {
         return backend;
     }
 
-    public void setBackend(final IngressSpecBackend backend) {
+    public void setBackend(final IngressBackend backend) {
         this.backend = backend;
     }
 
-    public List<JsonValue> getRules() {
+    public List<IngressRule> getRules() {
         return rules;
     }
 
-    public void setRules(final List<JsonValue> rules) {
+    public void setRules(final List<IngressRule> rules) {
         this.rules = rules;
     }
 
-    public List<JsonValue> getTls() {
+    public List<IngressTLS> getTls() {
         return tls;
     }
 
-    public void setTls(final List<JsonValue> tls) {
+    public void setTls(final List<IngressTLS> tls) {
         this.tls = tls;
     }
 
@@ -60,5 +62,25 @@ public class IngressSpec {
         return Objects.equals(backend, __otherCasted.backend) &&
             Objects.equals(rules, __otherCasted.rules) &&
             Objects.equals(tls, __otherCasted.tls);
+    }
+
+    public IngressSpec backend(final IngressBackend backend) {
+        this.backend = backend;
+        return this;
+    }
+
+    public IngressSpec rules(final List<IngressRule> rules) {
+        this.rules = rules;
+        return this;
+    }
+
+    public IngressSpec tls(final List<IngressTLS> tls) {
+        this.tls = tls;
+        return this;
+    }
+
+    @Override
+    public IngressSpec validate() {
+        return this;
     }
 }

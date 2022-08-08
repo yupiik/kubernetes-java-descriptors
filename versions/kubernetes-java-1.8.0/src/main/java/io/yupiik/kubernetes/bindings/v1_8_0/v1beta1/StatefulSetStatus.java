@@ -1,8 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_8_0.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_8_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_8_0.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class StatefulSetStatus {
+public class StatefulSetStatus implements Validable<StatefulSetStatus> {
     private Integer collisionCount;
     private Integer currentReplicas;
     private String currentRevision;
@@ -118,5 +122,50 @@ public class StatefulSetStatus {
             Objects.equals(replicas, __otherCasted.replicas) &&
             Objects.equals(updateRevision, __otherCasted.updateRevision) &&
             Objects.equals(updatedReplicas, __otherCasted.updatedReplicas);
+    }
+
+    public StatefulSetStatus collisionCount(final Integer collisionCount) {
+        this.collisionCount = collisionCount;
+        return this;
+    }
+
+    public StatefulSetStatus currentReplicas(final Integer currentReplicas) {
+        this.currentReplicas = currentReplicas;
+        return this;
+    }
+
+    public StatefulSetStatus currentRevision(final String currentRevision) {
+        this.currentRevision = currentRevision;
+        return this;
+    }
+
+    public StatefulSetStatus observedGeneration(final Integer observedGeneration) {
+        this.observedGeneration = observedGeneration;
+        return this;
+    }
+
+    public StatefulSetStatus readyReplicas(final Integer readyReplicas) {
+        this.readyReplicas = readyReplicas;
+        return this;
+    }
+
+    public StatefulSetStatus replicas(final int replicas) {
+        this.replicas = replicas;
+        return this;
+    }
+
+    public StatefulSetStatus updateRevision(final String updateRevision) {
+        this.updateRevision = updateRevision;
+        return this;
+    }
+
+    public StatefulSetStatus updatedReplicas(final Integer updatedReplicas) {
+        this.updatedReplicas = updatedReplicas;
+        return this;
+    }
+
+    @Override
+    public StatefulSetStatus validate() {
+        return this;
     }
 }

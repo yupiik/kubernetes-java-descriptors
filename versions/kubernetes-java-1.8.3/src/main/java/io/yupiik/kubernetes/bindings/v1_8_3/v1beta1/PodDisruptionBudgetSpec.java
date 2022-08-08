@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_8_3.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_8_3.Validable;
+import io.yupiik.kubernetes.bindings.v1_8_3.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class PodDisruptionBudgetSpec {
+public class PodDisruptionBudgetSpec implements Validable<PodDisruptionBudgetSpec> {
     private String maxUnavailable;
     private String minAvailable;
-    private PodDisruptionBudgetSpecSelector selector;
+    private LabelSelector selector;
 
     public PodDisruptionBudgetSpec() {
         // no-op
@@ -13,7 +17,7 @@ public class PodDisruptionBudgetSpec {
 
     public PodDisruptionBudgetSpec(final String maxUnavailable,
                                    final String minAvailable,
-                                   final PodDisruptionBudgetSpecSelector selector) {
+                                   final LabelSelector selector) {
         // no-op
     }
 
@@ -33,11 +37,11 @@ public class PodDisruptionBudgetSpec {
         this.minAvailable = minAvailable;
     }
 
-    public PodDisruptionBudgetSpecSelector getSelector() {
+    public LabelSelector getSelector() {
         return selector;
     }
 
-    public void setSelector(final PodDisruptionBudgetSpecSelector selector) {
+    public void setSelector(final LabelSelector selector) {
         this.selector = selector;
     }
 
@@ -58,5 +62,25 @@ public class PodDisruptionBudgetSpec {
         return Objects.equals(maxUnavailable, __otherCasted.maxUnavailable) &&
             Objects.equals(minAvailable, __otherCasted.minAvailable) &&
             Objects.equals(selector, __otherCasted.selector);
+    }
+
+    public PodDisruptionBudgetSpec maxUnavailable(final String maxUnavailable) {
+        this.maxUnavailable = maxUnavailable;
+        return this;
+    }
+
+    public PodDisruptionBudgetSpec minAvailable(final String minAvailable) {
+        this.minAvailable = minAvailable;
+        return this;
+    }
+
+    public PodDisruptionBudgetSpec selector(final LabelSelector selector) {
+        this.selector = selector;
+        return this;
+    }
+
+    @Override
+    public PodDisruptionBudgetSpec validate() {
+        return this;
     }
 }

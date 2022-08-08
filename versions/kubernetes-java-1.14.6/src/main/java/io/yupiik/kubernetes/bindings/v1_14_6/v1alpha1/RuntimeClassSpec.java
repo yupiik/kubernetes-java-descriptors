@@ -1,8 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_14_6.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_14_6.Validable;
+import io.yupiik.kubernetes.bindings.v1_14_6.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class RuntimeClassSpec {
+public class RuntimeClassSpec implements Validable<RuntimeClassSpec> {
     private String runtimeHandler;
 
     public RuntimeClassSpec() {
@@ -34,5 +38,27 @@ public class RuntimeClassSpec {
         }
         final RuntimeClassSpec __otherCasted = (RuntimeClassSpec) __other;
         return Objects.equals(runtimeHandler, __otherCasted.runtimeHandler);
+    }
+
+    public RuntimeClassSpec runtimeHandler(final String runtimeHandler) {
+        this.runtimeHandler = runtimeHandler;
+        return this;
+    }
+
+    @Override
+    public RuntimeClassSpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (runtimeHandler == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "runtimeHandler", "runtimeHandler",
+                "Missing 'runtimeHandler' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

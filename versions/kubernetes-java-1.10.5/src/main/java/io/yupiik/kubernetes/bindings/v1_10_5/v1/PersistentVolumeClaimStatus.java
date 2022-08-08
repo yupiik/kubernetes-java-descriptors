@@ -1,14 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_10_5.v1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_10_5.Validable;
+import io.yupiik.kubernetes.bindings.v1_10_5.ValidationException;
+import jakarta.json.JsonObject;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-public class PersistentVolumeClaimStatus {
+public class PersistentVolumeClaimStatus implements Validable<PersistentVolumeClaimStatus> {
     private List<String> accessModes;
-    private Map<String, String> capacity;
-    private List<JsonValue> conditions;
+    private JsonObject capacity;
+    private List<PersistentVolumeClaimCondition> conditions;
     private String phase;
 
     public PersistentVolumeClaimStatus() {
@@ -16,8 +18,8 @@ public class PersistentVolumeClaimStatus {
     }
 
     public PersistentVolumeClaimStatus(final List<String> accessModes,
-                                       final Map<String, String> capacity,
-                                       final List<JsonValue> conditions,
+                                       final JsonObject capacity,
+                                       final List<PersistentVolumeClaimCondition> conditions,
                                        final String phase) {
         // no-op
     }
@@ -30,19 +32,19 @@ public class PersistentVolumeClaimStatus {
         this.accessModes = accessModes;
     }
 
-    public Map<String, String> getCapacity() {
+    public JsonObject getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(final Map<String, String> capacity) {
+    public void setCapacity(final JsonObject capacity) {
         this.capacity = capacity;
     }
 
-    public List<JsonValue> getConditions() {
+    public List<PersistentVolumeClaimCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<JsonValue> conditions) {
+    public void setConditions(final List<PersistentVolumeClaimCondition> conditions) {
         this.conditions = conditions;
     }
 
@@ -73,5 +75,30 @@ public class PersistentVolumeClaimStatus {
             Objects.equals(capacity, __otherCasted.capacity) &&
             Objects.equals(conditions, __otherCasted.conditions) &&
             Objects.equals(phase, __otherCasted.phase);
+    }
+
+    public PersistentVolumeClaimStatus accessModes(final List<String> accessModes) {
+        this.accessModes = accessModes;
+        return this;
+    }
+
+    public PersistentVolumeClaimStatus capacity(final JsonObject capacity) {
+        this.capacity = capacity;
+        return this;
+    }
+
+    public PersistentVolumeClaimStatus conditions(final List<PersistentVolumeClaimCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public PersistentVolumeClaimStatus phase(final String phase) {
+        this.phase = phase;
+        return this;
+    }
+
+    @Override
+    public PersistentVolumeClaimStatus validate() {
+        return this;
     }
 }

@@ -1,14 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_11.v1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_7_11.Validable;
+import io.yupiik.kubernetes.bindings.v1_7_11.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class NodeSpec {
+public class NodeSpec implements Validable<NodeSpec> {
     private String externalID;
     private String podCIDR;
     private String providerID;
-    private List<JsonValue> taints;
+    private List<Taint> taints;
     private Boolean unschedulable;
 
     public NodeSpec() {
@@ -18,7 +20,7 @@ public class NodeSpec {
     public NodeSpec(final String externalID,
                     final String podCIDR,
                     final String providerID,
-                    final List<JsonValue> taints,
+                    final List<Taint> taints,
                     final Boolean unschedulable) {
         // no-op
     }
@@ -47,11 +49,11 @@ public class NodeSpec {
         this.providerID = providerID;
     }
 
-    public List<JsonValue> getTaints() {
+    public List<Taint> getTaints() {
         return taints;
     }
 
-    public void setTaints(final List<JsonValue> taints) {
+    public void setTaints(final List<Taint> taints) {
         this.taints = taints;
     }
 
@@ -84,5 +86,35 @@ public class NodeSpec {
             Objects.equals(providerID, __otherCasted.providerID) &&
             Objects.equals(taints, __otherCasted.taints) &&
             Objects.equals(unschedulable, __otherCasted.unschedulable);
+    }
+
+    public NodeSpec externalID(final String externalID) {
+        this.externalID = externalID;
+        return this;
+    }
+
+    public NodeSpec podCIDR(final String podCIDR) {
+        this.podCIDR = podCIDR;
+        return this;
+    }
+
+    public NodeSpec providerID(final String providerID) {
+        this.providerID = providerID;
+        return this;
+    }
+
+    public NodeSpec taints(final List<Taint> taints) {
+        this.taints = taints;
+        return this;
+    }
+
+    public NodeSpec unschedulable(final Boolean unschedulable) {
+        this.unschedulable = unschedulable;
+        return this;
+    }
+
+    @Override
+    public NodeSpec validate() {
+        return this;
     }
 }

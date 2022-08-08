@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_21_7.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_7.Validable;
+import io.yupiik.kubernetes.bindings.v1_21_7.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class EphemeralContainers {
+public class EphemeralContainers implements Validable<EphemeralContainers> {
     private String apiVersion;
-    private List<EphemeralContainersEphemeralContainers> ephemeralContainers;
+    private List<EphemeralContainer> ephemeralContainers;
     private String kind;
-    private EphemeralContainersMetadata metadata;
+    private ObjectMeta metadata;
 
     public EphemeralContainers() {
         // no-op
     }
 
     public EphemeralContainers(final String apiVersion,
-                               final List<EphemeralContainersEphemeralContainers> ephemeralContainers,
+                               final List<EphemeralContainer> ephemeralContainers,
                                final String kind,
-                               final EphemeralContainersMetadata metadata) {
+                               final ObjectMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class EphemeralContainers {
         this.apiVersion = apiVersion;
     }
 
-    public List<EphemeralContainersEphemeralContainers> getEphemeralContainers() {
+    public List<EphemeralContainer> getEphemeralContainers() {
         return ephemeralContainers;
     }
 
-    public void setEphemeralContainers(final List<EphemeralContainersEphemeralContainers> ephemeralContainers) {
+    public void setEphemeralContainers(final List<EphemeralContainer> ephemeralContainers) {
         this.ephemeralContainers = ephemeralContainers;
     }
 
@@ -44,11 +47,11 @@ public class EphemeralContainers {
         this.kind = kind;
     }
 
-    public EphemeralContainersMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final EphemeralContainersMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class EphemeralContainers {
             Objects.equals(ephemeralContainers, __otherCasted.ephemeralContainers) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public EphemeralContainers apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public EphemeralContainers ephemeralContainers(final List<EphemeralContainer> ephemeralContainers) {
+        this.ephemeralContainers = ephemeralContainers;
+        return this;
+    }
+
+    public EphemeralContainers kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public EphemeralContainers metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public EphemeralContainers validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (ephemeralContainers == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "ephemeralContainers", "ephemeralContainers",
+                "Missing 'ephemeralContainers' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

@@ -1,12 +1,14 @@
 package io.yupiik.kubernetes.bindings.v1_8_2.v1beta1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_8_2.Validable;
+import io.yupiik.kubernetes.bindings.v1_8_2.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ReplicaSetStatus {
+public class ReplicaSetStatus implements Validable<ReplicaSetStatus> {
     private Integer availableReplicas;
-    private List<JsonValue> conditions;
+    private List<ReplicaSetCondition> conditions;
     private Integer fullyLabeledReplicas;
     private Integer observedGeneration;
     private Integer readyReplicas;
@@ -17,7 +19,7 @@ public class ReplicaSetStatus {
     }
 
     public ReplicaSetStatus(final Integer availableReplicas,
-                            final List<JsonValue> conditions,
+                            final List<ReplicaSetCondition> conditions,
                             final Integer fullyLabeledReplicas,
                             final Integer observedGeneration,
                             final Integer readyReplicas,
@@ -33,11 +35,11 @@ public class ReplicaSetStatus {
         this.availableReplicas = availableReplicas;
     }
 
-    public List<JsonValue> getConditions() {
+    public List<ReplicaSetCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<JsonValue> conditions) {
+    public void setConditions(final List<ReplicaSetCondition> conditions) {
         this.conditions = conditions;
     }
 
@@ -96,5 +98,40 @@ public class ReplicaSetStatus {
             Objects.equals(observedGeneration, __otherCasted.observedGeneration) &&
             Objects.equals(readyReplicas, __otherCasted.readyReplicas) &&
             Objects.equals(replicas, __otherCasted.replicas);
+    }
+
+    public ReplicaSetStatus availableReplicas(final Integer availableReplicas) {
+        this.availableReplicas = availableReplicas;
+        return this;
+    }
+
+    public ReplicaSetStatus conditions(final List<ReplicaSetCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public ReplicaSetStatus fullyLabeledReplicas(final Integer fullyLabeledReplicas) {
+        this.fullyLabeledReplicas = fullyLabeledReplicas;
+        return this;
+    }
+
+    public ReplicaSetStatus observedGeneration(final Integer observedGeneration) {
+        this.observedGeneration = observedGeneration;
+        return this;
+    }
+
+    public ReplicaSetStatus readyReplicas(final Integer readyReplicas) {
+        this.readyReplicas = readyReplicas;
+        return this;
+    }
+
+    public ReplicaSetStatus replicas(final int replicas) {
+        this.replicas = replicas;
+        return this;
+    }
+
+    @Override
+    public ReplicaSetStatus validate() {
+        return this;
     }
 }

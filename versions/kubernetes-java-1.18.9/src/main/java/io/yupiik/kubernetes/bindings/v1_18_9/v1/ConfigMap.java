@@ -1,15 +1,19 @@
 package io.yupiik.kubernetes.bindings.v1_18_9.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_9.Validable;
+import io.yupiik.kubernetes.bindings.v1_18_9.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ConfigMap {
+public class ConfigMap implements Validable<ConfigMap> {
     private String apiVersion;
     private Map<String, String> binaryData;
     private Map<String, String> data;
     private Boolean immutable;
     private String kind;
-    private ConfigMapMetadata metadata;
+    private ObjectMeta metadata;
 
     public ConfigMap() {
         // no-op
@@ -20,7 +24,7 @@ public class ConfigMap {
                      final Map<String, String> data,
                      final Boolean immutable,
                      final String kind,
-                     final ConfigMapMetadata metadata) {
+                     final ObjectMeta metadata) {
         // no-op
     }
 
@@ -64,11 +68,11 @@ public class ConfigMap {
         this.kind = kind;
     }
 
-    public ConfigMapMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ConfigMapMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -95,5 +99,40 @@ public class ConfigMap {
             Objects.equals(immutable, __otherCasted.immutable) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public ConfigMap apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ConfigMap binaryData(final Map<String, String> binaryData) {
+        this.binaryData = binaryData;
+        return this;
+    }
+
+    public ConfigMap data(final Map<String, String> data) {
+        this.data = data;
+        return this;
+    }
+
+    public ConfigMap immutable(final Boolean immutable) {
+        this.immutable = immutable;
+        return this;
+    }
+
+    public ConfigMap kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ConfigMap metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public ConfigMap validate() {
+        return this;
     }
 }

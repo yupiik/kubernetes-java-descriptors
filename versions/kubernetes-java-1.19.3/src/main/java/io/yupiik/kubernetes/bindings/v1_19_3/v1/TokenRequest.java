@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_19_3.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_3.Validable;
+import io.yupiik.kubernetes.bindings.v1_19_3.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class TokenRequest {
+public class TokenRequest implements Validable<TokenRequest> {
     private String apiVersion;
     private String kind;
-    private TokenRequestMetadata metadata;
+    private ObjectMeta metadata;
     private TokenRequestSpec spec;
     private TokenRequestStatus status;
 
@@ -15,7 +19,7 @@ public class TokenRequest {
 
     public TokenRequest(final String apiVersion,
                         final String kind,
-                        final TokenRequestMetadata metadata,
+                        final ObjectMeta metadata,
                         final TokenRequestSpec spec,
                         final TokenRequestStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class TokenRequest {
         this.kind = kind;
     }
 
-    public TokenRequestMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final TokenRequestMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,47 @@ public class TokenRequest {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public TokenRequest apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public TokenRequest kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public TokenRequest metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public TokenRequest spec(final TokenRequestSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public TokenRequest status(final TokenRequestStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public TokenRequest validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (spec == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "spec", "spec",
+                "Missing 'spec' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

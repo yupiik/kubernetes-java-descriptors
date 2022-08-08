@@ -1,8 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_10_7.v1;
 
+import io.yupiik.kubernetes.bindings.v1_10_7.Validable;
+import io.yupiik.kubernetes.bindings.v1_10_7.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class HorizontalPodAutoscalerStatus {
+public class HorizontalPodAutoscalerStatus implements Validable<HorizontalPodAutoscalerStatus> {
     private Integer currentCPUUtilizationPercentage;
     private int currentReplicas;
     private int desiredReplicas;
@@ -82,5 +86,35 @@ public class HorizontalPodAutoscalerStatus {
             Objects.equals(desiredReplicas, __otherCasted.desiredReplicas) &&
             Objects.equals(lastScaleTime, __otherCasted.lastScaleTime) &&
             Objects.equals(observedGeneration, __otherCasted.observedGeneration);
+    }
+
+    public HorizontalPodAutoscalerStatus currentCPUUtilizationPercentage(final Integer currentCPUUtilizationPercentage) {
+        this.currentCPUUtilizationPercentage = currentCPUUtilizationPercentage;
+        return this;
+    }
+
+    public HorizontalPodAutoscalerStatus currentReplicas(final int currentReplicas) {
+        this.currentReplicas = currentReplicas;
+        return this;
+    }
+
+    public HorizontalPodAutoscalerStatus desiredReplicas(final int desiredReplicas) {
+        this.desiredReplicas = desiredReplicas;
+        return this;
+    }
+
+    public HorizontalPodAutoscalerStatus lastScaleTime(final String lastScaleTime) {
+        this.lastScaleTime = lastScaleTime;
+        return this;
+    }
+
+    public HorizontalPodAutoscalerStatus observedGeneration(final Integer observedGeneration) {
+        this.observedGeneration = observedGeneration;
+        return this;
+    }
+
+    @Override
+    public HorizontalPodAutoscalerStatus validate() {
+        return this;
     }
 }

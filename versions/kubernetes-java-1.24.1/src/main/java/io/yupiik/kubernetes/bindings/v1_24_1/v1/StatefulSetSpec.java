@@ -1,34 +1,37 @@
 package io.yupiik.kubernetes.bindings.v1_24_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_24_1.Validable;
+import io.yupiik.kubernetes.bindings.v1_24_1.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class StatefulSetSpec {
+public class StatefulSetSpec implements Validable<StatefulSetSpec> {
     private Integer minReadySeconds;
-    private StatefulSetSpecPersistentVolumeClaimRetentionPolicy persistentVolumeClaimRetentionPolicy;
+    private StatefulSetPersistentVolumeClaimRetentionPolicy persistentVolumeClaimRetentionPolicy;
     private String podManagementPolicy;
     private Integer replicas;
     private Integer revisionHistoryLimit;
-    private StatefulSetSpecSelector selector;
+    private LabelSelector selector;
     private String serviceName;
-    private StatefulSetSpecTemplate template;
-    private StatefulSetSpecUpdateStrategy updateStrategy;
-    private List<StatefulSetSpecVolumeClaimTemplates> volumeClaimTemplates;
+    private PodTemplateSpec template;
+    private StatefulSetUpdateStrategy updateStrategy;
+    private List<PersistentVolumeClaim> volumeClaimTemplates;
 
     public StatefulSetSpec() {
         // no-op
     }
 
     public StatefulSetSpec(final Integer minReadySeconds,
-                           final StatefulSetSpecPersistentVolumeClaimRetentionPolicy persistentVolumeClaimRetentionPolicy,
+                           final StatefulSetPersistentVolumeClaimRetentionPolicy persistentVolumeClaimRetentionPolicy,
                            final String podManagementPolicy,
                            final Integer replicas,
                            final Integer revisionHistoryLimit,
-                           final StatefulSetSpecSelector selector,
+                           final LabelSelector selector,
                            final String serviceName,
-                           final StatefulSetSpecTemplate template,
-                           final StatefulSetSpecUpdateStrategy updateStrategy,
-                           final List<StatefulSetSpecVolumeClaimTemplates> volumeClaimTemplates) {
+                           final PodTemplateSpec template,
+                           final StatefulSetUpdateStrategy updateStrategy,
+                           final List<PersistentVolumeClaim> volumeClaimTemplates) {
         // no-op
     }
 
@@ -40,11 +43,11 @@ public class StatefulSetSpec {
         this.minReadySeconds = minReadySeconds;
     }
 
-    public StatefulSetSpecPersistentVolumeClaimRetentionPolicy getPersistentVolumeClaimRetentionPolicy() {
+    public StatefulSetPersistentVolumeClaimRetentionPolicy getPersistentVolumeClaimRetentionPolicy() {
         return persistentVolumeClaimRetentionPolicy;
     }
 
-    public void setPersistentVolumeClaimRetentionPolicy(final StatefulSetSpecPersistentVolumeClaimRetentionPolicy persistentVolumeClaimRetentionPolicy) {
+    public void setPersistentVolumeClaimRetentionPolicy(final StatefulSetPersistentVolumeClaimRetentionPolicy persistentVolumeClaimRetentionPolicy) {
         this.persistentVolumeClaimRetentionPolicy = persistentVolumeClaimRetentionPolicy;
     }
 
@@ -72,11 +75,11 @@ public class StatefulSetSpec {
         this.revisionHistoryLimit = revisionHistoryLimit;
     }
 
-    public StatefulSetSpecSelector getSelector() {
+    public LabelSelector getSelector() {
         return selector;
     }
 
-    public void setSelector(final StatefulSetSpecSelector selector) {
+    public void setSelector(final LabelSelector selector) {
         this.selector = selector;
     }
 
@@ -88,27 +91,27 @@ public class StatefulSetSpec {
         this.serviceName = serviceName;
     }
 
-    public StatefulSetSpecTemplate getTemplate() {
+    public PodTemplateSpec getTemplate() {
         return template;
     }
 
-    public void setTemplate(final StatefulSetSpecTemplate template) {
+    public void setTemplate(final PodTemplateSpec template) {
         this.template = template;
     }
 
-    public StatefulSetSpecUpdateStrategy getUpdateStrategy() {
+    public StatefulSetUpdateStrategy getUpdateStrategy() {
         return updateStrategy;
     }
 
-    public void setUpdateStrategy(final StatefulSetSpecUpdateStrategy updateStrategy) {
+    public void setUpdateStrategy(final StatefulSetUpdateStrategy updateStrategy) {
         this.updateStrategy = updateStrategy;
     }
 
-    public List<StatefulSetSpecVolumeClaimTemplates> getVolumeClaimTemplates() {
+    public List<PersistentVolumeClaim> getVolumeClaimTemplates() {
         return volumeClaimTemplates;
     }
 
-    public void setVolumeClaimTemplates(final List<StatefulSetSpecVolumeClaimTemplates> volumeClaimTemplates) {
+    public void setVolumeClaimTemplates(final List<PersistentVolumeClaim> volumeClaimTemplates) {
         this.volumeClaimTemplates = volumeClaimTemplates;
     }
 
@@ -143,5 +146,88 @@ public class StatefulSetSpec {
             Objects.equals(template, __otherCasted.template) &&
             Objects.equals(updateStrategy, __otherCasted.updateStrategy) &&
             Objects.equals(volumeClaimTemplates, __otherCasted.volumeClaimTemplates);
+    }
+
+    public StatefulSetSpec minReadySeconds(final Integer minReadySeconds) {
+        this.minReadySeconds = minReadySeconds;
+        return this;
+    }
+
+    public StatefulSetSpec persistentVolumeClaimRetentionPolicy(final StatefulSetPersistentVolumeClaimRetentionPolicy persistentVolumeClaimRetentionPolicy) {
+        this.persistentVolumeClaimRetentionPolicy = persistentVolumeClaimRetentionPolicy;
+        return this;
+    }
+
+    public StatefulSetSpec podManagementPolicy(final String podManagementPolicy) {
+        this.podManagementPolicy = podManagementPolicy;
+        return this;
+    }
+
+    public StatefulSetSpec replicas(final Integer replicas) {
+        this.replicas = replicas;
+        return this;
+    }
+
+    public StatefulSetSpec revisionHistoryLimit(final Integer revisionHistoryLimit) {
+        this.revisionHistoryLimit = revisionHistoryLimit;
+        return this;
+    }
+
+    public StatefulSetSpec selector(final LabelSelector selector) {
+        this.selector = selector;
+        return this;
+    }
+
+    public StatefulSetSpec serviceName(final String serviceName) {
+        this.serviceName = serviceName;
+        return this;
+    }
+
+    public StatefulSetSpec template(final PodTemplateSpec template) {
+        this.template = template;
+        return this;
+    }
+
+    public StatefulSetSpec updateStrategy(final StatefulSetUpdateStrategy updateStrategy) {
+        this.updateStrategy = updateStrategy;
+        return this;
+    }
+
+    public StatefulSetSpec volumeClaimTemplates(final List<PersistentVolumeClaim> volumeClaimTemplates) {
+        this.volumeClaimTemplates = volumeClaimTemplates;
+        return this;
+    }
+
+    @Override
+    public StatefulSetSpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (selector == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "selector", "selector",
+                "Missing 'selector' attribute.", true));
+        }
+        if (serviceName == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "serviceName", "serviceName",
+                "Missing 'serviceName' attribute.", true));
+        }
+        if (template == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "template", "template",
+                "Missing 'template' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

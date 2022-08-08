@@ -1,20 +1,24 @@
 package io.yupiik.kubernetes.bindings.v1_16_7.v1;
 
+import io.yupiik.kubernetes.bindings.v1_16_7.Validable;
+import io.yupiik.kubernetes.bindings.v1_16_7.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Event {
+public class Event implements Validable<Event> {
     private String action;
     private String apiVersion;
     private Integer count;
     private String eventTime;
     private String firstTimestamp;
-    private EventInvolvedObject involvedObject;
+    private ObjectReference involvedObject;
     private String kind;
     private String lastTimestamp;
     private String message;
-    private EventMetadata metadata;
+    private ObjectMeta metadata;
     private String reason;
-    private EventRelated related;
+    private ObjectReference related;
     private String reportingComponent;
     private String reportingInstance;
     private EventSeries series;
@@ -30,13 +34,13 @@ public class Event {
                  final Integer count,
                  final String eventTime,
                  final String firstTimestamp,
-                 final EventInvolvedObject involvedObject,
+                 final ObjectReference involvedObject,
                  final String kind,
                  final String lastTimestamp,
                  final String message,
-                 final EventMetadata metadata,
+                 final ObjectMeta metadata,
                  final String reason,
-                 final EventRelated related,
+                 final ObjectReference related,
                  final String reportingComponent,
                  final String reportingInstance,
                  final EventSeries series,
@@ -85,11 +89,11 @@ public class Event {
         this.firstTimestamp = firstTimestamp;
     }
 
-    public EventInvolvedObject getInvolvedObject() {
+    public ObjectReference getInvolvedObject() {
         return involvedObject;
     }
 
-    public void setInvolvedObject(final EventInvolvedObject involvedObject) {
+    public void setInvolvedObject(final ObjectReference involvedObject) {
         this.involvedObject = involvedObject;
     }
 
@@ -117,11 +121,11 @@ public class Event {
         this.message = message;
     }
 
-    public EventMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final EventMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -133,11 +137,11 @@ public class Event {
         this.reason = reason;
     }
 
-    public EventRelated getRelated() {
+    public ObjectReference getRelated() {
         return related;
     }
 
-    public void setRelated(final EventRelated related) {
+    public void setRelated(final ObjectReference related) {
         this.related = related;
     }
 
@@ -226,5 +230,115 @@ public class Event {
             Objects.equals(series, __otherCasted.series) &&
             Objects.equals(source, __otherCasted.source) &&
             Objects.equals(type, __otherCasted.type);
+    }
+
+    public Event action(final String action) {
+        this.action = action;
+        return this;
+    }
+
+    public Event apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public Event count(final Integer count) {
+        this.count = count;
+        return this;
+    }
+
+    public Event eventTime(final String eventTime) {
+        this.eventTime = eventTime;
+        return this;
+    }
+
+    public Event firstTimestamp(final String firstTimestamp) {
+        this.firstTimestamp = firstTimestamp;
+        return this;
+    }
+
+    public Event involvedObject(final ObjectReference involvedObject) {
+        this.involvedObject = involvedObject;
+        return this;
+    }
+
+    public Event kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public Event lastTimestamp(final String lastTimestamp) {
+        this.lastTimestamp = lastTimestamp;
+        return this;
+    }
+
+    public Event message(final String message) {
+        this.message = message;
+        return this;
+    }
+
+    public Event metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public Event reason(final String reason) {
+        this.reason = reason;
+        return this;
+    }
+
+    public Event related(final ObjectReference related) {
+        this.related = related;
+        return this;
+    }
+
+    public Event reportingComponent(final String reportingComponent) {
+        this.reportingComponent = reportingComponent;
+        return this;
+    }
+
+    public Event reportingInstance(final String reportingInstance) {
+        this.reportingInstance = reportingInstance;
+        return this;
+    }
+
+    public Event series(final EventSeries series) {
+        this.series = series;
+        return this;
+    }
+
+    public Event source(final EventSource source) {
+        this.source = source;
+        return this;
+    }
+
+    public Event type(final String type) {
+        this.type = type;
+        return this;
+    }
+
+    @Override
+    public Event validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (involvedObject == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "involvedObject", "involvedObject",
+                "Missing 'involvedObject' attribute.", true));
+        }
+        if (metadata == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "metadata", "metadata",
+                "Missing 'metadata' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

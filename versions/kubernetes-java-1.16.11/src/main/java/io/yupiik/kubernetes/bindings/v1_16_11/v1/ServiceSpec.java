@@ -1,10 +1,13 @@
 package io.yupiik.kubernetes.bindings.v1_16_11.v1;
 
+import io.yupiik.kubernetes.bindings.v1_16_11.Validable;
+import io.yupiik.kubernetes.bindings.v1_16_11.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ServiceSpec {
+public class ServiceSpec implements Validable<ServiceSpec> {
     private String clusterIP;
     private List<String> externalIPs;
     private String externalName;
@@ -13,11 +16,11 @@ public class ServiceSpec {
     private String ipFamily;
     private String loadBalancerIP;
     private List<String> loadBalancerSourceRanges;
-    private List<ServiceSpecPorts> ports;
+    private List<ServicePort> ports;
     private Boolean publishNotReadyAddresses;
     private Map<String, String> selector;
     private String sessionAffinity;
-    private ServiceSpecSessionAffinityConfig sessionAffinityConfig;
+    private SessionAffinityConfig sessionAffinityConfig;
     private String type;
 
     public ServiceSpec() {
@@ -32,11 +35,11 @@ public class ServiceSpec {
                        final String ipFamily,
                        final String loadBalancerIP,
                        final List<String> loadBalancerSourceRanges,
-                       final List<ServiceSpecPorts> ports,
+                       final List<ServicePort> ports,
                        final Boolean publishNotReadyAddresses,
                        final Map<String, String> selector,
                        final String sessionAffinity,
-                       final ServiceSpecSessionAffinityConfig sessionAffinityConfig,
+                       final SessionAffinityConfig sessionAffinityConfig,
                        final String type) {
         // no-op
     }
@@ -105,11 +108,11 @@ public class ServiceSpec {
         this.loadBalancerSourceRanges = loadBalancerSourceRanges;
     }
 
-    public List<ServiceSpecPorts> getPorts() {
+    public List<ServicePort> getPorts() {
         return ports;
     }
 
-    public void setPorts(final List<ServiceSpecPorts> ports) {
+    public void setPorts(final List<ServicePort> ports) {
         this.ports = ports;
     }
 
@@ -137,11 +140,11 @@ public class ServiceSpec {
         this.sessionAffinity = sessionAffinity;
     }
 
-    public ServiceSpecSessionAffinityConfig getSessionAffinityConfig() {
+    public SessionAffinityConfig getSessionAffinityConfig() {
         return sessionAffinityConfig;
     }
 
-    public void setSessionAffinityConfig(final ServiceSpecSessionAffinityConfig sessionAffinityConfig) {
+    public void setSessionAffinityConfig(final SessionAffinityConfig sessionAffinityConfig) {
         this.sessionAffinityConfig = sessionAffinityConfig;
     }
 
@@ -192,5 +195,80 @@ public class ServiceSpec {
             Objects.equals(sessionAffinity, __otherCasted.sessionAffinity) &&
             Objects.equals(sessionAffinityConfig, __otherCasted.sessionAffinityConfig) &&
             Objects.equals(type, __otherCasted.type);
+    }
+
+    public ServiceSpec clusterIP(final String clusterIP) {
+        this.clusterIP = clusterIP;
+        return this;
+    }
+
+    public ServiceSpec externalIPs(final List<String> externalIPs) {
+        this.externalIPs = externalIPs;
+        return this;
+    }
+
+    public ServiceSpec externalName(final String externalName) {
+        this.externalName = externalName;
+        return this;
+    }
+
+    public ServiceSpec externalTrafficPolicy(final String externalTrafficPolicy) {
+        this.externalTrafficPolicy = externalTrafficPolicy;
+        return this;
+    }
+
+    public ServiceSpec healthCheckNodePort(final Integer healthCheckNodePort) {
+        this.healthCheckNodePort = healthCheckNodePort;
+        return this;
+    }
+
+    public ServiceSpec ipFamily(final String ipFamily) {
+        this.ipFamily = ipFamily;
+        return this;
+    }
+
+    public ServiceSpec loadBalancerIP(final String loadBalancerIP) {
+        this.loadBalancerIP = loadBalancerIP;
+        return this;
+    }
+
+    public ServiceSpec loadBalancerSourceRanges(final List<String> loadBalancerSourceRanges) {
+        this.loadBalancerSourceRanges = loadBalancerSourceRanges;
+        return this;
+    }
+
+    public ServiceSpec ports(final List<ServicePort> ports) {
+        this.ports = ports;
+        return this;
+    }
+
+    public ServiceSpec publishNotReadyAddresses(final Boolean publishNotReadyAddresses) {
+        this.publishNotReadyAddresses = publishNotReadyAddresses;
+        return this;
+    }
+
+    public ServiceSpec selector(final Map<String, String> selector) {
+        this.selector = selector;
+        return this;
+    }
+
+    public ServiceSpec sessionAffinity(final String sessionAffinity) {
+        this.sessionAffinity = sessionAffinity;
+        return this;
+    }
+
+    public ServiceSpec sessionAffinityConfig(final SessionAffinityConfig sessionAffinityConfig) {
+        this.sessionAffinityConfig = sessionAffinityConfig;
+        return this;
+    }
+
+    public ServiceSpec type(final String type) {
+        this.type = type;
+        return this;
+    }
+
+    @Override
+    public ServiceSpec validate() {
+        return this;
     }
 }

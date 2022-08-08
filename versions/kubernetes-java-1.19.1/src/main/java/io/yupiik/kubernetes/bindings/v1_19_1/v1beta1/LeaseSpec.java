@@ -1,8 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_19_1.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_19_1.Validable;
+import io.yupiik.kubernetes.bindings.v1_19_1.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class LeaseSpec {
+public class LeaseSpec implements Validable<LeaseSpec> {
     private String acquireTime;
     private String holderIdentity;
     private Integer leaseDurationSeconds;
@@ -82,5 +86,35 @@ public class LeaseSpec {
             Objects.equals(leaseDurationSeconds, __otherCasted.leaseDurationSeconds) &&
             Objects.equals(leaseTransitions, __otherCasted.leaseTransitions) &&
             Objects.equals(renewTime, __otherCasted.renewTime);
+    }
+
+    public LeaseSpec acquireTime(final String acquireTime) {
+        this.acquireTime = acquireTime;
+        return this;
+    }
+
+    public LeaseSpec holderIdentity(final String holderIdentity) {
+        this.holderIdentity = holderIdentity;
+        return this;
+    }
+
+    public LeaseSpec leaseDurationSeconds(final Integer leaseDurationSeconds) {
+        this.leaseDurationSeconds = leaseDurationSeconds;
+        return this;
+    }
+
+    public LeaseSpec leaseTransitions(final Integer leaseTransitions) {
+        this.leaseTransitions = leaseTransitions;
+        return this;
+    }
+
+    public LeaseSpec renewTime(final String renewTime) {
+        this.renewTime = renewTime;
+        return this;
+    }
+
+    @Override
+    public LeaseSpec validate() {
+        return this;
     }
 }

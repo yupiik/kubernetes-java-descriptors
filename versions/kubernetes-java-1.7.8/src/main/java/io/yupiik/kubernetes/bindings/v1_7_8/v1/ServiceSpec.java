@@ -1,11 +1,13 @@
 package io.yupiik.kubernetes.bindings.v1_7_8.v1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_7_8.Validable;
+import io.yupiik.kubernetes.bindings.v1_7_8.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ServiceSpec {
+public class ServiceSpec implements Validable<ServiceSpec> {
     private String clusterIP;
     private List<String> externalIPs;
     private String externalName;
@@ -13,7 +15,7 @@ public class ServiceSpec {
     private Integer healthCheckNodePort;
     private String loadBalancerIP;
     private List<String> loadBalancerSourceRanges;
-    private List<JsonValue> ports;
+    private List<ServicePort> ports;
     private Map<String, String> selector;
     private String sessionAffinity;
     private String type;
@@ -29,7 +31,7 @@ public class ServiceSpec {
                        final Integer healthCheckNodePort,
                        final String loadBalancerIP,
                        final List<String> loadBalancerSourceRanges,
-                       final List<JsonValue> ports,
+                       final List<ServicePort> ports,
                        final Map<String, String> selector,
                        final String sessionAffinity,
                        final String type) {
@@ -92,11 +94,11 @@ public class ServiceSpec {
         this.loadBalancerSourceRanges = loadBalancerSourceRanges;
     }
 
-    public List<JsonValue> getPorts() {
+    public List<ServicePort> getPorts() {
         return ports;
     }
 
-    public void setPorts(final List<JsonValue> ports) {
+    public void setPorts(final List<ServicePort> ports) {
         this.ports = ports;
     }
 
@@ -157,5 +159,65 @@ public class ServiceSpec {
             Objects.equals(selector, __otherCasted.selector) &&
             Objects.equals(sessionAffinity, __otherCasted.sessionAffinity) &&
             Objects.equals(type, __otherCasted.type);
+    }
+
+    public ServiceSpec clusterIP(final String clusterIP) {
+        this.clusterIP = clusterIP;
+        return this;
+    }
+
+    public ServiceSpec externalIPs(final List<String> externalIPs) {
+        this.externalIPs = externalIPs;
+        return this;
+    }
+
+    public ServiceSpec externalName(final String externalName) {
+        this.externalName = externalName;
+        return this;
+    }
+
+    public ServiceSpec externalTrafficPolicy(final String externalTrafficPolicy) {
+        this.externalTrafficPolicy = externalTrafficPolicy;
+        return this;
+    }
+
+    public ServiceSpec healthCheckNodePort(final Integer healthCheckNodePort) {
+        this.healthCheckNodePort = healthCheckNodePort;
+        return this;
+    }
+
+    public ServiceSpec loadBalancerIP(final String loadBalancerIP) {
+        this.loadBalancerIP = loadBalancerIP;
+        return this;
+    }
+
+    public ServiceSpec loadBalancerSourceRanges(final List<String> loadBalancerSourceRanges) {
+        this.loadBalancerSourceRanges = loadBalancerSourceRanges;
+        return this;
+    }
+
+    public ServiceSpec ports(final List<ServicePort> ports) {
+        this.ports = ports;
+        return this;
+    }
+
+    public ServiceSpec selector(final Map<String, String> selector) {
+        this.selector = selector;
+        return this;
+    }
+
+    public ServiceSpec sessionAffinity(final String sessionAffinity) {
+        this.sessionAffinity = sessionAffinity;
+        return this;
+    }
+
+    public ServiceSpec type(final String type) {
+        this.type = type;
+        return this;
+    }
+
+    @Override
+    public ServiceSpec validate() {
+        return this;
     }
 }

@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_7_2.v1;
 
+import io.yupiik.kubernetes.bindings.v1_7_2.Validable;
+import io.yupiik.kubernetes.bindings.v1_7_2.ValidationException;
+import jakarta.json.JsonObject;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-public class PersistentVolumeClaimStatus {
+public class PersistentVolumeClaimStatus implements Validable<PersistentVolumeClaimStatus> {
     private List<String> accessModes;
-    private Map<String, String> capacity;
+    private JsonObject capacity;
     private String phase;
 
     public PersistentVolumeClaimStatus() {
@@ -14,7 +17,7 @@ public class PersistentVolumeClaimStatus {
     }
 
     public PersistentVolumeClaimStatus(final List<String> accessModes,
-                                       final Map<String, String> capacity,
+                                       final JsonObject capacity,
                                        final String phase) {
         // no-op
     }
@@ -27,11 +30,11 @@ public class PersistentVolumeClaimStatus {
         this.accessModes = accessModes;
     }
 
-    public Map<String, String> getCapacity() {
+    public JsonObject getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(final Map<String, String> capacity) {
+    public void setCapacity(final JsonObject capacity) {
         this.capacity = capacity;
     }
 
@@ -60,5 +63,25 @@ public class PersistentVolumeClaimStatus {
         return Objects.equals(accessModes, __otherCasted.accessModes) &&
             Objects.equals(capacity, __otherCasted.capacity) &&
             Objects.equals(phase, __otherCasted.phase);
+    }
+
+    public PersistentVolumeClaimStatus accessModes(final List<String> accessModes) {
+        this.accessModes = accessModes;
+        return this;
+    }
+
+    public PersistentVolumeClaimStatus capacity(final JsonObject capacity) {
+        this.capacity = capacity;
+        return this;
+    }
+
+    public PersistentVolumeClaimStatus phase(final String phase) {
+        this.phase = phase;
+        return this;
+    }
+
+    @Override
+    public PersistentVolumeClaimStatus validate() {
+        return this;
     }
 }

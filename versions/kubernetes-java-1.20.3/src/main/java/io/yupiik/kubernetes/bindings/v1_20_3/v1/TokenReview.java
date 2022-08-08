@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_20_3.v1;
 
+import io.yupiik.kubernetes.bindings.v1_20_3.Validable;
+import io.yupiik.kubernetes.bindings.v1_20_3.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class TokenReview {
+public class TokenReview implements Validable<TokenReview> {
     private String apiVersion;
     private String kind;
-    private TokenReviewMetadata metadata;
+    private ObjectMeta metadata;
     private TokenReviewSpec spec;
     private TokenReviewStatus status;
 
@@ -15,7 +19,7 @@ public class TokenReview {
 
     public TokenReview(final String apiVersion,
                        final String kind,
-                       final TokenReviewMetadata metadata,
+                       final ObjectMeta metadata,
                        final TokenReviewSpec spec,
                        final TokenReviewStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class TokenReview {
         this.kind = kind;
     }
 
-    public TokenReviewMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final TokenReviewMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,47 @@ public class TokenReview {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public TokenReview apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public TokenReview kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public TokenReview metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public TokenReview spec(final TokenReviewSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public TokenReview status(final TokenReviewStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public TokenReview validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (spec == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "spec", "spec",
+                "Missing 'spec' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

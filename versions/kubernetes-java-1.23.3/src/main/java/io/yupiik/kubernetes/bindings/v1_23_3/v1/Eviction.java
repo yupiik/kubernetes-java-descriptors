@@ -1,21 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_23_3.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_3.Validable;
+import io.yupiik.kubernetes.bindings.v1_23_3.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Eviction {
+public class Eviction implements Validable<Eviction> {
     private String apiVersion;
-    private EvictionDeleteOptions deleteOptions;
+    private DeleteOptions deleteOptions;
     private String kind;
-    private EvictionMetadata metadata;
+    private ObjectMeta metadata;
 
     public Eviction() {
         // no-op
     }
 
     public Eviction(final String apiVersion,
-                    final EvictionDeleteOptions deleteOptions,
+                    final DeleteOptions deleteOptions,
                     final String kind,
-                    final EvictionMetadata metadata) {
+                    final ObjectMeta metadata) {
         // no-op
     }
 
@@ -27,11 +31,11 @@ public class Eviction {
         this.apiVersion = apiVersion;
     }
 
-    public EvictionDeleteOptions getDeleteOptions() {
+    public DeleteOptions getDeleteOptions() {
         return deleteOptions;
     }
 
-    public void setDeleteOptions(final EvictionDeleteOptions deleteOptions) {
+    public void setDeleteOptions(final DeleteOptions deleteOptions) {
         this.deleteOptions = deleteOptions;
     }
 
@@ -43,11 +47,11 @@ public class Eviction {
         this.kind = kind;
     }
 
-    public EvictionMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final EvictionMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -70,5 +74,30 @@ public class Eviction {
             Objects.equals(deleteOptions, __otherCasted.deleteOptions) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public Eviction apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public Eviction deleteOptions(final DeleteOptions deleteOptions) {
+        this.deleteOptions = deleteOptions;
+        return this;
+    }
+
+    public Eviction kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public Eviction metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public Eviction validate() {
+        return this;
     }
 }

@@ -17,6 +17,8 @@
 
     <bundlebee.kubernetes.schemas.url>https://github.com/yupiik/bundlebee/archive/refs/heads/gh-pages.zip</bundlebee.kubernetes.schemas.url>
     <bundlebee.kubernetes.schemas.base>generated/kubernetes/jsonschema</bundlebee.kubernetes.schemas.base>
+    <bundlebee.schema.extension>.jsonschema.raw.json</bundlebee.schema.extension>
+    <generator.threads>64</generator.threads>
   </properties>
 
   <profiles>

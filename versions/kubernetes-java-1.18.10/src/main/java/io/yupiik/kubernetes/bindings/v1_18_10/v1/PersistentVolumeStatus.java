@@ -1,8 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_18_10.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_10.Validable;
+import io.yupiik.kubernetes.bindings.v1_18_10.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class PersistentVolumeStatus {
+public class PersistentVolumeStatus implements Validable<PersistentVolumeStatus> {
     private String message;
     private String phase;
     private String reason;
@@ -58,5 +62,25 @@ public class PersistentVolumeStatus {
         return Objects.equals(message, __otherCasted.message) &&
             Objects.equals(phase, __otherCasted.phase) &&
             Objects.equals(reason, __otherCasted.reason);
+    }
+
+    public PersistentVolumeStatus message(final String message) {
+        this.message = message;
+        return this;
+    }
+
+    public PersistentVolumeStatus phase(final String phase) {
+        this.phase = phase;
+        return this;
+    }
+
+    public PersistentVolumeStatus reason(final String reason) {
+        this.reason = reason;
+        return this;
+    }
+
+    @Override
+    public PersistentVolumeStatus validate() {
+        return this;
     }
 }

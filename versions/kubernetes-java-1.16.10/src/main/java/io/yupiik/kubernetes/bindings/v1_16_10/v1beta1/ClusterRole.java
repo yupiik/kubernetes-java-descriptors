@@ -1,32 +1,35 @@
 package io.yupiik.kubernetes.bindings.v1_16_10.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_16_10.Validable;
+import io.yupiik.kubernetes.bindings.v1_16_10.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ClusterRole {
-    private ClusterRoleAggregationRule aggregationRule;
+public class ClusterRole implements Validable<ClusterRole> {
+    private AggregationRule aggregationRule;
     private String apiVersion;
     private String kind;
-    private ClusterRoleMetadata metadata;
-    private List<ClusterRoleRules> rules;
+    private ObjectMeta metadata;
+    private List<PolicyRule> rules;
 
     public ClusterRole() {
         // no-op
     }
 
-    public ClusterRole(final ClusterRoleAggregationRule aggregationRule,
+    public ClusterRole(final AggregationRule aggregationRule,
                        final String apiVersion,
                        final String kind,
-                       final ClusterRoleMetadata metadata,
-                       final List<ClusterRoleRules> rules) {
+                       final ObjectMeta metadata,
+                       final List<PolicyRule> rules) {
         // no-op
     }
 
-    public ClusterRoleAggregationRule getAggregationRule() {
+    public AggregationRule getAggregationRule() {
         return aggregationRule;
     }
 
-    public void setAggregationRule(final ClusterRoleAggregationRule aggregationRule) {
+    public void setAggregationRule(final AggregationRule aggregationRule) {
         this.aggregationRule = aggregationRule;
     }
 
@@ -46,19 +49,19 @@ public class ClusterRole {
         this.kind = kind;
     }
 
-    public ClusterRoleMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ClusterRoleMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
-    public List<ClusterRoleRules> getRules() {
+    public List<PolicyRule> getRules() {
         return rules;
     }
 
-    public void setRules(final List<ClusterRoleRules> rules) {
+    public void setRules(final List<PolicyRule> rules) {
         this.rules = rules;
     }
 
@@ -83,5 +86,35 @@ public class ClusterRole {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(rules, __otherCasted.rules);
+    }
+
+    public ClusterRole aggregationRule(final AggregationRule aggregationRule) {
+        this.aggregationRule = aggregationRule;
+        return this;
+    }
+
+    public ClusterRole apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ClusterRole kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ClusterRole metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public ClusterRole rules(final List<PolicyRule> rules) {
+        this.rules = rules;
+        return this;
+    }
+
+    @Override
+    public ClusterRole validate() {
+        return this;
     }
 }

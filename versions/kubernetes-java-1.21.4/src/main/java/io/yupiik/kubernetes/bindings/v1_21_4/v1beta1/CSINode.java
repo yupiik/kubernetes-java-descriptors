@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_21_4.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_21_4.Validable;
+import io.yupiik.kubernetes.bindings.v1_21_4.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class CSINode {
+public class CSINode implements Validable<CSINode> {
     private String apiVersion;
     private String kind;
-    private CSINodeMetadata metadata;
+    private ObjectMeta metadata;
     private CSINodeSpec spec;
 
     public CSINode() {
@@ -14,7 +18,7 @@ public class CSINode {
 
     public CSINode(final String apiVersion,
                    final String kind,
-                   final CSINodeMetadata metadata,
+                   final ObjectMeta metadata,
                    final CSINodeSpec spec) {
         // no-op
     }
@@ -35,11 +39,11 @@ public class CSINode {
         this.kind = kind;
     }
 
-    public CSINodeMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final CSINodeMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -70,5 +74,42 @@ public class CSINode {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec);
+    }
+
+    public CSINode apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public CSINode kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public CSINode metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public CSINode spec(final CSINodeSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    @Override
+    public CSINode validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (spec == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "spec", "spec",
+                "Missing 'spec' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

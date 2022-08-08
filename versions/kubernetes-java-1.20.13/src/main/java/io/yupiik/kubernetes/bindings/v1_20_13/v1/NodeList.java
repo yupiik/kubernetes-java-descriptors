@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_20_13.v1;
 
+import io.yupiik.kubernetes.bindings.v1_20_13.Validable;
+import io.yupiik.kubernetes.bindings.v1_20_13.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class NodeList {
+public class NodeList implements Validable<NodeList> {
     private String apiVersion;
-    private List<NodeListItems> items;
+    private List<Node> items;
     private String kind;
-    private NodeListMetadata metadata;
+    private ListMeta metadata;
 
     public NodeList() {
         // no-op
     }
 
     public NodeList(final String apiVersion,
-                    final List<NodeListItems> items,
+                    final List<Node> items,
                     final String kind,
-                    final NodeListMetadata metadata) {
+                    final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class NodeList {
         this.apiVersion = apiVersion;
     }
 
-    public List<NodeListItems> getItems() {
+    public List<Node> getItems() {
         return items;
     }
 
-    public void setItems(final List<NodeListItems> items) {
+    public void setItems(final List<Node> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class NodeList {
         this.kind = kind;
     }
 
-    public NodeListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final NodeListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class NodeList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public NodeList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public NodeList items(final List<Node> items) {
+        this.items = items;
+        return this;
+    }
+
+    public NodeList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public NodeList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public NodeList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

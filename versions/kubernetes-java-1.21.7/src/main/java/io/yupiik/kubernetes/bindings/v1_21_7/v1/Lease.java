@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_21_7.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_7.Validable;
+import io.yupiik.kubernetes.bindings.v1_21_7.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Lease {
+public class Lease implements Validable<Lease> {
     private String apiVersion;
     private String kind;
-    private LeaseMetadata metadata;
+    private ObjectMeta metadata;
     private LeaseSpec spec;
 
     public Lease() {
@@ -14,7 +18,7 @@ public class Lease {
 
     public Lease(final String apiVersion,
                  final String kind,
-                 final LeaseMetadata metadata,
+                 final ObjectMeta metadata,
                  final LeaseSpec spec) {
         // no-op
     }
@@ -35,11 +39,11 @@ public class Lease {
         this.kind = kind;
     }
 
-    public LeaseMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final LeaseMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -70,5 +74,30 @@ public class Lease {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec);
+    }
+
+    public Lease apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public Lease kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public Lease metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public Lease spec(final LeaseSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    @Override
+    public Lease validate() {
+        return this;
     }
 }

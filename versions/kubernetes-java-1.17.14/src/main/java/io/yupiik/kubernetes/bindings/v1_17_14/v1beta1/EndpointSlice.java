@@ -1,15 +1,18 @@
 package io.yupiik.kubernetes.bindings.v1_17_14.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_17_14.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_14.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class EndpointSlice {
+public class EndpointSlice implements Validable<EndpointSlice> {
     private String addressType;
     private String apiVersion;
-    private List<EndpointSliceEndpoints> endpoints;
+    private List<Endpoint> endpoints;
     private String kind;
-    private EndpointSliceMetadata metadata;
-    private List<EndpointSlicePorts> ports;
+    private ObjectMeta metadata;
+    private List<EndpointPort> ports;
 
     public EndpointSlice() {
         // no-op
@@ -17,10 +20,10 @@ public class EndpointSlice {
 
     public EndpointSlice(final String addressType,
                          final String apiVersion,
-                         final List<EndpointSliceEndpoints> endpoints,
+                         final List<Endpoint> endpoints,
                          final String kind,
-                         final EndpointSliceMetadata metadata,
-                         final List<EndpointSlicePorts> ports) {
+                         final ObjectMeta metadata,
+                         final List<EndpointPort> ports) {
         // no-op
     }
 
@@ -40,11 +43,11 @@ public class EndpointSlice {
         this.apiVersion = apiVersion;
     }
 
-    public List<EndpointSliceEndpoints> getEndpoints() {
+    public List<Endpoint> getEndpoints() {
         return endpoints;
     }
 
-    public void setEndpoints(final List<EndpointSliceEndpoints> endpoints) {
+    public void setEndpoints(final List<Endpoint> endpoints) {
         this.endpoints = endpoints;
     }
 
@@ -56,19 +59,19 @@ public class EndpointSlice {
         this.kind = kind;
     }
 
-    public EndpointSliceMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final EndpointSliceMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
-    public List<EndpointSlicePorts> getPorts() {
+    public List<EndpointPort> getPorts() {
         return ports;
     }
 
-    public void setPorts(final List<EndpointSlicePorts> ports) {
+    public void setPorts(final List<EndpointPort> ports) {
         this.ports = ports;
     }
 
@@ -95,5 +98,60 @@ public class EndpointSlice {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(ports, __otherCasted.ports);
+    }
+
+    public EndpointSlice addressType(final String addressType) {
+        this.addressType = addressType;
+        return this;
+    }
+
+    public EndpointSlice apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public EndpointSlice endpoints(final List<Endpoint> endpoints) {
+        this.endpoints = endpoints;
+        return this;
+    }
+
+    public EndpointSlice kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public EndpointSlice metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public EndpointSlice ports(final List<EndpointPort> ports) {
+        this.ports = ports;
+        return this;
+    }
+
+    @Override
+    public EndpointSlice validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (addressType == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "addressType", "addressType",
+                "Missing 'addressType' attribute.", true));
+        }
+        if (endpoints == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "endpoints", "endpoints",
+                "Missing 'endpoints' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

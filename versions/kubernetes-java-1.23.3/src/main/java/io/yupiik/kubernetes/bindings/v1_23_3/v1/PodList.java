@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_23_3.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_3.Validable;
+import io.yupiik.kubernetes.bindings.v1_23_3.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PodList {
+public class PodList implements Validable<PodList> {
     private String apiVersion;
-    private List<PodListItems> items;
+    private List<Pod> items;
     private String kind;
-    private PodListMetadata metadata;
+    private ListMeta metadata;
 
     public PodList() {
         // no-op
     }
 
     public PodList(final String apiVersion,
-                   final List<PodListItems> items,
+                   final List<Pod> items,
                    final String kind,
-                   final PodListMetadata metadata) {
+                   final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class PodList {
         this.apiVersion = apiVersion;
     }
 
-    public List<PodListItems> getItems() {
+    public List<Pod> getItems() {
         return items;
     }
 
-    public void setItems(final List<PodListItems> items) {
+    public void setItems(final List<Pod> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class PodList {
         this.kind = kind;
     }
 
-    public PodListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final PodListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class PodList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public PodList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public PodList items(final List<Pod> items) {
+        this.items = items;
+        return this;
+    }
+
+    public PodList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public PodList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public PodList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

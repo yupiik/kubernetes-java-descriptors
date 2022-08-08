@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_21_6.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_6.Validable;
+import io.yupiik.kubernetes.bindings.v1_21_6.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ResourceQuotaList {
+public class ResourceQuotaList implements Validable<ResourceQuotaList> {
     private String apiVersion;
-    private List<ResourceQuotaListItems> items;
+    private List<ResourceQuota> items;
     private String kind;
-    private ResourceQuotaListMetadata metadata;
+    private ListMeta metadata;
 
     public ResourceQuotaList() {
         // no-op
     }
 
     public ResourceQuotaList(final String apiVersion,
-                             final List<ResourceQuotaListItems> items,
+                             final List<ResourceQuota> items,
                              final String kind,
-                             final ResourceQuotaListMetadata metadata) {
+                             final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class ResourceQuotaList {
         this.apiVersion = apiVersion;
     }
 
-    public List<ResourceQuotaListItems> getItems() {
+    public List<ResourceQuota> getItems() {
         return items;
     }
 
-    public void setItems(final List<ResourceQuotaListItems> items) {
+    public void setItems(final List<ResourceQuota> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class ResourceQuotaList {
         this.kind = kind;
     }
 
-    public ResourceQuotaListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ResourceQuotaListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class ResourceQuotaList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public ResourceQuotaList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ResourceQuotaList items(final List<ResourceQuota> items) {
+        this.items = items;
+        return this;
+    }
+
+    public ResourceQuotaList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ResourceQuotaList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public ResourceQuotaList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

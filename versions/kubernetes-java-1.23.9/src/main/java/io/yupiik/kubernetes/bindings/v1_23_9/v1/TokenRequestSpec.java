@@ -1,11 +1,14 @@
 package io.yupiik.kubernetes.bindings.v1_23_9.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_9.Validable;
+import io.yupiik.kubernetes.bindings.v1_23_9.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class TokenRequestSpec {
+public class TokenRequestSpec implements Validable<TokenRequestSpec> {
     private List<String> audiences;
-    private TokenRequestSpecBoundObjectRef boundObjectRef;
+    private BoundObjectReference boundObjectRef;
     private Integer expirationSeconds;
 
     public TokenRequestSpec() {
@@ -13,7 +16,7 @@ public class TokenRequestSpec {
     }
 
     public TokenRequestSpec(final List<String> audiences,
-                            final TokenRequestSpecBoundObjectRef boundObjectRef,
+                            final BoundObjectReference boundObjectRef,
                             final Integer expirationSeconds) {
         // no-op
     }
@@ -26,11 +29,11 @@ public class TokenRequestSpec {
         this.audiences = audiences;
     }
 
-    public TokenRequestSpecBoundObjectRef getBoundObjectRef() {
+    public BoundObjectReference getBoundObjectRef() {
         return boundObjectRef;
     }
 
-    public void setBoundObjectRef(final TokenRequestSpecBoundObjectRef boundObjectRef) {
+    public void setBoundObjectRef(final BoundObjectReference boundObjectRef) {
         this.boundObjectRef = boundObjectRef;
     }
 
@@ -59,5 +62,37 @@ public class TokenRequestSpec {
         return Objects.equals(audiences, __otherCasted.audiences) &&
             Objects.equals(boundObjectRef, __otherCasted.boundObjectRef) &&
             Objects.equals(expirationSeconds, __otherCasted.expirationSeconds);
+    }
+
+    public TokenRequestSpec audiences(final List<String> audiences) {
+        this.audiences = audiences;
+        return this;
+    }
+
+    public TokenRequestSpec boundObjectRef(final BoundObjectReference boundObjectRef) {
+        this.boundObjectRef = boundObjectRef;
+        return this;
+    }
+
+    public TokenRequestSpec expirationSeconds(final Integer expirationSeconds) {
+        this.expirationSeconds = expirationSeconds;
+        return this;
+    }
+
+    @Override
+    public TokenRequestSpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (audiences == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "audiences", "audiences",
+                "Missing 'audiences' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

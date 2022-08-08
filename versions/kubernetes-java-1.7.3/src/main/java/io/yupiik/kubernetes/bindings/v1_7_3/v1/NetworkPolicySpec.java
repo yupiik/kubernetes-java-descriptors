@@ -1,35 +1,37 @@
 package io.yupiik.kubernetes.bindings.v1_7_3.v1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_7_3.Validable;
+import io.yupiik.kubernetes.bindings.v1_7_3.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class NetworkPolicySpec {
-    private List<JsonValue> ingress;
-    private NetworkPolicySpecPodSelector podSelector;
+public class NetworkPolicySpec implements Validable<NetworkPolicySpec> {
+    private List<NetworkPolicyIngressRule> ingress;
+    private LabelSelector podSelector;
 
     public NetworkPolicySpec() {
         // no-op
     }
 
-    public NetworkPolicySpec(final List<JsonValue> ingress,
-                             final NetworkPolicySpecPodSelector podSelector) {
+    public NetworkPolicySpec(final List<NetworkPolicyIngressRule> ingress,
+                             final LabelSelector podSelector) {
         // no-op
     }
 
-    public List<JsonValue> getIngress() {
+    public List<NetworkPolicyIngressRule> getIngress() {
         return ingress;
     }
 
-    public void setIngress(final List<JsonValue> ingress) {
+    public void setIngress(final List<NetworkPolicyIngressRule> ingress) {
         this.ingress = ingress;
     }
 
-    public NetworkPolicySpecPodSelector getPodSelector() {
+    public LabelSelector getPodSelector() {
         return podSelector;
     }
 
-    public void setPodSelector(final NetworkPolicySpecPodSelector podSelector) {
+    public void setPodSelector(final LabelSelector podSelector) {
         this.podSelector = podSelector;
     }
 
@@ -48,5 +50,32 @@ public class NetworkPolicySpec {
         final NetworkPolicySpec __otherCasted = (NetworkPolicySpec) __other;
         return Objects.equals(ingress, __otherCasted.ingress) &&
             Objects.equals(podSelector, __otherCasted.podSelector);
+    }
+
+    public NetworkPolicySpec ingress(final List<NetworkPolicyIngressRule> ingress) {
+        this.ingress = ingress;
+        return this;
+    }
+
+    public NetworkPolicySpec podSelector(final LabelSelector podSelector) {
+        this.podSelector = podSelector;
+        return this;
+    }
+
+    @Override
+    public NetworkPolicySpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (podSelector == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "podSelector", "podSelector",
+                "Missing 'podSelector' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

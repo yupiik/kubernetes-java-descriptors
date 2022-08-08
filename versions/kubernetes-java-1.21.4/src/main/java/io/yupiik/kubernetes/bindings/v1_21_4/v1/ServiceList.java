@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_21_4.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_4.Validable;
+import io.yupiik.kubernetes.bindings.v1_21_4.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ServiceList {
+public class ServiceList implements Validable<ServiceList> {
     private String apiVersion;
-    private List<ServiceListItems> items;
+    private List<Service> items;
     private String kind;
-    private ServiceListMetadata metadata;
+    private ListMeta metadata;
 
     public ServiceList() {
         // no-op
     }
 
     public ServiceList(final String apiVersion,
-                       final List<ServiceListItems> items,
+                       final List<Service> items,
                        final String kind,
-                       final ServiceListMetadata metadata) {
+                       final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class ServiceList {
         this.apiVersion = apiVersion;
     }
 
-    public List<ServiceListItems> getItems() {
+    public List<Service> getItems() {
         return items;
     }
 
-    public void setItems(final List<ServiceListItems> items) {
+    public void setItems(final List<Service> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class ServiceList {
         this.kind = kind;
     }
 
-    public ServiceListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ServiceListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class ServiceList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public ServiceList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ServiceList items(final List<Service> items) {
+        this.items = items;
+        return this;
+    }
+
+    public ServiceList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ServiceList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public ServiceList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

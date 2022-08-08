@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_16_12.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_16_12.Validable;
+import io.yupiik.kubernetes.bindings.v1_16_12.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Ingress {
+public class Ingress implements Validable<Ingress> {
     private String apiVersion;
     private String kind;
-    private IngressMetadata metadata;
+    private ObjectMeta metadata;
     private IngressSpec spec;
     private IngressStatus status;
 
@@ -15,7 +19,7 @@ public class Ingress {
 
     public Ingress(final String apiVersion,
                    final String kind,
-                   final IngressMetadata metadata,
+                   final ObjectMeta metadata,
                    final IngressSpec spec,
                    final IngressStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class Ingress {
         this.kind = kind;
     }
 
-    public IngressMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final IngressMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,35 @@ public class Ingress {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public Ingress apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public Ingress kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public Ingress metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public Ingress spec(final IngressSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public Ingress status(final IngressStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public Ingress validate() {
+        return this;
     }
 }

@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_19_16.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_16.Validable;
+import io.yupiik.kubernetes.bindings.v1_19_16.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class APIServiceSpec {
+public class APIServiceSpec implements Validable<APIServiceSpec> {
     private String caBundle;
     private String group;
     private int groupPriorityMinimum;
     private Boolean insecureSkipTLSVerify;
-    private APIServiceSpecService service;
+    private ServiceReference service;
     private String version;
     private int versionPriority;
 
@@ -19,7 +23,7 @@ public class APIServiceSpec {
                           final String group,
                           final int groupPriorityMinimum,
                           final Boolean insecureSkipTLSVerify,
-                          final APIServiceSpecService service,
+                          final ServiceReference service,
                           final String version,
                           final int versionPriority) {
         // no-op
@@ -57,11 +61,11 @@ public class APIServiceSpec {
         this.insecureSkipTLSVerify = insecureSkipTLSVerify;
     }
 
-    public APIServiceSpecService getService() {
+    public ServiceReference getService() {
         return service;
     }
 
-    public void setService(final APIServiceSpecService service) {
+    public void setService(final ServiceReference service) {
         this.service = service;
     }
 
@@ -106,5 +110,45 @@ public class APIServiceSpec {
             Objects.equals(service, __otherCasted.service) &&
             Objects.equals(version, __otherCasted.version) &&
             Objects.equals(versionPriority, __otherCasted.versionPriority);
+    }
+
+    public APIServiceSpec caBundle(final String caBundle) {
+        this.caBundle = caBundle;
+        return this;
+    }
+
+    public APIServiceSpec group(final String group) {
+        this.group = group;
+        return this;
+    }
+
+    public APIServiceSpec groupPriorityMinimum(final int groupPriorityMinimum) {
+        this.groupPriorityMinimum = groupPriorityMinimum;
+        return this;
+    }
+
+    public APIServiceSpec insecureSkipTLSVerify(final Boolean insecureSkipTLSVerify) {
+        this.insecureSkipTLSVerify = insecureSkipTLSVerify;
+        return this;
+    }
+
+    public APIServiceSpec service(final ServiceReference service) {
+        this.service = service;
+        return this;
+    }
+
+    public APIServiceSpec version(final String version) {
+        this.version = version;
+        return this;
+    }
+
+    public APIServiceSpec versionPriority(final int versionPriority) {
+        this.versionPriority = versionPriority;
+        return this;
+    }
+
+    @Override
+    public APIServiceSpec validate() {
+        return this;
     }
 }

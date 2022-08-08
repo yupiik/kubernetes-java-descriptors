@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_17_5.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_17_5.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_5.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class ReplicaSetSpec {
+public class ReplicaSetSpec implements Validable<ReplicaSetSpec> {
     private Integer minReadySeconds;
     private Integer replicas;
-    private ReplicaSetSpecSelector selector;
-    private ReplicaSetSpecTemplate template;
+    private LabelSelector selector;
+    private PodTemplateSpec template;
 
     public ReplicaSetSpec() {
         // no-op
@@ -14,8 +18,8 @@ public class ReplicaSetSpec {
 
     public ReplicaSetSpec(final Integer minReadySeconds,
                           final Integer replicas,
-                          final ReplicaSetSpecSelector selector,
-                          final ReplicaSetSpecTemplate template) {
+                          final LabelSelector selector,
+                          final PodTemplateSpec template) {
         // no-op
     }
 
@@ -35,19 +39,19 @@ public class ReplicaSetSpec {
         this.replicas = replicas;
     }
 
-    public ReplicaSetSpecSelector getSelector() {
+    public LabelSelector getSelector() {
         return selector;
     }
 
-    public void setSelector(final ReplicaSetSpecSelector selector) {
+    public void setSelector(final LabelSelector selector) {
         this.selector = selector;
     }
 
-    public ReplicaSetSpecTemplate getTemplate() {
+    public PodTemplateSpec getTemplate() {
         return template;
     }
 
-    public void setTemplate(final ReplicaSetSpecTemplate template) {
+    public void setTemplate(final PodTemplateSpec template) {
         this.template = template;
     }
 
@@ -70,5 +74,42 @@ public class ReplicaSetSpec {
             Objects.equals(replicas, __otherCasted.replicas) &&
             Objects.equals(selector, __otherCasted.selector) &&
             Objects.equals(template, __otherCasted.template);
+    }
+
+    public ReplicaSetSpec minReadySeconds(final Integer minReadySeconds) {
+        this.minReadySeconds = minReadySeconds;
+        return this;
+    }
+
+    public ReplicaSetSpec replicas(final Integer replicas) {
+        this.replicas = replicas;
+        return this;
+    }
+
+    public ReplicaSetSpec selector(final LabelSelector selector) {
+        this.selector = selector;
+        return this;
+    }
+
+    public ReplicaSetSpec template(final PodTemplateSpec template) {
+        this.template = template;
+        return this;
+    }
+
+    @Override
+    public ReplicaSetSpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (selector == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "selector", "selector",
+                "Missing 'selector' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

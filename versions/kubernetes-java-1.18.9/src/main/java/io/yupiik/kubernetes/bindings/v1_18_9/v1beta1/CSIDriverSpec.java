@@ -1,9 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_18_9.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_18_9.Validable;
+import io.yupiik.kubernetes.bindings.v1_18_9.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CSIDriverSpec {
+public class CSIDriverSpec implements Validable<CSIDriverSpec> {
     private Boolean attachRequired;
     private Boolean podInfoOnMount;
     private List<String> volumeLifecycleModes;
@@ -59,5 +62,25 @@ public class CSIDriverSpec {
         return Objects.equals(attachRequired, __otherCasted.attachRequired) &&
             Objects.equals(podInfoOnMount, __otherCasted.podInfoOnMount) &&
             Objects.equals(volumeLifecycleModes, __otherCasted.volumeLifecycleModes);
+    }
+
+    public CSIDriverSpec attachRequired(final Boolean attachRequired) {
+        this.attachRequired = attachRequired;
+        return this;
+    }
+
+    public CSIDriverSpec podInfoOnMount(final Boolean podInfoOnMount) {
+        this.podInfoOnMount = podInfoOnMount;
+        return this;
+    }
+
+    public CSIDriverSpec volumeLifecycleModes(final List<String> volumeLifecycleModes) {
+        this.volumeLifecycleModes = volumeLifecycleModes;
+        return this;
+    }
+
+    @Override
+    public CSIDriverSpec validate() {
+        return this;
     }
 }

@@ -1,23 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_12_0.v1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_12_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_12_0.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ComponentStatus {
+public class ComponentStatus implements Validable<ComponentStatus> {
     private String apiVersion;
-    private List<JsonValue> conditions;
+    private List<ComponentCondition> conditions;
     private String kind;
-    private ComponentStatusMetadata metadata;
+    private ObjectMeta metadata;
 
     public ComponentStatus() {
         // no-op
     }
 
     public ComponentStatus(final String apiVersion,
-                           final List<JsonValue> conditions,
+                           final List<ComponentCondition> conditions,
                            final String kind,
-                           final ComponentStatusMetadata metadata) {
+                           final ObjectMeta metadata) {
         // no-op
     }
 
@@ -29,11 +31,11 @@ public class ComponentStatus {
         this.apiVersion = apiVersion;
     }
 
-    public List<JsonValue> getConditions() {
+    public List<ComponentCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<JsonValue> conditions) {
+    public void setConditions(final List<ComponentCondition> conditions) {
         this.conditions = conditions;
     }
 
@@ -45,11 +47,11 @@ public class ComponentStatus {
         this.kind = kind;
     }
 
-    public ComponentStatusMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ComponentStatusMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -72,5 +74,30 @@ public class ComponentStatus {
             Objects.equals(conditions, __otherCasted.conditions) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public ComponentStatus apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ComponentStatus conditions(final List<ComponentCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public ComponentStatus kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ComponentStatus metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public ComponentStatus validate() {
+        return this;
     }
 }

@@ -1,8 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_24_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_24_1.Validable;
+import io.yupiik.kubernetes.bindings.v1_24_1.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class SubjectAccessReviewStatus {
+public class SubjectAccessReviewStatus implements Validable<SubjectAccessReviewStatus> {
     private boolean allowed;
     private Boolean denied;
     private String evaluationError;
@@ -70,5 +74,30 @@ public class SubjectAccessReviewStatus {
             Objects.equals(denied, __otherCasted.denied) &&
             Objects.equals(evaluationError, __otherCasted.evaluationError) &&
             Objects.equals(reason, __otherCasted.reason);
+    }
+
+    public SubjectAccessReviewStatus allowed(final boolean allowed) {
+        this.allowed = allowed;
+        return this;
+    }
+
+    public SubjectAccessReviewStatus denied(final Boolean denied) {
+        this.denied = denied;
+        return this;
+    }
+
+    public SubjectAccessReviewStatus evaluationError(final String evaluationError) {
+        this.evaluationError = evaluationError;
+        return this;
+    }
+
+    public SubjectAccessReviewStatus reason(final String reason) {
+        this.reason = reason;
+        return this;
+    }
+
+    @Override
+    public SubjectAccessReviewStatus validate() {
+        return this;
     }
 }

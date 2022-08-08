@@ -1,14 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_12_2.v1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_12_2.Validable;
+import io.yupiik.kubernetes.bindings.v1_12_2.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class APIResourceList {
+public class APIResourceList implements Validable<APIResourceList> {
     private String apiVersion;
     private String groupVersion;
     private String kind;
-    private List<JsonValue> resources;
+    private List<APIResource> resources;
 
     public APIResourceList() {
         // no-op
@@ -17,7 +19,7 @@ public class APIResourceList {
     public APIResourceList(final String apiVersion,
                            final String groupVersion,
                            final String kind,
-                           final List<JsonValue> resources) {
+                           final List<APIResource> resources) {
         // no-op
     }
 
@@ -45,11 +47,11 @@ public class APIResourceList {
         this.kind = kind;
     }
 
-    public List<JsonValue> getResources() {
+    public List<APIResource> getResources() {
         return resources;
     }
 
-    public void setResources(final List<JsonValue> resources) {
+    public void setResources(final List<APIResource> resources) {
         this.resources = resources;
     }
 
@@ -72,5 +74,50 @@ public class APIResourceList {
             Objects.equals(groupVersion, __otherCasted.groupVersion) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(resources, __otherCasted.resources);
+    }
+
+    public APIResourceList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public APIResourceList groupVersion(final String groupVersion) {
+        this.groupVersion = groupVersion;
+        return this;
+    }
+
+    public APIResourceList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public APIResourceList resources(final List<APIResource> resources) {
+        this.resources = resources;
+        return this;
+    }
+
+    @Override
+    public APIResourceList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (groupVersion == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "groupVersion", "groupVersion",
+                "Missing 'groupVersion' attribute.", true));
+        }
+        if (resources == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "resources", "resources",
+                "Missing 'resources' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

@@ -1,9 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_19_16.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_16.Validable;
+import io.yupiik.kubernetes.bindings.v1_19_16.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CSIDriverSpec {
+public class CSIDriverSpec implements Validable<CSIDriverSpec> {
     private Boolean attachRequired;
     private String fsGroupPolicy;
     private Boolean podInfoOnMount;
@@ -83,5 +86,35 @@ public class CSIDriverSpec {
             Objects.equals(podInfoOnMount, __otherCasted.podInfoOnMount) &&
             Objects.equals(storageCapacity, __otherCasted.storageCapacity) &&
             Objects.equals(volumeLifecycleModes, __otherCasted.volumeLifecycleModes);
+    }
+
+    public CSIDriverSpec attachRequired(final Boolean attachRequired) {
+        this.attachRequired = attachRequired;
+        return this;
+    }
+
+    public CSIDriverSpec fsGroupPolicy(final String fsGroupPolicy) {
+        this.fsGroupPolicy = fsGroupPolicy;
+        return this;
+    }
+
+    public CSIDriverSpec podInfoOnMount(final Boolean podInfoOnMount) {
+        this.podInfoOnMount = podInfoOnMount;
+        return this;
+    }
+
+    public CSIDriverSpec storageCapacity(final Boolean storageCapacity) {
+        this.storageCapacity = storageCapacity;
+        return this;
+    }
+
+    public CSIDriverSpec volumeLifecycleModes(final List<String> volumeLifecycleModes) {
+        this.volumeLifecycleModes = volumeLifecycleModes;
+        return this;
+    }
+
+    @Override
+    public CSIDriverSpec validate() {
+        return this;
     }
 }

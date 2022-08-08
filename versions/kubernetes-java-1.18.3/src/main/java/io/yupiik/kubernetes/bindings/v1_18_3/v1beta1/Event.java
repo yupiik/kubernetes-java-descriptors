@@ -1,21 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_18_3.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_18_3.Validable;
+import io.yupiik.kubernetes.bindings.v1_18_3.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Event {
+public class Event implements Validable<Event> {
     private String action;
     private String apiVersion;
     private Integer deprecatedCount;
     private String deprecatedFirstTimestamp;
     private String deprecatedLastTimestamp;
-    private EventDeprecatedSource deprecatedSource;
+    private EventSource deprecatedSource;
     private String eventTime;
     private String kind;
-    private EventMetadata metadata;
+    private ObjectMeta metadata;
     private String note;
     private String reason;
-    private EventRegarding regarding;
-    private EventRelated related;
+    private ObjectReference regarding;
+    private ObjectReference related;
     private String reportingController;
     private String reportingInstance;
     private EventSeries series;
@@ -30,14 +34,14 @@ public class Event {
                  final Integer deprecatedCount,
                  final String deprecatedFirstTimestamp,
                  final String deprecatedLastTimestamp,
-                 final EventDeprecatedSource deprecatedSource,
+                 final EventSource deprecatedSource,
                  final String eventTime,
                  final String kind,
-                 final EventMetadata metadata,
+                 final ObjectMeta metadata,
                  final String note,
                  final String reason,
-                 final EventRegarding regarding,
-                 final EventRelated related,
+                 final ObjectReference regarding,
+                 final ObjectReference related,
                  final String reportingController,
                  final String reportingInstance,
                  final EventSeries series,
@@ -85,11 +89,11 @@ public class Event {
         this.deprecatedLastTimestamp = deprecatedLastTimestamp;
     }
 
-    public EventDeprecatedSource getDeprecatedSource() {
+    public EventSource getDeprecatedSource() {
         return deprecatedSource;
     }
 
-    public void setDeprecatedSource(final EventDeprecatedSource deprecatedSource) {
+    public void setDeprecatedSource(final EventSource deprecatedSource) {
         this.deprecatedSource = deprecatedSource;
     }
 
@@ -109,11 +113,11 @@ public class Event {
         this.kind = kind;
     }
 
-    public EventMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final EventMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -133,19 +137,19 @@ public class Event {
         this.reason = reason;
     }
 
-    public EventRegarding getRegarding() {
+    public ObjectReference getRegarding() {
         return regarding;
     }
 
-    public void setRegarding(final EventRegarding regarding) {
+    public void setRegarding(final ObjectReference regarding) {
         this.regarding = regarding;
     }
 
-    public EventRelated getRelated() {
+    public ObjectReference getRelated() {
         return related;
     }
 
-    public void setRelated(final EventRelated related) {
+    public void setRelated(final ObjectReference related) {
         this.related = related;
     }
 
@@ -226,5 +230,107 @@ public class Event {
             Objects.equals(reportingInstance, __otherCasted.reportingInstance) &&
             Objects.equals(series, __otherCasted.series) &&
             Objects.equals(type, __otherCasted.type);
+    }
+
+    public Event action(final String action) {
+        this.action = action;
+        return this;
+    }
+
+    public Event apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public Event deprecatedCount(final Integer deprecatedCount) {
+        this.deprecatedCount = deprecatedCount;
+        return this;
+    }
+
+    public Event deprecatedFirstTimestamp(final String deprecatedFirstTimestamp) {
+        this.deprecatedFirstTimestamp = deprecatedFirstTimestamp;
+        return this;
+    }
+
+    public Event deprecatedLastTimestamp(final String deprecatedLastTimestamp) {
+        this.deprecatedLastTimestamp = deprecatedLastTimestamp;
+        return this;
+    }
+
+    public Event deprecatedSource(final EventSource deprecatedSource) {
+        this.deprecatedSource = deprecatedSource;
+        return this;
+    }
+
+    public Event eventTime(final String eventTime) {
+        this.eventTime = eventTime;
+        return this;
+    }
+
+    public Event kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public Event metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public Event note(final String note) {
+        this.note = note;
+        return this;
+    }
+
+    public Event reason(final String reason) {
+        this.reason = reason;
+        return this;
+    }
+
+    public Event regarding(final ObjectReference regarding) {
+        this.regarding = regarding;
+        return this;
+    }
+
+    public Event related(final ObjectReference related) {
+        this.related = related;
+        return this;
+    }
+
+    public Event reportingController(final String reportingController) {
+        this.reportingController = reportingController;
+        return this;
+    }
+
+    public Event reportingInstance(final String reportingInstance) {
+        this.reportingInstance = reportingInstance;
+        return this;
+    }
+
+    public Event series(final EventSeries series) {
+        this.series = series;
+        return this;
+    }
+
+    public Event type(final String type) {
+        this.type = type;
+        return this;
+    }
+
+    @Override
+    public Event validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (eventTime == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "eventTime", "eventTime",
+                "Missing 'eventTime' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

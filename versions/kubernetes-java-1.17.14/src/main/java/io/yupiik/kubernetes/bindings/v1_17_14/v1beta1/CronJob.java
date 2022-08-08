@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_17_14.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_17_14.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_14.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class CronJob {
+public class CronJob implements Validable<CronJob> {
     private String apiVersion;
     private String kind;
-    private CronJobMetadata metadata;
+    private ObjectMeta metadata;
     private CronJobSpec spec;
     private CronJobStatus status;
 
@@ -15,7 +19,7 @@ public class CronJob {
 
     public CronJob(final String apiVersion,
                    final String kind,
-                   final CronJobMetadata metadata,
+                   final ObjectMeta metadata,
                    final CronJobSpec spec,
                    final CronJobStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class CronJob {
         this.kind = kind;
     }
 
-    public CronJobMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final CronJobMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,35 @@ public class CronJob {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public CronJob apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public CronJob kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public CronJob metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public CronJob spec(final CronJobSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public CronJob status(final CronJobStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public CronJob validate() {
+        return this;
     }
 }

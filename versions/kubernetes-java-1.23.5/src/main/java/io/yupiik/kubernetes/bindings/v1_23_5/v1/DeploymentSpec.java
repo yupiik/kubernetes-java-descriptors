@@ -1,16 +1,20 @@
 package io.yupiik.kubernetes.bindings.v1_23_5.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_5.Validable;
+import io.yupiik.kubernetes.bindings.v1_23_5.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class DeploymentSpec {
+public class DeploymentSpec implements Validable<DeploymentSpec> {
     private Integer minReadySeconds;
     private Boolean paused;
     private Integer progressDeadlineSeconds;
     private Integer replicas;
     private Integer revisionHistoryLimit;
-    private DeploymentSpecSelector selector;
-    private DeploymentSpecStrategy strategy;
-    private DeploymentSpecTemplate template;
+    private LabelSelector selector;
+    private DeploymentStrategy strategy;
+    private PodTemplateSpec template;
 
     public DeploymentSpec() {
         // no-op
@@ -21,9 +25,9 @@ public class DeploymentSpec {
                           final Integer progressDeadlineSeconds,
                           final Integer replicas,
                           final Integer revisionHistoryLimit,
-                          final DeploymentSpecSelector selector,
-                          final DeploymentSpecStrategy strategy,
-                          final DeploymentSpecTemplate template) {
+                          final LabelSelector selector,
+                          final DeploymentStrategy strategy,
+                          final PodTemplateSpec template) {
         // no-op
     }
 
@@ -67,27 +71,27 @@ public class DeploymentSpec {
         this.revisionHistoryLimit = revisionHistoryLimit;
     }
 
-    public DeploymentSpecSelector getSelector() {
+    public LabelSelector getSelector() {
         return selector;
     }
 
-    public void setSelector(final DeploymentSpecSelector selector) {
+    public void setSelector(final LabelSelector selector) {
         this.selector = selector;
     }
 
-    public DeploymentSpecStrategy getStrategy() {
+    public DeploymentStrategy getStrategy() {
         return strategy;
     }
 
-    public void setStrategy(final DeploymentSpecStrategy strategy) {
+    public void setStrategy(final DeploymentStrategy strategy) {
         this.strategy = strategy;
     }
 
-    public DeploymentSpecTemplate getTemplate() {
+    public PodTemplateSpec getTemplate() {
         return template;
     }
 
-    public void setTemplate(final DeploymentSpecTemplate template) {
+    public void setTemplate(final PodTemplateSpec template) {
         this.template = template;
     }
 
@@ -118,5 +122,70 @@ public class DeploymentSpec {
             Objects.equals(selector, __otherCasted.selector) &&
             Objects.equals(strategy, __otherCasted.strategy) &&
             Objects.equals(template, __otherCasted.template);
+    }
+
+    public DeploymentSpec minReadySeconds(final Integer minReadySeconds) {
+        this.minReadySeconds = minReadySeconds;
+        return this;
+    }
+
+    public DeploymentSpec paused(final Boolean paused) {
+        this.paused = paused;
+        return this;
+    }
+
+    public DeploymentSpec progressDeadlineSeconds(final Integer progressDeadlineSeconds) {
+        this.progressDeadlineSeconds = progressDeadlineSeconds;
+        return this;
+    }
+
+    public DeploymentSpec replicas(final Integer replicas) {
+        this.replicas = replicas;
+        return this;
+    }
+
+    public DeploymentSpec revisionHistoryLimit(final Integer revisionHistoryLimit) {
+        this.revisionHistoryLimit = revisionHistoryLimit;
+        return this;
+    }
+
+    public DeploymentSpec selector(final LabelSelector selector) {
+        this.selector = selector;
+        return this;
+    }
+
+    public DeploymentSpec strategy(final DeploymentStrategy strategy) {
+        this.strategy = strategy;
+        return this;
+    }
+
+    public DeploymentSpec template(final PodTemplateSpec template) {
+        this.template = template;
+        return this;
+    }
+
+    @Override
+    public DeploymentSpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (selector == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "selector", "selector",
+                "Missing 'selector' attribute.", true));
+        }
+        if (template == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "template", "template",
+                "Missing 'template' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

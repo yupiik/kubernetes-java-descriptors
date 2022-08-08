@@ -1,14 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_7_16.v1;
 
+import io.yupiik.kubernetes.bindings.v1_7_16.Validable;
+import io.yupiik.kubernetes.bindings.v1_7_16.ValidationException;
 import jakarta.json.JsonObject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class SubjectAccessReviewSpec {
+public class SubjectAccessReviewSpec implements Validable<SubjectAccessReviewSpec> {
     private JsonObject extra;
     private List<String> groups;
-    private SubjectAccessReviewSpecNonResourceAttributes nonResourceAttributes;
-    private SubjectAccessReviewSpecResourceAttributes resourceAttributes;
+    private NonResourceAttributes nonResourceAttributes;
+    private ResourceAttributes resourceAttributes;
     private String user;
 
     public SubjectAccessReviewSpec() {
@@ -17,8 +20,8 @@ public class SubjectAccessReviewSpec {
 
     public SubjectAccessReviewSpec(final JsonObject extra,
                                    final List<String> groups,
-                                   final SubjectAccessReviewSpecNonResourceAttributes nonResourceAttributes,
-                                   final SubjectAccessReviewSpecResourceAttributes resourceAttributes,
+                                   final NonResourceAttributes nonResourceAttributes,
+                                   final ResourceAttributes resourceAttributes,
                                    final String user) {
         // no-op
     }
@@ -39,19 +42,19 @@ public class SubjectAccessReviewSpec {
         this.groups = groups;
     }
 
-    public SubjectAccessReviewSpecNonResourceAttributes getNonResourceAttributes() {
+    public NonResourceAttributes getNonResourceAttributes() {
         return nonResourceAttributes;
     }
 
-    public void setNonResourceAttributes(final SubjectAccessReviewSpecNonResourceAttributes nonResourceAttributes) {
+    public void setNonResourceAttributes(final NonResourceAttributes nonResourceAttributes) {
         this.nonResourceAttributes = nonResourceAttributes;
     }
 
-    public SubjectAccessReviewSpecResourceAttributes getResourceAttributes() {
+    public ResourceAttributes getResourceAttributes() {
         return resourceAttributes;
     }
 
-    public void setResourceAttributes(final SubjectAccessReviewSpecResourceAttributes resourceAttributes) {
+    public void setResourceAttributes(final ResourceAttributes resourceAttributes) {
         this.resourceAttributes = resourceAttributes;
     }
 
@@ -84,5 +87,35 @@ public class SubjectAccessReviewSpec {
             Objects.equals(nonResourceAttributes, __otherCasted.nonResourceAttributes) &&
             Objects.equals(resourceAttributes, __otherCasted.resourceAttributes) &&
             Objects.equals(user, __otherCasted.user);
+    }
+
+    public SubjectAccessReviewSpec extra(final JsonObject extra) {
+        this.extra = extra;
+        return this;
+    }
+
+    public SubjectAccessReviewSpec groups(final List<String> groups) {
+        this.groups = groups;
+        return this;
+    }
+
+    public SubjectAccessReviewSpec nonResourceAttributes(final NonResourceAttributes nonResourceAttributes) {
+        this.nonResourceAttributes = nonResourceAttributes;
+        return this;
+    }
+
+    public SubjectAccessReviewSpec resourceAttributes(final ResourceAttributes resourceAttributes) {
+        this.resourceAttributes = resourceAttributes;
+        return this;
+    }
+
+    public SubjectAccessReviewSpec user(final String user) {
+        this.user = user;
+        return this;
+    }
+
+    @Override
+    public SubjectAccessReviewSpec validate() {
+        return this;
     }
 }

@@ -1,26 +1,29 @@
 package io.yupiik.kubernetes.bindings.v1_18_6.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_18_6.Validable;
+import io.yupiik.kubernetes.bindings.v1_18_6.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CronJobStatus {
-    private List<CronJobStatusActive> active;
+public class CronJobStatus implements Validable<CronJobStatus> {
+    private List<ObjectReference> active;
     private String lastScheduleTime;
 
     public CronJobStatus() {
         // no-op
     }
 
-    public CronJobStatus(final List<CronJobStatusActive> active,
+    public CronJobStatus(final List<ObjectReference> active,
                          final String lastScheduleTime) {
         // no-op
     }
 
-    public List<CronJobStatusActive> getActive() {
+    public List<ObjectReference> getActive() {
         return active;
     }
 
-    public void setActive(final List<CronJobStatusActive> active) {
+    public void setActive(final List<ObjectReference> active) {
         this.active = active;
     }
 
@@ -47,5 +50,20 @@ public class CronJobStatus {
         final CronJobStatus __otherCasted = (CronJobStatus) __other;
         return Objects.equals(active, __otherCasted.active) &&
             Objects.equals(lastScheduleTime, __otherCasted.lastScheduleTime);
+    }
+
+    public CronJobStatus active(final List<ObjectReference> active) {
+        this.active = active;
+        return this;
+    }
+
+    public CronJobStatus lastScheduleTime(final String lastScheduleTime) {
+        this.lastScheduleTime = lastScheduleTime;
+        return this;
+    }
+
+    @Override
+    public CronJobStatus validate() {
+        return this;
     }
 }

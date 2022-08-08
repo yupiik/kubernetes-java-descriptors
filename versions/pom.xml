@@ -244,6 +244,8 @@
     <module>kubernetes-java-1.21.10</module>
     <module>kubernetes-java-1.21.11</module>
     <module>kubernetes-java-1.21.12</module>
+    <module>kubernetes-java-1.21.13</module>
+    <module>kubernetes-java-1.21.14</module>
     <module>kubernetes-java-1.22.0</module>
     <module>kubernetes-java-1.22.1</module>
     <module>kubernetes-java-1.22.2</module>
@@ -254,6 +256,7 @@
     <module>kubernetes-java-1.22.7</module>
     <module>kubernetes-java-1.22.8</module>
     <module>kubernetes-java-1.22.9</module>
+    <module>kubernetes-java-1.22.10</module>
     <module>kubernetes-java-1.22.11</module>
     <module>kubernetes-java-1.22.12</module>
     <module>kubernetes-java-1.23.0</module>

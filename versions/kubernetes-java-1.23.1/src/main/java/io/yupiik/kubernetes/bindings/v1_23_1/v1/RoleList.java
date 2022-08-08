@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_23_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_1.Validable;
+import io.yupiik.kubernetes.bindings.v1_23_1.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RoleList {
+public class RoleList implements Validable<RoleList> {
     private String apiVersion;
-    private List<RoleListItems> items;
+    private List<Role> items;
     private String kind;
-    private RoleListMetadata metadata;
+    private ListMeta metadata;
 
     public RoleList() {
         // no-op
     }
 
     public RoleList(final String apiVersion,
-                    final List<RoleListItems> items,
+                    final List<Role> items,
                     final String kind,
-                    final RoleListMetadata metadata) {
+                    final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class RoleList {
         this.apiVersion = apiVersion;
     }
 
-    public List<RoleListItems> getItems() {
+    public List<Role> getItems() {
         return items;
     }
 
-    public void setItems(final List<RoleListItems> items) {
+    public void setItems(final List<Role> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class RoleList {
         this.kind = kind;
     }
 
-    public RoleListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final RoleListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class RoleList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public RoleList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public RoleList items(final List<Role> items) {
+        this.items = items;
+        return this;
+    }
+
+    public RoleList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public RoleList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public RoleList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

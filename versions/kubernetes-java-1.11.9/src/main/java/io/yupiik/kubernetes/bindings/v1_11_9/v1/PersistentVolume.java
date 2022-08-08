@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_11_9.v1;
 
+import io.yupiik.kubernetes.bindings.v1_11_9.Validable;
+import io.yupiik.kubernetes.bindings.v1_11_9.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class PersistentVolume {
+public class PersistentVolume implements Validable<PersistentVolume> {
     private String apiVersion;
     private String kind;
-    private PersistentVolumeMetadata metadata;
+    private ObjectMeta metadata;
     private PersistentVolumeSpec spec;
     private PersistentVolumeStatus status;
 
@@ -15,7 +19,7 @@ public class PersistentVolume {
 
     public PersistentVolume(final String apiVersion,
                             final String kind,
-                            final PersistentVolumeMetadata metadata,
+                            final ObjectMeta metadata,
                             final PersistentVolumeSpec spec,
                             final PersistentVolumeStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class PersistentVolume {
         this.kind = kind;
     }
 
-    public PersistentVolumeMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final PersistentVolumeMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,35 @@ public class PersistentVolume {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public PersistentVolume apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public PersistentVolume kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public PersistentVolume metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public PersistentVolume spec(final PersistentVolumeSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public PersistentVolume status(final PersistentVolumeStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public PersistentVolume validate() {
+        return this;
     }
 }

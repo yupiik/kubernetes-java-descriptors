@@ -1,10 +1,13 @@
 package io.yupiik.kubernetes.bindings.v1_13_1.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_13_1.Validable;
+import io.yupiik.kubernetes.bindings.v1_13_1.ValidationException;
 import jakarta.json.JsonObject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CertificateSigningRequestSpec {
+public class CertificateSigningRequestSpec implements Validable<CertificateSigningRequestSpec> {
     private JsonObject extra;
     private List<String> groups;
     private String request;
@@ -96,5 +99,52 @@ public class CertificateSigningRequestSpec {
             Objects.equals(uid, __otherCasted.uid) &&
             Objects.equals(usages, __otherCasted.usages) &&
             Objects.equals(username, __otherCasted.username);
+    }
+
+    public CertificateSigningRequestSpec extra(final JsonObject extra) {
+        this.extra = extra;
+        return this;
+    }
+
+    public CertificateSigningRequestSpec groups(final List<String> groups) {
+        this.groups = groups;
+        return this;
+    }
+
+    public CertificateSigningRequestSpec request(final String request) {
+        this.request = request;
+        return this;
+    }
+
+    public CertificateSigningRequestSpec uid(final String uid) {
+        this.uid = uid;
+        return this;
+    }
+
+    public CertificateSigningRequestSpec usages(final List<String> usages) {
+        this.usages = usages;
+        return this;
+    }
+
+    public CertificateSigningRequestSpec username(final String username) {
+        this.username = username;
+        return this;
+    }
+
+    @Override
+    public CertificateSigningRequestSpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (request == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "request", "request",
+                "Missing 'request' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

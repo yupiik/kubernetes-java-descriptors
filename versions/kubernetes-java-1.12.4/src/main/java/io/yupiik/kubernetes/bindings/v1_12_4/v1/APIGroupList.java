@@ -1,12 +1,14 @@
 package io.yupiik.kubernetes.bindings.v1_12_4.v1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_12_4.Validable;
+import io.yupiik.kubernetes.bindings.v1_12_4.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class APIGroupList {
+public class APIGroupList implements Validable<APIGroupList> {
     private String apiVersion;
-    private List<JsonValue> groups;
+    private List<APIGroup> groups;
     private String kind;
 
     public APIGroupList() {
@@ -14,7 +16,7 @@ public class APIGroupList {
     }
 
     public APIGroupList(final String apiVersion,
-                        final List<JsonValue> groups,
+                        final List<APIGroup> groups,
                         final String kind) {
         // no-op
     }
@@ -27,11 +29,11 @@ public class APIGroupList {
         this.apiVersion = apiVersion;
     }
 
-    public List<JsonValue> getGroups() {
+    public List<APIGroup> getGroups() {
         return groups;
     }
 
-    public void setGroups(final List<JsonValue> groups) {
+    public void setGroups(final List<APIGroup> groups) {
         this.groups = groups;
     }
 
@@ -60,5 +62,37 @@ public class APIGroupList {
         return Objects.equals(apiVersion, __otherCasted.apiVersion) &&
             Objects.equals(groups, __otherCasted.groups) &&
             Objects.equals(kind, __otherCasted.kind);
+    }
+
+    public APIGroupList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public APIGroupList groups(final List<APIGroup> groups) {
+        this.groups = groups;
+        return this;
+    }
+
+    public APIGroupList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    @Override
+    public APIGroupList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (groups == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "groups", "groups",
+                "Missing 'groups' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

@@ -1,23 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_7_7.v1beta1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_7_7.Validable;
+import io.yupiik.kubernetes.bindings.v1_7_7.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ReplicaSetList {
+public class ReplicaSetList implements Validable<ReplicaSetList> {
     private String apiVersion;
-    private List<JsonValue> items;
+    private List<ReplicaSet> items;
     private String kind;
-    private ReplicaSetListMetadata metadata;
+    private ListMeta metadata;
 
     public ReplicaSetList() {
         // no-op
     }
 
     public ReplicaSetList(final String apiVersion,
-                          final List<JsonValue> items,
+                          final List<ReplicaSet> items,
                           final String kind,
-                          final ReplicaSetListMetadata metadata) {
+                          final ListMeta metadata) {
         // no-op
     }
 
@@ -29,11 +31,11 @@ public class ReplicaSetList {
         this.apiVersion = apiVersion;
     }
 
-    public List<JsonValue> getItems() {
+    public List<ReplicaSet> getItems() {
         return items;
     }
 
-    public void setItems(final List<JsonValue> items) {
+    public void setItems(final List<ReplicaSet> items) {
         this.items = items;
     }
 
@@ -45,11 +47,11 @@ public class ReplicaSetList {
         this.kind = kind;
     }
 
-    public ReplicaSetListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ReplicaSetListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -72,5 +74,42 @@ public class ReplicaSetList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public ReplicaSetList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ReplicaSetList items(final List<ReplicaSet> items) {
+        this.items = items;
+        return this;
+    }
+
+    public ReplicaSetList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ReplicaSetList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public ReplicaSetList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

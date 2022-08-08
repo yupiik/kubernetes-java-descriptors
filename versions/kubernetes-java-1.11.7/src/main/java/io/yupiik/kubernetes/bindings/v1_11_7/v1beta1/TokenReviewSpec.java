@@ -1,8 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_11_7.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_11_7.Validable;
+import io.yupiik.kubernetes.bindings.v1_11_7.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class TokenReviewSpec {
+public class TokenReviewSpec implements Validable<TokenReviewSpec> {
     private String token;
 
     public TokenReviewSpec() {
@@ -34,5 +38,15 @@ public class TokenReviewSpec {
         }
         final TokenReviewSpec __otherCasted = (TokenReviewSpec) __other;
         return Objects.equals(token, __otherCasted.token);
+    }
+
+    public TokenReviewSpec token(final String token) {
+        this.token = token;
+        return this;
+    }
+
+    @Override
+    public TokenReviewSpec validate() {
+        return this;
     }
 }

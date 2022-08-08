@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_20_1.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_20_1.Validable;
+import io.yupiik.kubernetes.bindings.v1_20_1.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class IngressClassList {
+public class IngressClassList implements Validable<IngressClassList> {
     private String apiVersion;
-    private List<IngressClassListItems> items;
+    private List<IngressClass> items;
     private String kind;
-    private IngressClassListMetadata metadata;
+    private ListMeta metadata;
 
     public IngressClassList() {
         // no-op
     }
 
     public IngressClassList(final String apiVersion,
-                            final List<IngressClassListItems> items,
+                            final List<IngressClass> items,
                             final String kind,
-                            final IngressClassListMetadata metadata) {
+                            final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class IngressClassList {
         this.apiVersion = apiVersion;
     }
 
-    public List<IngressClassListItems> getItems() {
+    public List<IngressClass> getItems() {
         return items;
     }
 
-    public void setItems(final List<IngressClassListItems> items) {
+    public void setItems(final List<IngressClass> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class IngressClassList {
         this.kind = kind;
     }
 
-    public IngressClassListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final IngressClassListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class IngressClassList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public IngressClassList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public IngressClassList items(final List<IngressClass> items) {
+        this.items = items;
+        return this;
+    }
+
+    public IngressClassList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public IngressClassList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public IngressClassList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

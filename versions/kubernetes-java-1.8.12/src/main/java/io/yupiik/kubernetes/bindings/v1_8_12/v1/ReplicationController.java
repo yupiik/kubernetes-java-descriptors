@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_8_12.v1;
 
+import io.yupiik.kubernetes.bindings.v1_8_12.Validable;
+import io.yupiik.kubernetes.bindings.v1_8_12.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class ReplicationController {
+public class ReplicationController implements Validable<ReplicationController> {
     private String apiVersion;
     private String kind;
-    private ReplicationControllerMetadata metadata;
+    private ObjectMeta metadata;
     private ReplicationControllerSpec spec;
     private ReplicationControllerStatus status;
 
@@ -15,7 +19,7 @@ public class ReplicationController {
 
     public ReplicationController(final String apiVersion,
                                  final String kind,
-                                 final ReplicationControllerMetadata metadata,
+                                 final ObjectMeta metadata,
                                  final ReplicationControllerSpec spec,
                                  final ReplicationControllerStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class ReplicationController {
         this.kind = kind;
     }
 
-    public ReplicationControllerMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ReplicationControllerMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,35 @@ public class ReplicationController {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public ReplicationController apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ReplicationController kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ReplicationController metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public ReplicationController spec(final ReplicationControllerSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public ReplicationController status(final ReplicationControllerStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public ReplicationController validate() {
+        return this;
     }
 }

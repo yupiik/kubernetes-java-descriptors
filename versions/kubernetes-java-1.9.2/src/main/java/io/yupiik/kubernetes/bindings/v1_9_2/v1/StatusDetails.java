@@ -1,11 +1,13 @@
 package io.yupiik.kubernetes.bindings.v1_9_2.v1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_9_2.Validable;
+import io.yupiik.kubernetes.bindings.v1_9_2.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class StatusDetails {
-    private List<JsonValue> causes;
+public class StatusDetails implements Validable<StatusDetails> {
+    private List<StatusCause> causes;
     private String group;
     private String kind;
     private String name;
@@ -16,7 +18,7 @@ public class StatusDetails {
         // no-op
     }
 
-    public StatusDetails(final List<JsonValue> causes,
+    public StatusDetails(final List<StatusCause> causes,
                          final String group,
                          final String kind,
                          final String name,
@@ -25,11 +27,11 @@ public class StatusDetails {
         // no-op
     }
 
-    public List<JsonValue> getCauses() {
+    public List<StatusCause> getCauses() {
         return causes;
     }
 
-    public void setCauses(final List<JsonValue> causes) {
+    public void setCauses(final List<StatusCause> causes) {
         this.causes = causes;
     }
 
@@ -96,5 +98,40 @@ public class StatusDetails {
             Objects.equals(name, __otherCasted.name) &&
             Objects.equals(retryAfterSeconds, __otherCasted.retryAfterSeconds) &&
             Objects.equals(uid, __otherCasted.uid);
+    }
+
+    public StatusDetails causes(final List<StatusCause> causes) {
+        this.causes = causes;
+        return this;
+    }
+
+    public StatusDetails group(final String group) {
+        this.group = group;
+        return this;
+    }
+
+    public StatusDetails kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public StatusDetails name(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    public StatusDetails retryAfterSeconds(final Integer retryAfterSeconds) {
+        this.retryAfterSeconds = retryAfterSeconds;
+        return this;
+    }
+
+    public StatusDetails uid(final String uid) {
+        this.uid = uid;
+        return this;
+    }
+
+    @Override
+    public StatusDetails validate() {
+        return this;
     }
 }

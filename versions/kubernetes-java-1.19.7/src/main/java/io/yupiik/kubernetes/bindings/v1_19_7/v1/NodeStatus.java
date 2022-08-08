@@ -1,101 +1,104 @@
 package io.yupiik.kubernetes.bindings.v1_19_7.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_7.Validable;
+import io.yupiik.kubernetes.bindings.v1_19_7.ValidationException;
+import jakarta.json.JsonObject;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-public class NodeStatus {
-    private List<NodeStatusAddresses> addresses;
-    private Map<String, String> allocatable;
-    private Map<String, String> capacity;
-    private List<NodeStatusConditions> conditions;
-    private NodeStatusConfig config;
-    private NodeStatusDaemonEndpoints daemonEndpoints;
-    private List<NodeStatusImages> images;
-    private NodeStatusNodeInfo nodeInfo;
+public class NodeStatus implements Validable<NodeStatus> {
+    private List<NodeAddress> addresses;
+    private JsonObject allocatable;
+    private JsonObject capacity;
+    private List<NodeCondition> conditions;
+    private NodeConfigStatus config;
+    private NodeDaemonEndpoints daemonEndpoints;
+    private List<ContainerImage> images;
+    private NodeSystemInfo nodeInfo;
     private String phase;
-    private List<NodeStatusVolumesAttached> volumesAttached;
+    private List<AttachedVolume> volumesAttached;
     private List<String> volumesInUse;
 
     public NodeStatus() {
         // no-op
     }
 
-    public NodeStatus(final List<NodeStatusAddresses> addresses,
-                      final Map<String, String> allocatable,
-                      final Map<String, String> capacity,
-                      final List<NodeStatusConditions> conditions,
-                      final NodeStatusConfig config,
-                      final NodeStatusDaemonEndpoints daemonEndpoints,
-                      final List<NodeStatusImages> images,
-                      final NodeStatusNodeInfo nodeInfo,
+    public NodeStatus(final List<NodeAddress> addresses,
+                      final JsonObject allocatable,
+                      final JsonObject capacity,
+                      final List<NodeCondition> conditions,
+                      final NodeConfigStatus config,
+                      final NodeDaemonEndpoints daemonEndpoints,
+                      final List<ContainerImage> images,
+                      final NodeSystemInfo nodeInfo,
                       final String phase,
-                      final List<NodeStatusVolumesAttached> volumesAttached,
+                      final List<AttachedVolume> volumesAttached,
                       final List<String> volumesInUse) {
         // no-op
     }
 
-    public List<NodeStatusAddresses> getAddresses() {
+    public List<NodeAddress> getAddresses() {
         return addresses;
     }
 
-    public void setAddresses(final List<NodeStatusAddresses> addresses) {
+    public void setAddresses(final List<NodeAddress> addresses) {
         this.addresses = addresses;
     }
 
-    public Map<String, String> getAllocatable() {
+    public JsonObject getAllocatable() {
         return allocatable;
     }
 
-    public void setAllocatable(final Map<String, String> allocatable) {
+    public void setAllocatable(final JsonObject allocatable) {
         this.allocatable = allocatable;
     }
 
-    public Map<String, String> getCapacity() {
+    public JsonObject getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(final Map<String, String> capacity) {
+    public void setCapacity(final JsonObject capacity) {
         this.capacity = capacity;
     }
 
-    public List<NodeStatusConditions> getConditions() {
+    public List<NodeCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<NodeStatusConditions> conditions) {
+    public void setConditions(final List<NodeCondition> conditions) {
         this.conditions = conditions;
     }
 
-    public NodeStatusConfig getConfig() {
+    public NodeConfigStatus getConfig() {
         return config;
     }
 
-    public void setConfig(final NodeStatusConfig config) {
+    public void setConfig(final NodeConfigStatus config) {
         this.config = config;
     }
 
-    public NodeStatusDaemonEndpoints getDaemonEndpoints() {
+    public NodeDaemonEndpoints getDaemonEndpoints() {
         return daemonEndpoints;
     }
 
-    public void setDaemonEndpoints(final NodeStatusDaemonEndpoints daemonEndpoints) {
+    public void setDaemonEndpoints(final NodeDaemonEndpoints daemonEndpoints) {
         this.daemonEndpoints = daemonEndpoints;
     }
 
-    public List<NodeStatusImages> getImages() {
+    public List<ContainerImage> getImages() {
         return images;
     }
 
-    public void setImages(final List<NodeStatusImages> images) {
+    public void setImages(final List<ContainerImage> images) {
         this.images = images;
     }
 
-    public NodeStatusNodeInfo getNodeInfo() {
+    public NodeSystemInfo getNodeInfo() {
         return nodeInfo;
     }
 
-    public void setNodeInfo(final NodeStatusNodeInfo nodeInfo) {
+    public void setNodeInfo(final NodeSystemInfo nodeInfo) {
         this.nodeInfo = nodeInfo;
     }
 
@@ -107,11 +110,11 @@ public class NodeStatus {
         this.phase = phase;
     }
 
-    public List<NodeStatusVolumesAttached> getVolumesAttached() {
+    public List<AttachedVolume> getVolumesAttached() {
         return volumesAttached;
     }
 
-    public void setVolumesAttached(final List<NodeStatusVolumesAttached> volumesAttached) {
+    public void setVolumesAttached(final List<AttachedVolume> volumesAttached) {
         this.volumesAttached = volumesAttached;
     }
 
@@ -156,5 +159,65 @@ public class NodeStatus {
             Objects.equals(phase, __otherCasted.phase) &&
             Objects.equals(volumesAttached, __otherCasted.volumesAttached) &&
             Objects.equals(volumesInUse, __otherCasted.volumesInUse);
+    }
+
+    public NodeStatus addresses(final List<NodeAddress> addresses) {
+        this.addresses = addresses;
+        return this;
+    }
+
+    public NodeStatus allocatable(final JsonObject allocatable) {
+        this.allocatable = allocatable;
+        return this;
+    }
+
+    public NodeStatus capacity(final JsonObject capacity) {
+        this.capacity = capacity;
+        return this;
+    }
+
+    public NodeStatus conditions(final List<NodeCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public NodeStatus config(final NodeConfigStatus config) {
+        this.config = config;
+        return this;
+    }
+
+    public NodeStatus daemonEndpoints(final NodeDaemonEndpoints daemonEndpoints) {
+        this.daemonEndpoints = daemonEndpoints;
+        return this;
+    }
+
+    public NodeStatus images(final List<ContainerImage> images) {
+        this.images = images;
+        return this;
+    }
+
+    public NodeStatus nodeInfo(final NodeSystemInfo nodeInfo) {
+        this.nodeInfo = nodeInfo;
+        return this;
+    }
+
+    public NodeStatus phase(final String phase) {
+        this.phase = phase;
+        return this;
+    }
+
+    public NodeStatus volumesAttached(final List<AttachedVolume> volumesAttached) {
+        this.volumesAttached = volumesAttached;
+        return this;
+    }
+
+    public NodeStatus volumesInUse(final List<String> volumesInUse) {
+        this.volumesInUse = volumesInUse;
+        return this;
+    }
+
+    @Override
+    public NodeStatus validate() {
+        return this;
     }
 }

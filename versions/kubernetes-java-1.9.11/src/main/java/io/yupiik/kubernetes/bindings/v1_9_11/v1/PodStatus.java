@@ -1,14 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_9_11.v1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_9_11.Validable;
+import io.yupiik.kubernetes.bindings.v1_9_11.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PodStatus {
-    private List<JsonValue> conditions;
-    private List<JsonValue> containerStatuses;
+public class PodStatus implements Validable<PodStatus> {
+    private List<PodCondition> conditions;
+    private List<ContainerStatus> containerStatuses;
     private String hostIP;
-    private List<JsonValue> initContainerStatuses;
+    private List<ContainerStatus> initContainerStatuses;
     private String message;
     private String phase;
     private String podIP;
@@ -20,10 +22,10 @@ public class PodStatus {
         // no-op
     }
 
-    public PodStatus(final List<JsonValue> conditions,
-                     final List<JsonValue> containerStatuses,
+    public PodStatus(final List<PodCondition> conditions,
+                     final List<ContainerStatus> containerStatuses,
                      final String hostIP,
-                     final List<JsonValue> initContainerStatuses,
+                     final List<ContainerStatus> initContainerStatuses,
                      final String message,
                      final String phase,
                      final String podIP,
@@ -33,19 +35,19 @@ public class PodStatus {
         // no-op
     }
 
-    public List<JsonValue> getConditions() {
+    public List<PodCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<JsonValue> conditions) {
+    public void setConditions(final List<PodCondition> conditions) {
         this.conditions = conditions;
     }
 
-    public List<JsonValue> getContainerStatuses() {
+    public List<ContainerStatus> getContainerStatuses() {
         return containerStatuses;
     }
 
-    public void setContainerStatuses(final List<JsonValue> containerStatuses) {
+    public void setContainerStatuses(final List<ContainerStatus> containerStatuses) {
         this.containerStatuses = containerStatuses;
     }
 
@@ -57,11 +59,11 @@ public class PodStatus {
         this.hostIP = hostIP;
     }
 
-    public List<JsonValue> getInitContainerStatuses() {
+    public List<ContainerStatus> getInitContainerStatuses() {
         return initContainerStatuses;
     }
 
-    public void setInitContainerStatuses(final List<JsonValue> initContainerStatuses) {
+    public void setInitContainerStatuses(final List<ContainerStatus> initContainerStatuses) {
         this.initContainerStatuses = initContainerStatuses;
     }
 
@@ -144,5 +146,60 @@ public class PodStatus {
             Objects.equals(qosClass, __otherCasted.qosClass) &&
             Objects.equals(reason, __otherCasted.reason) &&
             Objects.equals(startTime, __otherCasted.startTime);
+    }
+
+    public PodStatus conditions(final List<PodCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public PodStatus containerStatuses(final List<ContainerStatus> containerStatuses) {
+        this.containerStatuses = containerStatuses;
+        return this;
+    }
+
+    public PodStatus hostIP(final String hostIP) {
+        this.hostIP = hostIP;
+        return this;
+    }
+
+    public PodStatus initContainerStatuses(final List<ContainerStatus> initContainerStatuses) {
+        this.initContainerStatuses = initContainerStatuses;
+        return this;
+    }
+
+    public PodStatus message(final String message) {
+        this.message = message;
+        return this;
+    }
+
+    public PodStatus phase(final String phase) {
+        this.phase = phase;
+        return this;
+    }
+
+    public PodStatus podIP(final String podIP) {
+        this.podIP = podIP;
+        return this;
+    }
+
+    public PodStatus qosClass(final String qosClass) {
+        this.qosClass = qosClass;
+        return this;
+    }
+
+    public PodStatus reason(final String reason) {
+        this.reason = reason;
+        return this;
+    }
+
+    public PodStatus startTime(final String startTime) {
+        this.startTime = startTime;
+        return this;
+    }
+
+    @Override
+    public PodStatus validate() {
+        return this;
     }
 }

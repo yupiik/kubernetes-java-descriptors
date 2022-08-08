@@ -1,14 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_17_14.v1;
 
+import io.yupiik.kubernetes.bindings.v1_17_14.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_14.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RoleBinding {
+public class RoleBinding implements Validable<RoleBinding> {
     private String apiVersion;
     private String kind;
-    private RoleBindingMetadata metadata;
-    private RoleBindingRoleRef roleRef;
-    private List<RoleBindingSubjects> subjects;
+    private ObjectMeta metadata;
+    private RoleRef roleRef;
+    private List<Subject> subjects;
 
     public RoleBinding() {
         // no-op
@@ -16,9 +19,9 @@ public class RoleBinding {
 
     public RoleBinding(final String apiVersion,
                        final String kind,
-                       final RoleBindingMetadata metadata,
-                       final RoleBindingRoleRef roleRef,
-                       final List<RoleBindingSubjects> subjects) {
+                       final ObjectMeta metadata,
+                       final RoleRef roleRef,
+                       final List<Subject> subjects) {
         // no-op
     }
 
@@ -38,27 +41,27 @@ public class RoleBinding {
         this.kind = kind;
     }
 
-    public RoleBindingMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final RoleBindingMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
-    public RoleBindingRoleRef getRoleRef() {
+    public RoleRef getRoleRef() {
         return roleRef;
     }
 
-    public void setRoleRef(final RoleBindingRoleRef roleRef) {
+    public void setRoleRef(final RoleRef roleRef) {
         this.roleRef = roleRef;
     }
 
-    public List<RoleBindingSubjects> getSubjects() {
+    public List<Subject> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(final List<RoleBindingSubjects> subjects) {
+    public void setSubjects(final List<Subject> subjects) {
         this.subjects = subjects;
     }
 
@@ -83,5 +86,47 @@ public class RoleBinding {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(roleRef, __otherCasted.roleRef) &&
             Objects.equals(subjects, __otherCasted.subjects);
+    }
+
+    public RoleBinding apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public RoleBinding kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public RoleBinding metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public RoleBinding roleRef(final RoleRef roleRef) {
+        this.roleRef = roleRef;
+        return this;
+    }
+
+    public RoleBinding subjects(final List<Subject> subjects) {
+        this.subjects = subjects;
+        return this;
+    }
+
+    @Override
+    public RoleBinding validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (roleRef == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "roleRef", "roleRef",
+                "Missing 'roleRef' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

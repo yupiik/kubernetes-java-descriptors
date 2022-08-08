@@ -1,8 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_11_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_11_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_11_0.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class EventSource {
+public class EventSource implements Validable<EventSource> {
     private String component;
     private String host;
 
@@ -46,5 +50,20 @@ public class EventSource {
         final EventSource __otherCasted = (EventSource) __other;
         return Objects.equals(component, __otherCasted.component) &&
             Objects.equals(host, __otherCasted.host);
+    }
+
+    public EventSource component(final String component) {
+        this.component = component;
+        return this;
+    }
+
+    public EventSource host(final String host) {
+        this.host = host;
+        return this;
+    }
+
+    @Override
+    public EventSource validate() {
+        return this;
     }
 }

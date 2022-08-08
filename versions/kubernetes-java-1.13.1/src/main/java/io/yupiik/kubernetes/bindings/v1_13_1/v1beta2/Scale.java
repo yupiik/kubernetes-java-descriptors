@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_13_1.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_13_1.Validable;
+import io.yupiik.kubernetes.bindings.v1_13_1.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Scale {
+public class Scale implements Validable<Scale> {
     private String apiVersion;
     private String kind;
-    private ScaleMetadata metadata;
+    private ObjectMeta metadata;
     private ScaleSpec spec;
     private ScaleStatus status;
 
@@ -15,7 +19,7 @@ public class Scale {
 
     public Scale(final String apiVersion,
                  final String kind,
-                 final ScaleMetadata metadata,
+                 final ObjectMeta metadata,
                  final ScaleSpec spec,
                  final ScaleStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class Scale {
         this.kind = kind;
     }
 
-    public ScaleMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ScaleMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,35 @@ public class Scale {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public Scale apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public Scale kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public Scale metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public Scale spec(final ScaleSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public Scale status(final ScaleStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public Scale validate() {
+        return this;
     }
 }

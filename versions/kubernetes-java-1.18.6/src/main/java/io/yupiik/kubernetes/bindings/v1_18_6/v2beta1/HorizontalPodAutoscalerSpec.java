@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_18_6.v2beta1;
 
+import io.yupiik.kubernetes.bindings.v1_18_6.Validable;
+import io.yupiik.kubernetes.bindings.v1_18_6.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class HorizontalPodAutoscalerSpec {
+public class HorizontalPodAutoscalerSpec implements Validable<HorizontalPodAutoscalerSpec> {
     private int maxReplicas;
-    private List<HorizontalPodAutoscalerSpecMetrics> metrics;
+    private List<MetricSpec> metrics;
     private Integer minReplicas;
-    private HorizontalPodAutoscalerSpecScaleTargetRef scaleTargetRef;
+    private CrossVersionObjectReference scaleTargetRef;
 
     public HorizontalPodAutoscalerSpec() {
         // no-op
     }
 
     public HorizontalPodAutoscalerSpec(final int maxReplicas,
-                                       final List<HorizontalPodAutoscalerSpecMetrics> metrics,
+                                       final List<MetricSpec> metrics,
                                        final Integer minReplicas,
-                                       final HorizontalPodAutoscalerSpecScaleTargetRef scaleTargetRef) {
+                                       final CrossVersionObjectReference scaleTargetRef) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class HorizontalPodAutoscalerSpec {
         this.maxReplicas = maxReplicas;
     }
 
-    public List<HorizontalPodAutoscalerSpecMetrics> getMetrics() {
+    public List<MetricSpec> getMetrics() {
         return metrics;
     }
 
-    public void setMetrics(final List<HorizontalPodAutoscalerSpecMetrics> metrics) {
+    public void setMetrics(final List<MetricSpec> metrics) {
         this.metrics = metrics;
     }
 
@@ -44,11 +47,11 @@ public class HorizontalPodAutoscalerSpec {
         this.minReplicas = minReplicas;
     }
 
-    public HorizontalPodAutoscalerSpecScaleTargetRef getScaleTargetRef() {
+    public CrossVersionObjectReference getScaleTargetRef() {
         return scaleTargetRef;
     }
 
-    public void setScaleTargetRef(final HorizontalPodAutoscalerSpecScaleTargetRef scaleTargetRef) {
+    public void setScaleTargetRef(final CrossVersionObjectReference scaleTargetRef) {
         this.scaleTargetRef = scaleTargetRef;
     }
 
@@ -71,5 +74,42 @@ public class HorizontalPodAutoscalerSpec {
             Objects.equals(metrics, __otherCasted.metrics) &&
             Objects.equals(minReplicas, __otherCasted.minReplicas) &&
             Objects.equals(scaleTargetRef, __otherCasted.scaleTargetRef);
+    }
+
+    public HorizontalPodAutoscalerSpec maxReplicas(final int maxReplicas) {
+        this.maxReplicas = maxReplicas;
+        return this;
+    }
+
+    public HorizontalPodAutoscalerSpec metrics(final List<MetricSpec> metrics) {
+        this.metrics = metrics;
+        return this;
+    }
+
+    public HorizontalPodAutoscalerSpec minReplicas(final Integer minReplicas) {
+        this.minReplicas = minReplicas;
+        return this;
+    }
+
+    public HorizontalPodAutoscalerSpec scaleTargetRef(final CrossVersionObjectReference scaleTargetRef) {
+        this.scaleTargetRef = scaleTargetRef;
+        return this;
+    }
+
+    @Override
+    public HorizontalPodAutoscalerSpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (scaleTargetRef == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "scaleTargetRef", "scaleTargetRef",
+                "Missing 'scaleTargetRef' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

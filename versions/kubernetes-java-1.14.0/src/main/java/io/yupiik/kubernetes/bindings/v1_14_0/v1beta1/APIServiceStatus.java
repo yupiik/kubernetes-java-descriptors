@@ -1,24 +1,27 @@
 package io.yupiik.kubernetes.bindings.v1_14_0.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_14_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_14_0.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class APIServiceStatus {
-    private List<APIServiceStatusConditions> conditions;
+public class APIServiceStatus implements Validable<APIServiceStatus> {
+    private List<APIServiceCondition> conditions;
 
     public APIServiceStatus() {
         // no-op
     }
 
-    public APIServiceStatus(final List<APIServiceStatusConditions> conditions) {
+    public APIServiceStatus(final List<APIServiceCondition> conditions) {
         // no-op
     }
 
-    public List<APIServiceStatusConditions> getConditions() {
+    public List<APIServiceCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<APIServiceStatusConditions> conditions) {
+    public void setConditions(final List<APIServiceCondition> conditions) {
         this.conditions = conditions;
     }
 
@@ -35,5 +38,15 @@ public class APIServiceStatus {
         }
         final APIServiceStatus __otherCasted = (APIServiceStatus) __other;
         return Objects.equals(conditions, __otherCasted.conditions);
+    }
+
+    public APIServiceStatus conditions(final List<APIServiceCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    @Override
+    public APIServiceStatus validate() {
+        return this;
     }
 }

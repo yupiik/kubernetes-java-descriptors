@@ -1,13 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_11.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_11.Validable;
+import io.yupiik.kubernetes.bindings.v1_19_11.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ValidatingWebhookConfiguration {
+public class ValidatingWebhookConfiguration implements Validable<ValidatingWebhookConfiguration> {
     private String apiVersion;
     private String kind;
-    private ValidatingWebhookConfigurationMetadata metadata;
-    private List<ValidatingWebhookConfigurationWebhooks> webhooks;
+    private ObjectMeta metadata;
+    private List<ValidatingWebhook> webhooks;
 
     public ValidatingWebhookConfiguration() {
         // no-op
@@ -15,8 +18,8 @@ public class ValidatingWebhookConfiguration {
 
     public ValidatingWebhookConfiguration(final String apiVersion,
                                           final String kind,
-                                          final ValidatingWebhookConfigurationMetadata metadata,
-                                          final List<ValidatingWebhookConfigurationWebhooks> webhooks) {
+                                          final ObjectMeta metadata,
+                                          final List<ValidatingWebhook> webhooks) {
         // no-op
     }
 
@@ -36,19 +39,19 @@ public class ValidatingWebhookConfiguration {
         this.kind = kind;
     }
 
-    public ValidatingWebhookConfigurationMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ValidatingWebhookConfigurationMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
-    public List<ValidatingWebhookConfigurationWebhooks> getWebhooks() {
+    public List<ValidatingWebhook> getWebhooks() {
         return webhooks;
     }
 
-    public void setWebhooks(final List<ValidatingWebhookConfigurationWebhooks> webhooks) {
+    public void setWebhooks(final List<ValidatingWebhook> webhooks) {
         this.webhooks = webhooks;
     }
 
@@ -71,5 +74,30 @@ public class ValidatingWebhookConfiguration {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(webhooks, __otherCasted.webhooks);
+    }
+
+    public ValidatingWebhookConfiguration apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ValidatingWebhookConfiguration kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ValidatingWebhookConfiguration metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public ValidatingWebhookConfiguration webhooks(final List<ValidatingWebhook> webhooks) {
+        this.webhooks = webhooks;
+        return this;
+    }
+
+    @Override
+    public ValidatingWebhookConfiguration validate() {
+        return this;
     }
 }

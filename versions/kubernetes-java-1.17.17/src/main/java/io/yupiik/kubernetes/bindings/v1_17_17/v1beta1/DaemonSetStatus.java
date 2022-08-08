@@ -1,11 +1,14 @@
 package io.yupiik.kubernetes.bindings.v1_17_17.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_17_17.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_17.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class DaemonSetStatus {
+public class DaemonSetStatus implements Validable<DaemonSetStatus> {
     private Integer collisionCount;
-    private List<DaemonSetStatusConditions> conditions;
+    private List<DaemonSetCondition> conditions;
     private int currentNumberScheduled;
     private int desiredNumberScheduled;
     private Integer numberAvailable;
@@ -20,7 +23,7 @@ public class DaemonSetStatus {
     }
 
     public DaemonSetStatus(final Integer collisionCount,
-                           final List<DaemonSetStatusConditions> conditions,
+                           final List<DaemonSetCondition> conditions,
                            final int currentNumberScheduled,
                            final int desiredNumberScheduled,
                            final Integer numberAvailable,
@@ -40,11 +43,11 @@ public class DaemonSetStatus {
         this.collisionCount = collisionCount;
     }
 
-    public List<DaemonSetStatusConditions> getConditions() {
+    public List<DaemonSetCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<DaemonSetStatusConditions> conditions) {
+    public void setConditions(final List<DaemonSetCondition> conditions) {
         this.conditions = conditions;
     }
 
@@ -143,5 +146,60 @@ public class DaemonSetStatus {
             Objects.equals(numberUnavailable, __otherCasted.numberUnavailable) &&
             Objects.equals(observedGeneration, __otherCasted.observedGeneration) &&
             Objects.equals(updatedNumberScheduled, __otherCasted.updatedNumberScheduled);
+    }
+
+    public DaemonSetStatus collisionCount(final Integer collisionCount) {
+        this.collisionCount = collisionCount;
+        return this;
+    }
+
+    public DaemonSetStatus conditions(final List<DaemonSetCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public DaemonSetStatus currentNumberScheduled(final int currentNumberScheduled) {
+        this.currentNumberScheduled = currentNumberScheduled;
+        return this;
+    }
+
+    public DaemonSetStatus desiredNumberScheduled(final int desiredNumberScheduled) {
+        this.desiredNumberScheduled = desiredNumberScheduled;
+        return this;
+    }
+
+    public DaemonSetStatus numberAvailable(final Integer numberAvailable) {
+        this.numberAvailable = numberAvailable;
+        return this;
+    }
+
+    public DaemonSetStatus numberMisscheduled(final int numberMisscheduled) {
+        this.numberMisscheduled = numberMisscheduled;
+        return this;
+    }
+
+    public DaemonSetStatus numberReady(final int numberReady) {
+        this.numberReady = numberReady;
+        return this;
+    }
+
+    public DaemonSetStatus numberUnavailable(final Integer numberUnavailable) {
+        this.numberUnavailable = numberUnavailable;
+        return this;
+    }
+
+    public DaemonSetStatus observedGeneration(final Integer observedGeneration) {
+        this.observedGeneration = observedGeneration;
+        return this;
+    }
+
+    public DaemonSetStatus updatedNumberScheduled(final Integer updatedNumberScheduled) {
+        this.updatedNumberScheduled = updatedNumberScheduled;
+        return this;
+    }
+
+    @Override
+    public DaemonSetStatus validate() {
+        return this;
     }
 }

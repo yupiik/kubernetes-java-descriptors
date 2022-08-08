@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_14_0.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_14_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_14_0.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class VolumeAttachmentSpec {
+public class VolumeAttachmentSpec implements Validable<VolumeAttachmentSpec> {
     private String attacher;
     private String nodeName;
-    private VolumeAttachmentSpecSource source;
+    private VolumeAttachmentSource source;
 
     public VolumeAttachmentSpec() {
         // no-op
@@ -13,7 +17,7 @@ public class VolumeAttachmentSpec {
 
     public VolumeAttachmentSpec(final String attacher,
                                 final String nodeName,
-                                final VolumeAttachmentSpecSource source) {
+                                final VolumeAttachmentSource source) {
         // no-op
     }
 
@@ -33,11 +37,11 @@ public class VolumeAttachmentSpec {
         this.nodeName = nodeName;
     }
 
-    public VolumeAttachmentSpecSource getSource() {
+    public VolumeAttachmentSource getSource() {
         return source;
     }
 
-    public void setSource(final VolumeAttachmentSpecSource source) {
+    public void setSource(final VolumeAttachmentSource source) {
         this.source = source;
     }
 
@@ -58,5 +62,53 @@ public class VolumeAttachmentSpec {
         return Objects.equals(attacher, __otherCasted.attacher) &&
             Objects.equals(nodeName, __otherCasted.nodeName) &&
             Objects.equals(source, __otherCasted.source);
+    }
+
+    public VolumeAttachmentSpec attacher(final String attacher) {
+        this.attacher = attacher;
+        return this;
+    }
+
+    public VolumeAttachmentSpec nodeName(final String nodeName) {
+        this.nodeName = nodeName;
+        return this;
+    }
+
+    public VolumeAttachmentSpec source(final VolumeAttachmentSource source) {
+        this.source = source;
+        return this;
+    }
+
+    @Override
+    public VolumeAttachmentSpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (attacher == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "attacher", "attacher",
+                "Missing 'attacher' attribute.", true));
+        }
+        if (nodeName == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "nodeName", "nodeName",
+                "Missing 'nodeName' attribute.", true));
+        }
+        if (source == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "source", "source",
+                "Missing 'source' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

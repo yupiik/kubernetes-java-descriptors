@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_23_3.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_23_3.Validable;
+import io.yupiik.kubernetes.bindings.v1_23_3.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FlowSchemaList {
+public class FlowSchemaList implements Validable<FlowSchemaList> {
     private String apiVersion;
-    private List<FlowSchemaListItems> items;
+    private List<FlowSchema> items;
     private String kind;
-    private FlowSchemaListMetadata metadata;
+    private ListMeta metadata;
 
     public FlowSchemaList() {
         // no-op
     }
 
     public FlowSchemaList(final String apiVersion,
-                          final List<FlowSchemaListItems> items,
+                          final List<FlowSchema> items,
                           final String kind,
-                          final FlowSchemaListMetadata metadata) {
+                          final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class FlowSchemaList {
         this.apiVersion = apiVersion;
     }
 
-    public List<FlowSchemaListItems> getItems() {
+    public List<FlowSchema> getItems() {
         return items;
     }
 
-    public void setItems(final List<FlowSchemaListItems> items) {
+    public void setItems(final List<FlowSchema> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class FlowSchemaList {
         this.kind = kind;
     }
 
-    public FlowSchemaListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final FlowSchemaListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class FlowSchemaList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public FlowSchemaList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public FlowSchemaList items(final List<FlowSchema> items) {
+        this.items = items;
+        return this;
+    }
+
+    public FlowSchemaList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public FlowSchemaList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public FlowSchemaList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

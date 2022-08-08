@@ -1,23 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_9_10.v1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_9_10.Validable;
+import io.yupiik.kubernetes.bindings.v1_9_10.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ConfigMapList {
+public class ConfigMapList implements Validable<ConfigMapList> {
     private String apiVersion;
-    private List<JsonValue> items;
+    private List<ConfigMap> items;
     private String kind;
-    private ConfigMapListMetadata metadata;
+    private ListMeta metadata;
 
     public ConfigMapList() {
         // no-op
     }
 
     public ConfigMapList(final String apiVersion,
-                         final List<JsonValue> items,
+                         final List<ConfigMap> items,
                          final String kind,
-                         final ConfigMapListMetadata metadata) {
+                         final ListMeta metadata) {
         // no-op
     }
 
@@ -29,11 +31,11 @@ public class ConfigMapList {
         this.apiVersion = apiVersion;
     }
 
-    public List<JsonValue> getItems() {
+    public List<ConfigMap> getItems() {
         return items;
     }
 
-    public void setItems(final List<JsonValue> items) {
+    public void setItems(final List<ConfigMap> items) {
         this.items = items;
     }
 
@@ -45,11 +47,11 @@ public class ConfigMapList {
         this.kind = kind;
     }
 
-    public ConfigMapListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ConfigMapListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -72,5 +74,42 @@ public class ConfigMapList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public ConfigMapList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ConfigMapList items(final List<ConfigMap> items) {
+        this.items = items;
+        return this;
+    }
+
+    public ConfigMapList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ConfigMapList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public ConfigMapList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

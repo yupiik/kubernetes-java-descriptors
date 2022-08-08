@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_15_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_15_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_15_0.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ReplicationControllerSpec {
+public class ReplicationControllerSpec implements Validable<ReplicationControllerSpec> {
     private Integer minReadySeconds;
     private Integer replicas;
     private Map<String, String> selector;
-    private ReplicationControllerSpecTemplate template;
+    private PodTemplateSpec template;
 
     public ReplicationControllerSpec() {
         // no-op
@@ -16,7 +20,7 @@ public class ReplicationControllerSpec {
     public ReplicationControllerSpec(final Integer minReadySeconds,
                                      final Integer replicas,
                                      final Map<String, String> selector,
-                                     final ReplicationControllerSpecTemplate template) {
+                                     final PodTemplateSpec template) {
         // no-op
     }
 
@@ -44,11 +48,11 @@ public class ReplicationControllerSpec {
         this.selector = selector;
     }
 
-    public ReplicationControllerSpecTemplate getTemplate() {
+    public PodTemplateSpec getTemplate() {
         return template;
     }
 
-    public void setTemplate(final ReplicationControllerSpecTemplate template) {
+    public void setTemplate(final PodTemplateSpec template) {
         this.template = template;
     }
 
@@ -71,5 +75,30 @@ public class ReplicationControllerSpec {
             Objects.equals(replicas, __otherCasted.replicas) &&
             Objects.equals(selector, __otherCasted.selector) &&
             Objects.equals(template, __otherCasted.template);
+    }
+
+    public ReplicationControllerSpec minReadySeconds(final Integer minReadySeconds) {
+        this.minReadySeconds = minReadySeconds;
+        return this;
+    }
+
+    public ReplicationControllerSpec replicas(final Integer replicas) {
+        this.replicas = replicas;
+        return this;
+    }
+
+    public ReplicationControllerSpec selector(final Map<String, String> selector) {
+        this.selector = selector;
+        return this;
+    }
+
+    public ReplicationControllerSpec template(final PodTemplateSpec template) {
+        this.template = template;
+        return this;
+    }
+
+    @Override
+    public ReplicationControllerSpec validate() {
+        return this;
     }
 }

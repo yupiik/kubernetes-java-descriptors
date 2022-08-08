@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_12_0.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_12_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_12_0.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class CustomResourceDefinition {
+public class CustomResourceDefinition implements Validable<CustomResourceDefinition> {
     private String apiVersion;
     private String kind;
-    private CustomResourceDefinitionMetadata metadata;
+    private ObjectMeta metadata;
     private CustomResourceDefinitionSpec spec;
     private CustomResourceDefinitionStatus status;
 
@@ -15,7 +19,7 @@ public class CustomResourceDefinition {
 
     public CustomResourceDefinition(final String apiVersion,
                                     final String kind,
-                                    final CustomResourceDefinitionMetadata metadata,
+                                    final ObjectMeta metadata,
                                     final CustomResourceDefinitionSpec spec,
                                     final CustomResourceDefinitionStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class CustomResourceDefinition {
         this.kind = kind;
     }
 
-    public CustomResourceDefinitionMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final CustomResourceDefinitionMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,47 @@ public class CustomResourceDefinition {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public CustomResourceDefinition apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public CustomResourceDefinition kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public CustomResourceDefinition metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public CustomResourceDefinition spec(final CustomResourceDefinitionSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public CustomResourceDefinition status(final CustomResourceDefinitionStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public CustomResourceDefinition validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (spec == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "spec", "spec",
+                "Missing 'spec' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

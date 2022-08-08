@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_17_10.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_17_10.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_10.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class PriorityClass {
+public class PriorityClass implements Validable<PriorityClass> {
     private String apiVersion;
     private String description;
     private Boolean globalDefault;
     private String kind;
-    private PriorityClassMetadata metadata;
+    private ObjectMeta metadata;
     private String preemptionPolicy;
     private int value;
 
@@ -19,7 +23,7 @@ public class PriorityClass {
                          final String description,
                          final Boolean globalDefault,
                          final String kind,
-                         final PriorityClassMetadata metadata,
+                         final ObjectMeta metadata,
                          final String preemptionPolicy,
                          final int value) {
         // no-op
@@ -57,11 +61,11 @@ public class PriorityClass {
         this.kind = kind;
     }
 
-    public PriorityClassMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final PriorityClassMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -106,5 +110,45 @@ public class PriorityClass {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(preemptionPolicy, __otherCasted.preemptionPolicy) &&
             Objects.equals(value, __otherCasted.value);
+    }
+
+    public PriorityClass apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public PriorityClass description(final String description) {
+        this.description = description;
+        return this;
+    }
+
+    public PriorityClass globalDefault(final Boolean globalDefault) {
+        this.globalDefault = globalDefault;
+        return this;
+    }
+
+    public PriorityClass kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public PriorityClass metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public PriorityClass preemptionPolicy(final String preemptionPolicy) {
+        this.preemptionPolicy = preemptionPolicy;
+        return this;
+    }
+
+    public PriorityClass value(final int value) {
+        this.value = value;
+        return this;
+    }
+
+    @Override
+    public PriorityClass validate() {
+        return this;
     }
 }

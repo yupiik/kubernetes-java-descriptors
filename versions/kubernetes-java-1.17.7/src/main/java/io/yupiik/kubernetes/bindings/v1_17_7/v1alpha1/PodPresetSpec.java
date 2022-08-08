@@ -1,64 +1,67 @@
 package io.yupiik.kubernetes.bindings.v1_17_7.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_17_7.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_7.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PodPresetSpec {
-    private List<PodPresetSpecEnv> env;
-    private List<PodPresetSpecEnvFrom> envFrom;
-    private PodPresetSpecSelector selector;
-    private List<PodPresetSpecVolumeMounts> volumeMounts;
-    private List<PodPresetSpecVolumes> volumes;
+public class PodPresetSpec implements Validable<PodPresetSpec> {
+    private List<EnvVar> env;
+    private List<EnvFromSource> envFrom;
+    private LabelSelector selector;
+    private List<VolumeMount> volumeMounts;
+    private List<Volume> volumes;
 
     public PodPresetSpec() {
         // no-op
     }
 
-    public PodPresetSpec(final List<PodPresetSpecEnv> env,
-                         final List<PodPresetSpecEnvFrom> envFrom,
-                         final PodPresetSpecSelector selector,
-                         final List<PodPresetSpecVolumeMounts> volumeMounts,
-                         final List<PodPresetSpecVolumes> volumes) {
+    public PodPresetSpec(final List<EnvVar> env,
+                         final List<EnvFromSource> envFrom,
+                         final LabelSelector selector,
+                         final List<VolumeMount> volumeMounts,
+                         final List<Volume> volumes) {
         // no-op
     }
 
-    public List<PodPresetSpecEnv> getEnv() {
+    public List<EnvVar> getEnv() {
         return env;
     }
 
-    public void setEnv(final List<PodPresetSpecEnv> env) {
+    public void setEnv(final List<EnvVar> env) {
         this.env = env;
     }
 
-    public List<PodPresetSpecEnvFrom> getEnvFrom() {
+    public List<EnvFromSource> getEnvFrom() {
         return envFrom;
     }
 
-    public void setEnvFrom(final List<PodPresetSpecEnvFrom> envFrom) {
+    public void setEnvFrom(final List<EnvFromSource> envFrom) {
         this.envFrom = envFrom;
     }
 
-    public PodPresetSpecSelector getSelector() {
+    public LabelSelector getSelector() {
         return selector;
     }
 
-    public void setSelector(final PodPresetSpecSelector selector) {
+    public void setSelector(final LabelSelector selector) {
         this.selector = selector;
     }
 
-    public List<PodPresetSpecVolumeMounts> getVolumeMounts() {
+    public List<VolumeMount> getVolumeMounts() {
         return volumeMounts;
     }
 
-    public void setVolumeMounts(final List<PodPresetSpecVolumeMounts> volumeMounts) {
+    public void setVolumeMounts(final List<VolumeMount> volumeMounts) {
         this.volumeMounts = volumeMounts;
     }
 
-    public List<PodPresetSpecVolumes> getVolumes() {
+    public List<Volume> getVolumes() {
         return volumes;
     }
 
-    public void setVolumes(final List<PodPresetSpecVolumes> volumes) {
+    public void setVolumes(final List<Volume> volumes) {
         this.volumes = volumes;
     }
 
@@ -83,5 +86,35 @@ public class PodPresetSpec {
             Objects.equals(selector, __otherCasted.selector) &&
             Objects.equals(volumeMounts, __otherCasted.volumeMounts) &&
             Objects.equals(volumes, __otherCasted.volumes);
+    }
+
+    public PodPresetSpec env(final List<EnvVar> env) {
+        this.env = env;
+        return this;
+    }
+
+    public PodPresetSpec envFrom(final List<EnvFromSource> envFrom) {
+        this.envFrom = envFrom;
+        return this;
+    }
+
+    public PodPresetSpec selector(final LabelSelector selector) {
+        this.selector = selector;
+        return this;
+    }
+
+    public PodPresetSpec volumeMounts(final List<VolumeMount> volumeMounts) {
+        this.volumeMounts = volumeMounts;
+        return this;
+    }
+
+    public PodPresetSpec volumes(final List<Volume> volumes) {
+        this.volumes = volumes;
+        return this;
+    }
+
+    @Override
+    public PodPresetSpec validate() {
+        return this;
     }
 }

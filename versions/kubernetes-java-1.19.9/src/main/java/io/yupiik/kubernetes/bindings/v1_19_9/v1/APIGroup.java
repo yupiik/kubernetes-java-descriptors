@@ -1,15 +1,18 @@
 package io.yupiik.kubernetes.bindings.v1_19_9.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_9.Validable;
+import io.yupiik.kubernetes.bindings.v1_19_9.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class APIGroup {
+public class APIGroup implements Validable<APIGroup> {
     private String apiVersion;
     private String kind;
     private String name;
-    private APIGroupPreferredVersion preferredVersion;
-    private List<APIGroupServerAddressByClientCIDRs> serverAddressByClientCIDRs;
-    private List<APIGroupVersions> versions;
+    private GroupVersionForDiscovery preferredVersion;
+    private List<ServerAddressByClientCIDR> serverAddressByClientCIDRs;
+    private List<GroupVersionForDiscovery> versions;
 
     public APIGroup() {
         // no-op
@@ -18,9 +21,9 @@ public class APIGroup {
     public APIGroup(final String apiVersion,
                     final String kind,
                     final String name,
-                    final APIGroupPreferredVersion preferredVersion,
-                    final List<APIGroupServerAddressByClientCIDRs> serverAddressByClientCIDRs,
-                    final List<APIGroupVersions> versions) {
+                    final GroupVersionForDiscovery preferredVersion,
+                    final List<ServerAddressByClientCIDR> serverAddressByClientCIDRs,
+                    final List<GroupVersionForDiscovery> versions) {
         // no-op
     }
 
@@ -48,27 +51,27 @@ public class APIGroup {
         this.name = name;
     }
 
-    public APIGroupPreferredVersion getPreferredVersion() {
+    public GroupVersionForDiscovery getPreferredVersion() {
         return preferredVersion;
     }
 
-    public void setPreferredVersion(final APIGroupPreferredVersion preferredVersion) {
+    public void setPreferredVersion(final GroupVersionForDiscovery preferredVersion) {
         this.preferredVersion = preferredVersion;
     }
 
-    public List<APIGroupServerAddressByClientCIDRs> getServerAddressByClientCIDRs() {
+    public List<ServerAddressByClientCIDR> getServerAddressByClientCIDRs() {
         return serverAddressByClientCIDRs;
     }
 
-    public void setServerAddressByClientCIDRs(final List<APIGroupServerAddressByClientCIDRs> serverAddressByClientCIDRs) {
+    public void setServerAddressByClientCIDRs(final List<ServerAddressByClientCIDR> serverAddressByClientCIDRs) {
         this.serverAddressByClientCIDRs = serverAddressByClientCIDRs;
     }
 
-    public List<APIGroupVersions> getVersions() {
+    public List<GroupVersionForDiscovery> getVersions() {
         return versions;
     }
 
-    public void setVersions(final List<APIGroupVersions> versions) {
+    public void setVersions(final List<GroupVersionForDiscovery> versions) {
         this.versions = versions;
     }
 
@@ -95,5 +98,60 @@ public class APIGroup {
             Objects.equals(preferredVersion, __otherCasted.preferredVersion) &&
             Objects.equals(serverAddressByClientCIDRs, __otherCasted.serverAddressByClientCIDRs) &&
             Objects.equals(versions, __otherCasted.versions);
+    }
+
+    public APIGroup apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public APIGroup kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public APIGroup name(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    public APIGroup preferredVersion(final GroupVersionForDiscovery preferredVersion) {
+        this.preferredVersion = preferredVersion;
+        return this;
+    }
+
+    public APIGroup serverAddressByClientCIDRs(final List<ServerAddressByClientCIDR> serverAddressByClientCIDRs) {
+        this.serverAddressByClientCIDRs = serverAddressByClientCIDRs;
+        return this;
+    }
+
+    public APIGroup versions(final List<GroupVersionForDiscovery> versions) {
+        this.versions = versions;
+        return this;
+    }
+
+    @Override
+    public APIGroup validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (name == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "name", "name",
+                "Missing 'name' attribute.", true));
+        }
+        if (versions == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "versions", "versions",
+                "Missing 'versions' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

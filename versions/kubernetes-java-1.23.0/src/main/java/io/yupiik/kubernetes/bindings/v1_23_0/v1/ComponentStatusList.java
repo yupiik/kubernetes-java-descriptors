@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_23_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_23_0.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ComponentStatusList {
+public class ComponentStatusList implements Validable<ComponentStatusList> {
     private String apiVersion;
-    private List<ComponentStatusListItems> items;
+    private List<ComponentStatus> items;
     private String kind;
-    private ComponentStatusListMetadata metadata;
+    private ListMeta metadata;
 
     public ComponentStatusList() {
         // no-op
     }
 
     public ComponentStatusList(final String apiVersion,
-                               final List<ComponentStatusListItems> items,
+                               final List<ComponentStatus> items,
                                final String kind,
-                               final ComponentStatusListMetadata metadata) {
+                               final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class ComponentStatusList {
         this.apiVersion = apiVersion;
     }
 
-    public List<ComponentStatusListItems> getItems() {
+    public List<ComponentStatus> getItems() {
         return items;
     }
 
-    public void setItems(final List<ComponentStatusListItems> items) {
+    public void setItems(final List<ComponentStatus> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class ComponentStatusList {
         this.kind = kind;
     }
 
-    public ComponentStatusListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ComponentStatusListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class ComponentStatusList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public ComponentStatusList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ComponentStatusList items(final List<ComponentStatus> items) {
+        this.items = items;
+        return this;
+    }
+
+    public ComponentStatusList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ComponentStatusList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public ComponentStatusList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

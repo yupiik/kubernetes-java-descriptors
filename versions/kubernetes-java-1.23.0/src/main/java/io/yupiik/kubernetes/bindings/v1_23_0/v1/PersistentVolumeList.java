@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_23_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_23_0.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PersistentVolumeList {
+public class PersistentVolumeList implements Validable<PersistentVolumeList> {
     private String apiVersion;
-    private List<PersistentVolumeListItems> items;
+    private List<PersistentVolume> items;
     private String kind;
-    private PersistentVolumeListMetadata metadata;
+    private ListMeta metadata;
 
     public PersistentVolumeList() {
         // no-op
     }
 
     public PersistentVolumeList(final String apiVersion,
-                                final List<PersistentVolumeListItems> items,
+                                final List<PersistentVolume> items,
                                 final String kind,
-                                final PersistentVolumeListMetadata metadata) {
+                                final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class PersistentVolumeList {
         this.apiVersion = apiVersion;
     }
 
-    public List<PersistentVolumeListItems> getItems() {
+    public List<PersistentVolume> getItems() {
         return items;
     }
 
-    public void setItems(final List<PersistentVolumeListItems> items) {
+    public void setItems(final List<PersistentVolume> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class PersistentVolumeList {
         this.kind = kind;
     }
 
-    public PersistentVolumeListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final PersistentVolumeListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class PersistentVolumeList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public PersistentVolumeList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public PersistentVolumeList items(final List<PersistentVolume> items) {
+        this.items = items;
+        return this;
+    }
+
+    public PersistentVolumeList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public PersistentVolumeList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public PersistentVolumeList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

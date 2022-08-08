@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_15_2.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_15_2.Validable;
+import io.yupiik.kubernetes.bindings.v1_15_2.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class CSIDriver {
+public class CSIDriver implements Validable<CSIDriver> {
     private String apiVersion;
     private String kind;
-    private CSIDriverMetadata metadata;
+    private ObjectMeta metadata;
     private CSIDriverSpec spec;
 
     public CSIDriver() {
@@ -14,7 +18,7 @@ public class CSIDriver {
 
     public CSIDriver(final String apiVersion,
                      final String kind,
-                     final CSIDriverMetadata metadata,
+                     final ObjectMeta metadata,
                      final CSIDriverSpec spec) {
         // no-op
     }
@@ -35,11 +39,11 @@ public class CSIDriver {
         this.kind = kind;
     }
 
-    public CSIDriverMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final CSIDriverMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -70,5 +74,42 @@ public class CSIDriver {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec);
+    }
+
+    public CSIDriver apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public CSIDriver kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public CSIDriver metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public CSIDriver spec(final CSIDriverSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    @Override
+    public CSIDriver validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (spec == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "spec", "spec",
+                "Missing 'spec' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

@@ -1,39 +1,41 @@
 package io.yupiik.kubernetes.bindings.v1_11_0.v1beta1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_11_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_11_0.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CustomResourceDefinitionSpec {
-    private List<JsonValue> additionalPrinterColumns;
+public class CustomResourceDefinitionSpec implements Validable<CustomResourceDefinitionSpec> {
+    private List<CustomResourceColumnDefinition> additionalPrinterColumns;
     private String group;
-    private CustomResourceDefinitionSpecNames names;
+    private CustomResourceDefinitionNames names;
     private String scope;
-    private CustomResourceDefinitionSpecSubresources subresources;
-    private CustomResourceDefinitionSpecValidation validation;
+    private CustomResourceSubresources subresources;
+    private CustomResourceValidation validation;
     private String version;
-    private List<JsonValue> versions;
+    private List<CustomResourceDefinitionVersion> versions;
 
     public CustomResourceDefinitionSpec() {
         // no-op
     }
 
-    public CustomResourceDefinitionSpec(final List<JsonValue> additionalPrinterColumns,
+    public CustomResourceDefinitionSpec(final List<CustomResourceColumnDefinition> additionalPrinterColumns,
                                         final String group,
-                                        final CustomResourceDefinitionSpecNames names,
+                                        final CustomResourceDefinitionNames names,
                                         final String scope,
-                                        final CustomResourceDefinitionSpecSubresources subresources,
-                                        final CustomResourceDefinitionSpecValidation validation,
+                                        final CustomResourceSubresources subresources,
+                                        final CustomResourceValidation validation,
                                         final String version,
-                                        final List<JsonValue> versions) {
+                                        final List<CustomResourceDefinitionVersion> versions) {
         // no-op
     }
 
-    public List<JsonValue> getAdditionalPrinterColumns() {
+    public List<CustomResourceColumnDefinition> getAdditionalPrinterColumns() {
         return additionalPrinterColumns;
     }
 
-    public void setAdditionalPrinterColumns(final List<JsonValue> additionalPrinterColumns) {
+    public void setAdditionalPrinterColumns(final List<CustomResourceColumnDefinition> additionalPrinterColumns) {
         this.additionalPrinterColumns = additionalPrinterColumns;
     }
 
@@ -45,11 +47,11 @@ public class CustomResourceDefinitionSpec {
         this.group = group;
     }
 
-    public CustomResourceDefinitionSpecNames getNames() {
+    public CustomResourceDefinitionNames getNames() {
         return names;
     }
 
-    public void setNames(final CustomResourceDefinitionSpecNames names) {
+    public void setNames(final CustomResourceDefinitionNames names) {
         this.names = names;
     }
 
@@ -61,19 +63,19 @@ public class CustomResourceDefinitionSpec {
         this.scope = scope;
     }
 
-    public CustomResourceDefinitionSpecSubresources getSubresources() {
+    public CustomResourceSubresources getSubresources() {
         return subresources;
     }
 
-    public void setSubresources(final CustomResourceDefinitionSpecSubresources subresources) {
+    public void setSubresources(final CustomResourceSubresources subresources) {
         this.subresources = subresources;
     }
 
-    public CustomResourceDefinitionSpecValidation getValidation() {
+    public CustomResourceValidation getValidation() {
         return validation;
     }
 
-    public void setValidation(final CustomResourceDefinitionSpecValidation validation) {
+    public void setValidation(final CustomResourceValidation validation) {
         this.validation = validation;
     }
 
@@ -85,11 +87,11 @@ public class CustomResourceDefinitionSpec {
         this.version = version;
     }
 
-    public List<JsonValue> getVersions() {
+    public List<CustomResourceDefinitionVersion> getVersions() {
         return versions;
     }
 
-    public void setVersions(final List<JsonValue> versions) {
+    public void setVersions(final List<CustomResourceDefinitionVersion> versions) {
         this.versions = versions;
     }
 
@@ -120,5 +122,78 @@ public class CustomResourceDefinitionSpec {
             Objects.equals(validation, __otherCasted.validation) &&
             Objects.equals(version, __otherCasted.version) &&
             Objects.equals(versions, __otherCasted.versions);
+    }
+
+    public CustomResourceDefinitionSpec additionalPrinterColumns(final List<CustomResourceColumnDefinition> additionalPrinterColumns) {
+        this.additionalPrinterColumns = additionalPrinterColumns;
+        return this;
+    }
+
+    public CustomResourceDefinitionSpec group(final String group) {
+        this.group = group;
+        return this;
+    }
+
+    public CustomResourceDefinitionSpec names(final CustomResourceDefinitionNames names) {
+        this.names = names;
+        return this;
+    }
+
+    public CustomResourceDefinitionSpec scope(final String scope) {
+        this.scope = scope;
+        return this;
+    }
+
+    public CustomResourceDefinitionSpec subresources(final CustomResourceSubresources subresources) {
+        this.subresources = subresources;
+        return this;
+    }
+
+    public CustomResourceDefinitionSpec validation(final CustomResourceValidation validation) {
+        this.validation = validation;
+        return this;
+    }
+
+    public CustomResourceDefinitionSpec version(final String version) {
+        this.version = version;
+        return this;
+    }
+
+    public CustomResourceDefinitionSpec versions(final List<CustomResourceDefinitionVersion> versions) {
+        this.versions = versions;
+        return this;
+    }
+
+    @Override
+    public CustomResourceDefinitionSpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (group == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "group", "group",
+                "Missing 'group' attribute.", true));
+        }
+        if (names == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "names", "names",
+                "Missing 'names' attribute.", true));
+        }
+        if (scope == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "scope", "scope",
+                "Missing 'scope' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

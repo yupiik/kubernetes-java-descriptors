@@ -1,23 +1,27 @@
 package io.yupiik.kubernetes.bindings.v1_18_1.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_18_1.Validable;
+import io.yupiik.kubernetes.bindings.v1_18_1.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class IngressStatus {
-    private IngressStatusLoadBalancer loadBalancer;
+public class IngressStatus implements Validable<IngressStatus> {
+    private LoadBalancerStatus loadBalancer;
 
     public IngressStatus() {
         // no-op
     }
 
-    public IngressStatus(final IngressStatusLoadBalancer loadBalancer) {
+    public IngressStatus(final LoadBalancerStatus loadBalancer) {
         // no-op
     }
 
-    public IngressStatusLoadBalancer getLoadBalancer() {
+    public LoadBalancerStatus getLoadBalancer() {
         return loadBalancer;
     }
 
-    public void setLoadBalancer(final IngressStatusLoadBalancer loadBalancer) {
+    public void setLoadBalancer(final LoadBalancerStatus loadBalancer) {
         this.loadBalancer = loadBalancer;
     }
 
@@ -34,5 +38,15 @@ public class IngressStatus {
         }
         final IngressStatus __otherCasted = (IngressStatus) __other;
         return Objects.equals(loadBalancer, __otherCasted.loadBalancer);
+    }
+
+    public IngressStatus loadBalancer(final LoadBalancerStatus loadBalancer) {
+        this.loadBalancer = loadBalancer;
+        return this;
+    }
+
+    @Override
+    public IngressStatus validate() {
+        return this;
     }
 }

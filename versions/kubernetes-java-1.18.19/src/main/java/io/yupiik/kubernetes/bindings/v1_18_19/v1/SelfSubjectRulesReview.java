@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_18_19.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_19.Validable;
+import io.yupiik.kubernetes.bindings.v1_18_19.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class SelfSubjectRulesReview {
+public class SelfSubjectRulesReview implements Validable<SelfSubjectRulesReview> {
     private String apiVersion;
     private String kind;
-    private SelfSubjectRulesReviewMetadata metadata;
+    private ObjectMeta metadata;
     private SelfSubjectRulesReviewSpec spec;
-    private SelfSubjectRulesReviewStatus status;
+    private SubjectRulesReviewStatus status;
 
     public SelfSubjectRulesReview() {
         // no-op
@@ -15,9 +19,9 @@ public class SelfSubjectRulesReview {
 
     public SelfSubjectRulesReview(final String apiVersion,
                                   final String kind,
-                                  final SelfSubjectRulesReviewMetadata metadata,
+                                  final ObjectMeta metadata,
                                   final SelfSubjectRulesReviewSpec spec,
-                                  final SelfSubjectRulesReviewStatus status) {
+                                  final SubjectRulesReviewStatus status) {
         // no-op
     }
 
@@ -37,11 +41,11 @@ public class SelfSubjectRulesReview {
         this.kind = kind;
     }
 
-    public SelfSubjectRulesReviewMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final SelfSubjectRulesReviewMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -53,11 +57,11 @@ public class SelfSubjectRulesReview {
         this.spec = spec;
     }
 
-    public SelfSubjectRulesReviewStatus getStatus() {
+    public SubjectRulesReviewStatus getStatus() {
         return status;
     }
 
-    public void setStatus(final SelfSubjectRulesReviewStatus status) {
+    public void setStatus(final SubjectRulesReviewStatus status) {
         this.status = status;
     }
 
@@ -82,5 +86,47 @@ public class SelfSubjectRulesReview {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public SelfSubjectRulesReview apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public SelfSubjectRulesReview kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public SelfSubjectRulesReview metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public SelfSubjectRulesReview spec(final SelfSubjectRulesReviewSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public SelfSubjectRulesReview status(final SubjectRulesReviewStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public SelfSubjectRulesReview validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (spec == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "spec", "spec",
+                "Missing 'spec' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

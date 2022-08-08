@@ -1,11 +1,14 @@
 package io.yupiik.kubernetes.bindings.v1_17_11.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_17_11.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_11.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class StatefulSetStatus {
+public class StatefulSetStatus implements Validable<StatefulSetStatus> {
     private Integer collisionCount;
-    private List<StatefulSetStatusConditions> conditions;
+    private List<StatefulSetCondition> conditions;
     private Integer currentReplicas;
     private String currentRevision;
     private Integer observedGeneration;
@@ -19,7 +22,7 @@ public class StatefulSetStatus {
     }
 
     public StatefulSetStatus(final Integer collisionCount,
-                             final List<StatefulSetStatusConditions> conditions,
+                             final List<StatefulSetCondition> conditions,
                              final Integer currentReplicas,
                              final String currentRevision,
                              final Integer observedGeneration,
@@ -38,11 +41,11 @@ public class StatefulSetStatus {
         this.collisionCount = collisionCount;
     }
 
-    public List<StatefulSetStatusConditions> getConditions() {
+    public List<StatefulSetCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<StatefulSetStatusConditions> conditions) {
+    public void setConditions(final List<StatefulSetCondition> conditions) {
         this.conditions = conditions;
     }
 
@@ -131,5 +134,55 @@ public class StatefulSetStatus {
             Objects.equals(replicas, __otherCasted.replicas) &&
             Objects.equals(updateRevision, __otherCasted.updateRevision) &&
             Objects.equals(updatedReplicas, __otherCasted.updatedReplicas);
+    }
+
+    public StatefulSetStatus collisionCount(final Integer collisionCount) {
+        this.collisionCount = collisionCount;
+        return this;
+    }
+
+    public StatefulSetStatus conditions(final List<StatefulSetCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public StatefulSetStatus currentReplicas(final Integer currentReplicas) {
+        this.currentReplicas = currentReplicas;
+        return this;
+    }
+
+    public StatefulSetStatus currentRevision(final String currentRevision) {
+        this.currentRevision = currentRevision;
+        return this;
+    }
+
+    public StatefulSetStatus observedGeneration(final Integer observedGeneration) {
+        this.observedGeneration = observedGeneration;
+        return this;
+    }
+
+    public StatefulSetStatus readyReplicas(final Integer readyReplicas) {
+        this.readyReplicas = readyReplicas;
+        return this;
+    }
+
+    public StatefulSetStatus replicas(final int replicas) {
+        this.replicas = replicas;
+        return this;
+    }
+
+    public StatefulSetStatus updateRevision(final String updateRevision) {
+        this.updateRevision = updateRevision;
+        return this;
+    }
+
+    public StatefulSetStatus updatedReplicas(final Integer updatedReplicas) {
+        this.updatedReplicas = updatedReplicas;
+        return this;
+    }
+
+    @Override
+    public StatefulSetStatus validate() {
+        return this;
     }
 }

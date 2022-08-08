@@ -1,14 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_11_6.v1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_11_6.Validable;
+import io.yupiik.kubernetes.bindings.v1_11_6.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Endpoints {
+public class Endpoints implements Validable<Endpoints> {
     private String apiVersion;
     private String kind;
-    private EndpointsMetadata metadata;
-    private List<JsonValue> subsets;
+    private ObjectMeta metadata;
+    private List<EndpointSubset> subsets;
 
     public Endpoints() {
         // no-op
@@ -16,8 +18,8 @@ public class Endpoints {
 
     public Endpoints(final String apiVersion,
                      final String kind,
-                     final EndpointsMetadata metadata,
-                     final List<JsonValue> subsets) {
+                     final ObjectMeta metadata,
+                     final List<EndpointSubset> subsets) {
         // no-op
     }
 
@@ -37,19 +39,19 @@ public class Endpoints {
         this.kind = kind;
     }
 
-    public EndpointsMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final EndpointsMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
-    public List<JsonValue> getSubsets() {
+    public List<EndpointSubset> getSubsets() {
         return subsets;
     }
 
-    public void setSubsets(final List<JsonValue> subsets) {
+    public void setSubsets(final List<EndpointSubset> subsets) {
         this.subsets = subsets;
     }
 
@@ -72,5 +74,30 @@ public class Endpoints {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(subsets, __otherCasted.subsets);
+    }
+
+    public Endpoints apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public Endpoints kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public Endpoints metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public Endpoints subsets(final List<EndpointSubset> subsets) {
+        this.subsets = subsets;
+        return this;
+    }
+
+    @Override
+    public Endpoints validate() {
+        return this;
     }
 }

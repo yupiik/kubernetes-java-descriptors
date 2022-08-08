@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_13_2.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_13_2.Validable;
+import io.yupiik.kubernetes.bindings.v1_13_2.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class CertificateSigningRequest {
+public class CertificateSigningRequest implements Validable<CertificateSigningRequest> {
     private String apiVersion;
     private String kind;
-    private CertificateSigningRequestMetadata metadata;
+    private ObjectMeta metadata;
     private CertificateSigningRequestSpec spec;
     private CertificateSigningRequestStatus status;
 
@@ -15,7 +19,7 @@ public class CertificateSigningRequest {
 
     public CertificateSigningRequest(final String apiVersion,
                                      final String kind,
-                                     final CertificateSigningRequestMetadata metadata,
+                                     final ObjectMeta metadata,
                                      final CertificateSigningRequestSpec spec,
                                      final CertificateSigningRequestStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class CertificateSigningRequest {
         this.kind = kind;
     }
 
-    public CertificateSigningRequestMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final CertificateSigningRequestMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,35 @@ public class CertificateSigningRequest {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public CertificateSigningRequest apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public CertificateSigningRequest kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public CertificateSigningRequest metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public CertificateSigningRequest spec(final CertificateSigningRequestSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public CertificateSigningRequest status(final CertificateSigningRequestStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public CertificateSigningRequest validate() {
+        return this;
     }
 }

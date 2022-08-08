@@ -1,12 +1,14 @@
 package io.yupiik.kubernetes.bindings.v1_9_7.v1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_9_7.Validable;
+import io.yupiik.kubernetes.bindings.v1_9_7.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ReplicationControllerStatus {
+public class ReplicationControllerStatus implements Validable<ReplicationControllerStatus> {
     private Integer availableReplicas;
-    private List<JsonValue> conditions;
+    private List<ReplicationControllerCondition> conditions;
     private Integer fullyLabeledReplicas;
     private Integer observedGeneration;
     private Integer readyReplicas;
@@ -17,7 +19,7 @@ public class ReplicationControllerStatus {
     }
 
     public ReplicationControllerStatus(final Integer availableReplicas,
-                                       final List<JsonValue> conditions,
+                                       final List<ReplicationControllerCondition> conditions,
                                        final Integer fullyLabeledReplicas,
                                        final Integer observedGeneration,
                                        final Integer readyReplicas,
@@ -33,11 +35,11 @@ public class ReplicationControllerStatus {
         this.availableReplicas = availableReplicas;
     }
 
-    public List<JsonValue> getConditions() {
+    public List<ReplicationControllerCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<JsonValue> conditions) {
+    public void setConditions(final List<ReplicationControllerCondition> conditions) {
         this.conditions = conditions;
     }
 
@@ -96,5 +98,40 @@ public class ReplicationControllerStatus {
             Objects.equals(observedGeneration, __otherCasted.observedGeneration) &&
             Objects.equals(readyReplicas, __otherCasted.readyReplicas) &&
             Objects.equals(replicas, __otherCasted.replicas);
+    }
+
+    public ReplicationControllerStatus availableReplicas(final Integer availableReplicas) {
+        this.availableReplicas = availableReplicas;
+        return this;
+    }
+
+    public ReplicationControllerStatus conditions(final List<ReplicationControllerCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public ReplicationControllerStatus fullyLabeledReplicas(final Integer fullyLabeledReplicas) {
+        this.fullyLabeledReplicas = fullyLabeledReplicas;
+        return this;
+    }
+
+    public ReplicationControllerStatus observedGeneration(final Integer observedGeneration) {
+        this.observedGeneration = observedGeneration;
+        return this;
+    }
+
+    public ReplicationControllerStatus readyReplicas(final Integer readyReplicas) {
+        this.readyReplicas = readyReplicas;
+        return this;
+    }
+
+    public ReplicationControllerStatus replicas(final int replicas) {
+        this.replicas = replicas;
+        return this;
+    }
+
+    @Override
+    public ReplicationControllerStatus validate() {
+        return this;
     }
 }

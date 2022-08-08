@@ -1,14 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_5.v1alpha1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_7_5.Validable;
+import io.yupiik.kubernetes.bindings.v1_7_5.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ClusterRole {
+public class ClusterRole implements Validable<ClusterRole> {
     private String apiVersion;
     private String kind;
-    private ClusterRoleMetadata metadata;
-    private List<JsonValue> rules;
+    private ObjectMeta metadata;
+    private List<PolicyRule> rules;
 
     public ClusterRole() {
         // no-op
@@ -16,8 +18,8 @@ public class ClusterRole {
 
     public ClusterRole(final String apiVersion,
                        final String kind,
-                       final ClusterRoleMetadata metadata,
-                       final List<JsonValue> rules) {
+                       final ObjectMeta metadata,
+                       final List<PolicyRule> rules) {
         // no-op
     }
 
@@ -37,19 +39,19 @@ public class ClusterRole {
         this.kind = kind;
     }
 
-    public ClusterRoleMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ClusterRoleMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
-    public List<JsonValue> getRules() {
+    public List<PolicyRule> getRules() {
         return rules;
     }
 
-    public void setRules(final List<JsonValue> rules) {
+    public void setRules(final List<PolicyRule> rules) {
         this.rules = rules;
     }
 
@@ -72,5 +74,42 @@ public class ClusterRole {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(rules, __otherCasted.rules);
+    }
+
+    public ClusterRole apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ClusterRole kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ClusterRole metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public ClusterRole rules(final List<PolicyRule> rules) {
+        this.rules = rules;
+        return this;
+    }
+
+    @Override
+    public ClusterRole validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (rules == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "rules", "rules",
+                "Missing 'rules' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

@@ -1,20 +1,23 @@
 package io.yupiik.kubernetes.bindings.v1_22_12.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_22_12.Validable;
+import io.yupiik.kubernetes.bindings.v1_22_12.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class StorageVersionStatus {
+public class StorageVersionStatus implements Validable<StorageVersionStatus> {
     private String commonEncodingVersion;
-    private List<StorageVersionStatusConditions> conditions;
-    private List<StorageVersionStatusStorageVersions> storageVersions;
+    private List<StorageVersionCondition> conditions;
+    private List<ServerStorageVersion> storageVersions;
 
     public StorageVersionStatus() {
         // no-op
     }
 
     public StorageVersionStatus(final String commonEncodingVersion,
-                                final List<StorageVersionStatusConditions> conditions,
-                                final List<StorageVersionStatusStorageVersions> storageVersions) {
+                                final List<StorageVersionCondition> conditions,
+                                final List<ServerStorageVersion> storageVersions) {
         // no-op
     }
 
@@ -26,19 +29,19 @@ public class StorageVersionStatus {
         this.commonEncodingVersion = commonEncodingVersion;
     }
 
-    public List<StorageVersionStatusConditions> getConditions() {
+    public List<StorageVersionCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<StorageVersionStatusConditions> conditions) {
+    public void setConditions(final List<StorageVersionCondition> conditions) {
         this.conditions = conditions;
     }
 
-    public List<StorageVersionStatusStorageVersions> getStorageVersions() {
+    public List<ServerStorageVersion> getStorageVersions() {
         return storageVersions;
     }
 
-    public void setStorageVersions(final List<StorageVersionStatusStorageVersions> storageVersions) {
+    public void setStorageVersions(final List<ServerStorageVersion> storageVersions) {
         this.storageVersions = storageVersions;
     }
 
@@ -59,5 +62,25 @@ public class StorageVersionStatus {
         return Objects.equals(commonEncodingVersion, __otherCasted.commonEncodingVersion) &&
             Objects.equals(conditions, __otherCasted.conditions) &&
             Objects.equals(storageVersions, __otherCasted.storageVersions);
+    }
+
+    public StorageVersionStatus commonEncodingVersion(final String commonEncodingVersion) {
+        this.commonEncodingVersion = commonEncodingVersion;
+        return this;
+    }
+
+    public StorageVersionStatus conditions(final List<StorageVersionCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public StorageVersionStatus storageVersions(final List<ServerStorageVersion> storageVersions) {
+        this.storageVersions = storageVersions;
+        return this;
+    }
+
+    @Override
+    public StorageVersionStatus validate() {
+        return this;
     }
 }

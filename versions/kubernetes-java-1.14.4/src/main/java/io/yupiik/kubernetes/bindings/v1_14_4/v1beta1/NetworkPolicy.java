@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_14_4.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_14_4.Validable;
+import io.yupiik.kubernetes.bindings.v1_14_4.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class NetworkPolicy {
+public class NetworkPolicy implements Validable<NetworkPolicy> {
     private String apiVersion;
     private String kind;
-    private NetworkPolicyMetadata metadata;
+    private ObjectMeta metadata;
     private NetworkPolicySpec spec;
 
     public NetworkPolicy() {
@@ -14,7 +18,7 @@ public class NetworkPolicy {
 
     public NetworkPolicy(final String apiVersion,
                          final String kind,
-                         final NetworkPolicyMetadata metadata,
+                         final ObjectMeta metadata,
                          final NetworkPolicySpec spec) {
         // no-op
     }
@@ -35,11 +39,11 @@ public class NetworkPolicy {
         this.kind = kind;
     }
 
-    public NetworkPolicyMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final NetworkPolicyMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -70,5 +74,30 @@ public class NetworkPolicy {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec);
+    }
+
+    public NetworkPolicy apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public NetworkPolicy kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public NetworkPolicy metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public NetworkPolicy spec(final NetworkPolicySpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    @Override
+    public NetworkPolicy validate() {
+        return this;
     }
 }

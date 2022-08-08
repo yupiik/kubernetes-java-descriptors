@@ -1,36 +1,39 @@
 package io.yupiik.kubernetes.bindings.v1_17_14.v1;
 
+import io.yupiik.kubernetes.bindings.v1_17_14.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_14.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class NodeSpec {
-    private NodeSpecConfigSource configSource;
+public class NodeSpec implements Validable<NodeSpec> {
+    private NodeConfigSource configSource;
     private String externalID;
     private String podCIDR;
     private List<String> podCIDRs;
     private String providerID;
-    private List<NodeSpecTaints> taints;
+    private List<Taint> taints;
     private Boolean unschedulable;
 
     public NodeSpec() {
         // no-op
     }
 
-    public NodeSpec(final NodeSpecConfigSource configSource,
+    public NodeSpec(final NodeConfigSource configSource,
                     final String externalID,
                     final String podCIDR,
                     final List<String> podCIDRs,
                     final String providerID,
-                    final List<NodeSpecTaints> taints,
+                    final List<Taint> taints,
                     final Boolean unschedulable) {
         // no-op
     }
 
-    public NodeSpecConfigSource getConfigSource() {
+    public NodeConfigSource getConfigSource() {
         return configSource;
     }
 
-    public void setConfigSource(final NodeSpecConfigSource configSource) {
+    public void setConfigSource(final NodeConfigSource configSource) {
         this.configSource = configSource;
     }
 
@@ -66,11 +69,11 @@ public class NodeSpec {
         this.providerID = providerID;
     }
 
-    public List<NodeSpecTaints> getTaints() {
+    public List<Taint> getTaints() {
         return taints;
     }
 
-    public void setTaints(final List<NodeSpecTaints> taints) {
+    public void setTaints(final List<Taint> taints) {
         this.taints = taints;
     }
 
@@ -107,5 +110,45 @@ public class NodeSpec {
             Objects.equals(providerID, __otherCasted.providerID) &&
             Objects.equals(taints, __otherCasted.taints) &&
             Objects.equals(unschedulable, __otherCasted.unschedulable);
+    }
+
+    public NodeSpec configSource(final NodeConfigSource configSource) {
+        this.configSource = configSource;
+        return this;
+    }
+
+    public NodeSpec externalID(final String externalID) {
+        this.externalID = externalID;
+        return this;
+    }
+
+    public NodeSpec podCIDR(final String podCIDR) {
+        this.podCIDR = podCIDR;
+        return this;
+    }
+
+    public NodeSpec podCIDRs(final List<String> podCIDRs) {
+        this.podCIDRs = podCIDRs;
+        return this;
+    }
+
+    public NodeSpec providerID(final String providerID) {
+        this.providerID = providerID;
+        return this;
+    }
+
+    public NodeSpec taints(final List<Taint> taints) {
+        this.taints = taints;
+        return this;
+    }
+
+    public NodeSpec unschedulable(final Boolean unschedulable) {
+        this.unschedulable = unschedulable;
+        return this;
+    }
+
+    @Override
+    public NodeSpec validate() {
+        return this;
     }
 }

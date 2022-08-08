@@ -1,33 +1,37 @@
 package io.yupiik.kubernetes.bindings.v1_21_2.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_2.Validable;
+import io.yupiik.kubernetes.bindings.v1_21_2.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class SelfSubjectAccessReviewSpec {
-    private SelfSubjectAccessReviewSpecNonResourceAttributes nonResourceAttributes;
-    private SelfSubjectAccessReviewSpecResourceAttributes resourceAttributes;
+public class SelfSubjectAccessReviewSpec implements Validable<SelfSubjectAccessReviewSpec> {
+    private NonResourceAttributes nonResourceAttributes;
+    private ResourceAttributes resourceAttributes;
 
     public SelfSubjectAccessReviewSpec() {
         // no-op
     }
 
-    public SelfSubjectAccessReviewSpec(final SelfSubjectAccessReviewSpecNonResourceAttributes nonResourceAttributes,
-                                       final SelfSubjectAccessReviewSpecResourceAttributes resourceAttributes) {
+    public SelfSubjectAccessReviewSpec(final NonResourceAttributes nonResourceAttributes,
+                                       final ResourceAttributes resourceAttributes) {
         // no-op
     }
 
-    public SelfSubjectAccessReviewSpecNonResourceAttributes getNonResourceAttributes() {
+    public NonResourceAttributes getNonResourceAttributes() {
         return nonResourceAttributes;
     }
 
-    public void setNonResourceAttributes(final SelfSubjectAccessReviewSpecNonResourceAttributes nonResourceAttributes) {
+    public void setNonResourceAttributes(final NonResourceAttributes nonResourceAttributes) {
         this.nonResourceAttributes = nonResourceAttributes;
     }
 
-    public SelfSubjectAccessReviewSpecResourceAttributes getResourceAttributes() {
+    public ResourceAttributes getResourceAttributes() {
         return resourceAttributes;
     }
 
-    public void setResourceAttributes(final SelfSubjectAccessReviewSpecResourceAttributes resourceAttributes) {
+    public void setResourceAttributes(final ResourceAttributes resourceAttributes) {
         this.resourceAttributes = resourceAttributes;
     }
 
@@ -46,5 +50,20 @@ public class SelfSubjectAccessReviewSpec {
         final SelfSubjectAccessReviewSpec __otherCasted = (SelfSubjectAccessReviewSpec) __other;
         return Objects.equals(nonResourceAttributes, __otherCasted.nonResourceAttributes) &&
             Objects.equals(resourceAttributes, __otherCasted.resourceAttributes);
+    }
+
+    public SelfSubjectAccessReviewSpec nonResourceAttributes(final NonResourceAttributes nonResourceAttributes) {
+        this.nonResourceAttributes = nonResourceAttributes;
+        return this;
+    }
+
+    public SelfSubjectAccessReviewSpec resourceAttributes(final ResourceAttributes resourceAttributes) {
+        this.resourceAttributes = resourceAttributes;
+        return this;
+    }
+
+    @Override
+    public SelfSubjectAccessReviewSpec validate() {
+        return this;
     }
 }

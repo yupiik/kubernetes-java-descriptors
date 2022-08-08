@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_21_2.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_2.Validable;
+import io.yupiik.kubernetes.bindings.v1_21_2.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class DaemonSetSpec {
+public class DaemonSetSpec implements Validable<DaemonSetSpec> {
     private Integer minReadySeconds;
     private Integer revisionHistoryLimit;
-    private DaemonSetSpecSelector selector;
-    private DaemonSetSpecTemplate template;
-    private DaemonSetSpecUpdateStrategy updateStrategy;
+    private LabelSelector selector;
+    private PodTemplateSpec template;
+    private DaemonSetUpdateStrategy updateStrategy;
 
     public DaemonSetSpec() {
         // no-op
@@ -15,9 +19,9 @@ public class DaemonSetSpec {
 
     public DaemonSetSpec(final Integer minReadySeconds,
                          final Integer revisionHistoryLimit,
-                         final DaemonSetSpecSelector selector,
-                         final DaemonSetSpecTemplate template,
-                         final DaemonSetSpecUpdateStrategy updateStrategy) {
+                         final LabelSelector selector,
+                         final PodTemplateSpec template,
+                         final DaemonSetUpdateStrategy updateStrategy) {
         // no-op
     }
 
@@ -37,27 +41,27 @@ public class DaemonSetSpec {
         this.revisionHistoryLimit = revisionHistoryLimit;
     }
 
-    public DaemonSetSpecSelector getSelector() {
+    public LabelSelector getSelector() {
         return selector;
     }
 
-    public void setSelector(final DaemonSetSpecSelector selector) {
+    public void setSelector(final LabelSelector selector) {
         this.selector = selector;
     }
 
-    public DaemonSetSpecTemplate getTemplate() {
+    public PodTemplateSpec getTemplate() {
         return template;
     }
 
-    public void setTemplate(final DaemonSetSpecTemplate template) {
+    public void setTemplate(final PodTemplateSpec template) {
         this.template = template;
     }
 
-    public DaemonSetSpecUpdateStrategy getUpdateStrategy() {
+    public DaemonSetUpdateStrategy getUpdateStrategy() {
         return updateStrategy;
     }
 
-    public void setUpdateStrategy(final DaemonSetSpecUpdateStrategy updateStrategy) {
+    public void setUpdateStrategy(final DaemonSetUpdateStrategy updateStrategy) {
         this.updateStrategy = updateStrategy;
     }
 
@@ -82,5 +86,55 @@ public class DaemonSetSpec {
             Objects.equals(selector, __otherCasted.selector) &&
             Objects.equals(template, __otherCasted.template) &&
             Objects.equals(updateStrategy, __otherCasted.updateStrategy);
+    }
+
+    public DaemonSetSpec minReadySeconds(final Integer minReadySeconds) {
+        this.minReadySeconds = minReadySeconds;
+        return this;
+    }
+
+    public DaemonSetSpec revisionHistoryLimit(final Integer revisionHistoryLimit) {
+        this.revisionHistoryLimit = revisionHistoryLimit;
+        return this;
+    }
+
+    public DaemonSetSpec selector(final LabelSelector selector) {
+        this.selector = selector;
+        return this;
+    }
+
+    public DaemonSetSpec template(final PodTemplateSpec template) {
+        this.template = template;
+        return this;
+    }
+
+    public DaemonSetSpec updateStrategy(final DaemonSetUpdateStrategy updateStrategy) {
+        this.updateStrategy = updateStrategy;
+        return this;
+    }
+
+    @Override
+    public DaemonSetSpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (selector == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "selector", "selector",
+                "Missing 'selector' attribute.", true));
+        }
+        if (template == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "template", "template",
+                "Missing 'template' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

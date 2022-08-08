@@ -1,23 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_7_6.v1alpha1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_7_6.Validable;
+import io.yupiik.kubernetes.bindings.v1_7_6.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class InitializerConfiguration {
+public class InitializerConfiguration implements Validable<InitializerConfiguration> {
     private String apiVersion;
-    private List<JsonValue> initializers;
+    private List<Initializer> initializers;
     private String kind;
-    private InitializerConfigurationMetadata metadata;
+    private ObjectMeta metadata;
 
     public InitializerConfiguration() {
         // no-op
     }
 
     public InitializerConfiguration(final String apiVersion,
-                                    final List<JsonValue> initializers,
+                                    final List<Initializer> initializers,
                                     final String kind,
-                                    final InitializerConfigurationMetadata metadata) {
+                                    final ObjectMeta metadata) {
         // no-op
     }
 
@@ -29,11 +31,11 @@ public class InitializerConfiguration {
         this.apiVersion = apiVersion;
     }
 
-    public List<JsonValue> getInitializers() {
+    public List<Initializer> getInitializers() {
         return initializers;
     }
 
-    public void setInitializers(final List<JsonValue> initializers) {
+    public void setInitializers(final List<Initializer> initializers) {
         this.initializers = initializers;
     }
 
@@ -45,11 +47,11 @@ public class InitializerConfiguration {
         this.kind = kind;
     }
 
-    public InitializerConfigurationMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final InitializerConfigurationMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -72,5 +74,30 @@ public class InitializerConfiguration {
             Objects.equals(initializers, __otherCasted.initializers) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public InitializerConfiguration apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public InitializerConfiguration initializers(final List<Initializer> initializers) {
+        this.initializers = initializers;
+        return this;
+    }
+
+    public InitializerConfiguration kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public InitializerConfiguration metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public InitializerConfiguration validate() {
+        return this;
     }
 }

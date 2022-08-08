@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_12_6.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_12_6.Validable;
+import io.yupiik.kubernetes.bindings.v1_12_6.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class DaemonSet {
+public class DaemonSet implements Validable<DaemonSet> {
     private String apiVersion;
     private String kind;
-    private DaemonSetMetadata metadata;
+    private ObjectMeta metadata;
     private DaemonSetSpec spec;
     private DaemonSetStatus status;
 
@@ -15,7 +19,7 @@ public class DaemonSet {
 
     public DaemonSet(final String apiVersion,
                      final String kind,
-                     final DaemonSetMetadata metadata,
+                     final ObjectMeta metadata,
                      final DaemonSetSpec spec,
                      final DaemonSetStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class DaemonSet {
         this.kind = kind;
     }
 
-    public DaemonSetMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final DaemonSetMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,35 @@ public class DaemonSet {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public DaemonSet apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public DaemonSet kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public DaemonSet metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public DaemonSet spec(final DaemonSetSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public DaemonSet status(final DaemonSetStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public DaemonSet validate() {
+        return this;
     }
 }

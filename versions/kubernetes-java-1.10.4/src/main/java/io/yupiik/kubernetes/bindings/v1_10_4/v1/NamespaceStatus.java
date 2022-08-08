@@ -1,8 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_10_4.v1;
 
+import io.yupiik.kubernetes.bindings.v1_10_4.Validable;
+import io.yupiik.kubernetes.bindings.v1_10_4.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class NamespaceStatus {
+public class NamespaceStatus implements Validable<NamespaceStatus> {
     private String phase;
 
     public NamespaceStatus() {
@@ -34,5 +38,15 @@ public class NamespaceStatus {
         }
         final NamespaceStatus __otherCasted = (NamespaceStatus) __other;
         return Objects.equals(phase, __otherCasted.phase);
+    }
+
+    public NamespaceStatus phase(final String phase) {
+        this.phase = phase;
+        return this;
+    }
+
+    @Override
+    public NamespaceStatus validate() {
+        return this;
     }
 }

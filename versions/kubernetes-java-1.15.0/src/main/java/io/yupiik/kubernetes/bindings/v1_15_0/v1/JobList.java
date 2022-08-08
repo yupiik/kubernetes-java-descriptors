@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_15_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_15_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_15_0.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class JobList {
+public class JobList implements Validable<JobList> {
     private String apiVersion;
-    private List<JobListItems> items;
+    private List<Job> items;
     private String kind;
-    private JobListMetadata metadata;
+    private ListMeta metadata;
 
     public JobList() {
         // no-op
     }
 
     public JobList(final String apiVersion,
-                   final List<JobListItems> items,
+                   final List<Job> items,
                    final String kind,
-                   final JobListMetadata metadata) {
+                   final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class JobList {
         this.apiVersion = apiVersion;
     }
 
-    public List<JobListItems> getItems() {
+    public List<Job> getItems() {
         return items;
     }
 
-    public void setItems(final List<JobListItems> items) {
+    public void setItems(final List<Job> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class JobList {
         this.kind = kind;
     }
 
-    public JobListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final JobListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class JobList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public JobList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public JobList items(final List<Job> items) {
+        this.items = items;
+        return this;
+    }
+
+    public JobList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public JobList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public JobList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

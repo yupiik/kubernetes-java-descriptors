@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_17_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_17_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_0.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class DeploymentStatus {
+public class DeploymentStatus implements Validable<DeploymentStatus> {
     private Integer availableReplicas;
     private Integer collisionCount;
-    private List<DeploymentStatusConditions> conditions;
+    private List<DeploymentCondition> conditions;
     private Integer observedGeneration;
     private Integer readyReplicas;
     private Integer replicas;
@@ -19,7 +22,7 @@ public class DeploymentStatus {
 
     public DeploymentStatus(final Integer availableReplicas,
                             final Integer collisionCount,
-                            final List<DeploymentStatusConditions> conditions,
+                            final List<DeploymentCondition> conditions,
                             final Integer observedGeneration,
                             final Integer readyReplicas,
                             final Integer replicas,
@@ -44,11 +47,11 @@ public class DeploymentStatus {
         this.collisionCount = collisionCount;
     }
 
-    public List<DeploymentStatusConditions> getConditions() {
+    public List<DeploymentCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<DeploymentStatusConditions> conditions) {
+    public void setConditions(final List<DeploymentCondition> conditions) {
         this.conditions = conditions;
     }
 
@@ -119,5 +122,50 @@ public class DeploymentStatus {
             Objects.equals(replicas, __otherCasted.replicas) &&
             Objects.equals(unavailableReplicas, __otherCasted.unavailableReplicas) &&
             Objects.equals(updatedReplicas, __otherCasted.updatedReplicas);
+    }
+
+    public DeploymentStatus availableReplicas(final Integer availableReplicas) {
+        this.availableReplicas = availableReplicas;
+        return this;
+    }
+
+    public DeploymentStatus collisionCount(final Integer collisionCount) {
+        this.collisionCount = collisionCount;
+        return this;
+    }
+
+    public DeploymentStatus conditions(final List<DeploymentCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public DeploymentStatus observedGeneration(final Integer observedGeneration) {
+        this.observedGeneration = observedGeneration;
+        return this;
+    }
+
+    public DeploymentStatus readyReplicas(final Integer readyReplicas) {
+        this.readyReplicas = readyReplicas;
+        return this;
+    }
+
+    public DeploymentStatus replicas(final Integer replicas) {
+        this.replicas = replicas;
+        return this;
+    }
+
+    public DeploymentStatus unavailableReplicas(final Integer unavailableReplicas) {
+        this.unavailableReplicas = unavailableReplicas;
+        return this;
+    }
+
+    public DeploymentStatus updatedReplicas(final Integer updatedReplicas) {
+        this.updatedReplicas = updatedReplicas;
+        return this;
+    }
+
+    @Override
+    public DeploymentStatus validate() {
+        return this;
     }
 }

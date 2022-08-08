@@ -1,23 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_11_8.v1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_11_8.Validable;
+import io.yupiik.kubernetes.bindings.v1_11_8.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class NamespaceList {
+public class NamespaceList implements Validable<NamespaceList> {
     private String apiVersion;
-    private List<JsonValue> items;
+    private List<Namespace> items;
     private String kind;
-    private NamespaceListMetadata metadata;
+    private ListMeta metadata;
 
     public NamespaceList() {
         // no-op
     }
 
     public NamespaceList(final String apiVersion,
-                         final List<JsonValue> items,
+                         final List<Namespace> items,
                          final String kind,
-                         final NamespaceListMetadata metadata) {
+                         final ListMeta metadata) {
         // no-op
     }
 
@@ -29,11 +31,11 @@ public class NamespaceList {
         this.apiVersion = apiVersion;
     }
 
-    public List<JsonValue> getItems() {
+    public List<Namespace> getItems() {
         return items;
     }
 
-    public void setItems(final List<JsonValue> items) {
+    public void setItems(final List<Namespace> items) {
         this.items = items;
     }
 
@@ -45,11 +47,11 @@ public class NamespaceList {
         this.kind = kind;
     }
 
-    public NamespaceListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final NamespaceListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -72,5 +74,42 @@ public class NamespaceList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public NamespaceList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public NamespaceList items(final List<Namespace> items) {
+        this.items = items;
+        return this;
+    }
+
+    public NamespaceList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public NamespaceList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public NamespaceList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

@@ -1,15 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_7_4.v1beta1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_7_4.Validable;
+import io.yupiik.kubernetes.bindings.v1_7_4.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ThirdPartyResource {
+public class ThirdPartyResource implements Validable<ThirdPartyResource> {
     private String apiVersion;
     private String description;
     private String kind;
-    private ThirdPartyResourceMetadata metadata;
-    private List<JsonValue> versions;
+    private ObjectMeta metadata;
+    private List<APIVersion> versions;
 
     public ThirdPartyResource() {
         // no-op
@@ -18,8 +20,8 @@ public class ThirdPartyResource {
     public ThirdPartyResource(final String apiVersion,
                               final String description,
                               final String kind,
-                              final ThirdPartyResourceMetadata metadata,
-                              final List<JsonValue> versions) {
+                              final ObjectMeta metadata,
+                              final List<APIVersion> versions) {
         // no-op
     }
 
@@ -47,19 +49,19 @@ public class ThirdPartyResource {
         this.kind = kind;
     }
 
-    public ThirdPartyResourceMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ThirdPartyResourceMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
-    public List<JsonValue> getVersions() {
+    public List<APIVersion> getVersions() {
         return versions;
     }
 
-    public void setVersions(final List<JsonValue> versions) {
+    public void setVersions(final List<APIVersion> versions) {
         this.versions = versions;
     }
 
@@ -84,5 +86,35 @@ public class ThirdPartyResource {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(versions, __otherCasted.versions);
+    }
+
+    public ThirdPartyResource apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ThirdPartyResource description(final String description) {
+        this.description = description;
+        return this;
+    }
+
+    public ThirdPartyResource kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ThirdPartyResource metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public ThirdPartyResource versions(final List<APIVersion> versions) {
+        this.versions = versions;
+        return this;
+    }
+
+    @Override
+    public ThirdPartyResource validate() {
+        return this;
     }
 }

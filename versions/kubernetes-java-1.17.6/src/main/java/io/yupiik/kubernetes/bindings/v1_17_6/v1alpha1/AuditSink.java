@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_17_6.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_17_6.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_6.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class AuditSink {
+public class AuditSink implements Validable<AuditSink> {
     private String apiVersion;
     private String kind;
-    private AuditSinkMetadata metadata;
+    private ObjectMeta metadata;
     private AuditSinkSpec spec;
 
     public AuditSink() {
@@ -14,7 +18,7 @@ public class AuditSink {
 
     public AuditSink(final String apiVersion,
                      final String kind,
-                     final AuditSinkMetadata metadata,
+                     final ObjectMeta metadata,
                      final AuditSinkSpec spec) {
         // no-op
     }
@@ -35,11 +39,11 @@ public class AuditSink {
         this.kind = kind;
     }
 
-    public AuditSinkMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final AuditSinkMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -70,5 +74,30 @@ public class AuditSink {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec);
+    }
+
+    public AuditSink apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public AuditSink kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public AuditSink metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public AuditSink spec(final AuditSinkSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    @Override
+    public AuditSink validate() {
+        return this;
     }
 }

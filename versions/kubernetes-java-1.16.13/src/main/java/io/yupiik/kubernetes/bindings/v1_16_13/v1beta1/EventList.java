@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_16_13.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_16_13.Validable;
+import io.yupiik.kubernetes.bindings.v1_16_13.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class EventList {
+public class EventList implements Validable<EventList> {
     private String apiVersion;
-    private List<EventListItems> items;
+    private List<Event> items;
     private String kind;
-    private EventListMetadata metadata;
+    private ListMeta metadata;
 
     public EventList() {
         // no-op
     }
 
     public EventList(final String apiVersion,
-                     final List<EventListItems> items,
+                     final List<Event> items,
                      final String kind,
-                     final EventListMetadata metadata) {
+                     final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class EventList {
         this.apiVersion = apiVersion;
     }
 
-    public List<EventListItems> getItems() {
+    public List<Event> getItems() {
         return items;
     }
 
-    public void setItems(final List<EventListItems> items) {
+    public void setItems(final List<Event> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class EventList {
         this.kind = kind;
     }
 
-    public EventListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final EventListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class EventList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public EventList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public EventList items(final List<Event> items) {
+        this.items = items;
+        return this;
+    }
+
+    public EventList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public EventList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public EventList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

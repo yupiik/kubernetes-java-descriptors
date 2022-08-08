@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_9_0.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_9_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_9_0.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class VolumeAttachment {
+public class VolumeAttachment implements Validable<VolumeAttachment> {
     private String apiVersion;
     private String kind;
-    private VolumeAttachmentMetadata metadata;
+    private ObjectMeta metadata;
     private VolumeAttachmentSpec spec;
     private VolumeAttachmentStatus status;
 
@@ -15,7 +19,7 @@ public class VolumeAttachment {
 
     public VolumeAttachment(final String apiVersion,
                             final String kind,
-                            final VolumeAttachmentMetadata metadata,
+                            final ObjectMeta metadata,
                             final VolumeAttachmentSpec spec,
                             final VolumeAttachmentStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class VolumeAttachment {
         this.kind = kind;
     }
 
-    public VolumeAttachmentMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final VolumeAttachmentMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,47 @@ public class VolumeAttachment {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public VolumeAttachment apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public VolumeAttachment kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public VolumeAttachment metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public VolumeAttachment spec(final VolumeAttachmentSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public VolumeAttachment status(final VolumeAttachmentStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public VolumeAttachment validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (spec == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "spec", "spec",
+                "Missing 'spec' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

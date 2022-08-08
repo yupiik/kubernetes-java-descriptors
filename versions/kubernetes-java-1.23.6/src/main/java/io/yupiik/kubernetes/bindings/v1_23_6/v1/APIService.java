@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_23_6.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_6.Validable;
+import io.yupiik.kubernetes.bindings.v1_23_6.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class APIService {
+public class APIService implements Validable<APIService> {
     private String apiVersion;
     private String kind;
-    private APIServiceMetadata metadata;
+    private ObjectMeta metadata;
     private APIServiceSpec spec;
     private APIServiceStatus status;
 
@@ -15,7 +19,7 @@ public class APIService {
 
     public APIService(final String apiVersion,
                       final String kind,
-                      final APIServiceMetadata metadata,
+                      final ObjectMeta metadata,
                       final APIServiceSpec spec,
                       final APIServiceStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class APIService {
         this.kind = kind;
     }
 
-    public APIServiceMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final APIServiceMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,35 @@ public class APIService {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public APIService apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public APIService kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public APIService metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public APIService spec(final APIServiceSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public APIService status(final APIServiceStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public APIService validate() {
+        return this;
     }
 }

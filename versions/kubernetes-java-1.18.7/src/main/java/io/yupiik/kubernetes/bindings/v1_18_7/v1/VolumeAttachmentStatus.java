@@ -1,30 +1,34 @@
 package io.yupiik.kubernetes.bindings.v1_18_7.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_7.Validable;
+import io.yupiik.kubernetes.bindings.v1_18_7.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class VolumeAttachmentStatus {
-    private VolumeAttachmentStatusAttachError attachError;
+public class VolumeAttachmentStatus implements Validable<VolumeAttachmentStatus> {
+    private VolumeError attachError;
     private boolean attached;
     private Map<String, String> attachmentMetadata;
-    private VolumeAttachmentStatusDetachError detachError;
+    private VolumeError detachError;
 
     public VolumeAttachmentStatus() {
         // no-op
     }
 
-    public VolumeAttachmentStatus(final VolumeAttachmentStatusAttachError attachError,
+    public VolumeAttachmentStatus(final VolumeError attachError,
                                   final boolean attached,
                                   final Map<String, String> attachmentMetadata,
-                                  final VolumeAttachmentStatusDetachError detachError) {
+                                  final VolumeError detachError) {
         // no-op
     }
 
-    public VolumeAttachmentStatusAttachError getAttachError() {
+    public VolumeError getAttachError() {
         return attachError;
     }
 
-    public void setAttachError(final VolumeAttachmentStatusAttachError attachError) {
+    public void setAttachError(final VolumeError attachError) {
         this.attachError = attachError;
     }
 
@@ -44,11 +48,11 @@ public class VolumeAttachmentStatus {
         this.attachmentMetadata = attachmentMetadata;
     }
 
-    public VolumeAttachmentStatusDetachError getDetachError() {
+    public VolumeError getDetachError() {
         return detachError;
     }
 
-    public void setDetachError(final VolumeAttachmentStatusDetachError detachError) {
+    public void setDetachError(final VolumeError detachError) {
         this.detachError = detachError;
     }
 
@@ -71,5 +75,30 @@ public class VolumeAttachmentStatus {
             Objects.equals(attached, __otherCasted.attached) &&
             Objects.equals(attachmentMetadata, __otherCasted.attachmentMetadata) &&
             Objects.equals(detachError, __otherCasted.detachError);
+    }
+
+    public VolumeAttachmentStatus attachError(final VolumeError attachError) {
+        this.attachError = attachError;
+        return this;
+    }
+
+    public VolumeAttachmentStatus attached(final boolean attached) {
+        this.attached = attached;
+        return this;
+    }
+
+    public VolumeAttachmentStatus attachmentMetadata(final Map<String, String> attachmentMetadata) {
+        this.attachmentMetadata = attachmentMetadata;
+        return this;
+    }
+
+    public VolumeAttachmentStatus detachError(final VolumeError detachError) {
+        this.detachError = detachError;
+        return this;
+    }
+
+    @Override
+    public VolumeAttachmentStatus validate() {
+        return this;
     }
 }

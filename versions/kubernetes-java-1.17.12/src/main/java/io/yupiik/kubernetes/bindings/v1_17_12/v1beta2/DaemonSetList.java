@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_17_12.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_17_12.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_12.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class DaemonSetList {
+public class DaemonSetList implements Validable<DaemonSetList> {
     private String apiVersion;
-    private List<DaemonSetListItems> items;
+    private List<DaemonSet> items;
     private String kind;
-    private DaemonSetListMetadata metadata;
+    private ListMeta metadata;
 
     public DaemonSetList() {
         // no-op
     }
 
     public DaemonSetList(final String apiVersion,
-                         final List<DaemonSetListItems> items,
+                         final List<DaemonSet> items,
                          final String kind,
-                         final DaemonSetListMetadata metadata) {
+                         final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class DaemonSetList {
         this.apiVersion = apiVersion;
     }
 
-    public List<DaemonSetListItems> getItems() {
+    public List<DaemonSet> getItems() {
         return items;
     }
 
-    public void setItems(final List<DaemonSetListItems> items) {
+    public void setItems(final List<DaemonSet> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class DaemonSetList {
         this.kind = kind;
     }
 
-    public DaemonSetListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final DaemonSetListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class DaemonSetList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public DaemonSetList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public DaemonSetList items(final List<DaemonSet> items) {
+        this.items = items;
+        return this;
+    }
+
+    public DaemonSetList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public DaemonSetList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public DaemonSetList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

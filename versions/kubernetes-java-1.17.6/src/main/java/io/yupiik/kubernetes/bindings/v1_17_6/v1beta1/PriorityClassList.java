@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_17_6.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_17_6.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_6.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PriorityClassList {
+public class PriorityClassList implements Validable<PriorityClassList> {
     private String apiVersion;
-    private List<PriorityClassListItems> items;
+    private List<PriorityClass> items;
     private String kind;
-    private PriorityClassListMetadata metadata;
+    private ListMeta metadata;
 
     public PriorityClassList() {
         // no-op
     }
 
     public PriorityClassList(final String apiVersion,
-                             final List<PriorityClassListItems> items,
+                             final List<PriorityClass> items,
                              final String kind,
-                             final PriorityClassListMetadata metadata) {
+                             final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class PriorityClassList {
         this.apiVersion = apiVersion;
     }
 
-    public List<PriorityClassListItems> getItems() {
+    public List<PriorityClass> getItems() {
         return items;
     }
 
-    public void setItems(final List<PriorityClassListItems> items) {
+    public void setItems(final List<PriorityClass> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class PriorityClassList {
         this.kind = kind;
     }
 
-    public PriorityClassListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final PriorityClassListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class PriorityClassList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public PriorityClassList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public PriorityClassList items(final List<PriorityClass> items) {
+        this.items = items;
+        return this;
+    }
+
+    public PriorityClassList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public PriorityClassList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public PriorityClassList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

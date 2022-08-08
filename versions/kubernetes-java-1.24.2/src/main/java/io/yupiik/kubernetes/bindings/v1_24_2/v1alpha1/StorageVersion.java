@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_24_2.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_24_2.Validable;
+import io.yupiik.kubernetes.bindings.v1_24_2.ValidationException;
 import jakarta.json.JsonObject;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class StorageVersion {
+public class StorageVersion implements Validable<StorageVersion> {
     private String apiVersion;
     private String kind;
-    private StorageVersionMetadata metadata;
+    private ObjectMeta metadata;
     private JsonObject spec;
     private StorageVersionStatus status;
 
@@ -16,7 +20,7 @@ public class StorageVersion {
 
     public StorageVersion(final String apiVersion,
                           final String kind,
-                          final StorageVersionMetadata metadata,
+                          final ObjectMeta metadata,
                           final JsonObject spec,
                           final StorageVersionStatus status) {
         // no-op
@@ -38,11 +42,11 @@ public class StorageVersion {
         this.kind = kind;
     }
 
-    public StorageVersionMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final StorageVersionMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -83,5 +87,55 @@ public class StorageVersion {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public StorageVersion apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public StorageVersion kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public StorageVersion metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public StorageVersion spec(final JsonObject spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public StorageVersion status(final StorageVersionStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public StorageVersion validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (spec == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "spec", "spec",
+                "Missing 'spec' attribute.", true));
+        }
+        if (status == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "status", "status",
+                "Missing 'status' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

@@ -1,14 +1,18 @@
 package io.yupiik.kubernetes.bindings.v1_17_0.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_17_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_0.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class RuntimeClass {
+public class RuntimeClass implements Validable<RuntimeClass> {
     private String apiVersion;
     private String handler;
     private String kind;
-    private RuntimeClassMetadata metadata;
-    private RuntimeClassOverhead overhead;
-    private RuntimeClassScheduling scheduling;
+    private ObjectMeta metadata;
+    private Overhead overhead;
+    private Scheduling scheduling;
 
     public RuntimeClass() {
         // no-op
@@ -17,9 +21,9 @@ public class RuntimeClass {
     public RuntimeClass(final String apiVersion,
                         final String handler,
                         final String kind,
-                        final RuntimeClassMetadata metadata,
-                        final RuntimeClassOverhead overhead,
-                        final RuntimeClassScheduling scheduling) {
+                        final ObjectMeta metadata,
+                        final Overhead overhead,
+                        final Scheduling scheduling) {
         // no-op
     }
 
@@ -47,27 +51,27 @@ public class RuntimeClass {
         this.kind = kind;
     }
 
-    public RuntimeClassMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final RuntimeClassMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
-    public RuntimeClassOverhead getOverhead() {
+    public Overhead getOverhead() {
         return overhead;
     }
 
-    public void setOverhead(final RuntimeClassOverhead overhead) {
+    public void setOverhead(final Overhead overhead) {
         this.overhead = overhead;
     }
 
-    public RuntimeClassScheduling getScheduling() {
+    public Scheduling getScheduling() {
         return scheduling;
     }
 
-    public void setScheduling(final RuntimeClassScheduling scheduling) {
+    public void setScheduling(final Scheduling scheduling) {
         this.scheduling = scheduling;
     }
 
@@ -94,5 +98,52 @@ public class RuntimeClass {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(overhead, __otherCasted.overhead) &&
             Objects.equals(scheduling, __otherCasted.scheduling);
+    }
+
+    public RuntimeClass apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public RuntimeClass handler(final String handler) {
+        this.handler = handler;
+        return this;
+    }
+
+    public RuntimeClass kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public RuntimeClass metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public RuntimeClass overhead(final Overhead overhead) {
+        this.overhead = overhead;
+        return this;
+    }
+
+    public RuntimeClass scheduling(final Scheduling scheduling) {
+        this.scheduling = scheduling;
+        return this;
+    }
+
+    @Override
+    public RuntimeClass validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (handler == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "handler", "handler",
+                "Missing 'handler' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

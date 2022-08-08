@@ -1,11 +1,14 @@
 package io.yupiik.kubernetes.bindings.v1_21_0.v2beta1;
 
+import io.yupiik.kubernetes.bindings.v1_21_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_21_0.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class HorizontalPodAutoscalerStatus {
-    private List<HorizontalPodAutoscalerStatusConditions> conditions;
-    private List<HorizontalPodAutoscalerStatusCurrentMetrics> currentMetrics;
+public class HorizontalPodAutoscalerStatus implements Validable<HorizontalPodAutoscalerStatus> {
+    private List<HorizontalPodAutoscalerCondition> conditions;
+    private List<MetricStatus> currentMetrics;
     private int currentReplicas;
     private int desiredReplicas;
     private String lastScaleTime;
@@ -15,8 +18,8 @@ public class HorizontalPodAutoscalerStatus {
         // no-op
     }
 
-    public HorizontalPodAutoscalerStatus(final List<HorizontalPodAutoscalerStatusConditions> conditions,
-                                         final List<HorizontalPodAutoscalerStatusCurrentMetrics> currentMetrics,
+    public HorizontalPodAutoscalerStatus(final List<HorizontalPodAutoscalerCondition> conditions,
+                                         final List<MetricStatus> currentMetrics,
                                          final int currentReplicas,
                                          final int desiredReplicas,
                                          final String lastScaleTime,
@@ -24,19 +27,19 @@ public class HorizontalPodAutoscalerStatus {
         // no-op
     }
 
-    public List<HorizontalPodAutoscalerStatusConditions> getConditions() {
+    public List<HorizontalPodAutoscalerCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<HorizontalPodAutoscalerStatusConditions> conditions) {
+    public void setConditions(final List<HorizontalPodAutoscalerCondition> conditions) {
         this.conditions = conditions;
     }
 
-    public List<HorizontalPodAutoscalerStatusCurrentMetrics> getCurrentMetrics() {
+    public List<MetricStatus> getCurrentMetrics() {
         return currentMetrics;
     }
 
-    public void setCurrentMetrics(final List<HorizontalPodAutoscalerStatusCurrentMetrics> currentMetrics) {
+    public void setCurrentMetrics(final List<MetricStatus> currentMetrics) {
         this.currentMetrics = currentMetrics;
     }
 
@@ -95,5 +98,52 @@ public class HorizontalPodAutoscalerStatus {
             Objects.equals(desiredReplicas, __otherCasted.desiredReplicas) &&
             Objects.equals(lastScaleTime, __otherCasted.lastScaleTime) &&
             Objects.equals(observedGeneration, __otherCasted.observedGeneration);
+    }
+
+    public HorizontalPodAutoscalerStatus conditions(final List<HorizontalPodAutoscalerCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public HorizontalPodAutoscalerStatus currentMetrics(final List<MetricStatus> currentMetrics) {
+        this.currentMetrics = currentMetrics;
+        return this;
+    }
+
+    public HorizontalPodAutoscalerStatus currentReplicas(final int currentReplicas) {
+        this.currentReplicas = currentReplicas;
+        return this;
+    }
+
+    public HorizontalPodAutoscalerStatus desiredReplicas(final int desiredReplicas) {
+        this.desiredReplicas = desiredReplicas;
+        return this;
+    }
+
+    public HorizontalPodAutoscalerStatus lastScaleTime(final String lastScaleTime) {
+        this.lastScaleTime = lastScaleTime;
+        return this;
+    }
+
+    public HorizontalPodAutoscalerStatus observedGeneration(final Integer observedGeneration) {
+        this.observedGeneration = observedGeneration;
+        return this;
+    }
+
+    @Override
+    public HorizontalPodAutoscalerStatus validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (conditions == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "conditions", "conditions",
+                "Missing 'conditions' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

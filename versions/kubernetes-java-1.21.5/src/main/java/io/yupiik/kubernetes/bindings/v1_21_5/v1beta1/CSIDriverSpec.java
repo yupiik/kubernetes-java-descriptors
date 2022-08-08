@@ -1,15 +1,18 @@
 package io.yupiik.kubernetes.bindings.v1_21_5.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_21_5.Validable;
+import io.yupiik.kubernetes.bindings.v1_21_5.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CSIDriverSpec {
+public class CSIDriverSpec implements Validable<CSIDriverSpec> {
     private Boolean attachRequired;
     private String fsGroupPolicy;
     private Boolean podInfoOnMount;
     private Boolean requiresRepublish;
     private Boolean storageCapacity;
-    private List<CSIDriverSpecTokenRequests> tokenRequests;
+    private List<TokenRequest> tokenRequests;
     private List<String> volumeLifecycleModes;
 
     public CSIDriverSpec() {
@@ -21,7 +24,7 @@ public class CSIDriverSpec {
                          final Boolean podInfoOnMount,
                          final Boolean requiresRepublish,
                          final Boolean storageCapacity,
-                         final List<CSIDriverSpecTokenRequests> tokenRequests,
+                         final List<TokenRequest> tokenRequests,
                          final List<String> volumeLifecycleModes) {
         // no-op
     }
@@ -66,11 +69,11 @@ public class CSIDriverSpec {
         this.storageCapacity = storageCapacity;
     }
 
-    public List<CSIDriverSpecTokenRequests> getTokenRequests() {
+    public List<TokenRequest> getTokenRequests() {
         return tokenRequests;
     }
 
-    public void setTokenRequests(final List<CSIDriverSpecTokenRequests> tokenRequests) {
+    public void setTokenRequests(final List<TokenRequest> tokenRequests) {
         this.tokenRequests = tokenRequests;
     }
 
@@ -107,5 +110,45 @@ public class CSIDriverSpec {
             Objects.equals(storageCapacity, __otherCasted.storageCapacity) &&
             Objects.equals(tokenRequests, __otherCasted.tokenRequests) &&
             Objects.equals(volumeLifecycleModes, __otherCasted.volumeLifecycleModes);
+    }
+
+    public CSIDriverSpec attachRequired(final Boolean attachRequired) {
+        this.attachRequired = attachRequired;
+        return this;
+    }
+
+    public CSIDriverSpec fsGroupPolicy(final String fsGroupPolicy) {
+        this.fsGroupPolicy = fsGroupPolicy;
+        return this;
+    }
+
+    public CSIDriverSpec podInfoOnMount(final Boolean podInfoOnMount) {
+        this.podInfoOnMount = podInfoOnMount;
+        return this;
+    }
+
+    public CSIDriverSpec requiresRepublish(final Boolean requiresRepublish) {
+        this.requiresRepublish = requiresRepublish;
+        return this;
+    }
+
+    public CSIDriverSpec storageCapacity(final Boolean storageCapacity) {
+        this.storageCapacity = storageCapacity;
+        return this;
+    }
+
+    public CSIDriverSpec tokenRequests(final List<TokenRequest> tokenRequests) {
+        this.tokenRequests = tokenRequests;
+        return this;
+    }
+
+    public CSIDriverSpec volumeLifecycleModes(final List<String> volumeLifecycleModes) {
+        this.volumeLifecycleModes = volumeLifecycleModes;
+        return this;
+    }
+
+    @Override
+    public CSIDriverSpec validate() {
+        return this;
     }
 }

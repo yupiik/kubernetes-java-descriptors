@@ -1,32 +1,35 @@
 package io.yupiik.kubernetes.bindings.v1_16_1.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_16_1.Validable;
+import io.yupiik.kubernetes.bindings.v1_16_1.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PodSecurityPolicySpec {
+public class PodSecurityPolicySpec implements Validable<PodSecurityPolicySpec> {
     private Boolean allowPrivilegeEscalation;
-    private List<PodSecurityPolicySpecAllowedCSIDrivers> allowedCSIDrivers;
+    private List<AllowedCSIDriver> allowedCSIDrivers;
     private List<String> allowedCapabilities;
-    private List<PodSecurityPolicySpecAllowedFlexVolumes> allowedFlexVolumes;
-    private List<PodSecurityPolicySpecAllowedHostPaths> allowedHostPaths;
+    private List<AllowedFlexVolume> allowedFlexVolumes;
+    private List<AllowedHostPath> allowedHostPaths;
     private List<String> allowedProcMountTypes;
     private List<String> allowedUnsafeSysctls;
     private List<String> defaultAddCapabilities;
     private Boolean defaultAllowPrivilegeEscalation;
     private List<String> forbiddenSysctls;
-    private PodSecurityPolicySpecFsGroup fsGroup;
+    private FSGroupStrategyOptions fsGroup;
     private Boolean hostIPC;
     private Boolean hostNetwork;
     private Boolean hostPID;
-    private List<PodSecurityPolicySpecHostPorts> hostPorts;
+    private List<HostPortRange> hostPorts;
     private Boolean privileged;
     private Boolean readOnlyRootFilesystem;
     private List<String> requiredDropCapabilities;
-    private PodSecurityPolicySpecRunAsGroup runAsGroup;
-    private PodSecurityPolicySpecRunAsUser runAsUser;
-    private PodSecurityPolicySpecRuntimeClass runtimeClass;
-    private PodSecurityPolicySpecSeLinux seLinux;
-    private PodSecurityPolicySpecSupplementalGroups supplementalGroups;
+    private RunAsGroupStrategyOptions runAsGroup;
+    private RunAsUserStrategyOptions runAsUser;
+    private RuntimeClassStrategyOptions runtimeClass;
+    private SELinuxStrategyOptions seLinux;
+    private SupplementalGroupsStrategyOptions supplementalGroups;
     private List<String> volumes;
 
     public PodSecurityPolicySpec() {
@@ -34,28 +37,28 @@ public class PodSecurityPolicySpec {
     }
 
     public PodSecurityPolicySpec(final Boolean allowPrivilegeEscalation,
-                                 final List<PodSecurityPolicySpecAllowedCSIDrivers> allowedCSIDrivers,
+                                 final List<AllowedCSIDriver> allowedCSIDrivers,
                                  final List<String> allowedCapabilities,
-                                 final List<PodSecurityPolicySpecAllowedFlexVolumes> allowedFlexVolumes,
-                                 final List<PodSecurityPolicySpecAllowedHostPaths> allowedHostPaths,
+                                 final List<AllowedFlexVolume> allowedFlexVolumes,
+                                 final List<AllowedHostPath> allowedHostPaths,
                                  final List<String> allowedProcMountTypes,
                                  final List<String> allowedUnsafeSysctls,
                                  final List<String> defaultAddCapabilities,
                                  final Boolean defaultAllowPrivilegeEscalation,
                                  final List<String> forbiddenSysctls,
-                                 final PodSecurityPolicySpecFsGroup fsGroup,
+                                 final FSGroupStrategyOptions fsGroup,
                                  final Boolean hostIPC,
                                  final Boolean hostNetwork,
                                  final Boolean hostPID,
-                                 final List<PodSecurityPolicySpecHostPorts> hostPorts,
+                                 final List<HostPortRange> hostPorts,
                                  final Boolean privileged,
                                  final Boolean readOnlyRootFilesystem,
                                  final List<String> requiredDropCapabilities,
-                                 final PodSecurityPolicySpecRunAsGroup runAsGroup,
-                                 final PodSecurityPolicySpecRunAsUser runAsUser,
-                                 final PodSecurityPolicySpecRuntimeClass runtimeClass,
-                                 final PodSecurityPolicySpecSeLinux seLinux,
-                                 final PodSecurityPolicySpecSupplementalGroups supplementalGroups,
+                                 final RunAsGroupStrategyOptions runAsGroup,
+                                 final RunAsUserStrategyOptions runAsUser,
+                                 final RuntimeClassStrategyOptions runtimeClass,
+                                 final SELinuxStrategyOptions seLinux,
+                                 final SupplementalGroupsStrategyOptions supplementalGroups,
                                  final List<String> volumes) {
         // no-op
     }
@@ -68,11 +71,11 @@ public class PodSecurityPolicySpec {
         this.allowPrivilegeEscalation = allowPrivilegeEscalation;
     }
 
-    public List<PodSecurityPolicySpecAllowedCSIDrivers> getAllowedCSIDrivers() {
+    public List<AllowedCSIDriver> getAllowedCSIDrivers() {
         return allowedCSIDrivers;
     }
 
-    public void setAllowedCSIDrivers(final List<PodSecurityPolicySpecAllowedCSIDrivers> allowedCSIDrivers) {
+    public void setAllowedCSIDrivers(final List<AllowedCSIDriver> allowedCSIDrivers) {
         this.allowedCSIDrivers = allowedCSIDrivers;
     }
 
@@ -84,19 +87,19 @@ public class PodSecurityPolicySpec {
         this.allowedCapabilities = allowedCapabilities;
     }
 
-    public List<PodSecurityPolicySpecAllowedFlexVolumes> getAllowedFlexVolumes() {
+    public List<AllowedFlexVolume> getAllowedFlexVolumes() {
         return allowedFlexVolumes;
     }
 
-    public void setAllowedFlexVolumes(final List<PodSecurityPolicySpecAllowedFlexVolumes> allowedFlexVolumes) {
+    public void setAllowedFlexVolumes(final List<AllowedFlexVolume> allowedFlexVolumes) {
         this.allowedFlexVolumes = allowedFlexVolumes;
     }
 
-    public List<PodSecurityPolicySpecAllowedHostPaths> getAllowedHostPaths() {
+    public List<AllowedHostPath> getAllowedHostPaths() {
         return allowedHostPaths;
     }
 
-    public void setAllowedHostPaths(final List<PodSecurityPolicySpecAllowedHostPaths> allowedHostPaths) {
+    public void setAllowedHostPaths(final List<AllowedHostPath> allowedHostPaths) {
         this.allowedHostPaths = allowedHostPaths;
     }
 
@@ -140,11 +143,11 @@ public class PodSecurityPolicySpec {
         this.forbiddenSysctls = forbiddenSysctls;
     }
 
-    public PodSecurityPolicySpecFsGroup getFsGroup() {
+    public FSGroupStrategyOptions getFsGroup() {
         return fsGroup;
     }
 
-    public void setFsGroup(final PodSecurityPolicySpecFsGroup fsGroup) {
+    public void setFsGroup(final FSGroupStrategyOptions fsGroup) {
         this.fsGroup = fsGroup;
     }
 
@@ -172,11 +175,11 @@ public class PodSecurityPolicySpec {
         this.hostPID = hostPID;
     }
 
-    public List<PodSecurityPolicySpecHostPorts> getHostPorts() {
+    public List<HostPortRange> getHostPorts() {
         return hostPorts;
     }
 
-    public void setHostPorts(final List<PodSecurityPolicySpecHostPorts> hostPorts) {
+    public void setHostPorts(final List<HostPortRange> hostPorts) {
         this.hostPorts = hostPorts;
     }
 
@@ -204,43 +207,43 @@ public class PodSecurityPolicySpec {
         this.requiredDropCapabilities = requiredDropCapabilities;
     }
 
-    public PodSecurityPolicySpecRunAsGroup getRunAsGroup() {
+    public RunAsGroupStrategyOptions getRunAsGroup() {
         return runAsGroup;
     }
 
-    public void setRunAsGroup(final PodSecurityPolicySpecRunAsGroup runAsGroup) {
+    public void setRunAsGroup(final RunAsGroupStrategyOptions runAsGroup) {
         this.runAsGroup = runAsGroup;
     }
 
-    public PodSecurityPolicySpecRunAsUser getRunAsUser() {
+    public RunAsUserStrategyOptions getRunAsUser() {
         return runAsUser;
     }
 
-    public void setRunAsUser(final PodSecurityPolicySpecRunAsUser runAsUser) {
+    public void setRunAsUser(final RunAsUserStrategyOptions runAsUser) {
         this.runAsUser = runAsUser;
     }
 
-    public PodSecurityPolicySpecRuntimeClass getRuntimeClass() {
+    public RuntimeClassStrategyOptions getRuntimeClass() {
         return runtimeClass;
     }
 
-    public void setRuntimeClass(final PodSecurityPolicySpecRuntimeClass runtimeClass) {
+    public void setRuntimeClass(final RuntimeClassStrategyOptions runtimeClass) {
         this.runtimeClass = runtimeClass;
     }
 
-    public PodSecurityPolicySpecSeLinux getSeLinux() {
+    public SELinuxStrategyOptions getSeLinux() {
         return seLinux;
     }
 
-    public void setSeLinux(final PodSecurityPolicySpecSeLinux seLinux) {
+    public void setSeLinux(final SELinuxStrategyOptions seLinux) {
         this.seLinux = seLinux;
     }
 
-    public PodSecurityPolicySpecSupplementalGroups getSupplementalGroups() {
+    public SupplementalGroupsStrategyOptions getSupplementalGroups() {
         return supplementalGroups;
     }
 
-    public void setSupplementalGroups(final PodSecurityPolicySpecSupplementalGroups supplementalGroups) {
+    public void setSupplementalGroups(final SupplementalGroupsStrategyOptions supplementalGroups) {
         this.supplementalGroups = supplementalGroups;
     }
 
@@ -311,5 +314,166 @@ public class PodSecurityPolicySpec {
             Objects.equals(seLinux, __otherCasted.seLinux) &&
             Objects.equals(supplementalGroups, __otherCasted.supplementalGroups) &&
             Objects.equals(volumes, __otherCasted.volumes);
+    }
+
+    public PodSecurityPolicySpec allowPrivilegeEscalation(final Boolean allowPrivilegeEscalation) {
+        this.allowPrivilegeEscalation = allowPrivilegeEscalation;
+        return this;
+    }
+
+    public PodSecurityPolicySpec allowedCSIDrivers(final List<AllowedCSIDriver> allowedCSIDrivers) {
+        this.allowedCSIDrivers = allowedCSIDrivers;
+        return this;
+    }
+
+    public PodSecurityPolicySpec allowedCapabilities(final List<String> allowedCapabilities) {
+        this.allowedCapabilities = allowedCapabilities;
+        return this;
+    }
+
+    public PodSecurityPolicySpec allowedFlexVolumes(final List<AllowedFlexVolume> allowedFlexVolumes) {
+        this.allowedFlexVolumes = allowedFlexVolumes;
+        return this;
+    }
+
+    public PodSecurityPolicySpec allowedHostPaths(final List<AllowedHostPath> allowedHostPaths) {
+        this.allowedHostPaths = allowedHostPaths;
+        return this;
+    }
+
+    public PodSecurityPolicySpec allowedProcMountTypes(final List<String> allowedProcMountTypes) {
+        this.allowedProcMountTypes = allowedProcMountTypes;
+        return this;
+    }
+
+    public PodSecurityPolicySpec allowedUnsafeSysctls(final List<String> allowedUnsafeSysctls) {
+        this.allowedUnsafeSysctls = allowedUnsafeSysctls;
+        return this;
+    }
+
+    public PodSecurityPolicySpec defaultAddCapabilities(final List<String> defaultAddCapabilities) {
+        this.defaultAddCapabilities = defaultAddCapabilities;
+        return this;
+    }
+
+    public PodSecurityPolicySpec defaultAllowPrivilegeEscalation(final Boolean defaultAllowPrivilegeEscalation) {
+        this.defaultAllowPrivilegeEscalation = defaultAllowPrivilegeEscalation;
+        return this;
+    }
+
+    public PodSecurityPolicySpec forbiddenSysctls(final List<String> forbiddenSysctls) {
+        this.forbiddenSysctls = forbiddenSysctls;
+        return this;
+    }
+
+    public PodSecurityPolicySpec fsGroup(final FSGroupStrategyOptions fsGroup) {
+        this.fsGroup = fsGroup;
+        return this;
+    }
+
+    public PodSecurityPolicySpec hostIPC(final Boolean hostIPC) {
+        this.hostIPC = hostIPC;
+        return this;
+    }
+
+    public PodSecurityPolicySpec hostNetwork(final Boolean hostNetwork) {
+        this.hostNetwork = hostNetwork;
+        return this;
+    }
+
+    public PodSecurityPolicySpec hostPID(final Boolean hostPID) {
+        this.hostPID = hostPID;
+        return this;
+    }
+
+    public PodSecurityPolicySpec hostPorts(final List<HostPortRange> hostPorts) {
+        this.hostPorts = hostPorts;
+        return this;
+    }
+
+    public PodSecurityPolicySpec privileged(final Boolean privileged) {
+        this.privileged = privileged;
+        return this;
+    }
+
+    public PodSecurityPolicySpec readOnlyRootFilesystem(final Boolean readOnlyRootFilesystem) {
+        this.readOnlyRootFilesystem = readOnlyRootFilesystem;
+        return this;
+    }
+
+    public PodSecurityPolicySpec requiredDropCapabilities(final List<String> requiredDropCapabilities) {
+        this.requiredDropCapabilities = requiredDropCapabilities;
+        return this;
+    }
+
+    public PodSecurityPolicySpec runAsGroup(final RunAsGroupStrategyOptions runAsGroup) {
+        this.runAsGroup = runAsGroup;
+        return this;
+    }
+
+    public PodSecurityPolicySpec runAsUser(final RunAsUserStrategyOptions runAsUser) {
+        this.runAsUser = runAsUser;
+        return this;
+    }
+
+    public PodSecurityPolicySpec runtimeClass(final RuntimeClassStrategyOptions runtimeClass) {
+        this.runtimeClass = runtimeClass;
+        return this;
+    }
+
+    public PodSecurityPolicySpec seLinux(final SELinuxStrategyOptions seLinux) {
+        this.seLinux = seLinux;
+        return this;
+    }
+
+    public PodSecurityPolicySpec supplementalGroups(final SupplementalGroupsStrategyOptions supplementalGroups) {
+        this.supplementalGroups = supplementalGroups;
+        return this;
+    }
+
+    public PodSecurityPolicySpec volumes(final List<String> volumes) {
+        this.volumes = volumes;
+        return this;
+    }
+
+    @Override
+    public PodSecurityPolicySpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (fsGroup == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "fsGroup", "fsGroup",
+                "Missing 'fsGroup' attribute.", true));
+        }
+        if (runAsUser == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "runAsUser", "runAsUser",
+                "Missing 'runAsUser' attribute.", true));
+        }
+        if (seLinux == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "seLinux", "seLinux",
+                "Missing 'seLinux' attribute.", true));
+        }
+        if (supplementalGroups == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "supplementalGroups", "supplementalGroups",
+                "Missing 'supplementalGroups' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

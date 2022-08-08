@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_18_9.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_18_9.Validable;
+import io.yupiik.kubernetes.bindings.v1_18_9.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class PodPreset {
+public class PodPreset implements Validable<PodPreset> {
     private String apiVersion;
     private String kind;
-    private PodPresetMetadata metadata;
+    private ObjectMeta metadata;
     private PodPresetSpec spec;
 
     public PodPreset() {
@@ -14,7 +18,7 @@ public class PodPreset {
 
     public PodPreset(final String apiVersion,
                      final String kind,
-                     final PodPresetMetadata metadata,
+                     final ObjectMeta metadata,
                      final PodPresetSpec spec) {
         // no-op
     }
@@ -35,11 +39,11 @@ public class PodPreset {
         this.kind = kind;
     }
 
-    public PodPresetMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final PodPresetMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -70,5 +74,30 @@ public class PodPreset {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec);
+    }
+
+    public PodPreset apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public PodPreset kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public PodPreset metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public PodPreset spec(final PodPresetSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    @Override
+    public PodPreset validate() {
+        return this;
     }
 }

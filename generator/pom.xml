@@ -49,6 +49,8 @@
             <argument>${project.version}</argument>
             <argument>${project.build.directory}/work_download</argument>
             <argument>${project.parent.basedir}/versions</argument>
+            <argument>${bundlebee.schema.extension}</argument>
+            <argument>${generator.threads}</argument>
           </arguments>
         </configuration>
       </plugin>

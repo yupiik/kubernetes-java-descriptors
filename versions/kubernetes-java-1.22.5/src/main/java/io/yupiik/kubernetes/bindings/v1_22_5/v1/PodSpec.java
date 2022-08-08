@@ -1,85 +1,89 @@
 package io.yupiik.kubernetes.bindings.v1_22_5.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_5.Validable;
+import io.yupiik.kubernetes.bindings.v1_22_5.ValidationException;
+import jakarta.json.JsonObject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class PodSpec {
+public class PodSpec implements Validable<PodSpec> {
     private Integer activeDeadlineSeconds;
-    private PodSpecAffinity affinity;
+    private Affinity affinity;
     private Boolean automountServiceAccountToken;
-    private List<PodSpecContainers> containers;
-    private PodSpecDnsConfig dnsConfig;
+    private List<Container> containers;
+    private PodDNSConfig dnsConfig;
     private String dnsPolicy;
     private Boolean enableServiceLinks;
-    private List<PodSpecEphemeralContainers> ephemeralContainers;
-    private List<PodSpecHostAliases> hostAliases;
+    private List<EphemeralContainer> ephemeralContainers;
+    private List<HostAlias> hostAliases;
     private Boolean hostIPC;
     private Boolean hostNetwork;
     private Boolean hostPID;
     private String hostname;
-    private List<PodSpecImagePullSecrets> imagePullSecrets;
-    private List<PodSpecInitContainers> initContainers;
+    private List<LocalObjectReference> imagePullSecrets;
+    private List<Container> initContainers;
     private String nodeName;
     private Map<String, String> nodeSelector;
-    private Map<String, String> overhead;
+    private JsonObject overhead;
     private String preemptionPolicy;
     private Integer priority;
     private String priorityClassName;
-    private List<PodSpecReadinessGates> readinessGates;
+    private List<PodReadinessGate> readinessGates;
     private String restartPolicy;
     private String runtimeClassName;
     private String schedulerName;
-    private PodSpecSecurityContext securityContext;
+    private PodSecurityContext securityContext;
     private String serviceAccount;
     private String serviceAccountName;
     private Boolean setHostnameAsFQDN;
     private Boolean shareProcessNamespace;
     private String subdomain;
     private Integer terminationGracePeriodSeconds;
-    private List<PodSpecTolerations> tolerations;
-    private List<PodSpecTopologySpreadConstraints> topologySpreadConstraints;
-    private List<PodSpecVolumes> volumes;
+    private List<Toleration> tolerations;
+    private List<TopologySpreadConstraint> topologySpreadConstraints;
+    private List<Volume> volumes;
 
     public PodSpec() {
         // no-op
     }
 
     public PodSpec(final Integer activeDeadlineSeconds,
-                   final PodSpecAffinity affinity,
+                   final Affinity affinity,
                    final Boolean automountServiceAccountToken,
-                   final List<PodSpecContainers> containers,
-                   final PodSpecDnsConfig dnsConfig,
+                   final List<Container> containers,
+                   final PodDNSConfig dnsConfig,
                    final String dnsPolicy,
                    final Boolean enableServiceLinks,
-                   final List<PodSpecEphemeralContainers> ephemeralContainers,
-                   final List<PodSpecHostAliases> hostAliases,
+                   final List<EphemeralContainer> ephemeralContainers,
+                   final List<HostAlias> hostAliases,
                    final Boolean hostIPC,
                    final Boolean hostNetwork,
                    final Boolean hostPID,
                    final String hostname,
-                   final List<PodSpecImagePullSecrets> imagePullSecrets,
-                   final List<PodSpecInitContainers> initContainers,
+                   final List<LocalObjectReference> imagePullSecrets,
+                   final List<Container> initContainers,
                    final String nodeName,
                    final Map<String, String> nodeSelector,
-                   final Map<String, String> overhead,
+                   final JsonObject overhead,
                    final String preemptionPolicy,
                    final Integer priority,
                    final String priorityClassName,
-                   final List<PodSpecReadinessGates> readinessGates,
+                   final List<PodReadinessGate> readinessGates,
                    final String restartPolicy,
                    final String runtimeClassName,
                    final String schedulerName,
-                   final PodSpecSecurityContext securityContext,
+                   final PodSecurityContext securityContext,
                    final String serviceAccount,
                    final String serviceAccountName,
                    final Boolean setHostnameAsFQDN,
                    final Boolean shareProcessNamespace,
                    final String subdomain,
                    final Integer terminationGracePeriodSeconds,
-                   final List<PodSpecTolerations> tolerations,
-                   final List<PodSpecTopologySpreadConstraints> topologySpreadConstraints,
-                   final List<PodSpecVolumes> volumes) {
+                   final List<Toleration> tolerations,
+                   final List<TopologySpreadConstraint> topologySpreadConstraints,
+                   final List<Volume> volumes) {
         // no-op
     }
 
@@ -91,11 +95,11 @@ public class PodSpec {
         this.activeDeadlineSeconds = activeDeadlineSeconds;
     }
 
-    public PodSpecAffinity getAffinity() {
+    public Affinity getAffinity() {
         return affinity;
     }
 
-    public void setAffinity(final PodSpecAffinity affinity) {
+    public void setAffinity(final Affinity affinity) {
         this.affinity = affinity;
     }
 
@@ -107,19 +111,19 @@ public class PodSpec {
         this.automountServiceAccountToken = automountServiceAccountToken;
     }
 
-    public List<PodSpecContainers> getContainers() {
+    public List<Container> getContainers() {
         return containers;
     }
 
-    public void setContainers(final List<PodSpecContainers> containers) {
+    public void setContainers(final List<Container> containers) {
         this.containers = containers;
     }
 
-    public PodSpecDnsConfig getDnsConfig() {
+    public PodDNSConfig getDnsConfig() {
         return dnsConfig;
     }
 
-    public void setDnsConfig(final PodSpecDnsConfig dnsConfig) {
+    public void setDnsConfig(final PodDNSConfig dnsConfig) {
         this.dnsConfig = dnsConfig;
     }
 
@@ -139,19 +143,19 @@ public class PodSpec {
         this.enableServiceLinks = enableServiceLinks;
     }
 
-    public List<PodSpecEphemeralContainers> getEphemeralContainers() {
+    public List<EphemeralContainer> getEphemeralContainers() {
         return ephemeralContainers;
     }
 
-    public void setEphemeralContainers(final List<PodSpecEphemeralContainers> ephemeralContainers) {
+    public void setEphemeralContainers(final List<EphemeralContainer> ephemeralContainers) {
         this.ephemeralContainers = ephemeralContainers;
     }
 
-    public List<PodSpecHostAliases> getHostAliases() {
+    public List<HostAlias> getHostAliases() {
         return hostAliases;
     }
 
-    public void setHostAliases(final List<PodSpecHostAliases> hostAliases) {
+    public void setHostAliases(final List<HostAlias> hostAliases) {
         this.hostAliases = hostAliases;
     }
 
@@ -187,19 +191,19 @@ public class PodSpec {
         this.hostname = hostname;
     }
 
-    public List<PodSpecImagePullSecrets> getImagePullSecrets() {
+    public List<LocalObjectReference> getImagePullSecrets() {
         return imagePullSecrets;
     }
 
-    public void setImagePullSecrets(final List<PodSpecImagePullSecrets> imagePullSecrets) {
+    public void setImagePullSecrets(final List<LocalObjectReference> imagePullSecrets) {
         this.imagePullSecrets = imagePullSecrets;
     }
 
-    public List<PodSpecInitContainers> getInitContainers() {
+    public List<Container> getInitContainers() {
         return initContainers;
     }
 
-    public void setInitContainers(final List<PodSpecInitContainers> initContainers) {
+    public void setInitContainers(final List<Container> initContainers) {
         this.initContainers = initContainers;
     }
 
@@ -219,11 +223,11 @@ public class PodSpec {
         this.nodeSelector = nodeSelector;
     }
 
-    public Map<String, String> getOverhead() {
+    public JsonObject getOverhead() {
         return overhead;
     }
 
-    public void setOverhead(final Map<String, String> overhead) {
+    public void setOverhead(final JsonObject overhead) {
         this.overhead = overhead;
     }
 
@@ -251,11 +255,11 @@ public class PodSpec {
         this.priorityClassName = priorityClassName;
     }
 
-    public List<PodSpecReadinessGates> getReadinessGates() {
+    public List<PodReadinessGate> getReadinessGates() {
         return readinessGates;
     }
 
-    public void setReadinessGates(final List<PodSpecReadinessGates> readinessGates) {
+    public void setReadinessGates(final List<PodReadinessGate> readinessGates) {
         this.readinessGates = readinessGates;
     }
 
@@ -283,11 +287,11 @@ public class PodSpec {
         this.schedulerName = schedulerName;
     }
 
-    public PodSpecSecurityContext getSecurityContext() {
+    public PodSecurityContext getSecurityContext() {
         return securityContext;
     }
 
-    public void setSecurityContext(final PodSpecSecurityContext securityContext) {
+    public void setSecurityContext(final PodSecurityContext securityContext) {
         this.securityContext = securityContext;
     }
 
@@ -339,27 +343,27 @@ public class PodSpec {
         this.terminationGracePeriodSeconds = terminationGracePeriodSeconds;
     }
 
-    public List<PodSpecTolerations> getTolerations() {
+    public List<Toleration> getTolerations() {
         return tolerations;
     }
 
-    public void setTolerations(final List<PodSpecTolerations> tolerations) {
+    public void setTolerations(final List<Toleration> tolerations) {
         this.tolerations = tolerations;
     }
 
-    public List<PodSpecTopologySpreadConstraints> getTopologySpreadConstraints() {
+    public List<TopologySpreadConstraint> getTopologySpreadConstraints() {
         return topologySpreadConstraints;
     }
 
-    public void setTopologySpreadConstraints(final List<PodSpecTopologySpreadConstraints> topologySpreadConstraints) {
+    public void setTopologySpreadConstraints(final List<TopologySpreadConstraint> topologySpreadConstraints) {
         this.topologySpreadConstraints = topologySpreadConstraints;
     }
 
-    public List<PodSpecVolumes> getVolumes() {
+    public List<Volume> getVolumes() {
         return volumes;
     }
 
-    public void setVolumes(final List<PodSpecVolumes> volumes) {
+    public void setVolumes(final List<Volume> volumes) {
         this.volumes = volumes;
     }
 
@@ -444,5 +448,197 @@ public class PodSpec {
             Objects.equals(tolerations, __otherCasted.tolerations) &&
             Objects.equals(topologySpreadConstraints, __otherCasted.topologySpreadConstraints) &&
             Objects.equals(volumes, __otherCasted.volumes);
+    }
+
+    public PodSpec activeDeadlineSeconds(final Integer activeDeadlineSeconds) {
+        this.activeDeadlineSeconds = activeDeadlineSeconds;
+        return this;
+    }
+
+    public PodSpec affinity(final Affinity affinity) {
+        this.affinity = affinity;
+        return this;
+    }
+
+    public PodSpec automountServiceAccountToken(final Boolean automountServiceAccountToken) {
+        this.automountServiceAccountToken = automountServiceAccountToken;
+        return this;
+    }
+
+    public PodSpec containers(final List<Container> containers) {
+        this.containers = containers;
+        return this;
+    }
+
+    public PodSpec dnsConfig(final PodDNSConfig dnsConfig) {
+        this.dnsConfig = dnsConfig;
+        return this;
+    }
+
+    public PodSpec dnsPolicy(final String dnsPolicy) {
+        this.dnsPolicy = dnsPolicy;
+        return this;
+    }
+
+    public PodSpec enableServiceLinks(final Boolean enableServiceLinks) {
+        this.enableServiceLinks = enableServiceLinks;
+        return this;
+    }
+
+    public PodSpec ephemeralContainers(final List<EphemeralContainer> ephemeralContainers) {
+        this.ephemeralContainers = ephemeralContainers;
+        return this;
+    }
+
+    public PodSpec hostAliases(final List<HostAlias> hostAliases) {
+        this.hostAliases = hostAliases;
+        return this;
+    }
+
+    public PodSpec hostIPC(final Boolean hostIPC) {
+        this.hostIPC = hostIPC;
+        return this;
+    }
+
+    public PodSpec hostNetwork(final Boolean hostNetwork) {
+        this.hostNetwork = hostNetwork;
+        return this;
+    }
+
+    public PodSpec hostPID(final Boolean hostPID) {
+        this.hostPID = hostPID;
+        return this;
+    }
+
+    public PodSpec hostname(final String hostname) {
+        this.hostname = hostname;
+        return this;
+    }
+
+    public PodSpec imagePullSecrets(final List<LocalObjectReference> imagePullSecrets) {
+        this.imagePullSecrets = imagePullSecrets;
+        return this;
+    }
+
+    public PodSpec initContainers(final List<Container> initContainers) {
+        this.initContainers = initContainers;
+        return this;
+    }
+
+    public PodSpec nodeName(final String nodeName) {
+        this.nodeName = nodeName;
+        return this;
+    }
+
+    public PodSpec nodeSelector(final Map<String, String> nodeSelector) {
+        this.nodeSelector = nodeSelector;
+        return this;
+    }
+
+    public PodSpec overhead(final JsonObject overhead) {
+        this.overhead = overhead;
+        return this;
+    }
+
+    public PodSpec preemptionPolicy(final String preemptionPolicy) {
+        this.preemptionPolicy = preemptionPolicy;
+        return this;
+    }
+
+    public PodSpec priority(final Integer priority) {
+        this.priority = priority;
+        return this;
+    }
+
+    public PodSpec priorityClassName(final String priorityClassName) {
+        this.priorityClassName = priorityClassName;
+        return this;
+    }
+
+    public PodSpec readinessGates(final List<PodReadinessGate> readinessGates) {
+        this.readinessGates = readinessGates;
+        return this;
+    }
+
+    public PodSpec restartPolicy(final String restartPolicy) {
+        this.restartPolicy = restartPolicy;
+        return this;
+    }
+
+    public PodSpec runtimeClassName(final String runtimeClassName) {
+        this.runtimeClassName = runtimeClassName;
+        return this;
+    }
+
+    public PodSpec schedulerName(final String schedulerName) {
+        this.schedulerName = schedulerName;
+        return this;
+    }
+
+    public PodSpec securityContext(final PodSecurityContext securityContext) {
+        this.securityContext = securityContext;
+        return this;
+    }
+
+    public PodSpec serviceAccount(final String serviceAccount) {
+        this.serviceAccount = serviceAccount;
+        return this;
+    }
+
+    public PodSpec serviceAccountName(final String serviceAccountName) {
+        this.serviceAccountName = serviceAccountName;
+        return this;
+    }
+
+    public PodSpec setHostnameAsFQDN(final Boolean setHostnameAsFQDN) {
+        this.setHostnameAsFQDN = setHostnameAsFQDN;
+        return this;
+    }
+
+    public PodSpec shareProcessNamespace(final Boolean shareProcessNamespace) {
+        this.shareProcessNamespace = shareProcessNamespace;
+        return this;
+    }
+
+    public PodSpec subdomain(final String subdomain) {
+        this.subdomain = subdomain;
+        return this;
+    }
+
+    public PodSpec terminationGracePeriodSeconds(final Integer terminationGracePeriodSeconds) {
+        this.terminationGracePeriodSeconds = terminationGracePeriodSeconds;
+        return this;
+    }
+
+    public PodSpec tolerations(final List<Toleration> tolerations) {
+        this.tolerations = tolerations;
+        return this;
+    }
+
+    public PodSpec topologySpreadConstraints(final List<TopologySpreadConstraint> topologySpreadConstraints) {
+        this.topologySpreadConstraints = topologySpreadConstraints;
+        return this;
+    }
+
+    public PodSpec volumes(final List<Volume> volumes) {
+        this.volumes = volumes;
+        return this;
+    }
+
+    @Override
+    public PodSpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (containers == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "containers", "containers",
+                "Missing 'containers' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

@@ -1,34 +1,38 @@
 package io.yupiik.kubernetes.bindings.v1_23_7.v1;
 
-import java.util.Map;
+import io.yupiik.kubernetes.bindings.v1_23_7.Validable;
+import io.yupiik.kubernetes.bindings.v1_23_7.ValidationException;
+import jakarta.json.JsonObject;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class ResourceQuotaStatus {
-    private Map<String, String> hard;
-    private Map<String, String> used;
+public class ResourceQuotaStatus implements Validable<ResourceQuotaStatus> {
+    private JsonObject hard;
+    private JsonObject used;
 
     public ResourceQuotaStatus() {
         // no-op
     }
 
-    public ResourceQuotaStatus(final Map<String, String> hard,
-                               final Map<String, String> used) {
+    public ResourceQuotaStatus(final JsonObject hard,
+                               final JsonObject used) {
         // no-op
     }
 
-    public Map<String, String> getHard() {
+    public JsonObject getHard() {
         return hard;
     }
 
-    public void setHard(final Map<String, String> hard) {
+    public void setHard(final JsonObject hard) {
         this.hard = hard;
     }
 
-    public Map<String, String> getUsed() {
+    public JsonObject getUsed() {
         return used;
     }
 
-    public void setUsed(final Map<String, String> used) {
+    public void setUsed(final JsonObject used) {
         this.used = used;
     }
 
@@ -47,5 +51,20 @@ public class ResourceQuotaStatus {
         final ResourceQuotaStatus __otherCasted = (ResourceQuotaStatus) __other;
         return Objects.equals(hard, __otherCasted.hard) &&
             Objects.equals(used, __otherCasted.used);
+    }
+
+    public ResourceQuotaStatus hard(final JsonObject hard) {
+        this.hard = hard;
+        return this;
+    }
+
+    public ResourceQuotaStatus used(final JsonObject used) {
+        this.used = used;
+        return this;
+    }
+
+    @Override
+    public ResourceQuotaStatus validate() {
+        return this;
     }
 }

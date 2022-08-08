@@ -1,18 +1,21 @@
 package io.yupiik.kubernetes.bindings.v1_21_12.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_12.Validable;
+import io.yupiik.kubernetes.bindings.v1_21_12.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CertificateSigningRequestStatus {
+public class CertificateSigningRequestStatus implements Validable<CertificateSigningRequestStatus> {
     private String certificate;
-    private List<CertificateSigningRequestStatusConditions> conditions;
+    private List<CertificateSigningRequestCondition> conditions;
 
     public CertificateSigningRequestStatus() {
         // no-op
     }
 
     public CertificateSigningRequestStatus(final String certificate,
-                                           final List<CertificateSigningRequestStatusConditions> conditions) {
+                                           final List<CertificateSigningRequestCondition> conditions) {
         // no-op
     }
 
@@ -24,11 +27,11 @@ public class CertificateSigningRequestStatus {
         this.certificate = certificate;
     }
 
-    public List<CertificateSigningRequestStatusConditions> getConditions() {
+    public List<CertificateSigningRequestCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<CertificateSigningRequestStatusConditions> conditions) {
+    public void setConditions(final List<CertificateSigningRequestCondition> conditions) {
         this.conditions = conditions;
     }
 
@@ -47,5 +50,20 @@ public class CertificateSigningRequestStatus {
         final CertificateSigningRequestStatus __otherCasted = (CertificateSigningRequestStatus) __other;
         return Objects.equals(certificate, __otherCasted.certificate) &&
             Objects.equals(conditions, __otherCasted.conditions);
+    }
+
+    public CertificateSigningRequestStatus certificate(final String certificate) {
+        this.certificate = certificate;
+        return this;
+    }
+
+    public CertificateSigningRequestStatus conditions(final List<CertificateSigningRequestCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    @Override
+    public CertificateSigningRequestStatus validate() {
+        return this;
     }
 }

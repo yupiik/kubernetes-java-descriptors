@@ -1,19 +1,22 @@
 package io.yupiik.kubernetes.bindings.v1_19_13.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_13.Validable;
+import io.yupiik.kubernetes.bindings.v1_19_13.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PodStatus {
-    private List<PodStatusConditions> conditions;
-    private List<PodStatusContainerStatuses> containerStatuses;
-    private List<PodStatusEphemeralContainerStatuses> ephemeralContainerStatuses;
+public class PodStatus implements Validable<PodStatus> {
+    private List<PodCondition> conditions;
+    private List<ContainerStatus> containerStatuses;
+    private List<ContainerStatus> ephemeralContainerStatuses;
     private String hostIP;
-    private List<PodStatusInitContainerStatuses> initContainerStatuses;
+    private List<ContainerStatus> initContainerStatuses;
     private String message;
     private String nominatedNodeName;
     private String phase;
     private String podIP;
-    private List<PodStatusPodIPs> podIPs;
+    private List<PodIP> podIPs;
     private String qosClass;
     private String reason;
     private String startTime;
@@ -22,43 +25,43 @@ public class PodStatus {
         // no-op
     }
 
-    public PodStatus(final List<PodStatusConditions> conditions,
-                     final List<PodStatusContainerStatuses> containerStatuses,
-                     final List<PodStatusEphemeralContainerStatuses> ephemeralContainerStatuses,
+    public PodStatus(final List<PodCondition> conditions,
+                     final List<ContainerStatus> containerStatuses,
+                     final List<ContainerStatus> ephemeralContainerStatuses,
                      final String hostIP,
-                     final List<PodStatusInitContainerStatuses> initContainerStatuses,
+                     final List<ContainerStatus> initContainerStatuses,
                      final String message,
                      final String nominatedNodeName,
                      final String phase,
                      final String podIP,
-                     final List<PodStatusPodIPs> podIPs,
+                     final List<PodIP> podIPs,
                      final String qosClass,
                      final String reason,
                      final String startTime) {
         // no-op
     }
 
-    public List<PodStatusConditions> getConditions() {
+    public List<PodCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<PodStatusConditions> conditions) {
+    public void setConditions(final List<PodCondition> conditions) {
         this.conditions = conditions;
     }
 
-    public List<PodStatusContainerStatuses> getContainerStatuses() {
+    public List<ContainerStatus> getContainerStatuses() {
         return containerStatuses;
     }
 
-    public void setContainerStatuses(final List<PodStatusContainerStatuses> containerStatuses) {
+    public void setContainerStatuses(final List<ContainerStatus> containerStatuses) {
         this.containerStatuses = containerStatuses;
     }
 
-    public List<PodStatusEphemeralContainerStatuses> getEphemeralContainerStatuses() {
+    public List<ContainerStatus> getEphemeralContainerStatuses() {
         return ephemeralContainerStatuses;
     }
 
-    public void setEphemeralContainerStatuses(final List<PodStatusEphemeralContainerStatuses> ephemeralContainerStatuses) {
+    public void setEphemeralContainerStatuses(final List<ContainerStatus> ephemeralContainerStatuses) {
         this.ephemeralContainerStatuses = ephemeralContainerStatuses;
     }
 
@@ -70,11 +73,11 @@ public class PodStatus {
         this.hostIP = hostIP;
     }
 
-    public List<PodStatusInitContainerStatuses> getInitContainerStatuses() {
+    public List<ContainerStatus> getInitContainerStatuses() {
         return initContainerStatuses;
     }
 
-    public void setInitContainerStatuses(final List<PodStatusInitContainerStatuses> initContainerStatuses) {
+    public void setInitContainerStatuses(final List<ContainerStatus> initContainerStatuses) {
         this.initContainerStatuses = initContainerStatuses;
     }
 
@@ -110,11 +113,11 @@ public class PodStatus {
         this.podIP = podIP;
     }
 
-    public List<PodStatusPodIPs> getPodIPs() {
+    public List<PodIP> getPodIPs() {
         return podIPs;
     }
 
-    public void setPodIPs(final List<PodStatusPodIPs> podIPs) {
+    public void setPodIPs(final List<PodIP> podIPs) {
         this.podIPs = podIPs;
     }
 
@@ -179,5 +182,75 @@ public class PodStatus {
             Objects.equals(qosClass, __otherCasted.qosClass) &&
             Objects.equals(reason, __otherCasted.reason) &&
             Objects.equals(startTime, __otherCasted.startTime);
+    }
+
+    public PodStatus conditions(final List<PodCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public PodStatus containerStatuses(final List<ContainerStatus> containerStatuses) {
+        this.containerStatuses = containerStatuses;
+        return this;
+    }
+
+    public PodStatus ephemeralContainerStatuses(final List<ContainerStatus> ephemeralContainerStatuses) {
+        this.ephemeralContainerStatuses = ephemeralContainerStatuses;
+        return this;
+    }
+
+    public PodStatus hostIP(final String hostIP) {
+        this.hostIP = hostIP;
+        return this;
+    }
+
+    public PodStatus initContainerStatuses(final List<ContainerStatus> initContainerStatuses) {
+        this.initContainerStatuses = initContainerStatuses;
+        return this;
+    }
+
+    public PodStatus message(final String message) {
+        this.message = message;
+        return this;
+    }
+
+    public PodStatus nominatedNodeName(final String nominatedNodeName) {
+        this.nominatedNodeName = nominatedNodeName;
+        return this;
+    }
+
+    public PodStatus phase(final String phase) {
+        this.phase = phase;
+        return this;
+    }
+
+    public PodStatus podIP(final String podIP) {
+        this.podIP = podIP;
+        return this;
+    }
+
+    public PodStatus podIPs(final List<PodIP> podIPs) {
+        this.podIPs = podIPs;
+        return this;
+    }
+
+    public PodStatus qosClass(final String qosClass) {
+        this.qosClass = qosClass;
+        return this;
+    }
+
+    public PodStatus reason(final String reason) {
+        this.reason = reason;
+        return this;
+    }
+
+    public PodStatus startTime(final String startTime) {
+        this.startTime = startTime;
+        return this;
+    }
+
+    @Override
+    public PodStatus validate() {
+        return this;
     }
 }

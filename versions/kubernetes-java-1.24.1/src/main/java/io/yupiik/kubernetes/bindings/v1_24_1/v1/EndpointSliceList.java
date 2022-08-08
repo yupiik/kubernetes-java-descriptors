@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_24_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_24_1.Validable;
+import io.yupiik.kubernetes.bindings.v1_24_1.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class EndpointSliceList {
+public class EndpointSliceList implements Validable<EndpointSliceList> {
     private String apiVersion;
-    private List<EndpointSliceListItems> items;
+    private List<EndpointSlice> items;
     private String kind;
-    private EndpointSliceListMetadata metadata;
+    private ListMeta metadata;
 
     public EndpointSliceList() {
         // no-op
     }
 
     public EndpointSliceList(final String apiVersion,
-                             final List<EndpointSliceListItems> items,
+                             final List<EndpointSlice> items,
                              final String kind,
-                             final EndpointSliceListMetadata metadata) {
+                             final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class EndpointSliceList {
         this.apiVersion = apiVersion;
     }
 
-    public List<EndpointSliceListItems> getItems() {
+    public List<EndpointSlice> getItems() {
         return items;
     }
 
-    public void setItems(final List<EndpointSliceListItems> items) {
+    public void setItems(final List<EndpointSlice> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class EndpointSliceList {
         this.kind = kind;
     }
 
-    public EndpointSliceListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final EndpointSliceListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class EndpointSliceList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public EndpointSliceList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public EndpointSliceList items(final List<EndpointSlice> items) {
+        this.items = items;
+        return this;
+    }
+
+    public EndpointSliceList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public EndpointSliceList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public EndpointSliceList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

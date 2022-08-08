@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_14_7.v1;
 
+import io.yupiik.kubernetes.bindings.v1_14_7.Validable;
+import io.yupiik.kubernetes.bindings.v1_14_7.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ClusterRoleList {
+public class ClusterRoleList implements Validable<ClusterRoleList> {
     private String apiVersion;
-    private List<ClusterRoleListItems> items;
+    private List<ClusterRole> items;
     private String kind;
-    private ClusterRoleListMetadata metadata;
+    private ListMeta metadata;
 
     public ClusterRoleList() {
         // no-op
     }
 
     public ClusterRoleList(final String apiVersion,
-                           final List<ClusterRoleListItems> items,
+                           final List<ClusterRole> items,
                            final String kind,
-                           final ClusterRoleListMetadata metadata) {
+                           final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class ClusterRoleList {
         this.apiVersion = apiVersion;
     }
 
-    public List<ClusterRoleListItems> getItems() {
+    public List<ClusterRole> getItems() {
         return items;
     }
 
-    public void setItems(final List<ClusterRoleListItems> items) {
+    public void setItems(final List<ClusterRole> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class ClusterRoleList {
         this.kind = kind;
     }
 
-    public ClusterRoleListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ClusterRoleListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class ClusterRoleList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public ClusterRoleList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ClusterRoleList items(final List<ClusterRole> items) {
+        this.items = items;
+        return this;
+    }
+
+    public ClusterRoleList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ClusterRoleList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public ClusterRoleList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

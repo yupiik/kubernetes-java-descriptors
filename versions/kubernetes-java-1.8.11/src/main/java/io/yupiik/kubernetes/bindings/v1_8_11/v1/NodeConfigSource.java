@@ -1,10 +1,14 @@
 package io.yupiik.kubernetes.bindings.v1_8_11.v1;
 
+import io.yupiik.kubernetes.bindings.v1_8_11.Validable;
+import io.yupiik.kubernetes.bindings.v1_8_11.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class NodeConfigSource {
+public class NodeConfigSource implements Validable<NodeConfigSource> {
     private String apiVersion;
-    private NodeConfigSourceConfigMapRef configMapRef;
+    private ObjectReference configMapRef;
     private String kind;
 
     public NodeConfigSource() {
@@ -12,7 +16,7 @@ public class NodeConfigSource {
     }
 
     public NodeConfigSource(final String apiVersion,
-                            final NodeConfigSourceConfigMapRef configMapRef,
+                            final ObjectReference configMapRef,
                             final String kind) {
         // no-op
     }
@@ -25,11 +29,11 @@ public class NodeConfigSource {
         this.apiVersion = apiVersion;
     }
 
-    public NodeConfigSourceConfigMapRef getConfigMapRef() {
+    public ObjectReference getConfigMapRef() {
         return configMapRef;
     }
 
-    public void setConfigMapRef(final NodeConfigSourceConfigMapRef configMapRef) {
+    public void setConfigMapRef(final ObjectReference configMapRef) {
         this.configMapRef = configMapRef;
     }
 
@@ -58,5 +62,25 @@ public class NodeConfigSource {
         return Objects.equals(apiVersion, __otherCasted.apiVersion) &&
             Objects.equals(configMapRef, __otherCasted.configMapRef) &&
             Objects.equals(kind, __otherCasted.kind);
+    }
+
+    public NodeConfigSource apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public NodeConfigSource configMapRef(final ObjectReference configMapRef) {
+        this.configMapRef = configMapRef;
+        return this;
+    }
+
+    public NodeConfigSource kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    @Override
+    public NodeConfigSource validate() {
+        return this;
     }
 }

@@ -1,9 +1,13 @@
 package io.yupiik.kubernetes.bindings.v1_9_0.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_9_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_9_0.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class ScaleStatus {
+public class ScaleStatus implements Validable<ScaleStatus> {
     private int replicas;
     private Map<String, String> selector;
     private String targetSelector;
@@ -59,5 +63,25 @@ public class ScaleStatus {
         return Objects.equals(replicas, __otherCasted.replicas) &&
             Objects.equals(selector, __otherCasted.selector) &&
             Objects.equals(targetSelector, __otherCasted.targetSelector);
+    }
+
+    public ScaleStatus replicas(final int replicas) {
+        this.replicas = replicas;
+        return this;
+    }
+
+    public ScaleStatus selector(final Map<String, String> selector) {
+        this.selector = selector;
+        return this;
+    }
+
+    public ScaleStatus targetSelector(final String targetSelector) {
+        this.targetSelector = targetSelector;
+        return this;
+    }
+
+    @Override
+    public ScaleStatus validate() {
+        return this;
     }
 }

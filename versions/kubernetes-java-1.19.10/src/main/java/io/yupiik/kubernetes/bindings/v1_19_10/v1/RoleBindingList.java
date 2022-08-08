@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_19_10.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_10.Validable;
+import io.yupiik.kubernetes.bindings.v1_19_10.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class RoleBindingList {
+public class RoleBindingList implements Validable<RoleBindingList> {
     private String apiVersion;
-    private List<RoleBindingListItems> items;
+    private List<RoleBinding> items;
     private String kind;
-    private RoleBindingListMetadata metadata;
+    private ListMeta metadata;
 
     public RoleBindingList() {
         // no-op
     }
 
     public RoleBindingList(final String apiVersion,
-                           final List<RoleBindingListItems> items,
+                           final List<RoleBinding> items,
                            final String kind,
-                           final RoleBindingListMetadata metadata) {
+                           final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class RoleBindingList {
         this.apiVersion = apiVersion;
     }
 
-    public List<RoleBindingListItems> getItems() {
+    public List<RoleBinding> getItems() {
         return items;
     }
 
-    public void setItems(final List<RoleBindingListItems> items) {
+    public void setItems(final List<RoleBinding> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class RoleBindingList {
         this.kind = kind;
     }
 
-    public RoleBindingListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final RoleBindingListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class RoleBindingList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public RoleBindingList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public RoleBindingList items(final List<RoleBinding> items) {
+        this.items = items;
+        return this;
+    }
+
+    public RoleBindingList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public RoleBindingList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public RoleBindingList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

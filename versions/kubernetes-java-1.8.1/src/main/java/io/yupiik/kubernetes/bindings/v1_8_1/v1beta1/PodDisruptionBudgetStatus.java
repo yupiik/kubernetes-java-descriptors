@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_8_1.v1beta1;
 
-import java.util.Map;
+import io.yupiik.kubernetes.bindings.v1_8_1.Validable;
+import io.yupiik.kubernetes.bindings.v1_8_1.ValidationException;
+import jakarta.json.JsonObject;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class PodDisruptionBudgetStatus {
+public class PodDisruptionBudgetStatus implements Validable<PodDisruptionBudgetStatus> {
     private int currentHealthy;
     private int desiredHealthy;
-    private Map<String, String> disruptedPods;
+    private JsonObject disruptedPods;
     private int disruptionsAllowed;
     private int expectedPods;
     private Integer observedGeneration;
@@ -17,7 +21,7 @@ public class PodDisruptionBudgetStatus {
 
     public PodDisruptionBudgetStatus(final int currentHealthy,
                                      final int desiredHealthy,
-                                     final Map<String, String> disruptedPods,
+                                     final JsonObject disruptedPods,
                                      final int disruptionsAllowed,
                                      final int expectedPods,
                                      final Integer observedGeneration) {
@@ -40,11 +44,11 @@ public class PodDisruptionBudgetStatus {
         this.desiredHealthy = desiredHealthy;
     }
 
-    public Map<String, String> getDisruptedPods() {
+    public JsonObject getDisruptedPods() {
         return disruptedPods;
     }
 
-    public void setDisruptedPods(final Map<String, String> disruptedPods) {
+    public void setDisruptedPods(final JsonObject disruptedPods) {
         this.disruptedPods = disruptedPods;
     }
 
@@ -95,5 +99,52 @@ public class PodDisruptionBudgetStatus {
             Objects.equals(disruptionsAllowed, __otherCasted.disruptionsAllowed) &&
             Objects.equals(expectedPods, __otherCasted.expectedPods) &&
             Objects.equals(observedGeneration, __otherCasted.observedGeneration);
+    }
+
+    public PodDisruptionBudgetStatus currentHealthy(final int currentHealthy) {
+        this.currentHealthy = currentHealthy;
+        return this;
+    }
+
+    public PodDisruptionBudgetStatus desiredHealthy(final int desiredHealthy) {
+        this.desiredHealthy = desiredHealthy;
+        return this;
+    }
+
+    public PodDisruptionBudgetStatus disruptedPods(final JsonObject disruptedPods) {
+        this.disruptedPods = disruptedPods;
+        return this;
+    }
+
+    public PodDisruptionBudgetStatus disruptionsAllowed(final int disruptionsAllowed) {
+        this.disruptionsAllowed = disruptionsAllowed;
+        return this;
+    }
+
+    public PodDisruptionBudgetStatus expectedPods(final int expectedPods) {
+        this.expectedPods = expectedPods;
+        return this;
+    }
+
+    public PodDisruptionBudgetStatus observedGeneration(final Integer observedGeneration) {
+        this.observedGeneration = observedGeneration;
+        return this;
+    }
+
+    @Override
+    public PodDisruptionBudgetStatus validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (disruptedPods == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "disruptedPods", "disruptedPods",
+                "Missing 'disruptedPods' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

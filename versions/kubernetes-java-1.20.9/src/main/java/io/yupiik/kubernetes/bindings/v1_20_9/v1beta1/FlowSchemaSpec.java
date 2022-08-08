@@ -1,30 +1,33 @@
 package io.yupiik.kubernetes.bindings.v1_20_9.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_20_9.Validable;
+import io.yupiik.kubernetes.bindings.v1_20_9.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FlowSchemaSpec {
-    private FlowSchemaSpecDistinguisherMethod distinguisherMethod;
+public class FlowSchemaSpec implements Validable<FlowSchemaSpec> {
+    private FlowDistinguisherMethod distinguisherMethod;
     private Integer matchingPrecedence;
-    private FlowSchemaSpecPriorityLevelConfiguration priorityLevelConfiguration;
-    private List<FlowSchemaSpecRules> rules;
+    private PriorityLevelConfigurationReference priorityLevelConfiguration;
+    private List<PolicyRulesWithSubjects> rules;
 
     public FlowSchemaSpec() {
         // no-op
     }
 
-    public FlowSchemaSpec(final FlowSchemaSpecDistinguisherMethod distinguisherMethod,
+    public FlowSchemaSpec(final FlowDistinguisherMethod distinguisherMethod,
                           final Integer matchingPrecedence,
-                          final FlowSchemaSpecPriorityLevelConfiguration priorityLevelConfiguration,
-                          final List<FlowSchemaSpecRules> rules) {
+                          final PriorityLevelConfigurationReference priorityLevelConfiguration,
+                          final List<PolicyRulesWithSubjects> rules) {
         // no-op
     }
 
-    public FlowSchemaSpecDistinguisherMethod getDistinguisherMethod() {
+    public FlowDistinguisherMethod getDistinguisherMethod() {
         return distinguisherMethod;
     }
 
-    public void setDistinguisherMethod(final FlowSchemaSpecDistinguisherMethod distinguisherMethod) {
+    public void setDistinguisherMethod(final FlowDistinguisherMethod distinguisherMethod) {
         this.distinguisherMethod = distinguisherMethod;
     }
 
@@ -36,19 +39,19 @@ public class FlowSchemaSpec {
         this.matchingPrecedence = matchingPrecedence;
     }
 
-    public FlowSchemaSpecPriorityLevelConfiguration getPriorityLevelConfiguration() {
+    public PriorityLevelConfigurationReference getPriorityLevelConfiguration() {
         return priorityLevelConfiguration;
     }
 
-    public void setPriorityLevelConfiguration(final FlowSchemaSpecPriorityLevelConfiguration priorityLevelConfiguration) {
+    public void setPriorityLevelConfiguration(final PriorityLevelConfigurationReference priorityLevelConfiguration) {
         this.priorityLevelConfiguration = priorityLevelConfiguration;
     }
 
-    public List<FlowSchemaSpecRules> getRules() {
+    public List<PolicyRulesWithSubjects> getRules() {
         return rules;
     }
 
-    public void setRules(final List<FlowSchemaSpecRules> rules) {
+    public void setRules(final List<PolicyRulesWithSubjects> rules) {
         this.rules = rules;
     }
 
@@ -71,5 +74,42 @@ public class FlowSchemaSpec {
             Objects.equals(matchingPrecedence, __otherCasted.matchingPrecedence) &&
             Objects.equals(priorityLevelConfiguration, __otherCasted.priorityLevelConfiguration) &&
             Objects.equals(rules, __otherCasted.rules);
+    }
+
+    public FlowSchemaSpec distinguisherMethod(final FlowDistinguisherMethod distinguisherMethod) {
+        this.distinguisherMethod = distinguisherMethod;
+        return this;
+    }
+
+    public FlowSchemaSpec matchingPrecedence(final Integer matchingPrecedence) {
+        this.matchingPrecedence = matchingPrecedence;
+        return this;
+    }
+
+    public FlowSchemaSpec priorityLevelConfiguration(final PriorityLevelConfigurationReference priorityLevelConfiguration) {
+        this.priorityLevelConfiguration = priorityLevelConfiguration;
+        return this;
+    }
+
+    public FlowSchemaSpec rules(final List<PolicyRulesWithSubjects> rules) {
+        this.rules = rules;
+        return this;
+    }
+
+    @Override
+    public FlowSchemaSpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (priorityLevelConfiguration == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "priorityLevelConfiguration", "priorityLevelConfiguration",
+                "Missing 'priorityLevelConfiguration' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

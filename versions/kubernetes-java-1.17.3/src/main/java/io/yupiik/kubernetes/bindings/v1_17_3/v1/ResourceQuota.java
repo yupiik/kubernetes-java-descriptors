@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_17_3.v1;
 
+import io.yupiik.kubernetes.bindings.v1_17_3.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_3.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class ResourceQuota {
+public class ResourceQuota implements Validable<ResourceQuota> {
     private String apiVersion;
     private String kind;
-    private ResourceQuotaMetadata metadata;
+    private ObjectMeta metadata;
     private ResourceQuotaSpec spec;
     private ResourceQuotaStatus status;
 
@@ -15,7 +19,7 @@ public class ResourceQuota {
 
     public ResourceQuota(final String apiVersion,
                          final String kind,
-                         final ResourceQuotaMetadata metadata,
+                         final ObjectMeta metadata,
                          final ResourceQuotaSpec spec,
                          final ResourceQuotaStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class ResourceQuota {
         this.kind = kind;
     }
 
-    public ResourceQuotaMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ResourceQuotaMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,35 @@ public class ResourceQuota {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public ResourceQuota apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ResourceQuota kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ResourceQuota metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public ResourceQuota spec(final ResourceQuotaSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public ResourceQuota status(final ResourceQuotaStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public ResourceQuota validate() {
+        return this;
     }
 }

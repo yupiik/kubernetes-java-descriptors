@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_20_9.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_20_9.Validable;
+import io.yupiik.kubernetes.bindings.v1_20_9.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class PriorityLevelConfiguration {
+public class PriorityLevelConfiguration implements Validable<PriorityLevelConfiguration> {
     private String apiVersion;
     private String kind;
-    private PriorityLevelConfigurationMetadata metadata;
+    private ObjectMeta metadata;
     private PriorityLevelConfigurationSpec spec;
     private PriorityLevelConfigurationStatus status;
 
@@ -15,7 +19,7 @@ public class PriorityLevelConfiguration {
 
     public PriorityLevelConfiguration(final String apiVersion,
                                       final String kind,
-                                      final PriorityLevelConfigurationMetadata metadata,
+                                      final ObjectMeta metadata,
                                       final PriorityLevelConfigurationSpec spec,
                                       final PriorityLevelConfigurationStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class PriorityLevelConfiguration {
         this.kind = kind;
     }
 
-    public PriorityLevelConfigurationMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final PriorityLevelConfigurationMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,35 @@ public class PriorityLevelConfiguration {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public PriorityLevelConfiguration apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public PriorityLevelConfiguration kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public PriorityLevelConfiguration metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public PriorityLevelConfiguration spec(final PriorityLevelConfigurationSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public PriorityLevelConfiguration status(final PriorityLevelConfigurationStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public PriorityLevelConfiguration validate() {
+        return this;
     }
 }

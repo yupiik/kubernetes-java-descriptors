@@ -1,15 +1,18 @@
 package io.yupiik.kubernetes.bindings.v1_17_4.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_17_4.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_4.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class DeleteOptions {
+public class DeleteOptions implements Validable<DeleteOptions> {
     private String apiVersion;
     private List<String> dryRun;
     private Integer gracePeriodSeconds;
     private String kind;
     private Boolean orphanDependents;
-    private DeleteOptionsPreconditions preconditions;
+    private Preconditions preconditions;
     private String propagationPolicy;
 
     public DeleteOptions() {
@@ -21,7 +24,7 @@ public class DeleteOptions {
                          final Integer gracePeriodSeconds,
                          final String kind,
                          final Boolean orphanDependents,
-                         final DeleteOptionsPreconditions preconditions,
+                         final Preconditions preconditions,
                          final String propagationPolicy) {
         // no-op
     }
@@ -66,11 +69,11 @@ public class DeleteOptions {
         this.orphanDependents = orphanDependents;
     }
 
-    public DeleteOptionsPreconditions getPreconditions() {
+    public Preconditions getPreconditions() {
         return preconditions;
     }
 
-    public void setPreconditions(final DeleteOptionsPreconditions preconditions) {
+    public void setPreconditions(final Preconditions preconditions) {
         this.preconditions = preconditions;
     }
 
@@ -107,5 +110,45 @@ public class DeleteOptions {
             Objects.equals(orphanDependents, __otherCasted.orphanDependents) &&
             Objects.equals(preconditions, __otherCasted.preconditions) &&
             Objects.equals(propagationPolicy, __otherCasted.propagationPolicy);
+    }
+
+    public DeleteOptions apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public DeleteOptions dryRun(final List<String> dryRun) {
+        this.dryRun = dryRun;
+        return this;
+    }
+
+    public DeleteOptions gracePeriodSeconds(final Integer gracePeriodSeconds) {
+        this.gracePeriodSeconds = gracePeriodSeconds;
+        return this;
+    }
+
+    public DeleteOptions kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public DeleteOptions orphanDependents(final Boolean orphanDependents) {
+        this.orphanDependents = orphanDependents;
+        return this;
+    }
+
+    public DeleteOptions preconditions(final Preconditions preconditions) {
+        this.preconditions = preconditions;
+        return this;
+    }
+
+    public DeleteOptions propagationPolicy(final String propagationPolicy) {
+        this.propagationPolicy = propagationPolicy;
+        return this;
+    }
+
+    @Override
+    public DeleteOptions validate() {
+        return this;
     }
 }

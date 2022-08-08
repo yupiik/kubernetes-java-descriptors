@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_9_8.v1;
 
+import io.yupiik.kubernetes.bindings.v1_9_8.Validable;
+import io.yupiik.kubernetes.bindings.v1_9_8.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class Job {
+public class Job implements Validable<Job> {
     private String apiVersion;
     private String kind;
-    private JobMetadata metadata;
+    private ObjectMeta metadata;
     private JobSpec spec;
     private JobStatus status;
 
@@ -15,7 +19,7 @@ public class Job {
 
     public Job(final String apiVersion,
                final String kind,
-               final JobMetadata metadata,
+               final ObjectMeta metadata,
                final JobSpec spec,
                final JobStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class Job {
         this.kind = kind;
     }
 
-    public JobMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final JobMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,35 @@ public class Job {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public Job apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public Job kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public Job metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public Job spec(final JobSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public Job status(final JobStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public Job validate() {
+        return this;
     }
 }

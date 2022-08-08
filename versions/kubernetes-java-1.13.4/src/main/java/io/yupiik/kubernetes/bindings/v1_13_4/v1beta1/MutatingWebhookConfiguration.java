@@ -1,14 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_13_4.v1beta1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_13_4.Validable;
+import io.yupiik.kubernetes.bindings.v1_13_4.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MutatingWebhookConfiguration {
+public class MutatingWebhookConfiguration implements Validable<MutatingWebhookConfiguration> {
     private String apiVersion;
     private String kind;
-    private MutatingWebhookConfigurationMetadata metadata;
-    private List<JsonValue> webhooks;
+    private ObjectMeta metadata;
+    private List<Webhook> webhooks;
 
     public MutatingWebhookConfiguration() {
         // no-op
@@ -16,8 +18,8 @@ public class MutatingWebhookConfiguration {
 
     public MutatingWebhookConfiguration(final String apiVersion,
                                         final String kind,
-                                        final MutatingWebhookConfigurationMetadata metadata,
-                                        final List<JsonValue> webhooks) {
+                                        final ObjectMeta metadata,
+                                        final List<Webhook> webhooks) {
         // no-op
     }
 
@@ -37,19 +39,19 @@ public class MutatingWebhookConfiguration {
         this.kind = kind;
     }
 
-    public MutatingWebhookConfigurationMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final MutatingWebhookConfigurationMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
-    public List<JsonValue> getWebhooks() {
+    public List<Webhook> getWebhooks() {
         return webhooks;
     }
 
-    public void setWebhooks(final List<JsonValue> webhooks) {
+    public void setWebhooks(final List<Webhook> webhooks) {
         this.webhooks = webhooks;
     }
 
@@ -72,5 +74,30 @@ public class MutatingWebhookConfiguration {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(webhooks, __otherCasted.webhooks);
+    }
+
+    public MutatingWebhookConfiguration apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public MutatingWebhookConfiguration kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public MutatingWebhookConfiguration metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public MutatingWebhookConfiguration webhooks(final List<Webhook> webhooks) {
+        this.webhooks = webhooks;
+        return this;
+    }
+
+    @Override
+    public MutatingWebhookConfiguration validate() {
+        return this;
     }
 }

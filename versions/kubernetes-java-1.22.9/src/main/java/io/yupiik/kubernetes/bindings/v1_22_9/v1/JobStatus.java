@@ -1,17 +1,20 @@
 package io.yupiik.kubernetes.bindings.v1_22_9.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_9.Validable;
+import io.yupiik.kubernetes.bindings.v1_22_9.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class JobStatus {
+public class JobStatus implements Validable<JobStatus> {
     private Integer active;
     private String completedIndexes;
     private String completionTime;
-    private List<JobStatusConditions> conditions;
+    private List<JobCondition> conditions;
     private Integer failed;
     private String startTime;
     private Integer succeeded;
-    private JobStatusUncountedTerminatedPods uncountedTerminatedPods;
+    private UncountedTerminatedPods uncountedTerminatedPods;
 
     public JobStatus() {
         // no-op
@@ -20,11 +23,11 @@ public class JobStatus {
     public JobStatus(final Integer active,
                      final String completedIndexes,
                      final String completionTime,
-                     final List<JobStatusConditions> conditions,
+                     final List<JobCondition> conditions,
                      final Integer failed,
                      final String startTime,
                      final Integer succeeded,
-                     final JobStatusUncountedTerminatedPods uncountedTerminatedPods) {
+                     final UncountedTerminatedPods uncountedTerminatedPods) {
         // no-op
     }
 
@@ -52,11 +55,11 @@ public class JobStatus {
         this.completionTime = completionTime;
     }
 
-    public List<JobStatusConditions> getConditions() {
+    public List<JobCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<JobStatusConditions> conditions) {
+    public void setConditions(final List<JobCondition> conditions) {
         this.conditions = conditions;
     }
 
@@ -84,11 +87,11 @@ public class JobStatus {
         this.succeeded = succeeded;
     }
 
-    public JobStatusUncountedTerminatedPods getUncountedTerminatedPods() {
+    public UncountedTerminatedPods getUncountedTerminatedPods() {
         return uncountedTerminatedPods;
     }
 
-    public void setUncountedTerminatedPods(final JobStatusUncountedTerminatedPods uncountedTerminatedPods) {
+    public void setUncountedTerminatedPods(final UncountedTerminatedPods uncountedTerminatedPods) {
         this.uncountedTerminatedPods = uncountedTerminatedPods;
     }
 
@@ -119,5 +122,50 @@ public class JobStatus {
             Objects.equals(startTime, __otherCasted.startTime) &&
             Objects.equals(succeeded, __otherCasted.succeeded) &&
             Objects.equals(uncountedTerminatedPods, __otherCasted.uncountedTerminatedPods);
+    }
+
+    public JobStatus active(final Integer active) {
+        this.active = active;
+        return this;
+    }
+
+    public JobStatus completedIndexes(final String completedIndexes) {
+        this.completedIndexes = completedIndexes;
+        return this;
+    }
+
+    public JobStatus completionTime(final String completionTime) {
+        this.completionTime = completionTime;
+        return this;
+    }
+
+    public JobStatus conditions(final List<JobCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public JobStatus failed(final Integer failed) {
+        this.failed = failed;
+        return this;
+    }
+
+    public JobStatus startTime(final String startTime) {
+        this.startTime = startTime;
+        return this;
+    }
+
+    public JobStatus succeeded(final Integer succeeded) {
+        this.succeeded = succeeded;
+        return this;
+    }
+
+    public JobStatus uncountedTerminatedPods(final UncountedTerminatedPods uncountedTerminatedPods) {
+        this.uncountedTerminatedPods = uncountedTerminatedPods;
+        return this;
+    }
+
+    @Override
+    public JobStatus validate() {
+        return this;
     }
 }

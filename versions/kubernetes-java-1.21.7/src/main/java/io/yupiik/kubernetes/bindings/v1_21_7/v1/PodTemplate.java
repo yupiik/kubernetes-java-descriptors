@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_7.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_7.Validable;
+import io.yupiik.kubernetes.bindings.v1_21_7.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class PodTemplate {
+public class PodTemplate implements Validable<PodTemplate> {
     private String apiVersion;
     private String kind;
-    private PodTemplateMetadata metadata;
-    private PodTemplateTemplate template;
+    private ObjectMeta metadata;
+    private PodTemplateSpec template;
 
     public PodTemplate() {
         // no-op
@@ -14,8 +18,8 @@ public class PodTemplate {
 
     public PodTemplate(final String apiVersion,
                        final String kind,
-                       final PodTemplateMetadata metadata,
-                       final PodTemplateTemplate template) {
+                       final ObjectMeta metadata,
+                       final PodTemplateSpec template) {
         // no-op
     }
 
@@ -35,19 +39,19 @@ public class PodTemplate {
         this.kind = kind;
     }
 
-    public PodTemplateMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final PodTemplateMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
-    public PodTemplateTemplate getTemplate() {
+    public PodTemplateSpec getTemplate() {
         return template;
     }
 
-    public void setTemplate(final PodTemplateTemplate template) {
+    public void setTemplate(final PodTemplateSpec template) {
         this.template = template;
     }
 
@@ -70,5 +74,30 @@ public class PodTemplate {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(template, __otherCasted.template);
+    }
+
+    public PodTemplate apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public PodTemplate kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public PodTemplate metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public PodTemplate template(final PodTemplateSpec template) {
+        this.template = template;
+        return this;
+    }
+
+    @Override
+    public PodTemplate validate() {
+        return this;
     }
 }

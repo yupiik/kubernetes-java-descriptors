@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_17_16.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_17_16.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_16.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class RuntimeClass {
+public class RuntimeClass implements Validable<RuntimeClass> {
     private String apiVersion;
     private String kind;
-    private RuntimeClassMetadata metadata;
+    private ObjectMeta metadata;
     private RuntimeClassSpec spec;
 
     public RuntimeClass() {
@@ -14,7 +18,7 @@ public class RuntimeClass {
 
     public RuntimeClass(final String apiVersion,
                         final String kind,
-                        final RuntimeClassMetadata metadata,
+                        final ObjectMeta metadata,
                         final RuntimeClassSpec spec) {
         // no-op
     }
@@ -35,11 +39,11 @@ public class RuntimeClass {
         this.kind = kind;
     }
 
-    public RuntimeClassMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final RuntimeClassMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -70,5 +74,42 @@ public class RuntimeClass {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec);
+    }
+
+    public RuntimeClass apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public RuntimeClass kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public RuntimeClass metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public RuntimeClass spec(final RuntimeClassSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    @Override
+    public RuntimeClass validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (spec == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "spec", "spec",
+                "Missing 'spec' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_19_13.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_13.Validable;
+import io.yupiik.kubernetes.bindings.v1_19_13.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CSINodeList {
+public class CSINodeList implements Validable<CSINodeList> {
     private String apiVersion;
-    private List<CSINodeListItems> items;
+    private List<CSINode> items;
     private String kind;
-    private CSINodeListMetadata metadata;
+    private ListMeta metadata;
 
     public CSINodeList() {
         // no-op
     }
 
     public CSINodeList(final String apiVersion,
-                       final List<CSINodeListItems> items,
+                       final List<CSINode> items,
                        final String kind,
-                       final CSINodeListMetadata metadata) {
+                       final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class CSINodeList {
         this.apiVersion = apiVersion;
     }
 
-    public List<CSINodeListItems> getItems() {
+    public List<CSINode> getItems() {
         return items;
     }
 
-    public void setItems(final List<CSINodeListItems> items) {
+    public void setItems(final List<CSINode> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class CSINodeList {
         this.kind = kind;
     }
 
-    public CSINodeListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final CSINodeListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class CSINodeList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public CSINodeList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public CSINodeList items(final List<CSINode> items) {
+        this.items = items;
+        return this;
+    }
+
+    public CSINodeList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public CSINodeList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public CSINodeList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

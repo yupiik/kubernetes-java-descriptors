@@ -1,15 +1,18 @@
 package io.yupiik.kubernetes.bindings.v1_17_14.v1;
 
+import io.yupiik.kubernetes.bindings.v1_17_14.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_14.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ServiceAccount {
+public class ServiceAccount implements Validable<ServiceAccount> {
     private String apiVersion;
     private Boolean automountServiceAccountToken;
-    private List<ServiceAccountImagePullSecrets> imagePullSecrets;
+    private List<LocalObjectReference> imagePullSecrets;
     private String kind;
-    private ServiceAccountMetadata metadata;
-    private List<ServiceAccountSecrets> secrets;
+    private ObjectMeta metadata;
+    private List<ObjectReference> secrets;
 
     public ServiceAccount() {
         // no-op
@@ -17,10 +20,10 @@ public class ServiceAccount {
 
     public ServiceAccount(final String apiVersion,
                           final Boolean automountServiceAccountToken,
-                          final List<ServiceAccountImagePullSecrets> imagePullSecrets,
+                          final List<LocalObjectReference> imagePullSecrets,
                           final String kind,
-                          final ServiceAccountMetadata metadata,
-                          final List<ServiceAccountSecrets> secrets) {
+                          final ObjectMeta metadata,
+                          final List<ObjectReference> secrets) {
         // no-op
     }
 
@@ -40,11 +43,11 @@ public class ServiceAccount {
         this.automountServiceAccountToken = automountServiceAccountToken;
     }
 
-    public List<ServiceAccountImagePullSecrets> getImagePullSecrets() {
+    public List<LocalObjectReference> getImagePullSecrets() {
         return imagePullSecrets;
     }
 
-    public void setImagePullSecrets(final List<ServiceAccountImagePullSecrets> imagePullSecrets) {
+    public void setImagePullSecrets(final List<LocalObjectReference> imagePullSecrets) {
         this.imagePullSecrets = imagePullSecrets;
     }
 
@@ -56,19 +59,19 @@ public class ServiceAccount {
         this.kind = kind;
     }
 
-    public ServiceAccountMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ServiceAccountMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
-    public List<ServiceAccountSecrets> getSecrets() {
+    public List<ObjectReference> getSecrets() {
         return secrets;
     }
 
-    public void setSecrets(final List<ServiceAccountSecrets> secrets) {
+    public void setSecrets(final List<ObjectReference> secrets) {
         this.secrets = secrets;
     }
 
@@ -95,5 +98,40 @@ public class ServiceAccount {
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(secrets, __otherCasted.secrets);
+    }
+
+    public ServiceAccount apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ServiceAccount automountServiceAccountToken(final Boolean automountServiceAccountToken) {
+        this.automountServiceAccountToken = automountServiceAccountToken;
+        return this;
+    }
+
+    public ServiceAccount imagePullSecrets(final List<LocalObjectReference> imagePullSecrets) {
+        this.imagePullSecrets = imagePullSecrets;
+        return this;
+    }
+
+    public ServiceAccount kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ServiceAccount metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public ServiceAccount secrets(final List<ObjectReference> secrets) {
+        this.secrets = secrets;
+        return this;
+    }
+
+    @Override
+    public ServiceAccount validate() {
+        return this;
     }
 }

@@ -1,8 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_7_0.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_7_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_7_0.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class DaemonSetStatus {
+public class DaemonSetStatus implements Validable<DaemonSetStatus> {
     private Integer collisionCount;
     private int currentNumberScheduled;
     private int desiredNumberScheduled;
@@ -130,5 +134,55 @@ public class DaemonSetStatus {
             Objects.equals(numberUnavailable, __otherCasted.numberUnavailable) &&
             Objects.equals(observedGeneration, __otherCasted.observedGeneration) &&
             Objects.equals(updatedNumberScheduled, __otherCasted.updatedNumberScheduled);
+    }
+
+    public DaemonSetStatus collisionCount(final Integer collisionCount) {
+        this.collisionCount = collisionCount;
+        return this;
+    }
+
+    public DaemonSetStatus currentNumberScheduled(final int currentNumberScheduled) {
+        this.currentNumberScheduled = currentNumberScheduled;
+        return this;
+    }
+
+    public DaemonSetStatus desiredNumberScheduled(final int desiredNumberScheduled) {
+        this.desiredNumberScheduled = desiredNumberScheduled;
+        return this;
+    }
+
+    public DaemonSetStatus numberAvailable(final Integer numberAvailable) {
+        this.numberAvailable = numberAvailable;
+        return this;
+    }
+
+    public DaemonSetStatus numberMisscheduled(final int numberMisscheduled) {
+        this.numberMisscheduled = numberMisscheduled;
+        return this;
+    }
+
+    public DaemonSetStatus numberReady(final int numberReady) {
+        this.numberReady = numberReady;
+        return this;
+    }
+
+    public DaemonSetStatus numberUnavailable(final Integer numberUnavailable) {
+        this.numberUnavailable = numberUnavailable;
+        return this;
+    }
+
+    public DaemonSetStatus observedGeneration(final Integer observedGeneration) {
+        this.observedGeneration = observedGeneration;
+        return this;
+    }
+
+    public DaemonSetStatus updatedNumberScheduled(final Integer updatedNumberScheduled) {
+        this.updatedNumberScheduled = updatedNumberScheduled;
+        return this;
+    }
+
+    @Override
+    public DaemonSetStatus validate() {
+        return this;
     }
 }

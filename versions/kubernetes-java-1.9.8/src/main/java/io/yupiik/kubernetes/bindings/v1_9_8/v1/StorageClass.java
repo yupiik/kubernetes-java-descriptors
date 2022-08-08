@@ -1,14 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_9_8.v1;
 
+import io.yupiik.kubernetes.bindings.v1_9_8.Validable;
+import io.yupiik.kubernetes.bindings.v1_9_8.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class StorageClass {
+public class StorageClass implements Validable<StorageClass> {
     private Boolean allowVolumeExpansion;
     private String apiVersion;
     private String kind;
-    private StorageClassMetadata metadata;
+    private ObjectMeta metadata;
     private List<String> mountOptions;
     private Map<String, String> parameters;
     private String provisioner;
@@ -22,7 +25,7 @@ public class StorageClass {
     public StorageClass(final Boolean allowVolumeExpansion,
                         final String apiVersion,
                         final String kind,
-                        final StorageClassMetadata metadata,
+                        final ObjectMeta metadata,
                         final List<String> mountOptions,
                         final Map<String, String> parameters,
                         final String provisioner,
@@ -55,11 +58,11 @@ public class StorageClass {
         this.kind = kind;
     }
 
-    public StorageClassMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final StorageClassMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -132,5 +135,67 @@ public class StorageClass {
             Objects.equals(provisioner, __otherCasted.provisioner) &&
             Objects.equals(reclaimPolicy, __otherCasted.reclaimPolicy) &&
             Objects.equals(volumeBindingMode, __otherCasted.volumeBindingMode);
+    }
+
+    public StorageClass allowVolumeExpansion(final Boolean allowVolumeExpansion) {
+        this.allowVolumeExpansion = allowVolumeExpansion;
+        return this;
+    }
+
+    public StorageClass apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public StorageClass kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public StorageClass metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public StorageClass mountOptions(final List<String> mountOptions) {
+        this.mountOptions = mountOptions;
+        return this;
+    }
+
+    public StorageClass parameters(final Map<String, String> parameters) {
+        this.parameters = parameters;
+        return this;
+    }
+
+    public StorageClass provisioner(final String provisioner) {
+        this.provisioner = provisioner;
+        return this;
+    }
+
+    public StorageClass reclaimPolicy(final String reclaimPolicy) {
+        this.reclaimPolicy = reclaimPolicy;
+        return this;
+    }
+
+    public StorageClass volumeBindingMode(final String volumeBindingMode) {
+        this.volumeBindingMode = volumeBindingMode;
+        return this;
+    }
+
+    @Override
+    public StorageClass validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (provisioner == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "provisioner", "provisioner",
+                "Missing 'provisioner' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

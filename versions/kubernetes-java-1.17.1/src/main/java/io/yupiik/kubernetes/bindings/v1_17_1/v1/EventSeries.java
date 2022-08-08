@@ -1,8 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_17_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_17_1.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_1.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class EventSeries {
+public class EventSeries implements Validable<EventSeries> {
     private Integer count;
     private String lastObservedTime;
     private String state;
@@ -58,5 +62,25 @@ public class EventSeries {
         return Objects.equals(count, __otherCasted.count) &&
             Objects.equals(lastObservedTime, __otherCasted.lastObservedTime) &&
             Objects.equals(state, __otherCasted.state);
+    }
+
+    public EventSeries count(final Integer count) {
+        this.count = count;
+        return this;
+    }
+
+    public EventSeries lastObservedTime(final String lastObservedTime) {
+        this.lastObservedTime = lastObservedTime;
+        return this;
+    }
+
+    public EventSeries state(final String state) {
+        this.state = state;
+        return this;
+    }
+
+    @Override
+    public EventSeries validate() {
+        return this;
     }
 }

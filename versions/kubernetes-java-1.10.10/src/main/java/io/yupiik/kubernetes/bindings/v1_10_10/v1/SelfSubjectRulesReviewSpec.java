@@ -1,8 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_10_10.v1;
 
+import io.yupiik.kubernetes.bindings.v1_10_10.Validable;
+import io.yupiik.kubernetes.bindings.v1_10_10.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class SelfSubjectRulesReviewSpec {
+public class SelfSubjectRulesReviewSpec implements Validable<SelfSubjectRulesReviewSpec> {
     private String namespace;
 
     public SelfSubjectRulesReviewSpec() {
@@ -34,5 +38,15 @@ public class SelfSubjectRulesReviewSpec {
         }
         final SelfSubjectRulesReviewSpec __otherCasted = (SelfSubjectRulesReviewSpec) __other;
         return Objects.equals(namespace, __otherCasted.namespace);
+    }
+
+    public SelfSubjectRulesReviewSpec namespace(final String namespace) {
+        this.namespace = namespace;
+        return this;
+    }
+
+    @Override
+    public SelfSubjectRulesReviewSpec validate() {
+        return this;
     }
 }

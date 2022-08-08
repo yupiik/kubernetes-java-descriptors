@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_8_5.v1;
 
+import io.yupiik.kubernetes.bindings.v1_8_5.Validable;
+import io.yupiik.kubernetes.bindings.v1_8_5.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PersistentVolumeClaimSpec {
+public class PersistentVolumeClaimSpec implements Validable<PersistentVolumeClaimSpec> {
     private List<String> accessModes;
-    private PersistentVolumeClaimSpecResources resources;
-    private PersistentVolumeClaimSpecSelector selector;
+    private ResourceRequirements resources;
+    private LabelSelector selector;
     private String storageClassName;
     private String volumeName;
 
@@ -15,8 +18,8 @@ public class PersistentVolumeClaimSpec {
     }
 
     public PersistentVolumeClaimSpec(final List<String> accessModes,
-                                     final PersistentVolumeClaimSpecResources resources,
-                                     final PersistentVolumeClaimSpecSelector selector,
+                                     final ResourceRequirements resources,
+                                     final LabelSelector selector,
                                      final String storageClassName,
                                      final String volumeName) {
         // no-op
@@ -30,19 +33,19 @@ public class PersistentVolumeClaimSpec {
         this.accessModes = accessModes;
     }
 
-    public PersistentVolumeClaimSpecResources getResources() {
+    public ResourceRequirements getResources() {
         return resources;
     }
 
-    public void setResources(final PersistentVolumeClaimSpecResources resources) {
+    public void setResources(final ResourceRequirements resources) {
         this.resources = resources;
     }
 
-    public PersistentVolumeClaimSpecSelector getSelector() {
+    public LabelSelector getSelector() {
         return selector;
     }
 
-    public void setSelector(final PersistentVolumeClaimSpecSelector selector) {
+    public void setSelector(final LabelSelector selector) {
         this.selector = selector;
     }
 
@@ -83,5 +86,35 @@ public class PersistentVolumeClaimSpec {
             Objects.equals(selector, __otherCasted.selector) &&
             Objects.equals(storageClassName, __otherCasted.storageClassName) &&
             Objects.equals(volumeName, __otherCasted.volumeName);
+    }
+
+    public PersistentVolumeClaimSpec accessModes(final List<String> accessModes) {
+        this.accessModes = accessModes;
+        return this;
+    }
+
+    public PersistentVolumeClaimSpec resources(final ResourceRequirements resources) {
+        this.resources = resources;
+        return this;
+    }
+
+    public PersistentVolumeClaimSpec selector(final LabelSelector selector) {
+        this.selector = selector;
+        return this;
+    }
+
+    public PersistentVolumeClaimSpec storageClassName(final String storageClassName) {
+        this.storageClassName = storageClassName;
+        return this;
+    }
+
+    public PersistentVolumeClaimSpec volumeName(final String volumeName) {
+        this.volumeName = volumeName;
+        return this;
+    }
+
+    @Override
+    public PersistentVolumeClaimSpec validate() {
+        return this;
     }
 }

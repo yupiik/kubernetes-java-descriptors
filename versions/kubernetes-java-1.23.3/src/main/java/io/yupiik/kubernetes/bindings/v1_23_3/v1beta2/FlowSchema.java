@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_23_3.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_23_3.Validable;
+import io.yupiik.kubernetes.bindings.v1_23_3.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class FlowSchema {
+public class FlowSchema implements Validable<FlowSchema> {
     private String apiVersion;
     private String kind;
-    private FlowSchemaMetadata metadata;
+    private ObjectMeta metadata;
     private FlowSchemaSpec spec;
     private FlowSchemaStatus status;
 
@@ -15,7 +19,7 @@ public class FlowSchema {
 
     public FlowSchema(final String apiVersion,
                       final String kind,
-                      final FlowSchemaMetadata metadata,
+                      final ObjectMeta metadata,
                       final FlowSchemaSpec spec,
                       final FlowSchemaStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class FlowSchema {
         this.kind = kind;
     }
 
-    public FlowSchemaMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final FlowSchemaMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,35 @@ public class FlowSchema {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public FlowSchema apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public FlowSchema kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public FlowSchema metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public FlowSchema spec(final FlowSchemaSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public FlowSchema status(final FlowSchemaStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public FlowSchema validate() {
+        return this;
     }
 }

@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_15_5.v1;
 
+import io.yupiik.kubernetes.bindings.v1_15_5.Validable;
+import io.yupiik.kubernetes.bindings.v1_15_5.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-public class Secret {
+public class Secret implements Validable<Secret> {
     private String apiVersion;
     private Map<String, String> data;
     private String kind;
-    private SecretMetadata metadata;
+    private ObjectMeta metadata;
     private Map<String, String> stringData;
     private String type;
 
@@ -18,7 +22,7 @@ public class Secret {
     public Secret(final String apiVersion,
                   final Map<String, String> data,
                   final String kind,
-                  final SecretMetadata metadata,
+                  final ObjectMeta metadata,
                   final Map<String, String> stringData,
                   final String type) {
         // no-op
@@ -48,11 +52,11 @@ public class Secret {
         this.kind = kind;
     }
 
-    public SecretMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final SecretMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -95,5 +99,40 @@ public class Secret {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(stringData, __otherCasted.stringData) &&
             Objects.equals(type, __otherCasted.type);
+    }
+
+    public Secret apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public Secret data(final Map<String, String> data) {
+        this.data = data;
+        return this;
+    }
+
+    public Secret kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public Secret metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public Secret stringData(final Map<String, String> stringData) {
+        this.stringData = stringData;
+        return this;
+    }
+
+    public Secret type(final String type) {
+        this.type = type;
+        return this;
+    }
+
+    @Override
+    public Secret validate() {
+        return this;
     }
 }

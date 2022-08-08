@@ -1,74 +1,45 @@
 package io.yupiik.kubernetes.bindings.v1_21_12.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_12.Validable;
+import io.yupiik.kubernetes.bindings.v1_21_12.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class TokenRequest {
-    private String apiVersion;
-    private String kind;
-    private TokenRequestMetadata metadata;
-    private TokenRequestSpec spec;
-    private TokenRequestStatus status;
+public class TokenRequest implements Validable<TokenRequest> {
+    private String audience;
+    private Integer expirationSeconds;
 
     public TokenRequest() {
         // no-op
     }
 
-    public TokenRequest(final String apiVersion,
-                        final String kind,
-                        final TokenRequestMetadata metadata,
-                        final TokenRequestSpec spec,
-                        final TokenRequestStatus status) {
+    public TokenRequest(final String audience,
+                        final Integer expirationSeconds) {
         // no-op
     }
 
-    public String getApiVersion() {
-        return apiVersion;
+    public String getAudience() {
+        return audience;
     }
 
-    public void setApiVersion(final String apiVersion) {
-        this.apiVersion = apiVersion;
+    public void setAudience(final String audience) {
+        this.audience = audience;
     }
 
-    public String getKind() {
-        return kind;
+    public Integer getExpirationSeconds() {
+        return expirationSeconds;
     }
 
-    public void setKind(final String kind) {
-        this.kind = kind;
-    }
-
-    public TokenRequestMetadata getMetadata() {
-        return metadata;
-    }
-
-    public void setMetadata(final TokenRequestMetadata metadata) {
-        this.metadata = metadata;
-    }
-
-    public TokenRequestSpec getSpec() {
-        return spec;
-    }
-
-    public void setSpec(final TokenRequestSpec spec) {
-        this.spec = spec;
-    }
-
-    public TokenRequestStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(final TokenRequestStatus status) {
-        this.status = status;
+    public void setExpirationSeconds(final Integer expirationSeconds) {
+        this.expirationSeconds = expirationSeconds;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-                apiVersion,
-                kind,
-                metadata,
-                spec,
-                status);
+                audience,
+                expirationSeconds);
     }
 
     @Override
@@ -77,10 +48,34 @@ public class TokenRequest {
             return false;
         }
         final TokenRequest __otherCasted = (TokenRequest) __other;
-        return Objects.equals(apiVersion, __otherCasted.apiVersion) &&
-            Objects.equals(kind, __otherCasted.kind) &&
-            Objects.equals(metadata, __otherCasted.metadata) &&
-            Objects.equals(spec, __otherCasted.spec) &&
-            Objects.equals(status, __otherCasted.status);
+        return Objects.equals(audience, __otherCasted.audience) &&
+            Objects.equals(expirationSeconds, __otherCasted.expirationSeconds);
+    }
+
+    public TokenRequest audience(final String audience) {
+        this.audience = audience;
+        return this;
+    }
+
+    public TokenRequest expirationSeconds(final Integer expirationSeconds) {
+        this.expirationSeconds = expirationSeconds;
+        return this;
+    }
+
+    @Override
+    public TokenRequest validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (audience == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "audience", "audience",
+                "Missing 'audience' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

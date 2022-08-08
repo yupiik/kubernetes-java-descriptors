@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_9_8.v1;
 
+import io.yupiik.kubernetes.bindings.v1_9_8.Validable;
+import io.yupiik.kubernetes.bindings.v1_9_8.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class TokenReviewStatus {
+public class TokenReviewStatus implements Validable<TokenReviewStatus> {
     private Boolean authenticated;
     private String error;
-    private TokenReviewStatusUser user;
+    private UserInfo user;
 
     public TokenReviewStatus() {
         // no-op
@@ -13,7 +17,7 @@ public class TokenReviewStatus {
 
     public TokenReviewStatus(final Boolean authenticated,
                              final String error,
-                             final TokenReviewStatusUser user) {
+                             final UserInfo user) {
         // no-op
     }
 
@@ -33,11 +37,11 @@ public class TokenReviewStatus {
         this.error = error;
     }
 
-    public TokenReviewStatusUser getUser() {
+    public UserInfo getUser() {
         return user;
     }
 
-    public void setUser(final TokenReviewStatusUser user) {
+    public void setUser(final UserInfo user) {
         this.user = user;
     }
 
@@ -58,5 +62,25 @@ public class TokenReviewStatus {
         return Objects.equals(authenticated, __otherCasted.authenticated) &&
             Objects.equals(error, __otherCasted.error) &&
             Objects.equals(user, __otherCasted.user);
+    }
+
+    public TokenReviewStatus authenticated(final Boolean authenticated) {
+        this.authenticated = authenticated;
+        return this;
+    }
+
+    public TokenReviewStatus error(final String error) {
+        this.error = error;
+        return this;
+    }
+
+    public TokenReviewStatus user(final UserInfo user) {
+        this.user = user;
+        return this;
+    }
+
+    @Override
+    public TokenReviewStatus validate() {
+        return this;
     }
 }

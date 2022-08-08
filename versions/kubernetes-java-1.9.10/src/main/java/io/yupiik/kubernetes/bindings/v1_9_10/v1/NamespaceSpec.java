@@ -1,9 +1,12 @@
 package io.yupiik.kubernetes.bindings.v1_9_10.v1;
 
+import io.yupiik.kubernetes.bindings.v1_9_10.Validable;
+import io.yupiik.kubernetes.bindings.v1_9_10.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class NamespaceSpec {
+public class NamespaceSpec implements Validable<NamespaceSpec> {
     private List<String> finalizers;
 
     public NamespaceSpec() {
@@ -35,5 +38,15 @@ public class NamespaceSpec {
         }
         final NamespaceSpec __otherCasted = (NamespaceSpec) __other;
         return Objects.equals(finalizers, __otherCasted.finalizers);
+    }
+
+    public NamespaceSpec finalizers(final List<String> finalizers) {
+        this.finalizers = finalizers;
+        return this;
+    }
+
+    @Override
+    public NamespaceSpec validate() {
+        return this;
     }
 }

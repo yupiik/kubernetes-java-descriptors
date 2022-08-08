@@ -1,23 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_7_15.v2alpha1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_7_15.Validable;
+import io.yupiik.kubernetes.bindings.v1_7_15.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ScheduledJobList {
+public class ScheduledJobList implements Validable<ScheduledJobList> {
     private String apiVersion;
-    private List<JsonValue> items;
+    private List<CronJob> items;
     private String kind;
-    private ScheduledJobListMetadata metadata;
+    private ListMeta metadata;
 
     public ScheduledJobList() {
         // no-op
     }
 
     public ScheduledJobList(final String apiVersion,
-                            final List<JsonValue> items,
+                            final List<CronJob> items,
                             final String kind,
-                            final ScheduledJobListMetadata metadata) {
+                            final ListMeta metadata) {
         // no-op
     }
 
@@ -29,11 +31,11 @@ public class ScheduledJobList {
         this.apiVersion = apiVersion;
     }
 
-    public List<JsonValue> getItems() {
+    public List<CronJob> getItems() {
         return items;
     }
 
-    public void setItems(final List<JsonValue> items) {
+    public void setItems(final List<CronJob> items) {
         this.items = items;
     }
 
@@ -45,11 +47,11 @@ public class ScheduledJobList {
         this.kind = kind;
     }
 
-    public ScheduledJobListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final ScheduledJobListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -72,5 +74,42 @@ public class ScheduledJobList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public ScheduledJobList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public ScheduledJobList items(final List<CronJob> items) {
+        this.items = items;
+        return this;
+    }
+
+    public ScheduledJobList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public ScheduledJobList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public ScheduledJobList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

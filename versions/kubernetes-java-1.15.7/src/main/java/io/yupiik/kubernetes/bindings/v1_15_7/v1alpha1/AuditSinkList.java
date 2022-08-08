@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_15_7.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_15_7.Validable;
+import io.yupiik.kubernetes.bindings.v1_15_7.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AuditSinkList {
+public class AuditSinkList implements Validable<AuditSinkList> {
     private String apiVersion;
-    private List<AuditSinkListItems> items;
+    private List<AuditSink> items;
     private String kind;
-    private AuditSinkListMetadata metadata;
+    private ListMeta metadata;
 
     public AuditSinkList() {
         // no-op
     }
 
     public AuditSinkList(final String apiVersion,
-                         final List<AuditSinkListItems> items,
+                         final List<AuditSink> items,
                          final String kind,
-                         final AuditSinkListMetadata metadata) {
+                         final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class AuditSinkList {
         this.apiVersion = apiVersion;
     }
 
-    public List<AuditSinkListItems> getItems() {
+    public List<AuditSink> getItems() {
         return items;
     }
 
-    public void setItems(final List<AuditSinkListItems> items) {
+    public void setItems(final List<AuditSink> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class AuditSinkList {
         this.kind = kind;
     }
 
-    public AuditSinkListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final AuditSinkListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class AuditSinkList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public AuditSinkList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public AuditSinkList items(final List<AuditSink> items) {
+        this.items = items;
+        return this;
+    }
+
+    public AuditSinkList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public AuditSinkList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public AuditSinkList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

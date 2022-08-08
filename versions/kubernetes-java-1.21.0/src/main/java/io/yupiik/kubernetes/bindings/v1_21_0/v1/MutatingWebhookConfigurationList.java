@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_21_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_0.Validable;
+import io.yupiik.kubernetes.bindings.v1_21_0.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class MutatingWebhookConfigurationList {
+public class MutatingWebhookConfigurationList implements Validable<MutatingWebhookConfigurationList> {
     private String apiVersion;
-    private List<MutatingWebhookConfigurationListItems> items;
+    private List<MutatingWebhookConfiguration> items;
     private String kind;
-    private MutatingWebhookConfigurationListMetadata metadata;
+    private ListMeta metadata;
 
     public MutatingWebhookConfigurationList() {
         // no-op
     }
 
     public MutatingWebhookConfigurationList(final String apiVersion,
-                                            final List<MutatingWebhookConfigurationListItems> items,
+                                            final List<MutatingWebhookConfiguration> items,
                                             final String kind,
-                                            final MutatingWebhookConfigurationListMetadata metadata) {
+                                            final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class MutatingWebhookConfigurationList {
         this.apiVersion = apiVersion;
     }
 
-    public List<MutatingWebhookConfigurationListItems> getItems() {
+    public List<MutatingWebhookConfiguration> getItems() {
         return items;
     }
 
-    public void setItems(final List<MutatingWebhookConfigurationListItems> items) {
+    public void setItems(final List<MutatingWebhookConfiguration> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class MutatingWebhookConfigurationList {
         this.kind = kind;
     }
 
-    public MutatingWebhookConfigurationListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final MutatingWebhookConfigurationListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class MutatingWebhookConfigurationList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public MutatingWebhookConfigurationList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public MutatingWebhookConfigurationList items(final List<MutatingWebhookConfiguration> items) {
+        this.items = items;
+        return this;
+    }
+
+    public MutatingWebhookConfigurationList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public MutatingWebhookConfigurationList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public MutatingWebhookConfigurationList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_19_13.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_13.Validable;
+import io.yupiik.kubernetes.bindings.v1_19_13.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CSIDriverList {
+public class CSIDriverList implements Validable<CSIDriverList> {
     private String apiVersion;
-    private List<CSIDriverListItems> items;
+    private List<CSIDriver> items;
     private String kind;
-    private CSIDriverListMetadata metadata;
+    private ListMeta metadata;
 
     public CSIDriverList() {
         // no-op
     }
 
     public CSIDriverList(final String apiVersion,
-                         final List<CSIDriverListItems> items,
+                         final List<CSIDriver> items,
                          final String kind,
-                         final CSIDriverListMetadata metadata) {
+                         final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class CSIDriverList {
         this.apiVersion = apiVersion;
     }
 
-    public List<CSIDriverListItems> getItems() {
+    public List<CSIDriver> getItems() {
         return items;
     }
 
-    public void setItems(final List<CSIDriverListItems> items) {
+    public void setItems(final List<CSIDriver> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class CSIDriverList {
         this.kind = kind;
     }
 
-    public CSIDriverListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final CSIDriverListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class CSIDriverList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public CSIDriverList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public CSIDriverList items(final List<CSIDriver> items) {
+        this.items = items;
+        return this;
+    }
+
+    public CSIDriverList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public CSIDriverList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public CSIDriverList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

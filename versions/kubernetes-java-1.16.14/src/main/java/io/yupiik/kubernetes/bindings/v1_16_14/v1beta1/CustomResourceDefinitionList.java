@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_16_14.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_16_14.Validable;
+import io.yupiik.kubernetes.bindings.v1_16_14.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CustomResourceDefinitionList {
+public class CustomResourceDefinitionList implements Validable<CustomResourceDefinitionList> {
     private String apiVersion;
-    private List<CustomResourceDefinitionListItems> items;
+    private List<CustomResourceDefinition> items;
     private String kind;
-    private CustomResourceDefinitionListMetadata metadata;
+    private ListMeta metadata;
 
     public CustomResourceDefinitionList() {
         // no-op
     }
 
     public CustomResourceDefinitionList(final String apiVersion,
-                                        final List<CustomResourceDefinitionListItems> items,
+                                        final List<CustomResourceDefinition> items,
                                         final String kind,
-                                        final CustomResourceDefinitionListMetadata metadata) {
+                                        final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class CustomResourceDefinitionList {
         this.apiVersion = apiVersion;
     }
 
-    public List<CustomResourceDefinitionListItems> getItems() {
+    public List<CustomResourceDefinition> getItems() {
         return items;
     }
 
-    public void setItems(final List<CustomResourceDefinitionListItems> items) {
+    public void setItems(final List<CustomResourceDefinition> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class CustomResourceDefinitionList {
         this.kind = kind;
     }
 
-    public CustomResourceDefinitionListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final CustomResourceDefinitionListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class CustomResourceDefinitionList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public CustomResourceDefinitionList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public CustomResourceDefinitionList items(final List<CustomResourceDefinition> items) {
+        this.items = items;
+        return this;
+    }
+
+    public CustomResourceDefinitionList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public CustomResourceDefinitionList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public CustomResourceDefinitionList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

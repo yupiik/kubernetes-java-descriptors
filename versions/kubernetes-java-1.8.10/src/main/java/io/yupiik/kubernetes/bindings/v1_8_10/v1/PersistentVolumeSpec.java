@@ -1,69 +1,72 @@
 package io.yupiik.kubernetes.bindings.v1_8_10.v1;
 
+import io.yupiik.kubernetes.bindings.v1_8_10.Validable;
+import io.yupiik.kubernetes.bindings.v1_8_10.ValidationException;
+import jakarta.json.JsonObject;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-public class PersistentVolumeSpec {
+public class PersistentVolumeSpec implements Validable<PersistentVolumeSpec> {
     private List<String> accessModes;
-    private PersistentVolumeSpecAwsElasticBlockStore awsElasticBlockStore;
-    private PersistentVolumeSpecAzureDisk azureDisk;
-    private PersistentVolumeSpecAzureFile azureFile;
-    private Map<String, String> capacity;
-    private PersistentVolumeSpecCephfs cephfs;
-    private PersistentVolumeSpecCinder cinder;
-    private PersistentVolumeSpecClaimRef claimRef;
-    private PersistentVolumeSpecFc fc;
-    private PersistentVolumeSpecFlexVolume flexVolume;
-    private PersistentVolumeSpecFlocker flocker;
-    private PersistentVolumeSpecGcePersistentDisk gcePersistentDisk;
-    private PersistentVolumeSpecGlusterfs glusterfs;
-    private PersistentVolumeSpecHostPath hostPath;
-    private PersistentVolumeSpecIscsi iscsi;
-    private PersistentVolumeSpecLocal local;
+    private AWSElasticBlockStoreVolumeSource awsElasticBlockStore;
+    private AzureDiskVolumeSource azureDisk;
+    private AzureFilePersistentVolumeSource azureFile;
+    private JsonObject capacity;
+    private CephFSPersistentVolumeSource cephfs;
+    private CinderVolumeSource cinder;
+    private ObjectReference claimRef;
+    private FCVolumeSource fc;
+    private FlexVolumeSource flexVolume;
+    private FlockerVolumeSource flocker;
+    private GCEPersistentDiskVolumeSource gcePersistentDisk;
+    private GlusterfsVolumeSource glusterfs;
+    private HostPathVolumeSource hostPath;
+    private ISCSIVolumeSource iscsi;
+    private LocalVolumeSource local;
     private List<String> mountOptions;
-    private PersistentVolumeSpecNfs nfs;
+    private NFSVolumeSource nfs;
     private String persistentVolumeReclaimPolicy;
-    private PersistentVolumeSpecPhotonPersistentDisk photonPersistentDisk;
-    private PersistentVolumeSpecPortworxVolume portworxVolume;
-    private PersistentVolumeSpecQuobyte quobyte;
-    private PersistentVolumeSpecRbd rbd;
-    private PersistentVolumeSpecScaleIO scaleIO;
+    private PhotonPersistentDiskVolumeSource photonPersistentDisk;
+    private PortworxVolumeSource portworxVolume;
+    private QuobyteVolumeSource quobyte;
+    private RBDVolumeSource rbd;
+    private ScaleIOPersistentVolumeSource scaleIO;
     private String storageClassName;
-    private PersistentVolumeSpecStorageos storageos;
-    private PersistentVolumeSpecVsphereVolume vsphereVolume;
+    private StorageOSPersistentVolumeSource storageos;
+    private VsphereVirtualDiskVolumeSource vsphereVolume;
 
     public PersistentVolumeSpec() {
         // no-op
     }
 
     public PersistentVolumeSpec(final List<String> accessModes,
-                                final PersistentVolumeSpecAwsElasticBlockStore awsElasticBlockStore,
-                                final PersistentVolumeSpecAzureDisk azureDisk,
-                                final PersistentVolumeSpecAzureFile azureFile,
-                                final Map<String, String> capacity,
-                                final PersistentVolumeSpecCephfs cephfs,
-                                final PersistentVolumeSpecCinder cinder,
-                                final PersistentVolumeSpecClaimRef claimRef,
-                                final PersistentVolumeSpecFc fc,
-                                final PersistentVolumeSpecFlexVolume flexVolume,
-                                final PersistentVolumeSpecFlocker flocker,
-                                final PersistentVolumeSpecGcePersistentDisk gcePersistentDisk,
-                                final PersistentVolumeSpecGlusterfs glusterfs,
-                                final PersistentVolumeSpecHostPath hostPath,
-                                final PersistentVolumeSpecIscsi iscsi,
-                                final PersistentVolumeSpecLocal local,
+                                final AWSElasticBlockStoreVolumeSource awsElasticBlockStore,
+                                final AzureDiskVolumeSource azureDisk,
+                                final AzureFilePersistentVolumeSource azureFile,
+                                final JsonObject capacity,
+                                final CephFSPersistentVolumeSource cephfs,
+                                final CinderVolumeSource cinder,
+                                final ObjectReference claimRef,
+                                final FCVolumeSource fc,
+                                final FlexVolumeSource flexVolume,
+                                final FlockerVolumeSource flocker,
+                                final GCEPersistentDiskVolumeSource gcePersistentDisk,
+                                final GlusterfsVolumeSource glusterfs,
+                                final HostPathVolumeSource hostPath,
+                                final ISCSIVolumeSource iscsi,
+                                final LocalVolumeSource local,
                                 final List<String> mountOptions,
-                                final PersistentVolumeSpecNfs nfs,
+                                final NFSVolumeSource nfs,
                                 final String persistentVolumeReclaimPolicy,
-                                final PersistentVolumeSpecPhotonPersistentDisk photonPersistentDisk,
-                                final PersistentVolumeSpecPortworxVolume portworxVolume,
-                                final PersistentVolumeSpecQuobyte quobyte,
-                                final PersistentVolumeSpecRbd rbd,
-                                final PersistentVolumeSpecScaleIO scaleIO,
+                                final PhotonPersistentDiskVolumeSource photonPersistentDisk,
+                                final PortworxVolumeSource portworxVolume,
+                                final QuobyteVolumeSource quobyte,
+                                final RBDVolumeSource rbd,
+                                final ScaleIOPersistentVolumeSource scaleIO,
                                 final String storageClassName,
-                                final PersistentVolumeSpecStorageos storageos,
-                                final PersistentVolumeSpecVsphereVolume vsphereVolume) {
+                                final StorageOSPersistentVolumeSource storageos,
+                                final VsphereVirtualDiskVolumeSource vsphereVolume) {
         // no-op
     }
 
@@ -75,123 +78,123 @@ public class PersistentVolumeSpec {
         this.accessModes = accessModes;
     }
 
-    public PersistentVolumeSpecAwsElasticBlockStore getAwsElasticBlockStore() {
+    public AWSElasticBlockStoreVolumeSource getAwsElasticBlockStore() {
         return awsElasticBlockStore;
     }
 
-    public void setAwsElasticBlockStore(final PersistentVolumeSpecAwsElasticBlockStore awsElasticBlockStore) {
+    public void setAwsElasticBlockStore(final AWSElasticBlockStoreVolumeSource awsElasticBlockStore) {
         this.awsElasticBlockStore = awsElasticBlockStore;
     }
 
-    public PersistentVolumeSpecAzureDisk getAzureDisk() {
+    public AzureDiskVolumeSource getAzureDisk() {
         return azureDisk;
     }
 
-    public void setAzureDisk(final PersistentVolumeSpecAzureDisk azureDisk) {
+    public void setAzureDisk(final AzureDiskVolumeSource azureDisk) {
         this.azureDisk = azureDisk;
     }
 
-    public PersistentVolumeSpecAzureFile getAzureFile() {
+    public AzureFilePersistentVolumeSource getAzureFile() {
         return azureFile;
     }
 
-    public void setAzureFile(final PersistentVolumeSpecAzureFile azureFile) {
+    public void setAzureFile(final AzureFilePersistentVolumeSource azureFile) {
         this.azureFile = azureFile;
     }
 
-    public Map<String, String> getCapacity() {
+    public JsonObject getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(final Map<String, String> capacity) {
+    public void setCapacity(final JsonObject capacity) {
         this.capacity = capacity;
     }
 
-    public PersistentVolumeSpecCephfs getCephfs() {
+    public CephFSPersistentVolumeSource getCephfs() {
         return cephfs;
     }
 
-    public void setCephfs(final PersistentVolumeSpecCephfs cephfs) {
+    public void setCephfs(final CephFSPersistentVolumeSource cephfs) {
         this.cephfs = cephfs;
     }
 
-    public PersistentVolumeSpecCinder getCinder() {
+    public CinderVolumeSource getCinder() {
         return cinder;
     }
 
-    public void setCinder(final PersistentVolumeSpecCinder cinder) {
+    public void setCinder(final CinderVolumeSource cinder) {
         this.cinder = cinder;
     }
 
-    public PersistentVolumeSpecClaimRef getClaimRef() {
+    public ObjectReference getClaimRef() {
         return claimRef;
     }
 
-    public void setClaimRef(final PersistentVolumeSpecClaimRef claimRef) {
+    public void setClaimRef(final ObjectReference claimRef) {
         this.claimRef = claimRef;
     }
 
-    public PersistentVolumeSpecFc getFc() {
+    public FCVolumeSource getFc() {
         return fc;
     }
 
-    public void setFc(final PersistentVolumeSpecFc fc) {
+    public void setFc(final FCVolumeSource fc) {
         this.fc = fc;
     }
 
-    public PersistentVolumeSpecFlexVolume getFlexVolume() {
+    public FlexVolumeSource getFlexVolume() {
         return flexVolume;
     }
 
-    public void setFlexVolume(final PersistentVolumeSpecFlexVolume flexVolume) {
+    public void setFlexVolume(final FlexVolumeSource flexVolume) {
         this.flexVolume = flexVolume;
     }
 
-    public PersistentVolumeSpecFlocker getFlocker() {
+    public FlockerVolumeSource getFlocker() {
         return flocker;
     }
 
-    public void setFlocker(final PersistentVolumeSpecFlocker flocker) {
+    public void setFlocker(final FlockerVolumeSource flocker) {
         this.flocker = flocker;
     }
 
-    public PersistentVolumeSpecGcePersistentDisk getGcePersistentDisk() {
+    public GCEPersistentDiskVolumeSource getGcePersistentDisk() {
         return gcePersistentDisk;
     }
 
-    public void setGcePersistentDisk(final PersistentVolumeSpecGcePersistentDisk gcePersistentDisk) {
+    public void setGcePersistentDisk(final GCEPersistentDiskVolumeSource gcePersistentDisk) {
         this.gcePersistentDisk = gcePersistentDisk;
     }
 
-    public PersistentVolumeSpecGlusterfs getGlusterfs() {
+    public GlusterfsVolumeSource getGlusterfs() {
         return glusterfs;
     }
 
-    public void setGlusterfs(final PersistentVolumeSpecGlusterfs glusterfs) {
+    public void setGlusterfs(final GlusterfsVolumeSource glusterfs) {
         this.glusterfs = glusterfs;
     }
 
-    public PersistentVolumeSpecHostPath getHostPath() {
+    public HostPathVolumeSource getHostPath() {
         return hostPath;
     }
 
-    public void setHostPath(final PersistentVolumeSpecHostPath hostPath) {
+    public void setHostPath(final HostPathVolumeSource hostPath) {
         this.hostPath = hostPath;
     }
 
-    public PersistentVolumeSpecIscsi getIscsi() {
+    public ISCSIVolumeSource getIscsi() {
         return iscsi;
     }
 
-    public void setIscsi(final PersistentVolumeSpecIscsi iscsi) {
+    public void setIscsi(final ISCSIVolumeSource iscsi) {
         this.iscsi = iscsi;
     }
 
-    public PersistentVolumeSpecLocal getLocal() {
+    public LocalVolumeSource getLocal() {
         return local;
     }
 
-    public void setLocal(final PersistentVolumeSpecLocal local) {
+    public void setLocal(final LocalVolumeSource local) {
         this.local = local;
     }
 
@@ -203,11 +206,11 @@ public class PersistentVolumeSpec {
         this.mountOptions = mountOptions;
     }
 
-    public PersistentVolumeSpecNfs getNfs() {
+    public NFSVolumeSource getNfs() {
         return nfs;
     }
 
-    public void setNfs(final PersistentVolumeSpecNfs nfs) {
+    public void setNfs(final NFSVolumeSource nfs) {
         this.nfs = nfs;
     }
 
@@ -219,43 +222,43 @@ public class PersistentVolumeSpec {
         this.persistentVolumeReclaimPolicy = persistentVolumeReclaimPolicy;
     }
 
-    public PersistentVolumeSpecPhotonPersistentDisk getPhotonPersistentDisk() {
+    public PhotonPersistentDiskVolumeSource getPhotonPersistentDisk() {
         return photonPersistentDisk;
     }
 
-    public void setPhotonPersistentDisk(final PersistentVolumeSpecPhotonPersistentDisk photonPersistentDisk) {
+    public void setPhotonPersistentDisk(final PhotonPersistentDiskVolumeSource photonPersistentDisk) {
         this.photonPersistentDisk = photonPersistentDisk;
     }
 
-    public PersistentVolumeSpecPortworxVolume getPortworxVolume() {
+    public PortworxVolumeSource getPortworxVolume() {
         return portworxVolume;
     }
 
-    public void setPortworxVolume(final PersistentVolumeSpecPortworxVolume portworxVolume) {
+    public void setPortworxVolume(final PortworxVolumeSource portworxVolume) {
         this.portworxVolume = portworxVolume;
     }
 
-    public PersistentVolumeSpecQuobyte getQuobyte() {
+    public QuobyteVolumeSource getQuobyte() {
         return quobyte;
     }
 
-    public void setQuobyte(final PersistentVolumeSpecQuobyte quobyte) {
+    public void setQuobyte(final QuobyteVolumeSource quobyte) {
         this.quobyte = quobyte;
     }
 
-    public PersistentVolumeSpecRbd getRbd() {
+    public RBDVolumeSource getRbd() {
         return rbd;
     }
 
-    public void setRbd(final PersistentVolumeSpecRbd rbd) {
+    public void setRbd(final RBDVolumeSource rbd) {
         this.rbd = rbd;
     }
 
-    public PersistentVolumeSpecScaleIO getScaleIO() {
+    public ScaleIOPersistentVolumeSource getScaleIO() {
         return scaleIO;
     }
 
-    public void setScaleIO(final PersistentVolumeSpecScaleIO scaleIO) {
+    public void setScaleIO(final ScaleIOPersistentVolumeSource scaleIO) {
         this.scaleIO = scaleIO;
     }
 
@@ -267,19 +270,19 @@ public class PersistentVolumeSpec {
         this.storageClassName = storageClassName;
     }
 
-    public PersistentVolumeSpecStorageos getStorageos() {
+    public StorageOSPersistentVolumeSource getStorageos() {
         return storageos;
     }
 
-    public void setStorageos(final PersistentVolumeSpecStorageos storageos) {
+    public void setStorageos(final StorageOSPersistentVolumeSource storageos) {
         this.storageos = storageos;
     }
 
-    public PersistentVolumeSpecVsphereVolume getVsphereVolume() {
+    public VsphereVirtualDiskVolumeSource getVsphereVolume() {
         return vsphereVolume;
     }
 
-    public void setVsphereVolume(final PersistentVolumeSpecVsphereVolume vsphereVolume) {
+    public void setVsphereVolume(final VsphereVirtualDiskVolumeSource vsphereVolume) {
         this.vsphereVolume = vsphereVolume;
     }
 
@@ -348,5 +351,145 @@ public class PersistentVolumeSpec {
             Objects.equals(storageClassName, __otherCasted.storageClassName) &&
             Objects.equals(storageos, __otherCasted.storageos) &&
             Objects.equals(vsphereVolume, __otherCasted.vsphereVolume);
+    }
+
+    public PersistentVolumeSpec accessModes(final List<String> accessModes) {
+        this.accessModes = accessModes;
+        return this;
+    }
+
+    public PersistentVolumeSpec awsElasticBlockStore(final AWSElasticBlockStoreVolumeSource awsElasticBlockStore) {
+        this.awsElasticBlockStore = awsElasticBlockStore;
+        return this;
+    }
+
+    public PersistentVolumeSpec azureDisk(final AzureDiskVolumeSource azureDisk) {
+        this.azureDisk = azureDisk;
+        return this;
+    }
+
+    public PersistentVolumeSpec azureFile(final AzureFilePersistentVolumeSource azureFile) {
+        this.azureFile = azureFile;
+        return this;
+    }
+
+    public PersistentVolumeSpec capacity(final JsonObject capacity) {
+        this.capacity = capacity;
+        return this;
+    }
+
+    public PersistentVolumeSpec cephfs(final CephFSPersistentVolumeSource cephfs) {
+        this.cephfs = cephfs;
+        return this;
+    }
+
+    public PersistentVolumeSpec cinder(final CinderVolumeSource cinder) {
+        this.cinder = cinder;
+        return this;
+    }
+
+    public PersistentVolumeSpec claimRef(final ObjectReference claimRef) {
+        this.claimRef = claimRef;
+        return this;
+    }
+
+    public PersistentVolumeSpec fc(final FCVolumeSource fc) {
+        this.fc = fc;
+        return this;
+    }
+
+    public PersistentVolumeSpec flexVolume(final FlexVolumeSource flexVolume) {
+        this.flexVolume = flexVolume;
+        return this;
+    }
+
+    public PersistentVolumeSpec flocker(final FlockerVolumeSource flocker) {
+        this.flocker = flocker;
+        return this;
+    }
+
+    public PersistentVolumeSpec gcePersistentDisk(final GCEPersistentDiskVolumeSource gcePersistentDisk) {
+        this.gcePersistentDisk = gcePersistentDisk;
+        return this;
+    }
+
+    public PersistentVolumeSpec glusterfs(final GlusterfsVolumeSource glusterfs) {
+        this.glusterfs = glusterfs;
+        return this;
+    }
+
+    public PersistentVolumeSpec hostPath(final HostPathVolumeSource hostPath) {
+        this.hostPath = hostPath;
+        return this;
+    }
+
+    public PersistentVolumeSpec iscsi(final ISCSIVolumeSource iscsi) {
+        this.iscsi = iscsi;
+        return this;
+    }
+
+    public PersistentVolumeSpec local(final LocalVolumeSource local) {
+        this.local = local;
+        return this;
+    }
+
+    public PersistentVolumeSpec mountOptions(final List<String> mountOptions) {
+        this.mountOptions = mountOptions;
+        return this;
+    }
+
+    public PersistentVolumeSpec nfs(final NFSVolumeSource nfs) {
+        this.nfs = nfs;
+        return this;
+    }
+
+    public PersistentVolumeSpec persistentVolumeReclaimPolicy(final String persistentVolumeReclaimPolicy) {
+        this.persistentVolumeReclaimPolicy = persistentVolumeReclaimPolicy;
+        return this;
+    }
+
+    public PersistentVolumeSpec photonPersistentDisk(final PhotonPersistentDiskVolumeSource photonPersistentDisk) {
+        this.photonPersistentDisk = photonPersistentDisk;
+        return this;
+    }
+
+    public PersistentVolumeSpec portworxVolume(final PortworxVolumeSource portworxVolume) {
+        this.portworxVolume = portworxVolume;
+        return this;
+    }
+
+    public PersistentVolumeSpec quobyte(final QuobyteVolumeSource quobyte) {
+        this.quobyte = quobyte;
+        return this;
+    }
+
+    public PersistentVolumeSpec rbd(final RBDVolumeSource rbd) {
+        this.rbd = rbd;
+        return this;
+    }
+
+    public PersistentVolumeSpec scaleIO(final ScaleIOPersistentVolumeSource scaleIO) {
+        this.scaleIO = scaleIO;
+        return this;
+    }
+
+    public PersistentVolumeSpec storageClassName(final String storageClassName) {
+        this.storageClassName = storageClassName;
+        return this;
+    }
+
+    public PersistentVolumeSpec storageos(final StorageOSPersistentVolumeSource storageos) {
+        this.storageos = storageos;
+        return this;
+    }
+
+    public PersistentVolumeSpec vsphereVolume(final VsphereVirtualDiskVolumeSource vsphereVolume) {
+        this.vsphereVolume = vsphereVolume;
+        return this;
+    }
+
+    @Override
+    public PersistentVolumeSpec validate() {
+        return this;
     }
 }

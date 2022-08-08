@@ -1,23 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_13_8.v1beta2;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_13_8.Validable;
+import io.yupiik.kubernetes.bindings.v1_13_8.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class StatefulSetList {
+public class StatefulSetList implements Validable<StatefulSetList> {
     private String apiVersion;
-    private List<JsonValue> items;
+    private List<StatefulSet> items;
     private String kind;
-    private StatefulSetListMetadata metadata;
+    private ListMeta metadata;
 
     public StatefulSetList() {
         // no-op
     }
 
     public StatefulSetList(final String apiVersion,
-                           final List<JsonValue> items,
+                           final List<StatefulSet> items,
                            final String kind,
-                           final StatefulSetListMetadata metadata) {
+                           final ListMeta metadata) {
         // no-op
     }
 
@@ -29,11 +31,11 @@ public class StatefulSetList {
         this.apiVersion = apiVersion;
     }
 
-    public List<JsonValue> getItems() {
+    public List<StatefulSet> getItems() {
         return items;
     }
 
-    public void setItems(final List<JsonValue> items) {
+    public void setItems(final List<StatefulSet> items) {
         this.items = items;
     }
 
@@ -45,11 +47,11 @@ public class StatefulSetList {
         this.kind = kind;
     }
 
-    public StatefulSetListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final StatefulSetListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -72,5 +74,42 @@ public class StatefulSetList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public StatefulSetList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public StatefulSetList items(final List<StatefulSet> items) {
+        this.items = items;
+        return this;
+    }
+
+    public StatefulSetList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public StatefulSetList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public StatefulSetList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

@@ -1,26 +1,29 @@
 package io.yupiik.kubernetes.bindings.v1_17_8.v1;
 
+import io.yupiik.kubernetes.bindings.v1_17_8.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_8.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class NamespaceStatus {
-    private List<NamespaceStatusConditions> conditions;
+public class NamespaceStatus implements Validable<NamespaceStatus> {
+    private List<NamespaceCondition> conditions;
     private String phase;
 
     public NamespaceStatus() {
         // no-op
     }
 
-    public NamespaceStatus(final List<NamespaceStatusConditions> conditions,
+    public NamespaceStatus(final List<NamespaceCondition> conditions,
                            final String phase) {
         // no-op
     }
 
-    public List<NamespaceStatusConditions> getConditions() {
+    public List<NamespaceCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(final List<NamespaceStatusConditions> conditions) {
+    public void setConditions(final List<NamespaceCondition> conditions) {
         this.conditions = conditions;
     }
 
@@ -47,5 +50,20 @@ public class NamespaceStatus {
         final NamespaceStatus __otherCasted = (NamespaceStatus) __other;
         return Objects.equals(conditions, __otherCasted.conditions) &&
             Objects.equals(phase, __otherCasted.phase);
+    }
+
+    public NamespaceStatus conditions(final List<NamespaceCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public NamespaceStatus phase(final String phase) {
+        this.phase = phase;
+        return this;
+    }
+
+    @Override
+    public NamespaceStatus validate() {
+        return this;
     }
 }

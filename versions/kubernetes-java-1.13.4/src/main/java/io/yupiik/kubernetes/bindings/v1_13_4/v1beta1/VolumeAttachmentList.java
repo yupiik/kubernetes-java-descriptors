@@ -1,23 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_13_4.v1beta1;
 
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_13_4.Validable;
+import io.yupiik.kubernetes.bindings.v1_13_4.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class VolumeAttachmentList {
+public class VolumeAttachmentList implements Validable<VolumeAttachmentList> {
     private String apiVersion;
-    private List<JsonValue> items;
+    private List<VolumeAttachment> items;
     private String kind;
-    private VolumeAttachmentListMetadata metadata;
+    private ListMeta metadata;
 
     public VolumeAttachmentList() {
         // no-op
     }
 
     public VolumeAttachmentList(final String apiVersion,
-                                final List<JsonValue> items,
+                                final List<VolumeAttachment> items,
                                 final String kind,
-                                final VolumeAttachmentListMetadata metadata) {
+                                final ListMeta metadata) {
         // no-op
     }
 
@@ -29,11 +31,11 @@ public class VolumeAttachmentList {
         this.apiVersion = apiVersion;
     }
 
-    public List<JsonValue> getItems() {
+    public List<VolumeAttachment> getItems() {
         return items;
     }
 
-    public void setItems(final List<JsonValue> items) {
+    public void setItems(final List<VolumeAttachment> items) {
         this.items = items;
     }
 
@@ -45,11 +47,11 @@ public class VolumeAttachmentList {
         this.kind = kind;
     }
 
-    public VolumeAttachmentListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final VolumeAttachmentListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -72,5 +74,42 @@ public class VolumeAttachmentList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public VolumeAttachmentList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public VolumeAttachmentList items(final List<VolumeAttachment> items) {
+        this.items = items;
+        return this;
+    }
+
+    public VolumeAttachmentList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public VolumeAttachmentList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public VolumeAttachmentList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

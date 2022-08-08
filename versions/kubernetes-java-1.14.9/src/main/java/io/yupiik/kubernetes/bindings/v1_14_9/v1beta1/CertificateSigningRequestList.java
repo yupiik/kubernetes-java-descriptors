@@ -1,22 +1,25 @@
 package io.yupiik.kubernetes.bindings.v1_14_9.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_14_9.Validable;
+import io.yupiik.kubernetes.bindings.v1_14_9.ValidationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CertificateSigningRequestList {
+public class CertificateSigningRequestList implements Validable<CertificateSigningRequestList> {
     private String apiVersion;
-    private List<CertificateSigningRequestListItems> items;
+    private List<CertificateSigningRequest> items;
     private String kind;
-    private CertificateSigningRequestListMetadata metadata;
+    private ListMeta metadata;
 
     public CertificateSigningRequestList() {
         // no-op
     }
 
     public CertificateSigningRequestList(final String apiVersion,
-                                         final List<CertificateSigningRequestListItems> items,
+                                         final List<CertificateSigningRequest> items,
                                          final String kind,
-                                         final CertificateSigningRequestListMetadata metadata) {
+                                         final ListMeta metadata) {
         // no-op
     }
 
@@ -28,11 +31,11 @@ public class CertificateSigningRequestList {
         this.apiVersion = apiVersion;
     }
 
-    public List<CertificateSigningRequestListItems> getItems() {
+    public List<CertificateSigningRequest> getItems() {
         return items;
     }
 
-    public void setItems(final List<CertificateSigningRequestListItems> items) {
+    public void setItems(final List<CertificateSigningRequest> items) {
         this.items = items;
     }
 
@@ -44,11 +47,11 @@ public class CertificateSigningRequestList {
         this.kind = kind;
     }
 
-    public CertificateSigningRequestListMetadata getMetadata() {
+    public ListMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final CertificateSigningRequestListMetadata metadata) {
+    public void setMetadata(final ListMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -71,5 +74,42 @@ public class CertificateSigningRequestList {
             Objects.equals(items, __otherCasted.items) &&
             Objects.equals(kind, __otherCasted.kind) &&
             Objects.equals(metadata, __otherCasted.metadata);
+    }
+
+    public CertificateSigningRequestList apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public CertificateSigningRequestList items(final List<CertificateSigningRequest> items) {
+        this.items = items;
+        return this;
+    }
+
+    public CertificateSigningRequestList kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public CertificateSigningRequestList metadata(final ListMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    @Override
+    public CertificateSigningRequestList validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (items == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "items", "items",
+                "Missing 'items' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
     }
 }

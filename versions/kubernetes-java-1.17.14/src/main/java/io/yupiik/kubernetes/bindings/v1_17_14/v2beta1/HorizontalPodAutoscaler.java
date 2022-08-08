@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_17_14.v2beta1;
 
+import io.yupiik.kubernetes.bindings.v1_17_14.Validable;
+import io.yupiik.kubernetes.bindings.v1_17_14.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class HorizontalPodAutoscaler {
+public class HorizontalPodAutoscaler implements Validable<HorizontalPodAutoscaler> {
     private String apiVersion;
     private String kind;
-    private HorizontalPodAutoscalerMetadata metadata;
+    private ObjectMeta metadata;
     private HorizontalPodAutoscalerSpec spec;
     private HorizontalPodAutoscalerStatus status;
 
@@ -15,7 +19,7 @@ public class HorizontalPodAutoscaler {
 
     public HorizontalPodAutoscaler(final String apiVersion,
                                    final String kind,
-                                   final HorizontalPodAutoscalerMetadata metadata,
+                                   final ObjectMeta metadata,
                                    final HorizontalPodAutoscalerSpec spec,
                                    final HorizontalPodAutoscalerStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class HorizontalPodAutoscaler {
         this.kind = kind;
     }
 
-    public HorizontalPodAutoscalerMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final HorizontalPodAutoscalerMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,35 @@ public class HorizontalPodAutoscaler {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public HorizontalPodAutoscaler apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public HorizontalPodAutoscaler kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public HorizontalPodAutoscaler metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public HorizontalPodAutoscaler spec(final HorizontalPodAutoscalerSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public HorizontalPodAutoscaler status(final HorizontalPodAutoscalerStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public HorizontalPodAutoscaler validate() {
+        return this;
     }
 }

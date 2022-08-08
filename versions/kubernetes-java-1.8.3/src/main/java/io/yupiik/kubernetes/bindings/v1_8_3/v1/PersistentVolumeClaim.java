@@ -1,11 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_8_3.v1;
 
+import io.yupiik.kubernetes.bindings.v1_8_3.Validable;
+import io.yupiik.kubernetes.bindings.v1_8_3.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public class PersistentVolumeClaim {
+public class PersistentVolumeClaim implements Validable<PersistentVolumeClaim> {
     private String apiVersion;
     private String kind;
-    private PersistentVolumeClaimMetadata metadata;
+    private ObjectMeta metadata;
     private PersistentVolumeClaimSpec spec;
     private PersistentVolumeClaimStatus status;
 
@@ -15,7 +19,7 @@ public class PersistentVolumeClaim {
 
     public PersistentVolumeClaim(final String apiVersion,
                                  final String kind,
-                                 final PersistentVolumeClaimMetadata metadata,
+                                 final ObjectMeta metadata,
                                  final PersistentVolumeClaimSpec spec,
                                  final PersistentVolumeClaimStatus status) {
         // no-op
@@ -37,11 +41,11 @@ public class PersistentVolumeClaim {
         this.kind = kind;
     }
 
-    public PersistentVolumeClaimMetadata getMetadata() {
+    public ObjectMeta getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(final PersistentVolumeClaimMetadata metadata) {
+    public void setMetadata(final ObjectMeta metadata) {
         this.metadata = metadata;
     }
 
@@ -82,5 +86,35 @@ public class PersistentVolumeClaim {
             Objects.equals(metadata, __otherCasted.metadata) &&
             Objects.equals(spec, __otherCasted.spec) &&
             Objects.equals(status, __otherCasted.status);
+    }
+
+    public PersistentVolumeClaim apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public PersistentVolumeClaim kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public PersistentVolumeClaim metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public PersistentVolumeClaim spec(final PersistentVolumeClaimSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public PersistentVolumeClaim status(final PersistentVolumeClaimStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public PersistentVolumeClaim validate() {
+        return this;
     }
 }

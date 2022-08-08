@@ -1,37 +1,40 @@
 package io.yupiik.kubernetes.bindings.v1_20_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_20_1.Validable;
+import io.yupiik.kubernetes.bindings.v1_20_1.ValidationException;
+import jakarta.json.JsonObject;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-public class ResourceQuotaSpec {
-    private Map<String, String> hard;
-    private ResourceQuotaSpecScopeSelector scopeSelector;
+public class ResourceQuotaSpec implements Validable<ResourceQuotaSpec> {
+    private JsonObject hard;
+    private ScopeSelector scopeSelector;
     private List<String> scopes;
 
     public ResourceQuotaSpec() {
         // no-op
     }
 
-    public ResourceQuotaSpec(final Map<String, String> hard,
-                             final ResourceQuotaSpecScopeSelector scopeSelector,
+    public ResourceQuotaSpec(final JsonObject hard,
+                             final ScopeSelector scopeSelector,
                              final List<String> scopes) {
         // no-op
     }
 
-    public Map<String, String> getHard() {
+    public JsonObject getHard() {
         return hard;
     }
 
-    public void setHard(final Map<String, String> hard) {
+    public void setHard(final JsonObject hard) {
         this.hard = hard;
     }
 
-    public ResourceQuotaSpecScopeSelector getScopeSelector() {
+    public ScopeSelector getScopeSelector() {
         return scopeSelector;
     }
 
-    public void setScopeSelector(final ResourceQuotaSpecScopeSelector scopeSelector) {
+    public void setScopeSelector(final ScopeSelector scopeSelector) {
         this.scopeSelector = scopeSelector;
     }
 
@@ -60,5 +63,25 @@ public class ResourceQuotaSpec {
         return Objects.equals(hard, __otherCasted.hard) &&
             Objects.equals(scopeSelector, __otherCasted.scopeSelector) &&
             Objects.equals(scopes, __otherCasted.scopes);
+    }
+
+    public ResourceQuotaSpec hard(final JsonObject hard) {
+        this.hard = hard;
+        return this;
+    }
+
+    public ResourceQuotaSpec scopeSelector(final ScopeSelector scopeSelector) {
+        this.scopeSelector = scopeSelector;
+        return this;
+    }
+
+    public ResourceQuotaSpec scopes(final List<String> scopes) {
+        this.scopes = scopes;
+        return this;
+    }
+
+    @Override
+    public ResourceQuotaSpec validate() {
+        return this;
     }
 }
