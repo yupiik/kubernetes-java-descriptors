@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_17_6.v1;
 
+import io.yupiik.kubernetes.bindings.v1_17_6.Exportable;
+import io.yupiik.kubernetes.bindings.v1_17_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_6.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_6.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ExecAction implements Validable<ExecAction> {
+public class ExecAction implements Validable<ExecAction>, Exportable {
     private List<String> command;
 
     public ExecAction() {
@@ -48,5 +52,13 @@ public class ExecAction implements Validable<ExecAction> {
     @Override
     public ExecAction validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (command != null ? "\"command\":" + command.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

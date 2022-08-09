@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_10_12.v1;
 
+import io.yupiik.kubernetes.bindings.v1_10_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_10_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_10_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_10_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Taint implements Validable<Taint> {
+public class Taint implements Validable<Taint>, Exportable {
     private String effect;
     private String key;
     private String timeAdded;
@@ -119,5 +123,16 @@ public class Taint implements Validable<Taint> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (effect != null ? "\"effect\":\"" +  JsonStrings.escapeJson(effect) + "\"" : ""),
+                    (key != null ? "\"key\":\"" +  JsonStrings.escapeJson(key) + "\"" : ""),
+                    (timeAdded != null ? "\"timeAdded\":\"" +  JsonStrings.escapeJson(timeAdded) + "\"" : ""),
+                    (value != null ? "\"value\":\"" +  JsonStrings.escapeJson(value) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

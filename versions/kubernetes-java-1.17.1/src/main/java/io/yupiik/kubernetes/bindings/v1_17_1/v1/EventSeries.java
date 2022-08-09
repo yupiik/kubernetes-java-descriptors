@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_17_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_17_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_17_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class EventSeries implements Validable<EventSeries> {
+public class EventSeries implements Validable<EventSeries>, Exportable {
     private Integer count;
     private String lastObservedTime;
     private String state;
@@ -82,5 +86,15 @@ public class EventSeries implements Validable<EventSeries> {
     @Override
     public EventSeries validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (count != null ? "\"count\":" + count : ""),
+                    (lastObservedTime != null ? "\"lastObservedTime\":\"" +  JsonStrings.escapeJson(lastObservedTime) + "\"" : ""),
+                    (state != null ? "\"state\":\"" +  JsonStrings.escapeJson(state) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

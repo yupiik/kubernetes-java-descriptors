@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_10_12.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_10_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_10_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_10_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_10_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ReplicaSet implements Validable<ReplicaSet> {
+public class ReplicaSet implements Validable<ReplicaSet>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -115,6 +119,24 @@ public class ReplicaSet implements Validable<ReplicaSet> {
 
     @Override
     public ReplicaSet validate() {
+        if (kind == null) {
+            kind = "ReplicaSet";
+        }
+        if (apiVersion == null) {
+            apiVersion = "apps/v1beta2";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""),
+                    (status != null ? "\"status\":" + status.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

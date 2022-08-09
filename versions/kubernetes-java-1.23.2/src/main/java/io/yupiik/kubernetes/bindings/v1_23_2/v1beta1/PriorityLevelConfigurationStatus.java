@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_23_2.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_23_2.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PriorityLevelConfigurationStatus implements Validable<PriorityLevelConfigurationStatus> {
+public class PriorityLevelConfigurationStatus implements Validable<PriorityLevelConfigurationStatus>, Exportable {
     private List<PriorityLevelConfigurationCondition> conditions;
 
     public PriorityLevelConfigurationStatus() {
@@ -48,5 +51,13 @@ public class PriorityLevelConfigurationStatus implements Validable<PriorityLevel
     @Override
     public PriorityLevelConfigurationStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

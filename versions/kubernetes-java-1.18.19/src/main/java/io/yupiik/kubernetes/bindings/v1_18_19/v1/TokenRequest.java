@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_19.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_19.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_19.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_19.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_19.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class TokenRequest implements Validable<TokenRequest> {
+public class TokenRequest implements Validable<TokenRequest>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -115,6 +119,12 @@ public class TokenRequest implements Validable<TokenRequest> {
 
     @Override
     public TokenRequest validate() {
+        if (kind == null) {
+            kind = "TokenRequest";
+        }
+        if (apiVersion == null) {
+            apiVersion = "authentication.k8s.io/v1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (spec == null) {
             if (__errors_jsonSchema == null) {
@@ -128,5 +138,17 @@ public class TokenRequest implements Validable<TokenRequest> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""),
+                    (status != null ? "\"status\":" + status.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

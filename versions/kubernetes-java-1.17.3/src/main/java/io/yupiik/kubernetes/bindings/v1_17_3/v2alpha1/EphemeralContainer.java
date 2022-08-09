@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_17_3.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_17_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_17_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class EphemeralContainer implements Validable<EphemeralContainer> {
+public class EphemeralContainer implements Validable<EphemeralContainer>, Exportable {
     private List<String> args;
     private List<String> command;
     private List<EnvVar> env;
@@ -434,5 +438,35 @@ public class EphemeralContainer implements Validable<EphemeralContainer> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (args != null ? "\"args\":" + args.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (command != null ? "\"command\":" + command.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (env != null ? "\"env\":" + env.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (envFrom != null ? "\"envFrom\":" + envFrom.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (image != null ? "\"image\":\"" +  JsonStrings.escapeJson(image) + "\"" : ""),
+                    (imagePullPolicy != null ? "\"imagePullPolicy\":\"" +  JsonStrings.escapeJson(imagePullPolicy) + "\"" : ""),
+                    (lifecycle != null ? "\"lifecycle\":" + lifecycle.asJson() : ""),
+                    (livenessProbe != null ? "\"livenessProbe\":" + livenessProbe.asJson() : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (ports != null ? "\"ports\":" + ports.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (readinessProbe != null ? "\"readinessProbe\":" + readinessProbe.asJson() : ""),
+                    (resources != null ? "\"resources\":" + resources.asJson() : ""),
+                    (securityContext != null ? "\"securityContext\":" + securityContext.asJson() : ""),
+                    (startupProbe != null ? "\"startupProbe\":" + startupProbe.asJson() : ""),
+                    (stdin != null ? "\"stdin\":" + stdin : ""),
+                    (stdinOnce != null ? "\"stdinOnce\":" + stdinOnce : ""),
+                    (targetContainerName != null ? "\"targetContainerName\":\"" +  JsonStrings.escapeJson(targetContainerName) + "\"" : ""),
+                    (terminationMessagePath != null ? "\"terminationMessagePath\":\"" +  JsonStrings.escapeJson(terminationMessagePath) + "\"" : ""),
+                    (terminationMessagePolicy != null ? "\"terminationMessagePolicy\":\"" +  JsonStrings.escapeJson(terminationMessagePolicy) + "\"" : ""),
+                    (tty != null ? "\"tty\":" + tty : ""),
+                    (volumeDevices != null ? "\"volumeDevices\":" + volumeDevices.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (volumeMounts != null ? "\"volumeMounts\":" + volumeMounts.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (workingDir != null ? "\"workingDir\":\"" +  JsonStrings.escapeJson(workingDir) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

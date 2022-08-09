@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_15_1.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_15_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_15_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class SecretEnvSource implements Validable<SecretEnvSource> {
+public class SecretEnvSource implements Validable<SecretEnvSource>, Exportable {
     private String name;
     private Boolean optional;
 
@@ -65,5 +69,14 @@ public class SecretEnvSource implements Validable<SecretEnvSource> {
     @Override
     public SecretEnvSource validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (optional != null ? "\"optional\":" + optional : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_13_5.v1;
 
+import io.yupiik.kubernetes.bindings.v1_13_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_13_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class DaemonSet implements Validable<DaemonSet> {
+public class DaemonSet implements Validable<DaemonSet>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -115,6 +119,24 @@ public class DaemonSet implements Validable<DaemonSet> {
 
     @Override
     public DaemonSet validate() {
+        if (kind == null) {
+            kind = "DaemonSet";
+        }
+        if (apiVersion == null) {
+            apiVersion = "apps/v1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""),
+                    (status != null ? "\"status\":" + status.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

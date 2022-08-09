@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_17_6.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_17_6.Exportable;
+import io.yupiik.kubernetes.bindings.v1_17_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_6.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_6.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class RuntimeClass implements Validable<RuntimeClass> {
+public class RuntimeClass implements Validable<RuntimeClass>, Exportable {
     private String apiVersion;
     private String handler;
     private String kind;
@@ -132,6 +136,12 @@ public class RuntimeClass implements Validable<RuntimeClass> {
 
     @Override
     public RuntimeClass validate() {
+        if (kind == null) {
+            kind = "RuntimeClass";
+        }
+        if (apiVersion == null) {
+            apiVersion = "node.k8s.io/v1beta1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (handler == null) {
             if (__errors_jsonSchema == null) {
@@ -145,5 +155,18 @@ public class RuntimeClass implements Validable<RuntimeClass> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (handler != null ? "\"handler\":\"" +  JsonStrings.escapeJson(handler) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (overhead != null ? "\"overhead\":" + overhead.asJson() : ""),
+                    (scheduling != null ? "\"scheduling\":" + scheduling.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

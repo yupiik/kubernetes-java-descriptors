@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_11_6.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_11_6.Exportable;
+import io.yupiik.kubernetes.bindings.v1_11_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_11_6.Validable;
 import io.yupiik.kubernetes.bindings.v1_11_6.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class RollingUpdateDaemonSet implements Validable<RollingUpdateDaemonSet> {
+public class RollingUpdateDaemonSet implements Validable<RollingUpdateDaemonSet>, Exportable {
     private String maxUnavailable;
 
     public RollingUpdateDaemonSet() {
@@ -48,5 +52,13 @@ public class RollingUpdateDaemonSet implements Validable<RollingUpdateDaemonSet>
     @Override
     public RollingUpdateDaemonSet validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (maxUnavailable != null ? "\"maxUnavailable\":\"" +  JsonStrings.escapeJson(maxUnavailable) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

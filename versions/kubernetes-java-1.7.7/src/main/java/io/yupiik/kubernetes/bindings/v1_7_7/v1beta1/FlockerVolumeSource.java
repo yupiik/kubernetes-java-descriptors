@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_7.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_7_7.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_7.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_7.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_7.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class FlockerVolumeSource implements Validable<FlockerVolumeSource> {
+public class FlockerVolumeSource implements Validable<FlockerVolumeSource>, Exportable {
     private String datasetName;
     private String datasetUUID;
 
@@ -65,5 +69,14 @@ public class FlockerVolumeSource implements Validable<FlockerVolumeSource> {
     @Override
     public FlockerVolumeSource validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (datasetName != null ? "\"datasetName\":\"" +  JsonStrings.escapeJson(datasetName) + "\"" : ""),
+                    (datasetUUID != null ? "\"datasetUUID\":\"" +  JsonStrings.escapeJson(datasetUUID) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

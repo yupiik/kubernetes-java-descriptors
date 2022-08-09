@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_15_7.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_15_7.Exportable;
+import io.yupiik.kubernetes.bindings.v1_15_7.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_7.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_7.ValidationException;
 import jakarta.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ManagedFieldsEntry implements Validable<ManagedFieldsEntry> {
+public class ManagedFieldsEntry implements Validable<ManagedFieldsEntry>, Exportable {
     private String apiVersion;
     private JsonObject fields;
     private String manager;
@@ -117,5 +121,17 @@ public class ManagedFieldsEntry implements Validable<ManagedFieldsEntry> {
     @Override
     public ManagedFieldsEntry validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (fields != null ? "\"fields\":" + fields : ""),
+                    (manager != null ? "\"manager\":\"" +  JsonStrings.escapeJson(manager) + "\"" : ""),
+                    (operation != null ? "\"operation\":\"" +  JsonStrings.escapeJson(operation) + "\"" : ""),
+                    (time != null ? "\"time\":\"" +  JsonStrings.escapeJson(time) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

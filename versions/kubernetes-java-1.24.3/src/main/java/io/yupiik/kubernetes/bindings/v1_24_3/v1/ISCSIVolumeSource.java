@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_24_3.v1;
 
+import io.yupiik.kubernetes.bindings.v1_24_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_24_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_24_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_24_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ISCSIVolumeSource implements Validable<ISCSIVolumeSource> {
+public class ISCSIVolumeSource implements Validable<ISCSIVolumeSource>, Exportable {
     private Boolean chapAuthDiscovery;
     private Boolean chapAuthSession;
     private String fsType;
@@ -238,5 +242,23 @@ public class ISCSIVolumeSource implements Validable<ISCSIVolumeSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (chapAuthDiscovery != null ? "\"chapAuthDiscovery\":" + chapAuthDiscovery : ""),
+                    (chapAuthSession != null ? "\"chapAuthSession\":" + chapAuthSession : ""),
+                    (fsType != null ? "\"fsType\":\"" +  JsonStrings.escapeJson(fsType) + "\"" : ""),
+                    (initiatorName != null ? "\"initiatorName\":\"" +  JsonStrings.escapeJson(initiatorName) + "\"" : ""),
+                    (iqn != null ? "\"iqn\":\"" +  JsonStrings.escapeJson(iqn) + "\"" : ""),
+                    (iscsiInterface != null ? "\"iscsiInterface\":\"" +  JsonStrings.escapeJson(iscsiInterface) + "\"" : ""),
+                    "\"lun\":" + lun,
+                    (portals != null ? "\"portals\":" + portals.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (secretRef != null ? "\"secretRef\":" + secretRef.asJson() : ""),
+                    (targetPortal != null ? "\"targetPortal\":\"" +  JsonStrings.escapeJson(targetPortal) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

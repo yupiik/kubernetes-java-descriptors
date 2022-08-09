@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_7_8.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_7_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_8.ValidationException;
 import jakarta.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PersistentVolumeClaimStatus implements Validable<PersistentVolumeClaimStatus> {
+public class PersistentVolumeClaimStatus implements Validable<PersistentVolumeClaimStatus>, Exportable {
     private List<String> accessModes;
     private JsonObject capacity;
     private String phase;
@@ -83,5 +87,15 @@ public class PersistentVolumeClaimStatus implements Validable<PersistentVolumeCl
     @Override
     public PersistentVolumeClaimStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (accessModes != null ? "\"accessModes\":" + accessModes.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (capacity != null ? "\"capacity\":" + capacity : ""),
+                    (phase != null ? "\"phase\":\"" +  JsonStrings.escapeJson(phase) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

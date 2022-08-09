@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_12.v1;
 
+import io.yupiik.kubernetes.bindings.v1_16_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class DownwardAPIVolumeFile implements Validable<DownwardAPIVolumeFile> {
+public class DownwardAPIVolumeFile implements Validable<DownwardAPIVolumeFile>, Exportable {
     private ObjectFieldSelector fieldRef;
     private Integer mode;
     private String path;
@@ -111,5 +115,16 @@ public class DownwardAPIVolumeFile implements Validable<DownwardAPIVolumeFile> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (fieldRef != null ? "\"fieldRef\":" + fieldRef.asJson() : ""),
+                    (mode != null ? "\"mode\":" + mode : ""),
+                    (path != null ? "\"path\":\"" +  JsonStrings.escapeJson(path) + "\"" : ""),
+                    (resourceFieldRef != null ? "\"resourceFieldRef\":" + resourceFieldRef.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

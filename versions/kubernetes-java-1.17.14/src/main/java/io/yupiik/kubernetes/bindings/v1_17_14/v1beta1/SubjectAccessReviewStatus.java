@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_17_14.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_17_14.Exportable;
+import io.yupiik.kubernetes.bindings.v1_17_14.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_14.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_14.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class SubjectAccessReviewStatus implements Validable<SubjectAccessReviewStatus> {
+public class SubjectAccessReviewStatus implements Validable<SubjectAccessReviewStatus>, Exportable {
     private boolean allowed;
     private Boolean denied;
     private String evaluationError;
@@ -99,5 +103,16 @@ public class SubjectAccessReviewStatus implements Validable<SubjectAccessReviewS
     @Override
     public SubjectAccessReviewStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    "\"allowed\":" + allowed,
+                    (denied != null ? "\"denied\":" + denied : ""),
+                    (evaluationError != null ? "\"evaluationError\":\"" +  JsonStrings.escapeJson(evaluationError) + "\"" : ""),
+                    (reason != null ? "\"reason\":\"" +  JsonStrings.escapeJson(reason) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

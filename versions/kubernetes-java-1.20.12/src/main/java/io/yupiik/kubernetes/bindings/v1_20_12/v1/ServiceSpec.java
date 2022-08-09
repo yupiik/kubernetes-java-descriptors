@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_20_12.v1;
 
+import io.yupiik.kubernetes.bindings.v1_20_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_20_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ServiceSpec implements Validable<ServiceSpec> {
+public class ServiceSpec implements Validable<ServiceSpec>, Exportable {
     private Boolean allocateLoadBalancerNodePorts;
     private String clusterIP;
     private List<String> clusterIPs;
@@ -338,5 +342,32 @@ public class ServiceSpec implements Validable<ServiceSpec> {
     @Override
     public ServiceSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (allocateLoadBalancerNodePorts != null ? "\"allocateLoadBalancerNodePorts\":" + allocateLoadBalancerNodePorts : ""),
+                    (clusterIP != null ? "\"clusterIP\":\"" +  JsonStrings.escapeJson(clusterIP) + "\"" : ""),
+                    (clusterIPs != null ? "\"clusterIPs\":" + clusterIPs.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (externalIPs != null ? "\"externalIPs\":" + externalIPs.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (externalName != null ? "\"externalName\":\"" +  JsonStrings.escapeJson(externalName) + "\"" : ""),
+                    (externalTrafficPolicy != null ? "\"externalTrafficPolicy\":\"" +  JsonStrings.escapeJson(externalTrafficPolicy) + "\"" : ""),
+                    (healthCheckNodePort != null ? "\"healthCheckNodePort\":" + healthCheckNodePort : ""),
+                    (ipFamilies != null ? "\"ipFamilies\":" + ipFamilies.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (ipFamilyPolicy != null ? "\"ipFamilyPolicy\":\"" +  JsonStrings.escapeJson(ipFamilyPolicy) + "\"" : ""),
+                    (loadBalancerIP != null ? "\"loadBalancerIP\":\"" +  JsonStrings.escapeJson(loadBalancerIP) + "\"" : ""),
+                    (loadBalancerSourceRanges != null ? "\"loadBalancerSourceRanges\":" + loadBalancerSourceRanges.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (ports != null ? "\"ports\":" + ports.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (publishNotReadyAddresses != null ? "\"publishNotReadyAddresses\":" + publishNotReadyAddresses : ""),
+                    (selector != null ? "\"selector\":" + selector.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""),
+                    (sessionAffinity != null ? "\"sessionAffinity\":\"" +  JsonStrings.escapeJson(sessionAffinity) + "\"" : ""),
+                    (sessionAffinityConfig != null ? "\"sessionAffinityConfig\":" + sessionAffinityConfig.asJson() : ""),
+                    (topologyKeys != null ? "\"topologyKeys\":" + topologyKeys.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

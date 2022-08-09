@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_11_6.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_11_6.Exportable;
+import io.yupiik.kubernetes.bindings.v1_11_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_11_6.Validable;
 import io.yupiik.kubernetes.bindings.v1_11_6.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class StatefulSetStatus implements Validable<StatefulSetStatus> {
+public class StatefulSetStatus implements Validable<StatefulSetStatus>, Exportable {
     private Integer collisionCount;
     private List<StatefulSetCondition> conditions;
     private Integer currentReplicas;
@@ -184,5 +188,21 @@ public class StatefulSetStatus implements Validable<StatefulSetStatus> {
     @Override
     public StatefulSetStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (collisionCount != null ? "\"collisionCount\":" + collisionCount : ""),
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (currentReplicas != null ? "\"currentReplicas\":" + currentReplicas : ""),
+                    (currentRevision != null ? "\"currentRevision\":\"" +  JsonStrings.escapeJson(currentRevision) + "\"" : ""),
+                    (observedGeneration != null ? "\"observedGeneration\":" + observedGeneration : ""),
+                    (readyReplicas != null ? "\"readyReplicas\":" + readyReplicas : ""),
+                    "\"replicas\":" + replicas,
+                    (updateRevision != null ? "\"updateRevision\":\"" +  JsonStrings.escapeJson(updateRevision) + "\"" : ""),
+                    (updatedReplicas != null ? "\"updatedReplicas\":" + updatedReplicas : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

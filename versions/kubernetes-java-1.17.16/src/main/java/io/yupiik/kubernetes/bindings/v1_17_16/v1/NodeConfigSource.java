@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_17_16.v1;
 
+import io.yupiik.kubernetes.bindings.v1_17_16.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_16.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_16.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NodeConfigSource implements Validable<NodeConfigSource> {
+public class NodeConfigSource implements Validable<NodeConfigSource>, Exportable {
     private ConfigMapNodeConfigSource configMap;
 
     public NodeConfigSource() {
@@ -48,5 +51,13 @@ public class NodeConfigSource implements Validable<NodeConfigSource> {
     @Override
     public NodeConfigSource validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (configMap != null ? "\"configMap\":" + configMap.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_8_0.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_8_0.Exportable;
 import io.yupiik.kubernetes.bindings.v1_8_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class VolumeProjection implements Validable<VolumeProjection> {
+public class VolumeProjection implements Validable<VolumeProjection>, Exportable {
     private ConfigMapProjection configMap;
     private DownwardAPIProjection downwardAPI;
     private SecretProjection secret;
@@ -82,5 +85,15 @@ public class VolumeProjection implements Validable<VolumeProjection> {
     @Override
     public VolumeProjection validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (configMap != null ? "\"configMap\":" + configMap.asJson() : ""),
+                    (downwardAPI != null ? "\"downwardAPI\":" + downwardAPI.asJson() : ""),
+                    (secret != null ? "\"secret\":" + secret.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

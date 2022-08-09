@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_10_5.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_10_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_10_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_10_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_10_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class InitializerConfiguration implements Validable<InitializerConfiguration> {
+public class InitializerConfiguration implements Validable<InitializerConfiguration>, Exportable {
     private String apiVersion;
     private List<Initializer> initializers;
     private String kind;
@@ -98,6 +102,23 @@ public class InitializerConfiguration implements Validable<InitializerConfigurat
 
     @Override
     public InitializerConfiguration validate() {
+        if (kind == null) {
+            kind = "InitializerConfiguration";
+        }
+        if (apiVersion == null) {
+            apiVersion = "admissionregistration.k8s.io/v1alpha1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (initializers != null ? "\"initializers\":" + initializers.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

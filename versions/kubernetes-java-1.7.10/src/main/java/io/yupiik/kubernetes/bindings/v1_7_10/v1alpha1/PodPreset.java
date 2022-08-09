@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_10.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_7_10.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_10.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodPreset implements Validable<PodPreset> {
+public class PodPreset implements Validable<PodPreset>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -98,6 +102,23 @@ public class PodPreset implements Validable<PodPreset> {
 
     @Override
     public PodPreset validate() {
+        if (kind == null) {
+            kind = "PodPreset";
+        }
+        if (apiVersion == null) {
+            apiVersion = "settings.k8s.io/v1alpha1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

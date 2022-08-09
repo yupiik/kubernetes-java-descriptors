@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_11_10.v1;
 
+import io.yupiik.kubernetes.bindings.v1_11_10.Exportable;
+import io.yupiik.kubernetes.bindings.v1_11_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_11_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_11_10.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NodeSpec implements Validable<NodeSpec> {
+public class NodeSpec implements Validable<NodeSpec>, Exportable {
     private NodeConfigSource configSource;
     private String externalID;
     private String podCIDR;
@@ -133,5 +137,18 @@ public class NodeSpec implements Validable<NodeSpec> {
     @Override
     public NodeSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (configSource != null ? "\"configSource\":" + configSource.asJson() : ""),
+                    (externalID != null ? "\"externalID\":\"" +  JsonStrings.escapeJson(externalID) + "\"" : ""),
+                    (podCIDR != null ? "\"podCIDR\":\"" +  JsonStrings.escapeJson(podCIDR) + "\"" : ""),
+                    (providerID != null ? "\"providerID\":\"" +  JsonStrings.escapeJson(providerID) + "\"" : ""),
+                    (taints != null ? "\"taints\":" + taints.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (unschedulable != null ? "\"unschedulable\":" + unschedulable : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

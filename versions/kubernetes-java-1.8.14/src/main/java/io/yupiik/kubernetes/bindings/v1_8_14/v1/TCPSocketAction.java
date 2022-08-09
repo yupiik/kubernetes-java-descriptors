@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_8_14.v1;
 
+import io.yupiik.kubernetes.bindings.v1_8_14.Exportable;
+import io.yupiik.kubernetes.bindings.v1_8_14.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_14.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_14.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class TCPSocketAction implements Validable<TCPSocketAction> {
+public class TCPSocketAction implements Validable<TCPSocketAction>, Exportable {
     private String host;
     private String port;
 
@@ -77,5 +81,14 @@ public class TCPSocketAction implements Validable<TCPSocketAction> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (host != null ? "\"host\":\"" +  JsonStrings.escapeJson(host) + "\"" : ""),
+                    (port != null ? "\"port\":\"" +  JsonStrings.escapeJson(port) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

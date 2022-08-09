@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_9_5.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_9_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_9_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_9_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_9_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class VolumeAttachmentSource implements Validable<VolumeAttachmentSource> {
+public class VolumeAttachmentSource implements Validable<VolumeAttachmentSource>, Exportable {
     private String persistentVolumeName;
 
     public VolumeAttachmentSource() {
@@ -48,5 +52,13 @@ public class VolumeAttachmentSource implements Validable<VolumeAttachmentSource>
     @Override
     public VolumeAttachmentSource validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (persistentVolumeName != null ? "\"persistentVolumeName\":\"" +  JsonStrings.escapeJson(persistentVolumeName) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

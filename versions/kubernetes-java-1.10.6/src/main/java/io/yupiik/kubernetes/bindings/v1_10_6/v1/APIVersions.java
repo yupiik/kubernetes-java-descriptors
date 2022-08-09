@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_10_6.v1;
 
+import io.yupiik.kubernetes.bindings.v1_10_6.Exportable;
+import io.yupiik.kubernetes.bindings.v1_10_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_10_6.Validable;
 import io.yupiik.kubernetes.bindings.v1_10_6.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class APIVersions implements Validable<APIVersions> {
+public class APIVersions implements Validable<APIVersions>, Exportable {
     private String apiVersion;
     private String kind;
     private List<ServerAddressByClientCIDR> serverAddressByClientCIDRs;
@@ -98,6 +102,12 @@ public class APIVersions implements Validable<APIVersions> {
 
     @Override
     public APIVersions validate() {
+        if (kind == null) {
+            kind = "APIVersions";
+        }
+        if (apiVersion == null) {
+            apiVersion = "v1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (serverAddressByClientCIDRs == null) {
             if (__errors_jsonSchema == null) {
@@ -119,5 +129,16 @@ public class APIVersions implements Validable<APIVersions> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (serverAddressByClientCIDRs != null ? "\"serverAddressByClientCIDRs\":" + serverAddressByClientCIDRs.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (versions != null ? "\"versions\":" + versions.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

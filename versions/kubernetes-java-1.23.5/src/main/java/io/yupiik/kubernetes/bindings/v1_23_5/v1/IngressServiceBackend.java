@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_23_5.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_23_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class IngressServiceBackend implements Validable<IngressServiceBackend> {
+public class IngressServiceBackend implements Validable<IngressServiceBackend>, Exportable {
     private String name;
     private ServiceBackendPort port;
 
@@ -77,5 +81,14 @@ public class IngressServiceBackend implements Validable<IngressServiceBackend> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (port != null ? "\"port\":" + port.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

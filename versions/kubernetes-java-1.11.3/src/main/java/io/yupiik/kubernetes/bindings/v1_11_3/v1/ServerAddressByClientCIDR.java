@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_11_3.v1;
 
+import io.yupiik.kubernetes.bindings.v1_11_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_11_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_11_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_11_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ServerAddressByClientCIDR implements Validable<ServerAddressByClientCIDR> {
+public class ServerAddressByClientCIDR implements Validable<ServerAddressByClientCIDR>, Exportable {
     private String clientCIDR;
     private String serverAddress;
 
@@ -85,5 +89,14 @@ public class ServerAddressByClientCIDR implements Validable<ServerAddressByClien
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (clientCIDR != null ? "\"clientCIDR\":\"" +  JsonStrings.escapeJson(clientCIDR) + "\"" : ""),
+                    (serverAddress != null ? "\"serverAddress\":\"" +  JsonStrings.escapeJson(serverAddress) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

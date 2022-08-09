@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_8_5.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_8_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_8_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class VolumeMount implements Validable<VolumeMount> {
+public class VolumeMount implements Validable<VolumeMount>, Exportable {
     private String mountPath;
     private String mountPropagation;
     private String name;
@@ -136,5 +140,17 @@ public class VolumeMount implements Validable<VolumeMount> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (mountPath != null ? "\"mountPath\":\"" +  JsonStrings.escapeJson(mountPath) + "\"" : ""),
+                    (mountPropagation != null ? "\"mountPropagation\":\"" +  JsonStrings.escapeJson(mountPropagation) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (subPath != null ? "\"subPath\":\"" +  JsonStrings.escapeJson(subPath) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

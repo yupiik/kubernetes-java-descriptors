@@ -1,7 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_23_0.v1beta1;
 
-public enum SeccompProfileType {
+import io.yupiik.kubernetes.bindings.v1_23_0.Exportable;
+
+public enum SeccompProfileType implements Exportable {
     RuntimeDefault,
     Localhost,
     Unconfined
+    ;
+
+    @Override
+    public String asJson() {
+        return "\"" + name() + "\"";
+    }
 }

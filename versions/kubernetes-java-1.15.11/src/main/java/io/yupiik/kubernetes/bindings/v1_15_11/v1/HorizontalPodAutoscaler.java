@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_15_11.v1;
 
+import io.yupiik.kubernetes.bindings.v1_15_11.Exportable;
+import io.yupiik.kubernetes.bindings.v1_15_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_11.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_11.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class HorizontalPodAutoscaler implements Validable<HorizontalPodAutoscaler> {
+public class HorizontalPodAutoscaler implements Validable<HorizontalPodAutoscaler>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -115,6 +119,24 @@ public class HorizontalPodAutoscaler implements Validable<HorizontalPodAutoscale
 
     @Override
     public HorizontalPodAutoscaler validate() {
+        if (kind == null) {
+            kind = "HorizontalPodAutoscaler";
+        }
+        if (apiVersion == null) {
+            apiVersion = "autoscaling/v1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""),
+                    (status != null ? "\"status\":" + status.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

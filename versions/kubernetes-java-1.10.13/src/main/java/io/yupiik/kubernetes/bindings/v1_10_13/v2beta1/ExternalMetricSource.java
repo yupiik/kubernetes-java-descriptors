@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_10_13.v2beta1;
 
+import io.yupiik.kubernetes.bindings.v1_10_13.Exportable;
+import io.yupiik.kubernetes.bindings.v1_10_13.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_10_13.Validable;
 import io.yupiik.kubernetes.bindings.v1_10_13.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ExternalMetricSource implements Validable<ExternalMetricSource> {
+public class ExternalMetricSource implements Validable<ExternalMetricSource>, Exportable {
     private String metricName;
     private LabelSelector metricSelector;
     private String targetAverageValue;
@@ -111,5 +115,16 @@ public class ExternalMetricSource implements Validable<ExternalMetricSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (metricName != null ? "\"metricName\":\"" +  JsonStrings.escapeJson(metricName) + "\"" : ""),
+                    (metricSelector != null ? "\"metricSelector\":" + metricSelector.asJson() : ""),
+                    (targetAverageValue != null ? "\"targetAverageValue\":\"" +  JsonStrings.escapeJson(targetAverageValue) + "\"" : ""),
+                    (targetValue != null ? "\"targetValue\":\"" +  JsonStrings.escapeJson(targetValue) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

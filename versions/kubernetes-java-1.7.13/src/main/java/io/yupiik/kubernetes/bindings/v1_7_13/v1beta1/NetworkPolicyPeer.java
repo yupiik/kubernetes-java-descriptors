@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_7_13.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_7_13.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_13.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_13.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NetworkPolicyPeer implements Validable<NetworkPolicyPeer> {
+public class NetworkPolicyPeer implements Validable<NetworkPolicyPeer>, Exportable {
     private LabelSelector namespaceSelector;
     private LabelSelector podSelector;
 
@@ -65,5 +68,14 @@ public class NetworkPolicyPeer implements Validable<NetworkPolicyPeer> {
     @Override
     public NetworkPolicyPeer validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (namespaceSelector != null ? "\"namespaceSelector\":" + namespaceSelector.asJson() : ""),
+                    (podSelector != null ? "\"podSelector\":" + podSelector.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

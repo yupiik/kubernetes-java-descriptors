@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_15.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_19_15.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_15.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_15.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_15.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NonResourceAttributes implements Validable<NonResourceAttributes> {
+public class NonResourceAttributes implements Validable<NonResourceAttributes>, Exportable {
     private String path;
     private String verb;
 
@@ -65,5 +69,14 @@ public class NonResourceAttributes implements Validable<NonResourceAttributes> {
     @Override
     public NonResourceAttributes validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (path != null ? "\"path\":\"" +  JsonStrings.escapeJson(path) + "\"" : ""),
+                    (verb != null ? "\"verb\":\"" +  JsonStrings.escapeJson(verb) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

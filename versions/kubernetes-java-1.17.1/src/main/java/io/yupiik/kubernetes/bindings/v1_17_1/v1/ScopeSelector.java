@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_17_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_17_1.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ScopeSelector implements Validable<ScopeSelector> {
+public class ScopeSelector implements Validable<ScopeSelector>, Exportable {
     private List<ScopedResourceSelectorRequirement> matchExpressions;
 
     public ScopeSelector() {
@@ -48,5 +51,13 @@ public class ScopeSelector implements Validable<ScopeSelector> {
     @Override
     public ScopeSelector validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (matchExpressions != null ? "\"matchExpressions\":" + matchExpressions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

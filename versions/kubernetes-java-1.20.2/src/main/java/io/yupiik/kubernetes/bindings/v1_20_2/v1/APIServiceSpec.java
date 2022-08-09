@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_20_2.v1;
 
+import io.yupiik.kubernetes.bindings.v1_20_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_20_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class APIServiceSpec implements Validable<APIServiceSpec> {
+public class APIServiceSpec implements Validable<APIServiceSpec>, Exportable {
     private String caBundle;
     private String group;
     private int groupPriorityMinimum;
@@ -150,5 +154,19 @@ public class APIServiceSpec implements Validable<APIServiceSpec> {
     @Override
     public APIServiceSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (caBundle != null ? "\"caBundle\":\"" +  JsonStrings.escapeJson(caBundle) + "\"" : ""),
+                    (group != null ? "\"group\":\"" +  JsonStrings.escapeJson(group) + "\"" : ""),
+                    "\"groupPriorityMinimum\":" + groupPriorityMinimum,
+                    (insecureSkipTLSVerify != null ? "\"insecureSkipTLSVerify\":" + insecureSkipTLSVerify : ""),
+                    (service != null ? "\"service\":" + service.asJson() : ""),
+                    (version != null ? "\"version\":\"" +  JsonStrings.escapeJson(version) + "\"" : ""),
+                    "\"versionPriority\":" + versionPriority)
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

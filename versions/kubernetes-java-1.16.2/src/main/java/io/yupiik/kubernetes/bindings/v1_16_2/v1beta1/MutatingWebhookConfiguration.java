@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_2.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_16_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class MutatingWebhookConfiguration implements Validable<MutatingWebhookConfiguration> {
+public class MutatingWebhookConfiguration implements Validable<MutatingWebhookConfiguration>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -98,6 +102,23 @@ public class MutatingWebhookConfiguration implements Validable<MutatingWebhookCo
 
     @Override
     public MutatingWebhookConfiguration validate() {
+        if (kind == null) {
+            kind = "MutatingWebhookConfiguration";
+        }
+        if (apiVersion == null) {
+            apiVersion = "admissionregistration.k8s.io/v1beta1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (webhooks != null ? "\"webhooks\":" + webhooks.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

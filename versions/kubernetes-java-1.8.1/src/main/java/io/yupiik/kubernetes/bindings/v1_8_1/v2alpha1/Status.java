@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_8_1.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_8_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_8_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Status implements Validable<Status> {
+public class Status implements Validable<Status>, Exportable {
     private String apiVersion;
     private Integer code;
     private StatusDetails details;
@@ -166,6 +170,27 @@ public class Status implements Validable<Status> {
 
     @Override
     public Status validate() {
+        if (kind == null) {
+            kind = "Status";
+        }
+        if (apiVersion == null) {
+            apiVersion = "v1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (code != null ? "\"code\":" + code : ""),
+                    (details != null ? "\"details\":" + details.asJson() : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (message != null ? "\"message\":\"" +  JsonStrings.escapeJson(message) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (reason != null ? "\"reason\":\"" +  JsonStrings.escapeJson(reason) + "\"" : ""),
+                    (status != null ? "\"status\":\"" +  JsonStrings.escapeJson(status) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

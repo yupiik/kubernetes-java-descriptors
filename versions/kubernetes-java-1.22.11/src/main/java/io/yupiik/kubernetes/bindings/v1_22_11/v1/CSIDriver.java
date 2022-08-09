@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_22_11.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_11.Exportable;
+import io.yupiik.kubernetes.bindings.v1_22_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_11.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_11.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CSIDriver implements Validable<CSIDriver> {
+public class CSIDriver implements Validable<CSIDriver>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -98,6 +102,12 @@ public class CSIDriver implements Validable<CSIDriver> {
 
     @Override
     public CSIDriver validate() {
+        if (kind == null) {
+            kind = "CSIDriver";
+        }
+        if (apiVersion == null) {
+            apiVersion = "storage.k8s.io/v1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (spec == null) {
             if (__errors_jsonSchema == null) {
@@ -111,5 +121,16 @@ public class CSIDriver implements Validable<CSIDriver> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

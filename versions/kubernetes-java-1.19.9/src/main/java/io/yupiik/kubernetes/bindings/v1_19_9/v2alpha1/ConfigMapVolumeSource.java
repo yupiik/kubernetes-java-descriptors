@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_9.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_19_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ConfigMapVolumeSource implements Validable<ConfigMapVolumeSource> {
+public class ConfigMapVolumeSource implements Validable<ConfigMapVolumeSource>, Exportable {
     private Integer defaultMode;
     private List<KeyToPath> items;
     private String name;
@@ -99,5 +103,16 @@ public class ConfigMapVolumeSource implements Validable<ConfigMapVolumeSource> {
     @Override
     public ConfigMapVolumeSource validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (defaultMode != null ? "\"defaultMode\":" + defaultMode : ""),
+                    (items != null ? "\"items\":" + items.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (optional != null ? "\"optional\":" + optional : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

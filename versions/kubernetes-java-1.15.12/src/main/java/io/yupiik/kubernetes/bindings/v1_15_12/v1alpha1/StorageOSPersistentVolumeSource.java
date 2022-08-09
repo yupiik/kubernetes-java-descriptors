@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_15_12.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_15_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_15_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class StorageOSPersistentVolumeSource implements Validable<StorageOSPersistentVolumeSource> {
+public class StorageOSPersistentVolumeSource implements Validable<StorageOSPersistentVolumeSource>, Exportable {
     private String fsType;
     private Boolean readOnly;
     private ObjectReference secretRef;
@@ -116,5 +120,17 @@ public class StorageOSPersistentVolumeSource implements Validable<StorageOSPersi
     @Override
     public StorageOSPersistentVolumeSource validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (fsType != null ? "\"fsType\":\"" +  JsonStrings.escapeJson(fsType) + "\"" : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (secretRef != null ? "\"secretRef\":" + secretRef.asJson() : ""),
+                    (volumeName != null ? "\"volumeName\":\"" +  JsonStrings.escapeJson(volumeName) + "\"" : ""),
+                    (volumeNamespace != null ? "\"volumeNamespace\":\"" +  JsonStrings.escapeJson(volumeNamespace) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

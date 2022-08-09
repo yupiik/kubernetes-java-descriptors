@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_17_11.v2beta2;
 
+import io.yupiik.kubernetes.bindings.v1_17_11.Exportable;
+import io.yupiik.kubernetes.bindings.v1_17_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_11.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_11.ValidationException;
 import jakarta.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class WatchEvent implements Validable<WatchEvent> {
+public class WatchEvent implements Validable<WatchEvent>, Exportable {
     private JsonObject object;
     private String type;
 
@@ -86,5 +90,14 @@ public class WatchEvent implements Validable<WatchEvent> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (object != null ? "\"object\":" + object : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

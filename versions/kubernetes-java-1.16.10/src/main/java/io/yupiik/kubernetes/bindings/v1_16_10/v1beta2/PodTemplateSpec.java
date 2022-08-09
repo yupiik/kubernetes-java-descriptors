@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_16_10.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_16_10.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_10.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodTemplateSpec implements Validable<PodTemplateSpec> {
+public class PodTemplateSpec implements Validable<PodTemplateSpec>, Exportable {
     private ObjectMeta metadata;
     private PodSpec spec;
 
@@ -65,5 +68,14 @@ public class PodTemplateSpec implements Validable<PodTemplateSpec> {
     @Override
     public PodTemplateSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

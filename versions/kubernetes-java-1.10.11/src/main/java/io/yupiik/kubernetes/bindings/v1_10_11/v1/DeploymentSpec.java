@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_10_11.v1;
 
+import io.yupiik.kubernetes.bindings.v1_10_11.Exportable;
 import io.yupiik.kubernetes.bindings.v1_10_11.Validable;
 import io.yupiik.kubernetes.bindings.v1_10_11.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class DeploymentSpec implements Validable<DeploymentSpec> {
+public class DeploymentSpec implements Validable<DeploymentSpec>, Exportable {
     private Integer minReadySeconds;
     private Boolean paused;
     private Integer progressDeadlineSeconds;
@@ -187,5 +190,20 @@ public class DeploymentSpec implements Validable<DeploymentSpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (minReadySeconds != null ? "\"minReadySeconds\":" + minReadySeconds : ""),
+                    (paused != null ? "\"paused\":" + paused : ""),
+                    (progressDeadlineSeconds != null ? "\"progressDeadlineSeconds\":" + progressDeadlineSeconds : ""),
+                    (replicas != null ? "\"replicas\":" + replicas : ""),
+                    (revisionHistoryLimit != null ? "\"revisionHistoryLimit\":" + revisionHistoryLimit : ""),
+                    (selector != null ? "\"selector\":" + selector.asJson() : ""),
+                    (strategy != null ? "\"strategy\":" + strategy.asJson() : ""),
+                    (template != null ? "\"template\":" + template.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_3.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_21_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Job implements Validable<Job> {
+public class Job implements Validable<Job>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -115,6 +119,24 @@ public class Job implements Validable<Job> {
 
     @Override
     public Job validate() {
+        if (kind == null) {
+            kind = "Job";
+        }
+        if (apiVersion == null) {
+            apiVersion = "batch/v1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""),
+                    (status != null ? "\"status\":" + status.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

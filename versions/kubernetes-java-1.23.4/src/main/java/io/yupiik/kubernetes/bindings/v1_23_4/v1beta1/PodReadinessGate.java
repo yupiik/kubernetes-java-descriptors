@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_23_4.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_23_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodReadinessGate implements Validable<PodReadinessGate> {
+public class PodReadinessGate implements Validable<PodReadinessGate>, Exportable {
     private PodReadinessGateConditionType conditionType;
 
     public PodReadinessGate() {
@@ -60,5 +63,13 @@ public class PodReadinessGate implements Validable<PodReadinessGate> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (conditionType != null ? "\"conditionType\":" + conditionType.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

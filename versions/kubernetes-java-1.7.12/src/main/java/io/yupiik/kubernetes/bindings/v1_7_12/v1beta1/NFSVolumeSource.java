@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_12.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_7_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NFSVolumeSource implements Validable<NFSVolumeSource> {
+public class NFSVolumeSource implements Validable<NFSVolumeSource>, Exportable {
     private String path;
     private Boolean readOnly;
     private String server;
@@ -102,5 +106,15 @@ public class NFSVolumeSource implements Validable<NFSVolumeSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (path != null ? "\"path\":\"" +  JsonStrings.escapeJson(path) + "\"" : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (server != null ? "\"server\":\"" +  JsonStrings.escapeJson(server) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_8_2.v1;
 
+import io.yupiik.kubernetes.bindings.v1_8_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_8_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Binding implements Validable<Binding> {
+public class Binding implements Validable<Binding>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -98,6 +102,12 @@ public class Binding implements Validable<Binding> {
 
     @Override
     public Binding validate() {
+        if (kind == null) {
+            kind = "Binding";
+        }
+        if (apiVersion == null) {
+            apiVersion = "v1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (target == null) {
             if (__errors_jsonSchema == null) {
@@ -111,5 +121,16 @@ public class Binding implements Validable<Binding> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (target != null ? "\"target\":" + target.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

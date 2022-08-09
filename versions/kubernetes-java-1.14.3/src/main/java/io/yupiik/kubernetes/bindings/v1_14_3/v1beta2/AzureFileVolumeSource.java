@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_14_3.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_14_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_14_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_14_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_14_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class AzureFileVolumeSource implements Validable<AzureFileVolumeSource> {
+public class AzureFileVolumeSource implements Validable<AzureFileVolumeSource>, Exportable {
     private Boolean readOnly;
     private String secretName;
     private String shareName;
@@ -102,5 +106,15 @@ public class AzureFileVolumeSource implements Validable<AzureFileVolumeSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (secretName != null ? "\"secretName\":\"" +  JsonStrings.escapeJson(secretName) + "\"" : ""),
+                    (shareName != null ? "\"shareName\":\"" +  JsonStrings.escapeJson(shareName) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_16_11.v2beta2;
 
+import io.yupiik.kubernetes.bindings.v1_16_11.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_11.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_11.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ExternalMetricStatus implements Validable<ExternalMetricStatus> {
+public class ExternalMetricStatus implements Validable<ExternalMetricStatus>, Exportable {
     private MetricValueStatus current;
     private MetricIdentifier metric;
 
@@ -85,5 +88,14 @@ public class ExternalMetricStatus implements Validable<ExternalMetricStatus> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (current != null ? "\"current\":" + current.asJson() : ""),
+                    (metric != null ? "\"metric\":" + metric.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

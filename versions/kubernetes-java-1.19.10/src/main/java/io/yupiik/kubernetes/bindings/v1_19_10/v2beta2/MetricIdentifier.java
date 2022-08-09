@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_10.v2beta2;
 
+import io.yupiik.kubernetes.bindings.v1_19_10.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_10.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class MetricIdentifier implements Validable<MetricIdentifier> {
+public class MetricIdentifier implements Validable<MetricIdentifier>, Exportable {
     private String name;
     private LabelSelector selector;
 
@@ -77,5 +81,14 @@ public class MetricIdentifier implements Validable<MetricIdentifier> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (selector != null ? "\"selector\":" + selector.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

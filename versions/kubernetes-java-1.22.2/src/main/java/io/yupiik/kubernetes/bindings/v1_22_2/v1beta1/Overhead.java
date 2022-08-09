@@ -1,13 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_22_2.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_22_2.Exportable;
 import io.yupiik.kubernetes.bindings.v1_22_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_2.ValidationException;
 import jakarta.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Overhead implements Validable<Overhead> {
+public class Overhead implements Validable<Overhead>, Exportable {
     private JsonObject podFixed;
 
     public Overhead() {
@@ -49,5 +52,13 @@ public class Overhead implements Validable<Overhead> {
     @Override
     public Overhead validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (podFixed != null ? "\"podFixed\":" + podFixed : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

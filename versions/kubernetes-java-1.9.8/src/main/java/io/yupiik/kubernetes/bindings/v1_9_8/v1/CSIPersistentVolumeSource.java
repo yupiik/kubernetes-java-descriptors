@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_9_8.v1;
 
+import io.yupiik.kubernetes.bindings.v1_9_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_9_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_9_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_9_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CSIPersistentVolumeSource implements Validable<CSIPersistentVolumeSource> {
+public class CSIPersistentVolumeSource implements Validable<CSIPersistentVolumeSource>, Exportable {
     private String driver;
     private Boolean readOnly;
     private String volumeHandle;
@@ -102,5 +106,15 @@ public class CSIPersistentVolumeSource implements Validable<CSIPersistentVolumeS
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (driver != null ? "\"driver\":\"" +  JsonStrings.escapeJson(driver) + "\"" : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (volumeHandle != null ? "\"volumeHandle\":\"" +  JsonStrings.escapeJson(volumeHandle) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

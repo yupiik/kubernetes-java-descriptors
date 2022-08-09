@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_11_2.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_11_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_11_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_11_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_11_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CertificateSigningRequestStatus implements Validable<CertificateSigningRequestStatus> {
+public class CertificateSigningRequestStatus implements Validable<CertificateSigningRequestStatus>, Exportable {
     private String certificate;
     private List<CertificateSigningRequestCondition> conditions;
 
@@ -65,5 +69,14 @@ public class CertificateSigningRequestStatus implements Validable<CertificateSig
     @Override
     public CertificateSigningRequestStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (certificate != null ? "\"certificate\":\"" +  JsonStrings.escapeJson(certificate) + "\"" : ""),
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

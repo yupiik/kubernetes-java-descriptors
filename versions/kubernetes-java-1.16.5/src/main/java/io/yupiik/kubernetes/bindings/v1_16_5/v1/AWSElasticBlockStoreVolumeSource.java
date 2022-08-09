@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_5.v1;
 
+import io.yupiik.kubernetes.bindings.v1_16_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class AWSElasticBlockStoreVolumeSource implements Validable<AWSElasticBlockStoreVolumeSource> {
+public class AWSElasticBlockStoreVolumeSource implements Validable<AWSElasticBlockStoreVolumeSource>, Exportable {
     private String fsType;
     private Integer partition;
     private Boolean readOnly;
@@ -111,5 +115,16 @@ public class AWSElasticBlockStoreVolumeSource implements Validable<AWSElasticBlo
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (fsType != null ? "\"fsType\":\"" +  JsonStrings.escapeJson(fsType) + "\"" : ""),
+                    (partition != null ? "\"partition\":" + partition : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (volumeID != null ? "\"volumeID\":\"" +  JsonStrings.escapeJson(volumeID) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

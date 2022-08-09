@@ -43,6 +43,7 @@ import java.util.zip.ZipInputStream;
 import static java.net.http.HttpResponse.BodyHandlers.ofString;
 import static java.util.Comparator.comparing;
 import static java.util.Objects.requireNonNull;
+import static java.util.Optional.ofNullable;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toMap;
@@ -121,6 +122,67 @@ public final class GenerateBindings {
 
         final var basePackage = "io.yupiik.kubernetes.bindings.v" + k8sApiVersion.replace('.', '_');
         // todo: serializable (json/yaml)?
+        writeJava(root, basePackage, "JsonStrings", "package " + basePackage + ";\n" +
+                "\n" +
+                "// internal class, public to share it accross subpackages but shouldn't be used by client code\n" +
+                "public final class JsonStrings {\n" +
+                "    private JsonStrings() {\n" +
+                "        // no-op\n" +
+                "    }\n" +
+                "\n" +
+                "    public static String escapeJson(final String text) {\n" +
+                "        if (text.isEmpty()) {\n" +
+                "            return \"\";\n" +
+                "        }\n" +
+                "\n" +
+                "        final var out = new StringBuilder();\n" +
+                "\n" +
+                "        final int length = text.length();\n" +
+                "        for (int i = 0; i < length; i++) {\n" +
+                "            int begin = i;\n" +
+                "            int end = i;\n" +
+                "            char c = text.charAt(i);\n" +
+                "            while (c >= 0x20 && c != 0x22 && c != 0x5c) {\n" +
+                "                i++;\n" +
+                "                end = i;\n" +
+                "                if (i < length) {\n" +
+                "                    c = text.charAt(i);\n" +
+                "                } else {\n" +
+                "                    break;\n" +
+                "                }\n" +
+                "            }\n" +
+                "\n" +
+                "            if (begin < end) { // no escaping\n" +
+                "                out.append(text, begin, end);\n" +
+                "                if (i == length) {\n" +
+                "                    break;\n" +
+                "                }\n" +
+                "            }\n" +
+                "\n" +
+                "            switch (c) {\n" +
+                "                case '\"', '\\\\' -> out.append('\\\\').append(c);\n" +
+                "                case '\\b' -> out.append('\\\\').append('b');\n" +
+                "                case '\\f' -> out.append('\\\\').append('f');\n" +
+                "                case '\\n' -> out.append('\\\\').append('n');\n" +
+                "                case '\\r' -> out.append('\\\\').append('r');\n" +
+                "                case '\\t' -> out.append('\\\\').append('t');\n" +
+                "                default -> {\n" +
+                "                    final var hex = \"000\" + Integer.toHexString(c);\n" +
+                "                    out.append(\"\\\\u\").append(hex.substring(hex.length() - 4));\n" +
+                "                }\n" +
+                "            }\n" +
+                "        }\n" +
+                "\n" +
+                "        return out.toString();\n" +
+                "    }\n" +
+                "}\n" +
+                "\n");
+        writeJava(root, basePackage, "Exportable", "package " + basePackage + ";\n" +
+                "\n" +
+                "public interface Exportable {\n" +
+                "    String asJson();\n" +
+                "}\n" +
+                "\n");
         writeJava(root, basePackage, "Validable", "package " + basePackage + ";\n" +
                 "\n" +
                 "public interface Validable<T> {\n" +
@@ -530,6 +592,9 @@ public final class GenerateBindings {
         private final String clazz;
         private final String basePackage;
 
+        private String asJson;
+        private boolean lastEnumHasInjection;
+
         private K8sPojoGenerator(final PojoGenerator.PojoConfiguration conf, final JsonObject schema,
                                  final String basePackage) {
             super(conf);
@@ -540,12 +605,24 @@ public final class GenerateBindings {
 
         @Override
         public Map<String, String> generate() {
+            asJson = generateAsJson(); // enables to handle imports properly having attributes and avoids to regenerate it in beforeClassEnd()
+
             // for afterClassName() and beforeClassEnd()
+            imports.add(basePackage + ".Exportable");
             imports.add(basePackage + ".Validable");
             if (!attributes.isEmpty()) {
                 imports.add(basePackage + ".ValidationException");
                 imports.add(List.class.getName());
                 imports.add(ArrayList.class.getName());
+            }
+            if (asJson.contains("JsonStrings")) {
+                imports.add(basePackage + ".JsonStrings");
+            }
+            if (asJson.contains(" Stream.of(")) {
+                imports.add(Stream.class.getName());
+            }
+            if (asJson.contains("collect(joining")) {
+                imports.add("static java.util.stream.Collectors.joining");
             }
             return super.generate();
         }
@@ -556,19 +633,148 @@ public final class GenerateBindings {
         }
 
         @Override
+        protected String beforeEnumEnd() {
+            return (!lastEnumHasInjection ? "    ;\n" : "") +
+                    "\n" +
+                    "    @Override\n" +
+                    "    public String asJson() {\n" +
+                    (lastEnumHasInjection ?
+                            "        return \"\\\"\" + toString() + \"\\\"\";\n" :
+                            "        return \"\\\"\" + name() + \"\\\"\";\n") +
+                    "    }\n" +
+                    "";
+        }
+
+        @Override
+        protected String afterEnumName(final Map<String, String> values, final boolean valuesAreInjected) {
+            this.lastEnumHasInjection = valuesAreInjected;
+            return " implements Exportable";
+        }
+
+        @Override
+        protected String enumImports() {
+            return "" +
+                    "import " + basePackage + ".Exportable;\n" +
+                    "\n";
+        }
+
+        @Override
         protected String afterClassName() {
-            return " implements Validable<" + clazz + ">";
+            return " implements Validable<" + clazz + ">, Exportable";
         }
 
         @Override
         protected String beforeClassEnd() {
-            return attributes.isEmpty() ? "" : "\n" + generateFluentSetter() + "\n" + generateValidator();
+            return attributes.isEmpty() ? "" : ("" +
+                    "\n" + generateFluentSetter() +
+                    "\n" + generateValidator() +
+                    "\n" + asJson);
+        }
+
+        private String generateAsJson() {
+            return "" +
+                    "    @Override\n" +
+                    "    public String asJson() {\n" +
+                    (attributes.isEmpty() ?
+                            "        return \"{}\";" : "" +
+                            "        return Stream.of(\n" +
+                            attributes.stream()
+                                    .sorted(comparing(Attribute::getJavaName))
+                                    .map(a -> {
+                                        final boolean primitive = isPrimitive(a.getType());
+                                        return "                    " +
+                                                (primitive ? "" : "(" + a.getJavaName() + " != null ? ") +
+                                                jsonSerializer(a) +
+                                                (primitive ? "" : " : \"\")");
+                                    })
+                                    .collect(joining(",\n")) +
+                            ")\n" +
+                            "                .filter(__it -> !__it.isBlank())\n" +
+                            "                .collect(joining(\",\", \"{\", \"}\"));\n") +
+                    "    }\n";
+        }
+
+        private String jsonSerializer(final Attribute attribute) {
+            final var type = attribute.getType();
+            final var key = "\"\\\"" + attribute.getJsonName().replace("\"", "\\\"") + "\\\":";
+            return switch (type) {
+                case "int", "long", "float", "double", "boolean", "Integer", "Long", "Float", "Double", "Boolean", "JsonObject", "JsonValue" ->
+                        key + "\" + " + attribute.getJavaName();
+                case "String" -> key + "\\\"\" +  JsonStrings.escapeJson(" + attribute.getJavaName() + ") + \"\\\"\"";
+                default -> {
+                    if (type.startsWith("List<")) {
+                        final var containedType = type.substring("List<".length(), type.length() - 1).strip();
+                        final var prefix = key + "\" + " + attribute.getJavaName() + ".stream().map(__it -> ";
+                        final var suffix = ").collect(joining(\",\", \"[\", \"]\"))";
+                        yield switch (containedType) {
+                            case "int", "long", "float", "double", "boolean" ->
+                                    prefix + "String.valueOf(__it)" + suffix;
+                            case "Integer", "Long", "Float", "Double", "Boolean", "JsonObject", "JsonValue" ->
+                                    prefix + "__it == null ? \"null\" : String.valueOf(__it)" + suffix;
+                            case "String" -> prefix +
+                                    "__it == null ? \"null\" : (\"\\\"\" + JsonStrings.escapeJson(__it) + \"\\\"\")" + suffix;
+                            default -> prefix + "__it == null ? \"null\" : __it.asJson()" + suffix;
+                        };
+                    }
+                    if (type.startsWith("Map<")) {
+                        final var containedType = type.substring(type.indexOf(',') + 1, type.length() - 1).strip();
+                        final var prefix = key + "\" + " + attribute.getJavaName() + ".entrySet().stream()\n" +
+                                "                        .map(__it -> \"\\\"\" + JsonStrings.escapeJson(__it.getKey()) + \"\\\":\" + ";
+                        final var suffix = ")\n                        .collect(joining(\",\", \"{\", \"}\"))";
+                        yield switch (containedType) {
+                            case "int", "long", "float", "double", "boolean" ->
+                                    prefix + "String.valueOf(__it.getValue())" + suffix;
+                            case "Integer", "Long", "Float", "Double", "Boolean", "JsonObject", "JsonValue" ->
+                                    prefix + "(__it.getValue() == null ? \"null\" : String.valueOf(__it.getValue()))" + suffix;
+                            case "String" -> prefix +
+                                    "(__it.getValue() == null ? \"null\" : (\"\\\"\" + JsonStrings.escapeJson(__it.getValue()) + \"\\\"\"))" + suffix;
+                            default ->
+                                    prefix + "(__it.getValue() == null ? \"null\" : __it.getValue().asJson())" + suffix;
+                        };
+                    }
+                    yield key + "\" + " + attribute.getJavaName() + ".asJson()";
+                }
+            };
         }
 
         private String generateValidator() {
-            final var start = "    @Override\n" +
+            var start = "    @Override\n" +
                     "    public " + clazz + " validate() {\n";
             final var end = "        return this;\n    }\n";
+
+            final var groupVersionKindValue = schema.get("x-kubernetes-group-version-kind");
+            if (groupVersionKindValue != null && groupVersionKindValue.getValueType() == JsonValue.ValueType.ARRAY) {
+                final var groupVersionKind = groupVersionKindValue.asJsonArray();
+                if (groupVersionKind.size() == 1) {
+                    final var defaults = groupVersionKind.get(0).asJsonObject();
+                    final var properties = schema.getJsonObject("properties");
+                    if (ofNullable(properties.get("kind"))
+                            .map(it -> "string".equals(it.asJsonObject().getString("type")))
+                            .orElse(false)) {
+                        start += "" +
+                                "        if (kind == null) {\n" +
+                                "            kind = \"" + defaults.getString("kind") + "\";\n" +
+                                "        }\n";
+                    }
+                    if (ofNullable(properties.get("apiVersion"))
+                            .map(it -> "string".equals(it.asJsonObject().getString("type")))
+                            .orElse(false)) {
+                        final var apiVersion = ofNullable(defaults.get("group"))
+                                .filter(it -> it.getValueType() == JsonValue.ValueType.STRING)
+                                .map(JsonString.class::cast)
+                                .map(JsonString::getString)
+                                .filter(it -> !it.isBlank())
+                                .map(v -> v + '/')
+                                .orElse("") +
+                                defaults.getString("version");
+
+                        start += "" +
+                                "        if (apiVersion == null) {\n" +
+                                "            apiVersion = \"" + apiVersion + "\";\n" +
+                                "        }\n";
+                    }
+                }
+            }
 
             final var requiredValue = schema.get("required");
             if (requiredValue == null || requiredValue.getValueType() != JsonValue.ValueType.ARRAY) {
@@ -620,6 +826,14 @@ public final class GenerateBindings {
                             "        return this;\n" +
                             "    }\n")
                     .collect(joining("\n"));
+        }
+
+        private boolean isPrimitive(final String type) {
+            return "int".equals(type) ||
+                    "long".equals(type) ||
+                    "float".equals(type) ||
+                    "double".equals(type) ||
+                    "boolean".equals(type);
         }
     }
 }

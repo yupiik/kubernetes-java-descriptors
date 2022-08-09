@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_15.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_15.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_15.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_15.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_15.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NamespaceStatus implements Validable<NamespaceStatus> {
+public class NamespaceStatus implements Validable<NamespaceStatus>, Exportable {
     private List<NamespaceCondition> conditions;
     private String phase;
 
@@ -65,5 +69,14 @@ public class NamespaceStatus implements Validable<NamespaceStatus> {
     @Override
     public NamespaceStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (phase != null ? "\"phase\":\"" +  JsonStrings.escapeJson(phase) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_6.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_19_6.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_6.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_6.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class TokenReviewStatus implements Validable<TokenReviewStatus> {
+public class TokenReviewStatus implements Validable<TokenReviewStatus>, Exportable {
     private List<String> audiences;
     private Boolean authenticated;
     private String error;
@@ -99,5 +103,16 @@ public class TokenReviewStatus implements Validable<TokenReviewStatus> {
     @Override
     public TokenReviewStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (audiences != null ? "\"audiences\":" + audiences.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (authenticated != null ? "\"authenticated\":" + authenticated : ""),
+                    (error != null ? "\"error\":\"" +  JsonStrings.escapeJson(error) + "\"" : ""),
+                    (user != null ? "\"user\":" + user.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

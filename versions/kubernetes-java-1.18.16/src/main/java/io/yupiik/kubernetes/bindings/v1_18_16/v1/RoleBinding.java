@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_16.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_16.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_16.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_16.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_16.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class RoleBinding implements Validable<RoleBinding> {
+public class RoleBinding implements Validable<RoleBinding>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -115,6 +119,12 @@ public class RoleBinding implements Validable<RoleBinding> {
 
     @Override
     public RoleBinding validate() {
+        if (kind == null) {
+            kind = "RoleBinding";
+        }
+        if (apiVersion == null) {
+            apiVersion = "rbac.authorization.k8s.io/v1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (roleRef == null) {
             if (__errors_jsonSchema == null) {
@@ -128,5 +138,17 @@ public class RoleBinding implements Validable<RoleBinding> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (roleRef != null ? "\"roleRef\":" + roleRef.asJson() : ""),
+                    (subjects != null ? "\"subjects\":" + subjects.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

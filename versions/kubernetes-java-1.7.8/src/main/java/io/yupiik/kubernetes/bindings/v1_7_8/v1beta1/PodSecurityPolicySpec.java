@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_8.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_7_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodSecurityPolicySpec implements Validable<PodSecurityPolicySpec> {
+public class PodSecurityPolicySpec implements Validable<PodSecurityPolicySpec>, Exportable {
     private List<String> allowedCapabilities;
     private List<String> defaultAddCapabilities;
     private FSGroupStrategyOptions fsGroup;
@@ -305,5 +309,26 @@ public class PodSecurityPolicySpec implements Validable<PodSecurityPolicySpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (allowedCapabilities != null ? "\"allowedCapabilities\":" + allowedCapabilities.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (defaultAddCapabilities != null ? "\"defaultAddCapabilities\":" + defaultAddCapabilities.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (fsGroup != null ? "\"fsGroup\":" + fsGroup.asJson() : ""),
+                    (hostIPC != null ? "\"hostIPC\":" + hostIPC : ""),
+                    (hostNetwork != null ? "\"hostNetwork\":" + hostNetwork : ""),
+                    (hostPID != null ? "\"hostPID\":" + hostPID : ""),
+                    (hostPorts != null ? "\"hostPorts\":" + hostPorts.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (privileged != null ? "\"privileged\":" + privileged : ""),
+                    (readOnlyRootFilesystem != null ? "\"readOnlyRootFilesystem\":" + readOnlyRootFilesystem : ""),
+                    (requiredDropCapabilities != null ? "\"requiredDropCapabilities\":" + requiredDropCapabilities.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (runAsUser != null ? "\"runAsUser\":" + runAsUser.asJson() : ""),
+                    (seLinux != null ? "\"seLinux\":" + seLinux.asJson() : ""),
+                    (supplementalGroups != null ? "\"supplementalGroups\":" + supplementalGroups.asJson() : ""),
+                    (volumes != null ? "\"volumes\":" + volumes.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

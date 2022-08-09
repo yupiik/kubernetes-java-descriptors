@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_20_12.v1;
 
+import io.yupiik.kubernetes.bindings.v1_20_12.Exportable;
 import io.yupiik.kubernetes.bindings.v1_20_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NodeDaemonEndpoints implements Validable<NodeDaemonEndpoints> {
+public class NodeDaemonEndpoints implements Validable<NodeDaemonEndpoints>, Exportable {
     private DaemonEndpoint kubeletEndpoint;
 
     public NodeDaemonEndpoints() {
@@ -48,5 +51,13 @@ public class NodeDaemonEndpoints implements Validable<NodeDaemonEndpoints> {
     @Override
     public NodeDaemonEndpoints validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (kubeletEndpoint != null ? "\"kubeletEndpoint\":" + kubeletEndpoint.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

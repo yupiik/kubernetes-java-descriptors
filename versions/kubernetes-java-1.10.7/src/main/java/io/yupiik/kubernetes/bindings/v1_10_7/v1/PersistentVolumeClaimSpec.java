@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_10_7.v1;
 
+import io.yupiik.kubernetes.bindings.v1_10_7.Exportable;
+import io.yupiik.kubernetes.bindings.v1_10_7.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_10_7.Validable;
 import io.yupiik.kubernetes.bindings.v1_10_7.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PersistentVolumeClaimSpec implements Validable<PersistentVolumeClaimSpec> {
+public class PersistentVolumeClaimSpec implements Validable<PersistentVolumeClaimSpec>, Exportable {
     private List<String> accessModes;
     private ResourceRequirements resources;
     private LabelSelector selector;
@@ -133,5 +137,18 @@ public class PersistentVolumeClaimSpec implements Validable<PersistentVolumeClai
     @Override
     public PersistentVolumeClaimSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (accessModes != null ? "\"accessModes\":" + accessModes.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (resources != null ? "\"resources\":" + resources.asJson() : ""),
+                    (selector != null ? "\"selector\":" + selector.asJson() : ""),
+                    (storageClassName != null ? "\"storageClassName\":\"" +  JsonStrings.escapeJson(storageClassName) + "\"" : ""),
+                    (volumeMode != null ? "\"volumeMode\":\"" +  JsonStrings.escapeJson(volumeMode) + "\"" : ""),
+                    (volumeName != null ? "\"volumeName\":\"" +  JsonStrings.escapeJson(volumeName) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

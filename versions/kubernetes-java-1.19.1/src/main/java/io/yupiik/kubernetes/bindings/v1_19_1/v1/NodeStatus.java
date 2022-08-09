@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_19_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_1.ValidationException;
 import jakarta.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NodeStatus implements Validable<NodeStatus> {
+public class NodeStatus implements Validable<NodeStatus>, Exportable {
     private List<NodeAddress> addresses;
     private JsonObject allocatable;
     private JsonObject capacity;
@@ -219,5 +223,23 @@ public class NodeStatus implements Validable<NodeStatus> {
     @Override
     public NodeStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (addresses != null ? "\"addresses\":" + addresses.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (allocatable != null ? "\"allocatable\":" + allocatable : ""),
+                    (capacity != null ? "\"capacity\":" + capacity : ""),
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (config != null ? "\"config\":" + config.asJson() : ""),
+                    (daemonEndpoints != null ? "\"daemonEndpoints\":" + daemonEndpoints.asJson() : ""),
+                    (images != null ? "\"images\":" + images.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (nodeInfo != null ? "\"nodeInfo\":" + nodeInfo.asJson() : ""),
+                    (phase != null ? "\"phase\":\"" +  JsonStrings.escapeJson(phase) + "\"" : ""),
+                    (volumesAttached != null ? "\"volumesAttached\":" + volumesAttached.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (volumesInUse != null ? "\"volumesInUse\":" + volumesInUse.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

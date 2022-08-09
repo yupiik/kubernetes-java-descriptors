@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_7_11.v1;
 
+import io.yupiik.kubernetes.bindings.v1_7_11.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_11.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_11.ValidationException;
 import jakarta.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PersistentVolumeSpec implements Validable<PersistentVolumeSpec> {
+public class PersistentVolumeSpec implements Validable<PersistentVolumeSpec>, Exportable {
     private List<String> accessModes;
     private AWSElasticBlockStoreVolumeSource awsElasticBlockStore;
     private AzureDiskVolumeSource azureDisk;
@@ -474,5 +478,38 @@ public class PersistentVolumeSpec implements Validable<PersistentVolumeSpec> {
     @Override
     public PersistentVolumeSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (accessModes != null ? "\"accessModes\":" + accessModes.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (awsElasticBlockStore != null ? "\"awsElasticBlockStore\":" + awsElasticBlockStore.asJson() : ""),
+                    (azureDisk != null ? "\"azureDisk\":" + azureDisk.asJson() : ""),
+                    (azureFile != null ? "\"azureFile\":" + azureFile.asJson() : ""),
+                    (capacity != null ? "\"capacity\":" + capacity : ""),
+                    (cephfs != null ? "\"cephfs\":" + cephfs.asJson() : ""),
+                    (cinder != null ? "\"cinder\":" + cinder.asJson() : ""),
+                    (claimRef != null ? "\"claimRef\":" + claimRef.asJson() : ""),
+                    (fc != null ? "\"fc\":" + fc.asJson() : ""),
+                    (flexVolume != null ? "\"flexVolume\":" + flexVolume.asJson() : ""),
+                    (flocker != null ? "\"flocker\":" + flocker.asJson() : ""),
+                    (gcePersistentDisk != null ? "\"gcePersistentDisk\":" + gcePersistentDisk.asJson() : ""),
+                    (glusterfs != null ? "\"glusterfs\":" + glusterfs.asJson() : ""),
+                    (hostPath != null ? "\"hostPath\":" + hostPath.asJson() : ""),
+                    (iscsi != null ? "\"iscsi\":" + iscsi.asJson() : ""),
+                    (local != null ? "\"local\":" + local.asJson() : ""),
+                    (nfs != null ? "\"nfs\":" + nfs.asJson() : ""),
+                    (persistentVolumeReclaimPolicy != null ? "\"persistentVolumeReclaimPolicy\":\"" +  JsonStrings.escapeJson(persistentVolumeReclaimPolicy) + "\"" : ""),
+                    (photonPersistentDisk != null ? "\"photonPersistentDisk\":" + photonPersistentDisk.asJson() : ""),
+                    (portworxVolume != null ? "\"portworxVolume\":" + portworxVolume.asJson() : ""),
+                    (quobyte != null ? "\"quobyte\":" + quobyte.asJson() : ""),
+                    (rbd != null ? "\"rbd\":" + rbd.asJson() : ""),
+                    (scaleIO != null ? "\"scaleIO\":" + scaleIO.asJson() : ""),
+                    (storageClassName != null ? "\"storageClassName\":\"" +  JsonStrings.escapeJson(storageClassName) + "\"" : ""),
+                    (storageos != null ? "\"storageos\":" + storageos.asJson() : ""),
+                    (vsphereVolume != null ? "\"vsphereVolume\":" + vsphereVolume.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

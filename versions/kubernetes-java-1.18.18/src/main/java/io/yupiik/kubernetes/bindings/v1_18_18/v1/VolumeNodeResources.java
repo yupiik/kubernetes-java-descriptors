@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_18_18.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_18.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_18.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_18.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class VolumeNodeResources implements Validable<VolumeNodeResources> {
+public class VolumeNodeResources implements Validable<VolumeNodeResources>, Exportable {
     private Integer count;
 
     public VolumeNodeResources() {
@@ -48,5 +51,13 @@ public class VolumeNodeResources implements Validable<VolumeNodeResources> {
     @Override
     public VolumeNodeResources validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (count != null ? "\"count\":" + count : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

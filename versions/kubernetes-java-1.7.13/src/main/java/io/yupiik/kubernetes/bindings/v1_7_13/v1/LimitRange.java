@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_13.v1;
 
+import io.yupiik.kubernetes.bindings.v1_7_13.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_13.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_13.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_13.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class LimitRange implements Validable<LimitRange> {
+public class LimitRange implements Validable<LimitRange>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -98,6 +102,23 @@ public class LimitRange implements Validable<LimitRange> {
 
     @Override
     public LimitRange validate() {
+        if (kind == null) {
+            kind = "LimitRange";
+        }
+        if (apiVersion == null) {
+            apiVersion = "v1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

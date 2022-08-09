@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_6.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_16_6.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_6.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_6.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ObjectReference implements Validable<ObjectReference> {
+public class ObjectReference implements Validable<ObjectReference>, Exportable {
     private String apiVersion;
     private String fieldPath;
     private String kind;
@@ -150,5 +154,19 @@ public class ObjectReference implements Validable<ObjectReference> {
     @Override
     public ObjectReference validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (fieldPath != null ? "\"fieldPath\":\"" +  JsonStrings.escapeJson(fieldPath) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (namespace != null ? "\"namespace\":\"" +  JsonStrings.escapeJson(namespace) + "\"" : ""),
+                    (resourceVersion != null ? "\"resourceVersion\":\"" +  JsonStrings.escapeJson(resourceVersion) + "\"" : ""),
+                    (uid != null ? "\"uid\":\"" +  JsonStrings.escapeJson(uid) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_14.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_19_14.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_14.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_14.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_14.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class AllowedCSIDriver implements Validable<AllowedCSIDriver> {
+public class AllowedCSIDriver implements Validable<AllowedCSIDriver>, Exportable {
     private String name;
 
     public AllowedCSIDriver() {
@@ -60,5 +64,13 @@ public class AllowedCSIDriver implements Validable<AllowedCSIDriver> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

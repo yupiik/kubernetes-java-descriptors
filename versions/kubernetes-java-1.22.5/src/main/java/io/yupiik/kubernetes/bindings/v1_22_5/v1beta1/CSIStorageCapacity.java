@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_22_5.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_22_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_22_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CSIStorageCapacity implements Validable<CSIStorageCapacity> {
+public class CSIStorageCapacity implements Validable<CSIStorageCapacity>, Exportable {
     private String apiVersion;
     private String capacity;
     private String kind;
@@ -149,6 +153,12 @@ public class CSIStorageCapacity implements Validable<CSIStorageCapacity> {
 
     @Override
     public CSIStorageCapacity validate() {
+        if (kind == null) {
+            kind = "CSIStorageCapacity";
+        }
+        if (apiVersion == null) {
+            apiVersion = "storage.k8s.io/v1beta1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (storageClassName == null) {
             if (__errors_jsonSchema == null) {
@@ -162,5 +172,19 @@ public class CSIStorageCapacity implements Validable<CSIStorageCapacity> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (capacity != null ? "\"capacity\":\"" +  JsonStrings.escapeJson(capacity) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (maximumVolumeSize != null ? "\"maximumVolumeSize\":\"" +  JsonStrings.escapeJson(maximumVolumeSize) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (nodeTopology != null ? "\"nodeTopology\":" + nodeTopology.asJson() : ""),
+                    (storageClassName != null ? "\"storageClassName\":\"" +  JsonStrings.escapeJson(storageClassName) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

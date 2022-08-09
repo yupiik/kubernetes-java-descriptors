@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_22_6.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_6.Exportable;
+import io.yupiik.kubernetes.bindings.v1_22_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_6.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_6.ValidationException;
 import jakarta.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ResourceQuotaSpec implements Validable<ResourceQuotaSpec> {
+public class ResourceQuotaSpec implements Validable<ResourceQuotaSpec>, Exportable {
     private JsonObject hard;
     private ScopeSelector scopeSelector;
     private List<String> scopes;
@@ -83,5 +87,15 @@ public class ResourceQuotaSpec implements Validable<ResourceQuotaSpec> {
     @Override
     public ResourceQuotaSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (hard != null ? "\"hard\":" + hard : ""),
+                    (scopeSelector != null ? "\"scopeSelector\":" + scopeSelector.asJson() : ""),
+                    (scopes != null ? "\"scopes\":" + scopes.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

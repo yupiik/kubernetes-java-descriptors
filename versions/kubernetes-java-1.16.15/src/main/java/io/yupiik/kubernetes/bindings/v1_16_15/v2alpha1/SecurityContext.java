@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_15.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_16_15.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_15.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_15.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_15.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class SecurityContext implements Validable<SecurityContext> {
+public class SecurityContext implements Validable<SecurityContext>, Exportable {
     private Boolean allowPrivilegeEscalation;
     private Capabilities capabilities;
     private Boolean privileged;
@@ -201,5 +205,22 @@ public class SecurityContext implements Validable<SecurityContext> {
     @Override
     public SecurityContext validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (allowPrivilegeEscalation != null ? "\"allowPrivilegeEscalation\":" + allowPrivilegeEscalation : ""),
+                    (capabilities != null ? "\"capabilities\":" + capabilities.asJson() : ""),
+                    (privileged != null ? "\"privileged\":" + privileged : ""),
+                    (procMount != null ? "\"procMount\":\"" +  JsonStrings.escapeJson(procMount) + "\"" : ""),
+                    (readOnlyRootFilesystem != null ? "\"readOnlyRootFilesystem\":" + readOnlyRootFilesystem : ""),
+                    (runAsGroup != null ? "\"runAsGroup\":" + runAsGroup : ""),
+                    (runAsNonRoot != null ? "\"runAsNonRoot\":" + runAsNonRoot : ""),
+                    (runAsUser != null ? "\"runAsUser\":" + runAsUser : ""),
+                    (seLinuxOptions != null ? "\"seLinuxOptions\":" + seLinuxOptions.asJson() : ""),
+                    (windowsOptions != null ? "\"windowsOptions\":" + windowsOptions.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

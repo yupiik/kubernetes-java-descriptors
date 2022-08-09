@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_9.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_21_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class EndpointSlice implements Validable<EndpointSlice> {
+public class EndpointSlice implements Validable<EndpointSlice>, Exportable {
     private String addressType;
     private String apiVersion;
     private List<Endpoint> endpoints;
@@ -132,6 +136,12 @@ public class EndpointSlice implements Validable<EndpointSlice> {
 
     @Override
     public EndpointSlice validate() {
+        if (kind == null) {
+            kind = "EndpointSlice";
+        }
+        if (apiVersion == null) {
+            apiVersion = "discovery.k8s.io/v1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (addressType == null) {
             if (__errors_jsonSchema == null) {
@@ -153,5 +163,18 @@ public class EndpointSlice implements Validable<EndpointSlice> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (addressType != null ? "\"addressType\":\"" +  JsonStrings.escapeJson(addressType) + "\"" : ""),
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (endpoints != null ? "\"endpoints\":" + endpoints.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (ports != null ? "\"ports\":" + ports.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

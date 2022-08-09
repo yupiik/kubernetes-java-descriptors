@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_21_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ConfigMapList implements Validable<ConfigMapList> {
+public class ConfigMapList implements Validable<ConfigMapList>, Exportable {
     private String apiVersion;
     private List<ConfigMap> items;
     private String kind;
@@ -98,6 +102,12 @@ public class ConfigMapList implements Validable<ConfigMapList> {
 
     @Override
     public ConfigMapList validate() {
+        if (kind == null) {
+            kind = "ConfigMapList";
+        }
+        if (apiVersion == null) {
+            apiVersion = "v1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (items == null) {
             if (__errors_jsonSchema == null) {
@@ -111,5 +121,16 @@ public class ConfigMapList implements Validable<ConfigMapList> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (items != null ? "\"items\":" + items.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

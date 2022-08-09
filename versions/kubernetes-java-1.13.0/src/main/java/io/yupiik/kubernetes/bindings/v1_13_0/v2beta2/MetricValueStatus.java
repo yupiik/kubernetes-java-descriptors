@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_13_0.v2beta2;
 
+import io.yupiik.kubernetes.bindings.v1_13_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_13_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class MetricValueStatus implements Validable<MetricValueStatus> {
+public class MetricValueStatus implements Validable<MetricValueStatus>, Exportable {
     private Integer averageUtilization;
     private String averageValue;
     private String value;
@@ -82,5 +86,15 @@ public class MetricValueStatus implements Validable<MetricValueStatus> {
     @Override
     public MetricValueStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (averageUtilization != null ? "\"averageUtilization\":" + averageUtilization : ""),
+                    (averageValue != null ? "\"averageValue\":\"" +  JsonStrings.escapeJson(averageValue) + "\"" : ""),
+                    (value != null ? "\"value\":\"" +  JsonStrings.escapeJson(value) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

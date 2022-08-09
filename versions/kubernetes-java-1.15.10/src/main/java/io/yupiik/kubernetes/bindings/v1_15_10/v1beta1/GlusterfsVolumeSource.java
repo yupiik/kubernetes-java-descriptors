@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_15_10.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_15_10.Exportable;
+import io.yupiik.kubernetes.bindings.v1_15_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_10.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class GlusterfsVolumeSource implements Validable<GlusterfsVolumeSource> {
+public class GlusterfsVolumeSource implements Validable<GlusterfsVolumeSource>, Exportable {
     private String endpoints;
     private String path;
     private Boolean readOnly;
@@ -102,5 +106,15 @@ public class GlusterfsVolumeSource implements Validable<GlusterfsVolumeSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (endpoints != null ? "\"endpoints\":\"" +  JsonStrings.escapeJson(endpoints) + "\"" : ""),
+                    (path != null ? "\"path\":\"" +  JsonStrings.escapeJson(path) + "\"" : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_23_5.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_23_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class LifecycleHandler implements Validable<LifecycleHandler> {
+public class LifecycleHandler implements Validable<LifecycleHandler>, Exportable {
     private ExecAction exec;
     private HTTPGetAction httpGet;
     private TCPSocketAction tcpSocket;
@@ -82,5 +85,15 @@ public class LifecycleHandler implements Validable<LifecycleHandler> {
     @Override
     public LifecycleHandler validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (exec != null ? "\"exec\":" + exec.asJson() : ""),
+                    (httpGet != null ? "\"httpGet\":" + httpGet.asJson() : ""),
+                    (tcpSocket != null ? "\"tcpSocket\":" + tcpSocket.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

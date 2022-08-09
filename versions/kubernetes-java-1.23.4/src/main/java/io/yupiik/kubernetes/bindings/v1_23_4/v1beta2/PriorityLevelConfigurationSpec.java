@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_23_4.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_23_4.Exportable;
+import io.yupiik.kubernetes.bindings.v1_23_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PriorityLevelConfigurationSpec implements Validable<PriorityLevelConfigurationSpec> {
+public class PriorityLevelConfigurationSpec implements Validable<PriorityLevelConfigurationSpec>, Exportable {
     private LimitedPriorityLevelConfiguration limited;
     private String type;
 
@@ -77,5 +81,14 @@ public class PriorityLevelConfigurationSpec implements Validable<PriorityLevelCo
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (limited != null ? "\"limited\":" + limited.asJson() : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

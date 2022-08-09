@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_22_3.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_22_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodDisruptionBudgetSpec implements Validable<PodDisruptionBudgetSpec> {
+public class PodDisruptionBudgetSpec implements Validable<PodDisruptionBudgetSpec>, Exportable {
     private String maxUnavailable;
     private String minAvailable;
     private LabelSelector selector;
@@ -82,5 +86,15 @@ public class PodDisruptionBudgetSpec implements Validable<PodDisruptionBudgetSpe
     @Override
     public PodDisruptionBudgetSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (maxUnavailable != null ? "\"maxUnavailable\":\"" +  JsonStrings.escapeJson(maxUnavailable) + "\"" : ""),
+                    (minAvailable != null ? "\"minAvailable\":\"" +  JsonStrings.escapeJson(minAvailable) + "\"" : ""),
+                    (selector != null ? "\"selector\":" + selector.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

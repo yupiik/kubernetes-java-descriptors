@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_15_7.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_15_7.Exportable;
+import io.yupiik.kubernetes.bindings.v1_15_7.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_7.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_7.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PersistentVolumeClaimVolumeSource implements Validable<PersistentVolumeClaimVolumeSource> {
+public class PersistentVolumeClaimVolumeSource implements Validable<PersistentVolumeClaimVolumeSource>, Exportable {
     private String claimName;
     private Boolean readOnly;
 
@@ -77,5 +81,14 @@ public class PersistentVolumeClaimVolumeSource implements Validable<PersistentVo
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (claimName != null ? "\"claimName\":\"" +  JsonStrings.escapeJson(claimName) + "\"" : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

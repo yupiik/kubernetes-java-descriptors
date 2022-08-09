@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_14_6.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_14_6.Exportable;
 import io.yupiik.kubernetes.bindings.v1_14_6.Validable;
 import io.yupiik.kubernetes.bindings.v1_14_6.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Webhook implements Validable<Webhook> {
+public class Webhook implements Validable<Webhook>, Exportable {
     private WebhookClientConfig clientConfig;
     private WebhookThrottleConfig throttle;
 
@@ -77,5 +80,14 @@ public class Webhook implements Validable<Webhook> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (clientConfig != null ? "\"clientConfig\":" + clientConfig.asJson() : ""),
+                    (throttle != null ? "\"throttle\":" + throttle.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

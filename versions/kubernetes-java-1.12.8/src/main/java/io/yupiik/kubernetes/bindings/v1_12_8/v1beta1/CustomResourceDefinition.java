@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_12_8.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_12_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_12_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_12_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_12_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CustomResourceDefinition implements Validable<CustomResourceDefinition> {
+public class CustomResourceDefinition implements Validable<CustomResourceDefinition>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -115,6 +119,12 @@ public class CustomResourceDefinition implements Validable<CustomResourceDefinit
 
     @Override
     public CustomResourceDefinition validate() {
+        if (kind == null) {
+            kind = "CustomResourceDefinition";
+        }
+        if (apiVersion == null) {
+            apiVersion = "apiextensions.k8s.io/v1beta1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (spec == null) {
             if (__errors_jsonSchema == null) {
@@ -128,5 +138,17 @@ public class CustomResourceDefinition implements Validable<CustomResourceDefinit
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""),
+                    (status != null ? "\"status\":" + status.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

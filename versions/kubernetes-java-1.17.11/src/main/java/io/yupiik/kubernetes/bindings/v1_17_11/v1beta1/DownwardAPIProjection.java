@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_17_11.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_17_11.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_11.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_11.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class DownwardAPIProjection implements Validable<DownwardAPIProjection> {
+public class DownwardAPIProjection implements Validable<DownwardAPIProjection>, Exportable {
     private List<DownwardAPIVolumeFile> items;
 
     public DownwardAPIProjection() {
@@ -48,5 +51,13 @@ public class DownwardAPIProjection implements Validable<DownwardAPIProjection> {
     @Override
     public DownwardAPIProjection validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (items != null ? "\"items\":" + items.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

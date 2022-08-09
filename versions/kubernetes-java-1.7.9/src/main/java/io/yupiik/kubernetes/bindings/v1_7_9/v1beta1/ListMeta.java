@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_9.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_7_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ListMeta implements Validable<ListMeta> {
+public class ListMeta implements Validable<ListMeta>, Exportable {
     private String resourceVersion;
     private String selfLink;
 
@@ -65,5 +69,14 @@ public class ListMeta implements Validable<ListMeta> {
     @Override
     public ListMeta validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (resourceVersion != null ? "\"resourceVersion\":\"" +  JsonStrings.escapeJson(resourceVersion) + "\"" : ""),
+                    (selfLink != null ? "\"selfLink\":\"" +  JsonStrings.escapeJson(selfLink) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

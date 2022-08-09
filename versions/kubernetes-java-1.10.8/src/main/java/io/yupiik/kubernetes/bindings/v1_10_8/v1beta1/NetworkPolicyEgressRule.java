@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_10_8.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_10_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_10_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_10_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NetworkPolicyEgressRule implements Validable<NetworkPolicyEgressRule> {
+public class NetworkPolicyEgressRule implements Validable<NetworkPolicyEgressRule>, Exportable {
     private List<NetworkPolicyPort> ports;
     private List<NetworkPolicyPeer> to;
 
@@ -65,5 +68,14 @@ public class NetworkPolicyEgressRule implements Validable<NetworkPolicyEgressRul
     @Override
     public NetworkPolicyEgressRule validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (ports != null ? "\"ports\":" + ports.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (to != null ? "\"to\":" + to.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

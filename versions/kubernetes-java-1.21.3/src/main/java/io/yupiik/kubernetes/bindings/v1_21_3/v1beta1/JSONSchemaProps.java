@@ -1,5 +1,7 @@
 package io.yupiik.kubernetes.bindings.v1_21_3.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_21_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_21_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_3.ValidationException;
 import jakarta.json.JsonObject;
@@ -8,8 +10,10 @@ import jakarta.json.bind.annotation.JsonbProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class JSONSchemaProps implements Validable<JSONSchemaProps> {
+public class JSONSchemaProps implements Validable<JSONSchemaProps>, Exportable {
     private JsonValue additionalItems;
     private JsonValue additionalProperties;
     private List<JSONSchemaProps> allOf;
@@ -775,5 +779,55 @@ public class JSONSchemaProps implements Validable<JSONSchemaProps> {
     @Override
     public JSONSchemaProps validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (additionalItems != null ? "\"additionalItems\":" + additionalItems : ""),
+                    (additionalProperties != null ? "\"additionalProperties\":" + additionalProperties : ""),
+                    (allOf != null ? "\"allOf\":" + allOf.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (anyOf != null ? "\"anyOf\":" + anyOf.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (defaultValue != null ? "\"default\":" + defaultValue : ""),
+                    (definitions != null ? "\"definitions\":" + definitions : ""),
+                    (dependencies != null ? "\"dependencies\":" + dependencies : ""),
+                    (description != null ? "\"description\":\"" +  JsonStrings.escapeJson(description) + "\"" : ""),
+                    (enumValue != null ? "\"enum\":" + enumValue.stream().map(__it -> __it == null ? "null" : String.valueOf(__it)).collect(joining(",", "[", "]")) : ""),
+                    (example != null ? "\"example\":" + example : ""),
+                    (exclusiveMaximum != null ? "\"exclusiveMaximum\":" + exclusiveMaximum : ""),
+                    (exclusiveMinimum != null ? "\"exclusiveMinimum\":" + exclusiveMinimum : ""),
+                    (externalDocs != null ? "\"externalDocs\":" + externalDocs.asJson() : ""),
+                    (format != null ? "\"format\":\"" +  JsonStrings.escapeJson(format) + "\"" : ""),
+                    (id != null ? "\"id\":\"" +  JsonStrings.escapeJson(id) + "\"" : ""),
+                    (items != null ? "\"items\":" + items : ""),
+                    (maxItems != null ? "\"maxItems\":" + maxItems : ""),
+                    (maxLength != null ? "\"maxLength\":" + maxLength : ""),
+                    (maxProperties != null ? "\"maxProperties\":" + maxProperties : ""),
+                    (maximum != null ? "\"maximum\":" + maximum : ""),
+                    (minItems != null ? "\"minItems\":" + minItems : ""),
+                    (minLength != null ? "\"minLength\":" + minLength : ""),
+                    (minProperties != null ? "\"minProperties\":" + minProperties : ""),
+                    (minimum != null ? "\"minimum\":" + minimum : ""),
+                    (multipleOf != null ? "\"multipleOf\":" + multipleOf : ""),
+                    (not != null ? "\"not\":" + not.asJson() : ""),
+                    (nullable != null ? "\"nullable\":" + nullable : ""),
+                    (oneOf != null ? "\"oneOf\":" + oneOf.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (pattern != null ? "\"pattern\":\"" +  JsonStrings.escapeJson(pattern) + "\"" : ""),
+                    (patternProperties != null ? "\"patternProperties\":" + patternProperties : ""),
+                    (properties != null ? "\"properties\":" + properties : ""),
+                    (ref != null ? "\"$ref\":\"" +  JsonStrings.escapeJson(ref) + "\"" : ""),
+                    (required != null ? "\"required\":" + required.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (schema != null ? "\"$schema\":\"" +  JsonStrings.escapeJson(schema) + "\"" : ""),
+                    (title != null ? "\"title\":\"" +  JsonStrings.escapeJson(title) + "\"" : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""),
+                    (uniqueItems != null ? "\"uniqueItems\":" + uniqueItems : ""),
+                    (xKubernetesEmbeddedResource != null ? "\"x-kubernetes-embedded-resource\":" + xKubernetesEmbeddedResource : ""),
+                    (xKubernetesIntOrString != null ? "\"x-kubernetes-int-or-string\":" + xKubernetesIntOrString : ""),
+                    (xKubernetesListMapKeys != null ? "\"x-kubernetes-list-map-keys\":" + xKubernetesListMapKeys.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (xKubernetesListType != null ? "\"x-kubernetes-list-type\":\"" +  JsonStrings.escapeJson(xKubernetesListType) + "\"" : ""),
+                    (xKubernetesMapType != null ? "\"x-kubernetes-map-type\":\"" +  JsonStrings.escapeJson(xKubernetesMapType) + "\"" : ""),
+                    (xKubernetesPreserveUnknownFields != null ? "\"x-kubernetes-preserve-unknown-fields\":" + xKubernetesPreserveUnknownFields : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

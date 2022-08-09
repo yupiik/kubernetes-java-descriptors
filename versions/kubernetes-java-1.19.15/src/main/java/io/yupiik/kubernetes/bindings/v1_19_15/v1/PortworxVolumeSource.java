@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_15.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_15.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_15.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_15.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_15.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PortworxVolumeSource implements Validable<PortworxVolumeSource> {
+public class PortworxVolumeSource implements Validable<PortworxVolumeSource>, Exportable {
     private String fsType;
     private Boolean readOnly;
     private String volumeID;
@@ -94,5 +98,15 @@ public class PortworxVolumeSource implements Validable<PortworxVolumeSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (fsType != null ? "\"fsType\":\"" +  JsonStrings.escapeJson(fsType) + "\"" : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (volumeID != null ? "\"volumeID\":\"" +  JsonStrings.escapeJson(volumeID) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

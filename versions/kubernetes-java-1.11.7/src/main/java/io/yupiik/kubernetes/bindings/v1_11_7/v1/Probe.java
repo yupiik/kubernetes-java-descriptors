@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_11_7.v1;
 
+import io.yupiik.kubernetes.bindings.v1_11_7.Exportable;
 import io.yupiik.kubernetes.bindings.v1_11_7.Validable;
 import io.yupiik.kubernetes.bindings.v1_11_7.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Probe implements Validable<Probe> {
+public class Probe implements Validable<Probe>, Exportable {
     private ExecAction exec;
     private Integer failureThreshold;
     private HTTPGetAction httpGet;
@@ -167,5 +170,20 @@ public class Probe implements Validable<Probe> {
     @Override
     public Probe validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (exec != null ? "\"exec\":" + exec.asJson() : ""),
+                    (failureThreshold != null ? "\"failureThreshold\":" + failureThreshold : ""),
+                    (httpGet != null ? "\"httpGet\":" + httpGet.asJson() : ""),
+                    (initialDelaySeconds != null ? "\"initialDelaySeconds\":" + initialDelaySeconds : ""),
+                    (periodSeconds != null ? "\"periodSeconds\":" + periodSeconds : ""),
+                    (successThreshold != null ? "\"successThreshold\":" + successThreshold : ""),
+                    (tcpSocket != null ? "\"tcpSocket\":" + tcpSocket.asJson() : ""),
+                    (timeoutSeconds != null ? "\"timeoutSeconds\":" + timeoutSeconds : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_13_9.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_13_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_13_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ObjectFieldSelector implements Validable<ObjectFieldSelector> {
+public class ObjectFieldSelector implements Validable<ObjectFieldSelector>, Exportable {
     private String apiVersion;
     private String fieldPath;
 
@@ -77,5 +81,14 @@ public class ObjectFieldSelector implements Validable<ObjectFieldSelector> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (fieldPath != null ? "\"fieldPath\":\"" +  JsonStrings.escapeJson(fieldPath) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

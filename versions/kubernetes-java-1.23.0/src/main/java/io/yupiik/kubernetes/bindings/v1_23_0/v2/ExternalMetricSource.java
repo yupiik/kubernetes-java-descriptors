@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_23_0.v2;
 
+import io.yupiik.kubernetes.bindings.v1_23_0.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ExternalMetricSource implements Validable<ExternalMetricSource> {
+public class ExternalMetricSource implements Validable<ExternalMetricSource>, Exportable {
     private MetricIdentifier metric;
     private MetricTarget target;
 
@@ -85,5 +88,14 @@ public class ExternalMetricSource implements Validable<ExternalMetricSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (metric != null ? "\"metric\":" + metric.asJson() : ""),
+                    (target != null ? "\"target\":" + target.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_17_8.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_17_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_17_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CustomResourceDefinitionVersion implements Validable<CustomResourceDefinitionVersion> {
+public class CustomResourceDefinitionVersion implements Validable<CustomResourceDefinitionVersion>, Exportable {
     private List<CustomResourceColumnDefinition> additionalPrinterColumns;
     private String name;
     private CustomResourceValidation schema;
@@ -145,5 +149,18 @@ public class CustomResourceDefinitionVersion implements Validable<CustomResource
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (additionalPrinterColumns != null ? "\"additionalPrinterColumns\":" + additionalPrinterColumns.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (schema != null ? "\"schema\":" + schema.asJson() : ""),
+                    "\"served\":" + served,
+                    "\"storage\":" + storage,
+                    (subresources != null ? "\"subresources\":" + subresources.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

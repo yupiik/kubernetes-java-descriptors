@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_9.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_21_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_21_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class StorageVersionStatus implements Validable<StorageVersionStatus> {
+public class StorageVersionStatus implements Validable<StorageVersionStatus>, Exportable {
     private String commonEncodingVersion;
     private List<StorageVersionCondition> conditions;
     private List<ServerStorageVersion> storageVersions;
@@ -82,5 +86,15 @@ public class StorageVersionStatus implements Validable<StorageVersionStatus> {
     @Override
     public StorageVersionStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (commonEncodingVersion != null ? "\"commonEncodingVersion\":\"" +  JsonStrings.escapeJson(commonEncodingVersion) + "\"" : ""),
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (storageVersions != null ? "\"storageVersions\":" + storageVersions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

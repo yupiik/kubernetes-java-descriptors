@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_9_10.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_9_10.Exportable;
+import io.yupiik.kubernetes.bindings.v1_9_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_9_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_9_10.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class SecretVolumeSource implements Validable<SecretVolumeSource> {
+public class SecretVolumeSource implements Validable<SecretVolumeSource>, Exportable {
     private Integer defaultMode;
     private List<KeyToPath> items;
     private Boolean optional;
@@ -99,5 +103,16 @@ public class SecretVolumeSource implements Validable<SecretVolumeSource> {
     @Override
     public SecretVolumeSource validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (defaultMode != null ? "\"defaultMode\":" + defaultMode : ""),
+                    (items != null ? "\"items\":" + items.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (optional != null ? "\"optional\":" + optional : ""),
+                    (secretName != null ? "\"secretName\":\"" +  JsonStrings.escapeJson(secretName) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

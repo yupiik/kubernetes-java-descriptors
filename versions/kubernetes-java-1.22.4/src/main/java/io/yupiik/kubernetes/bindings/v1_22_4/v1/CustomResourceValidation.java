@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_22_4.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_22_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CustomResourceValidation implements Validable<CustomResourceValidation> {
+public class CustomResourceValidation implements Validable<CustomResourceValidation>, Exportable {
     private JSONSchemaProps openAPIV3Schema;
 
     public CustomResourceValidation() {
@@ -48,5 +51,13 @@ public class CustomResourceValidation implements Validable<CustomResourceValidat
     @Override
     public CustomResourceValidation validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (openAPIV3Schema != null ? "\"openAPIV3Schema\":" + openAPIV3Schema.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

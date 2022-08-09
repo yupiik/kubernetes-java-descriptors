@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_13_12.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_13_12.Exportable;
 import io.yupiik.kubernetes.bindings.v1_13_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Affinity implements Validable<Affinity> {
+public class Affinity implements Validable<Affinity>, Exportable {
     private NodeAffinity nodeAffinity;
     private PodAffinity podAffinity;
     private PodAntiAffinity podAntiAffinity;
@@ -82,5 +85,15 @@ public class Affinity implements Validable<Affinity> {
     @Override
     public Affinity validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (nodeAffinity != null ? "\"nodeAffinity\":" + nodeAffinity.asJson() : ""),
+                    (podAffinity != null ? "\"podAffinity\":" + podAffinity.asJson() : ""),
+                    (podAntiAffinity != null ? "\"podAntiAffinity\":" + podAntiAffinity.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

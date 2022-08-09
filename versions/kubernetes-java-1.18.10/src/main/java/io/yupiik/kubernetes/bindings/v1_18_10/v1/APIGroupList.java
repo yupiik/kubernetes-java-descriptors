@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_10.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_10.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_10.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class APIGroupList implements Validable<APIGroupList> {
+public class APIGroupList implements Validable<APIGroupList>, Exportable {
     private String apiVersion;
     private List<APIGroup> groups;
     private String kind;
@@ -81,6 +85,12 @@ public class APIGroupList implements Validable<APIGroupList> {
 
     @Override
     public APIGroupList validate() {
+        if (kind == null) {
+            kind = "APIGroupList";
+        }
+        if (apiVersion == null) {
+            apiVersion = "v1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (groups == null) {
             if (__errors_jsonSchema == null) {
@@ -94,5 +104,15 @@ public class APIGroupList implements Validable<APIGroupList> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (groups != null ? "\"groups\":" + groups.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

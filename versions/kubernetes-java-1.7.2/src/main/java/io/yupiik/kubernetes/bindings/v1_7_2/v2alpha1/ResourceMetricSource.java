@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_2.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_7_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ResourceMetricSource implements Validable<ResourceMetricSource> {
+public class ResourceMetricSource implements Validable<ResourceMetricSource>, Exportable {
     private String name;
     private Integer targetAverageUtilization;
     private String targetAverageValue;
@@ -94,5 +98,15 @@ public class ResourceMetricSource implements Validable<ResourceMetricSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (targetAverageUtilization != null ? "\"targetAverageUtilization\":" + targetAverageUtilization : ""),
+                    (targetAverageValue != null ? "\"targetAverageValue\":\"" +  JsonStrings.escapeJson(targetAverageValue) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

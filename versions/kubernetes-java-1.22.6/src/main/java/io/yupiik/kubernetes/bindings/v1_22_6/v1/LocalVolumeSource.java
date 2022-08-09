@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_22_6.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_6.Exportable;
+import io.yupiik.kubernetes.bindings.v1_22_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_6.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_6.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class LocalVolumeSource implements Validable<LocalVolumeSource> {
+public class LocalVolumeSource implements Validable<LocalVolumeSource>, Exportable {
     private String fsType;
     private String path;
 
@@ -77,5 +81,14 @@ public class LocalVolumeSource implements Validable<LocalVolumeSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (fsType != null ? "\"fsType\":\"" +  JsonStrings.escapeJson(fsType) + "\"" : ""),
+                    (path != null ? "\"path\":\"" +  JsonStrings.escapeJson(path) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

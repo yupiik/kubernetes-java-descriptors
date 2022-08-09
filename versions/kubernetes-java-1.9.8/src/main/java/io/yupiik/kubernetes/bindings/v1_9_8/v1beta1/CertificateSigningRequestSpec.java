@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_9_8.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_9_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_9_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_9_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_9_8.ValidationException;
 import jakarta.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CertificateSigningRequestSpec implements Validable<CertificateSigningRequestSpec> {
+public class CertificateSigningRequestSpec implements Validable<CertificateSigningRequestSpec>, Exportable {
     private JsonObject extra;
     private List<String> groups;
     private String request;
@@ -146,5 +150,18 @@ public class CertificateSigningRequestSpec implements Validable<CertificateSigni
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (extra != null ? "\"extra\":" + extra : ""),
+                    (groups != null ? "\"groups\":" + groups.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (request != null ? "\"request\":\"" +  JsonStrings.escapeJson(request) + "\"" : ""),
+                    (uid != null ? "\"uid\":\"" +  JsonStrings.escapeJson(uid) + "\"" : ""),
+                    (usages != null ? "\"usages\":" + usages.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (username != null ? "\"username\":\"" +  JsonStrings.escapeJson(username) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

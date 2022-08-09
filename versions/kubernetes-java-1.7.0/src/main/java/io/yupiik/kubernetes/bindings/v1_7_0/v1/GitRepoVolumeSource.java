@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_7_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class GitRepoVolumeSource implements Validable<GitRepoVolumeSource> {
+public class GitRepoVolumeSource implements Validable<GitRepoVolumeSource>, Exportable {
     private String directory;
     private String repository;
     private String revision;
@@ -94,5 +98,15 @@ public class GitRepoVolumeSource implements Validable<GitRepoVolumeSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (directory != null ? "\"directory\":\"" +  JsonStrings.escapeJson(directory) + "\"" : ""),
+                    (repository != null ? "\"repository\":\"" +  JsonStrings.escapeJson(repository) + "\"" : ""),
+                    (revision != null ? "\"revision\":\"" +  JsonStrings.escapeJson(revision) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_12.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_7_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class StatefulSetStatus implements Validable<StatefulSetStatus> {
+public class StatefulSetStatus implements Validable<StatefulSetStatus>, Exportable {
     private Integer currentReplicas;
     private String currentRevision;
     private Integer observedGeneration;
@@ -150,5 +154,19 @@ public class StatefulSetStatus implements Validable<StatefulSetStatus> {
     @Override
     public StatefulSetStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (currentReplicas != null ? "\"currentReplicas\":" + currentReplicas : ""),
+                    (currentRevision != null ? "\"currentRevision\":\"" +  JsonStrings.escapeJson(currentRevision) + "\"" : ""),
+                    (observedGeneration != null ? "\"observedGeneration\":" + observedGeneration : ""),
+                    (readyReplicas != null ? "\"readyReplicas\":" + readyReplicas : ""),
+                    "\"replicas\":" + replicas,
+                    (updateRevision != null ? "\"updateRevision\":\"" +  JsonStrings.escapeJson(updateRevision) + "\"" : ""),
+                    (updatedReplicas != null ? "\"updatedReplicas\":" + updatedReplicas : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

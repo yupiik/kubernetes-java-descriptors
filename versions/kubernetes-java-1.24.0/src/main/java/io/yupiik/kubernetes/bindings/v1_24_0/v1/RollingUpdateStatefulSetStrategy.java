@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_24_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_24_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_24_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_24_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_24_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class RollingUpdateStatefulSetStrategy implements Validable<RollingUpdateStatefulSetStrategy> {
+public class RollingUpdateStatefulSetStrategy implements Validable<RollingUpdateStatefulSetStrategy>, Exportable {
     private String maxUnavailable;
     private Integer partition;
 
@@ -65,5 +69,14 @@ public class RollingUpdateStatefulSetStrategy implements Validable<RollingUpdate
     @Override
     public RollingUpdateStatefulSetStrategy validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (maxUnavailable != null ? "\"maxUnavailable\":\"" +  JsonStrings.escapeJson(maxUnavailable) + "\"" : ""),
+                    (partition != null ? "\"partition\":" + partition : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

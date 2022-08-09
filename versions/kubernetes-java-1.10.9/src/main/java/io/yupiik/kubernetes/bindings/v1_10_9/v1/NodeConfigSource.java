@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_10_9.v1;
 
+import io.yupiik.kubernetes.bindings.v1_10_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_10_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_10_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_10_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NodeConfigSource implements Validable<NodeConfigSource> {
+public class NodeConfigSource implements Validable<NodeConfigSource>, Exportable {
     private String apiVersion;
     private ObjectReference configMapRef;
     private String kind;
@@ -81,6 +85,22 @@ public class NodeConfigSource implements Validable<NodeConfigSource> {
 
     @Override
     public NodeConfigSource validate() {
+        if (kind == null) {
+            kind = "NodeConfigSource";
+        }
+        if (apiVersion == null) {
+            apiVersion = "v1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (configMapRef != null ? "\"configMapRef\":" + configMapRef.asJson() : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

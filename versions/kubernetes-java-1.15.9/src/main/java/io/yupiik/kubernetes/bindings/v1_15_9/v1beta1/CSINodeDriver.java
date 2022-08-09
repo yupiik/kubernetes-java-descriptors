@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_15_9.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_15_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_15_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CSINodeDriver implements Validable<CSINodeDriver> {
+public class CSINodeDriver implements Validable<CSINodeDriver>, Exportable {
     private String name;
     private String nodeID;
     private List<String> topologyKeys;
@@ -102,5 +106,15 @@ public class CSINodeDriver implements Validable<CSINodeDriver> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (nodeID != null ? "\"nodeID\":\"" +  JsonStrings.escapeJson(nodeID) + "\"" : ""),
+                    (topologyKeys != null ? "\"topologyKeys\":" + topologyKeys.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

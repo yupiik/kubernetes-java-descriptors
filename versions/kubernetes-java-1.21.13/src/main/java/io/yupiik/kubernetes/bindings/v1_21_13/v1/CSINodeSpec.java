@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_21_13.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_13.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_13.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_13.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CSINodeSpec implements Validable<CSINodeSpec> {
+public class CSINodeSpec implements Validable<CSINodeSpec>, Exportable {
     private List<CSINodeDriver> drivers;
 
     public CSINodeSpec() {
@@ -60,5 +63,13 @@ public class CSINodeSpec implements Validable<CSINodeSpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (drivers != null ? "\"drivers\":" + drivers.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

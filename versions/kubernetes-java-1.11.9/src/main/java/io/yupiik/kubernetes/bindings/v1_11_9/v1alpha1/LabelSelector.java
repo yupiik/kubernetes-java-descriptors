@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_11_9.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_11_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_11_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_11_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_11_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class LabelSelector implements Validable<LabelSelector> {
+public class LabelSelector implements Validable<LabelSelector>, Exportable {
     private List<LabelSelectorRequirement> matchExpressions;
     private Map<String, String> matchLabels;
 
@@ -66,5 +70,16 @@ public class LabelSelector implements Validable<LabelSelector> {
     @Override
     public LabelSelector validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (matchExpressions != null ? "\"matchExpressions\":" + matchExpressions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (matchLabels != null ? "\"matchLabels\":" + matchLabels.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

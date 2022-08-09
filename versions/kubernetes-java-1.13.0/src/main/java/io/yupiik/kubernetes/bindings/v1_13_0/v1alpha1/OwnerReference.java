@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_13_0.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_13_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_13_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class OwnerReference implements Validable<OwnerReference> {
+public class OwnerReference implements Validable<OwnerReference>, Exportable {
     private String apiVersion;
     private Boolean blockOwnerDeletion;
     private Boolean controller;
@@ -169,5 +173,18 @@ public class OwnerReference implements Validable<OwnerReference> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (blockOwnerDeletion != null ? "\"blockOwnerDeletion\":" + blockOwnerDeletion : ""),
+                    (controller != null ? "\"controller\":" + controller : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (uid != null ? "\"uid\":\"" +  JsonStrings.escapeJson(uid) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

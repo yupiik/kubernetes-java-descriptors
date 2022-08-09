@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_20_10.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_20_10.Exportable;
+import io.yupiik.kubernetes.bindings.v1_20_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_10.ValidationException;
 import jakarta.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class StorageVersion implements Validable<StorageVersion> {
+public class StorageVersion implements Validable<StorageVersion>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -116,6 +120,12 @@ public class StorageVersion implements Validable<StorageVersion> {
 
     @Override
     public StorageVersion validate() {
+        if (kind == null) {
+            kind = "StorageVersion";
+        }
+        if (apiVersion == null) {
+            apiVersion = "internal.apiserver.k8s.io/v1alpha1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (spec == null) {
             if (__errors_jsonSchema == null) {
@@ -137,5 +147,17 @@ public class StorageVersion implements Validable<StorageVersion> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec : ""),
+                    (status != null ? "\"status\":" + status.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

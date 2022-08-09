@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_8_5.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_8_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_8_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class FSGroupStrategyOptions implements Validable<FSGroupStrategyOptions> {
+public class FSGroupStrategyOptions implements Validable<FSGroupStrategyOptions>, Exportable {
     private List<IDRange> ranges;
     private String rule;
 
@@ -65,5 +69,14 @@ public class FSGroupStrategyOptions implements Validable<FSGroupStrategyOptions>
     @Override
     public FSGroupStrategyOptions validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (ranges != null ? "\"ranges\":" + ranges.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (rule != null ? "\"rule\":\"" +  JsonStrings.escapeJson(rule) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

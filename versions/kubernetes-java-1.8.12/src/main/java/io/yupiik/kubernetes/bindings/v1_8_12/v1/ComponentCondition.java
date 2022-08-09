@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_8_12.v1;
 
+import io.yupiik.kubernetes.bindings.v1_8_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_8_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ComponentCondition implements Validable<ComponentCondition> {
+public class ComponentCondition implements Validable<ComponentCondition>, Exportable {
     private String error;
     private String message;
     private String status;
@@ -119,5 +123,16 @@ public class ComponentCondition implements Validable<ComponentCondition> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (error != null ? "\"error\":\"" +  JsonStrings.escapeJson(error) + "\"" : ""),
+                    (message != null ? "\"message\":\"" +  JsonStrings.escapeJson(message) + "\"" : ""),
+                    (status != null ? "\"status\":\"" +  JsonStrings.escapeJson(status) + "\"" : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

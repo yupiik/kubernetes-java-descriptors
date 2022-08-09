@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_9.v2beta2;
 
+import io.yupiik.kubernetes.bindings.v1_21_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_21_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class HPAScalingRules implements Validable<HPAScalingRules> {
+public class HPAScalingRules implements Validable<HPAScalingRules>, Exportable {
     private List<HPAScalingPolicy> policies;
     private String selectPolicy;
     private Integer stabilizationWindowSeconds;
@@ -82,5 +86,15 @@ public class HPAScalingRules implements Validable<HPAScalingRules> {
     @Override
     public HPAScalingRules validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (policies != null ? "\"policies\":" + policies.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (selectPolicy != null ? "\"selectPolicy\":\"" +  JsonStrings.escapeJson(selectPolicy) + "\"" : ""),
+                    (stabilizationWindowSeconds != null ? "\"stabilizationWindowSeconds\":" + stabilizationWindowSeconds : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

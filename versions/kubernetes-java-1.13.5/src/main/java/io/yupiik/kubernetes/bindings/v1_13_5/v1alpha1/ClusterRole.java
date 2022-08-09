@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_13_5.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_13_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_13_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ClusterRole implements Validable<ClusterRole> {
+public class ClusterRole implements Validable<ClusterRole>, Exportable {
     private AggregationRule aggregationRule;
     private String apiVersion;
     private String kind;
@@ -115,6 +119,12 @@ public class ClusterRole implements Validable<ClusterRole> {
 
     @Override
     public ClusterRole validate() {
+        if (kind == null) {
+            kind = "ClusterRole";
+        }
+        if (apiVersion == null) {
+            apiVersion = "rbac.authorization.k8s.io/v1alpha1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (rules == null) {
             if (__errors_jsonSchema == null) {
@@ -128,5 +138,17 @@ public class ClusterRole implements Validable<ClusterRole> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (aggregationRule != null ? "\"aggregationRule\":" + aggregationRule.asJson() : ""),
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (rules != null ? "\"rules\":" + rules.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

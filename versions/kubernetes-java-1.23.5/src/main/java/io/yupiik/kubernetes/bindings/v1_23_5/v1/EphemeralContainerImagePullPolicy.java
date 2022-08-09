@@ -1,7 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_23_5.v1;
 
-public enum EphemeralContainerImagePullPolicy {
+import io.yupiik.kubernetes.bindings.v1_23_5.Exportable;
+
+public enum EphemeralContainerImagePullPolicy implements Exportable {
     Never,
     IfNotPresent,
     Always
+    ;
+
+    @Override
+    public String asJson() {
+        return "\"" + name() + "\"";
+    }
 }

@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_15_3.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_15_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_15_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodPresetSpec implements Validable<PodPresetSpec> {
+public class PodPresetSpec implements Validable<PodPresetSpec>, Exportable {
     private List<EnvVar> env;
     private List<EnvFromSource> envFrom;
     private LabelSelector selector;
@@ -116,5 +119,17 @@ public class PodPresetSpec implements Validable<PodPresetSpec> {
     @Override
     public PodPresetSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (env != null ? "\"env\":" + env.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (envFrom != null ? "\"envFrom\":" + envFrom.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (selector != null ? "\"selector\":" + selector.asJson() : ""),
+                    (volumeMounts != null ? "\"volumeMounts\":" + volumeMounts.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (volumes != null ? "\"volumes\":" + volumes.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

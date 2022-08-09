@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_17_2.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_17_2.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class HTTPIngressRuleValue implements Validable<HTTPIngressRuleValue> {
+public class HTTPIngressRuleValue implements Validable<HTTPIngressRuleValue>, Exportable {
     private List<HTTPIngressPath> paths;
 
     public HTTPIngressRuleValue() {
@@ -60,5 +63,13 @@ public class HTTPIngressRuleValue implements Validable<HTTPIngressRuleValue> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (paths != null ? "\"paths\":" + paths.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

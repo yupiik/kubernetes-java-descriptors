@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_23_1.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_23_1.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PolicyRulesWithSubjects implements Validable<PolicyRulesWithSubjects> {
+public class PolicyRulesWithSubjects implements Validable<PolicyRulesWithSubjects>, Exportable {
     private List<NonResourcePolicyRule> nonResourceRules;
     private List<ResourcePolicyRule> resourceRules;
     private List<Subject> subjects;
@@ -94,5 +97,15 @@ public class PolicyRulesWithSubjects implements Validable<PolicyRulesWithSubject
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (nonResourceRules != null ? "\"nonResourceRules\":" + nonResourceRules.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (resourceRules != null ? "\"resourceRules\":" + resourceRules.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (subjects != null ? "\"subjects\":" + subjects.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

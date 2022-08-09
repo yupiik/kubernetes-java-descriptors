@@ -1,13 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_2.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_21_2.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_2.ValidationException;
 import jakarta.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodDisruptionBudgetStatus implements Validable<PodDisruptionBudgetStatus> {
+public class PodDisruptionBudgetStatus implements Validable<PodDisruptionBudgetStatus>, Exportable {
     private List<Condition> conditions;
     private int currentHealthy;
     private int desiredHealthy;
@@ -151,5 +154,19 @@ public class PodDisruptionBudgetStatus implements Validable<PodDisruptionBudgetS
     @Override
     public PodDisruptionBudgetStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    "\"currentHealthy\":" + currentHealthy,
+                    "\"desiredHealthy\":" + desiredHealthy,
+                    (disruptedPods != null ? "\"disruptedPods\":" + disruptedPods : ""),
+                    "\"disruptionsAllowed\":" + disruptionsAllowed,
+                    "\"expectedPods\":" + expectedPods,
+                    (observedGeneration != null ? "\"observedGeneration\":" + observedGeneration : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

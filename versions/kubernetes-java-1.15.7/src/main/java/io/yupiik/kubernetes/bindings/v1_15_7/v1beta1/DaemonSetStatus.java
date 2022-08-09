@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_15_7.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_15_7.Exportable;
 import io.yupiik.kubernetes.bindings.v1_15_7.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_7.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class DaemonSetStatus implements Validable<DaemonSetStatus> {
+public class DaemonSetStatus implements Validable<DaemonSetStatus>, Exportable {
     private Integer collisionCount;
     private List<DaemonSetCondition> conditions;
     private int currentNumberScheduled;
@@ -201,5 +204,22 @@ public class DaemonSetStatus implements Validable<DaemonSetStatus> {
     @Override
     public DaemonSetStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (collisionCount != null ? "\"collisionCount\":" + collisionCount : ""),
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    "\"currentNumberScheduled\":" + currentNumberScheduled,
+                    "\"desiredNumberScheduled\":" + desiredNumberScheduled,
+                    (numberAvailable != null ? "\"numberAvailable\":" + numberAvailable : ""),
+                    "\"numberMisscheduled\":" + numberMisscheduled,
+                    "\"numberReady\":" + numberReady,
+                    (numberUnavailable != null ? "\"numberUnavailable\":" + numberUnavailable : ""),
+                    (observedGeneration != null ? "\"observedGeneration\":" + observedGeneration : ""),
+                    (updatedNumberScheduled != null ? "\"updatedNumberScheduled\":" + updatedNumberScheduled : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

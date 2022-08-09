@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_17_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_17_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_17_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class WebhookConversion implements Validable<WebhookConversion> {
+public class WebhookConversion implements Validable<WebhookConversion>, Exportable {
     private WebhookClientConfig clientConfig;
     private List<String> conversionReviewVersions;
 
@@ -77,5 +81,14 @@ public class WebhookConversion implements Validable<WebhookConversion> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (clientConfig != null ? "\"clientConfig\":" + clientConfig.asJson() : ""),
+                    (conversionReviewVersions != null ? "\"conversionReviewVersions\":" + conversionReviewVersions.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

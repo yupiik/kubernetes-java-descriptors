@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_15.v1;
 
+import io.yupiik.kubernetes.bindings.v1_16_15.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_15.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_15.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_15.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class VolumeError implements Validable<VolumeError> {
+public class VolumeError implements Validable<VolumeError>, Exportable {
     private String message;
     private String time;
 
@@ -65,5 +69,14 @@ public class VolumeError implements Validable<VolumeError> {
     @Override
     public VolumeError validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (message != null ? "\"message\":\"" +  JsonStrings.escapeJson(message) + "\"" : ""),
+                    (time != null ? "\"time\":\"" +  JsonStrings.escapeJson(time) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

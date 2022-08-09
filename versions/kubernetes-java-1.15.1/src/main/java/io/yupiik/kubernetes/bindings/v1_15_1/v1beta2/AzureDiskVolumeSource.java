@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_15_1.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_15_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_15_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class AzureDiskVolumeSource implements Validable<AzureDiskVolumeSource> {
+public class AzureDiskVolumeSource implements Validable<AzureDiskVolumeSource>, Exportable {
     private String cachingMode;
     private String diskName;
     private String diskURI;
@@ -153,5 +157,18 @@ public class AzureDiskVolumeSource implements Validable<AzureDiskVolumeSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (cachingMode != null ? "\"cachingMode\":\"" +  JsonStrings.escapeJson(cachingMode) + "\"" : ""),
+                    (diskName != null ? "\"diskName\":\"" +  JsonStrings.escapeJson(diskName) + "\"" : ""),
+                    (diskURI != null ? "\"diskURI\":\"" +  JsonStrings.escapeJson(diskURI) + "\"" : ""),
+                    (fsType != null ? "\"fsType\":\"" +  JsonStrings.escapeJson(fsType) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

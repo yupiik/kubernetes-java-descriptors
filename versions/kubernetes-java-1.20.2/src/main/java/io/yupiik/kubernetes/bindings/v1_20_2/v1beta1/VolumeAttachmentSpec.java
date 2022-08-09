@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_20_2.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_20_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_20_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class VolumeAttachmentSpec implements Validable<VolumeAttachmentSpec> {
+public class VolumeAttachmentSpec implements Validable<VolumeAttachmentSpec>, Exportable {
     private String attacher;
     private String nodeName;
     private VolumeAttachmentSource source;
@@ -110,5 +114,15 @@ public class VolumeAttachmentSpec implements Validable<VolumeAttachmentSpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (attacher != null ? "\"attacher\":\"" +  JsonStrings.escapeJson(attacher) + "\"" : ""),
+                    (nodeName != null ? "\"nodeName\":\"" +  JsonStrings.escapeJson(nodeName) + "\"" : ""),
+                    (source != null ? "\"source\":" + source.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_23_8.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_23_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_23_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Subject implements Validable<Subject> {
+public class Subject implements Validable<Subject>, Exportable {
     private GroupSubject group;
     private String kind;
     private ServiceAccountSubject serviceAccount;
@@ -111,5 +115,16 @@ public class Subject implements Validable<Subject> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (group != null ? "\"group\":" + group.asJson() : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (serviceAccount != null ? "\"serviceAccount\":" + serviceAccount.asJson() : ""),
+                    (user != null ? "\"user\":" + user.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

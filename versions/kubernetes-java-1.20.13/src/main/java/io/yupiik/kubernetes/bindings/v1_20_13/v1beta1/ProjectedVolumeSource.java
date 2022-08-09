@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_20_13.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_20_13.Exportable;
 import io.yupiik.kubernetes.bindings.v1_20_13.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_13.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ProjectedVolumeSource implements Validable<ProjectedVolumeSource> {
+public class ProjectedVolumeSource implements Validable<ProjectedVolumeSource>, Exportable {
     private Integer defaultMode;
     private List<VolumeProjection> sources;
 
@@ -65,5 +68,14 @@ public class ProjectedVolumeSource implements Validable<ProjectedVolumeSource> {
     @Override
     public ProjectedVolumeSource validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (defaultMode != null ? "\"defaultMode\":" + defaultMode : ""),
+                    (sources != null ? "\"sources\":" + sources.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

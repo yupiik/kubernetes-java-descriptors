@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_10_11.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_10_11.Exportable;
 import io.yupiik.kubernetes.bindings.v1_10_11.Validable;
 import io.yupiik.kubernetes.bindings.v1_10_11.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class AggregationRule implements Validable<AggregationRule> {
+public class AggregationRule implements Validable<AggregationRule>, Exportable {
     private List<LabelSelector> clusterRoleSelectors;
 
     public AggregationRule() {
@@ -48,5 +51,13 @@ public class AggregationRule implements Validable<AggregationRule> {
     @Override
     public AggregationRule validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (clusterRoleSelectors != null ? "\"clusterRoleSelectors\":" + clusterRoleSelectors.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

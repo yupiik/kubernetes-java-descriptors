@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_9_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_9_0.Exportable;
 import io.yupiik.kubernetes.bindings.v1_9_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_9_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ReplicaSetSpec implements Validable<ReplicaSetSpec> {
+public class ReplicaSetSpec implements Validable<ReplicaSetSpec>, Exportable {
     private Integer minReadySeconds;
     private Integer replicas;
     private LabelSelector selector;
@@ -111,5 +114,16 @@ public class ReplicaSetSpec implements Validable<ReplicaSetSpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (minReadySeconds != null ? "\"minReadySeconds\":" + minReadySeconds : ""),
+                    (replicas != null ? "\"replicas\":" + replicas : ""),
+                    (selector != null ? "\"selector\":" + selector.asJson() : ""),
+                    (template != null ? "\"template\":" + template.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

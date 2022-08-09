@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_23_2.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_23_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_23_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PriorityLevelConfigurationCondition implements Validable<PriorityLevelConfigurationCondition> {
+public class PriorityLevelConfigurationCondition implements Validable<PriorityLevelConfigurationCondition>, Exportable {
     private String lastTransitionTime;
     private String message;
     private String reason;
@@ -116,5 +120,17 @@ public class PriorityLevelConfigurationCondition implements Validable<PriorityLe
     @Override
     public PriorityLevelConfigurationCondition validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (lastTransitionTime != null ? "\"lastTransitionTime\":\"" +  JsonStrings.escapeJson(lastTransitionTime) + "\"" : ""),
+                    (message != null ? "\"message\":\"" +  JsonStrings.escapeJson(message) + "\"" : ""),
+                    (reason != null ? "\"reason\":\"" +  JsonStrings.escapeJson(reason) + "\"" : ""),
+                    (status != null ? "\"status\":\"" +  JsonStrings.escapeJson(status) + "\"" : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

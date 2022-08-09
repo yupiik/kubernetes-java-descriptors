@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_12.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CSIDriverSpec implements Validable<CSIDriverSpec> {
+public class CSIDriverSpec implements Validable<CSIDriverSpec>, Exportable {
     private Boolean attachRequired;
     private String fsGroupPolicy;
     private Boolean podInfoOnMount;
@@ -116,5 +120,17 @@ public class CSIDriverSpec implements Validable<CSIDriverSpec> {
     @Override
     public CSIDriverSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (attachRequired != null ? "\"attachRequired\":" + attachRequired : ""),
+                    (fsGroupPolicy != null ? "\"fsGroupPolicy\":\"" +  JsonStrings.escapeJson(fsGroupPolicy) + "\"" : ""),
+                    (podInfoOnMount != null ? "\"podInfoOnMount\":" + podInfoOnMount : ""),
+                    (storageCapacity != null ? "\"storageCapacity\":" + storageCapacity : ""),
+                    (volumeLifecycleModes != null ? "\"volumeLifecycleModes\":" + volumeLifecycleModes.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_15_8.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_15_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_15_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodDNSConfigOption implements Validable<PodDNSConfigOption> {
+public class PodDNSConfigOption implements Validable<PodDNSConfigOption>, Exportable {
     private String name;
     private String value;
 
@@ -65,5 +69,14 @@ public class PodDNSConfigOption implements Validable<PodDNSConfigOption> {
     @Override
     public PodDNSConfigOption validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (value != null ? "\"value\":\"" +  JsonStrings.escapeJson(value) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

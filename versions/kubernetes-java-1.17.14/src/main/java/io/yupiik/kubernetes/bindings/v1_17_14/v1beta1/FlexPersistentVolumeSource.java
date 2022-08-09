@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_17_14.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_17_14.Exportable;
+import io.yupiik.kubernetes.bindings.v1_17_14.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_14.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_14.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class FlexPersistentVolumeSource implements Validable<FlexPersistentVolumeSource> {
+public class FlexPersistentVolumeSource implements Validable<FlexPersistentVolumeSource>, Exportable {
     private String driver;
     private String fsType;
     private Map<String, String> options;
@@ -129,5 +133,19 @@ public class FlexPersistentVolumeSource implements Validable<FlexPersistentVolum
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (driver != null ? "\"driver\":\"" +  JsonStrings.escapeJson(driver) + "\"" : ""),
+                    (fsType != null ? "\"fsType\":\"" +  JsonStrings.escapeJson(fsType) + "\"" : ""),
+                    (options != null ? "\"options\":" + options.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (secretRef != null ? "\"secretRef\":" + secretRef.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

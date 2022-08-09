@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_23_4.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_4.Exportable;
+import io.yupiik.kubernetes.bindings.v1_23_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class EndpointAddress implements Validable<EndpointAddress> {
+public class EndpointAddress implements Validable<EndpointAddress>, Exportable {
     private String hostname;
     private String ip;
     private String nodeName;
@@ -111,5 +115,16 @@ public class EndpointAddress implements Validable<EndpointAddress> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (hostname != null ? "\"hostname\":\"" +  JsonStrings.escapeJson(hostname) + "\"" : ""),
+                    (ip != null ? "\"ip\":\"" +  JsonStrings.escapeJson(ip) + "\"" : ""),
+                    (nodeName != null ? "\"nodeName\":\"" +  JsonStrings.escapeJson(nodeName) + "\"" : ""),
+                    (targetRef != null ? "\"targetRef\":" + targetRef.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

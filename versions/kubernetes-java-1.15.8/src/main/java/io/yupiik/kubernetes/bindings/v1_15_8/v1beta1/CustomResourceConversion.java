@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_15_8.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_15_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_15_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CustomResourceConversion implements Validable<CustomResourceConversion> {
+public class CustomResourceConversion implements Validable<CustomResourceConversion>, Exportable {
     private List<String> conversionReviewVersions;
     private String strategy;
     private WebhookClientConfig webhookClientConfig;
@@ -94,5 +98,15 @@ public class CustomResourceConversion implements Validable<CustomResourceConvers
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (conversionReviewVersions != null ? "\"conversionReviewVersions\":" + conversionReviewVersions.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (strategy != null ? "\"strategy\":\"" +  JsonStrings.escapeJson(strategy) + "\"" : ""),
+                    (webhookClientConfig != null ? "\"webhookClientConfig\":" + webhookClientConfig.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

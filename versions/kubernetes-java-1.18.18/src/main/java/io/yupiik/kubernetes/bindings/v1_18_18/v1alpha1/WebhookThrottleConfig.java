@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_18_18.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_18_18.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_18.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_18.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class WebhookThrottleConfig implements Validable<WebhookThrottleConfig> {
+public class WebhookThrottleConfig implements Validable<WebhookThrottleConfig>, Exportable {
     private Integer burst;
     private Integer qps;
 
@@ -65,5 +68,14 @@ public class WebhookThrottleConfig implements Validable<WebhookThrottleConfig> {
     @Override
     public WebhookThrottleConfig validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (burst != null ? "\"burst\":" + burst : ""),
+                    (qps != null ? "\"qps\":" + qps : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

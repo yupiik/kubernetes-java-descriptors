@@ -1,8 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_23_4.v1;
 
-public enum ServiceSpecType {
+import io.yupiik.kubernetes.bindings.v1_23_4.Exportable;
+
+public enum ServiceSpecType implements Exportable {
     ClusterIP,
     LoadBalancer,
     ExternalName,
     NodePort
+    ;
+
+    @Override
+    public String asJson() {
+        return "\"" + name() + "\"";
+    }
 }

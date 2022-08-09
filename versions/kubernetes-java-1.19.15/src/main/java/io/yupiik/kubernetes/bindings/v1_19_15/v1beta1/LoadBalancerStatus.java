@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_19_15.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_19_15.Exportable;
 import io.yupiik.kubernetes.bindings.v1_19_15.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_15.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class LoadBalancerStatus implements Validable<LoadBalancerStatus> {
+public class LoadBalancerStatus implements Validable<LoadBalancerStatus>, Exportable {
     private List<LoadBalancerIngress> ingress;
 
     public LoadBalancerStatus() {
@@ -48,5 +51,13 @@ public class LoadBalancerStatus implements Validable<LoadBalancerStatus> {
     @Override
     public LoadBalancerStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (ingress != null ? "\"ingress\":" + ingress.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

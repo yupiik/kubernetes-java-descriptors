@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_10.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_10.Exportable;
+import io.yupiik.kubernetes.bindings.v1_21_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_10.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CustomResourceSubresourceScale implements Validable<CustomResourceSubresourceScale> {
+public class CustomResourceSubresourceScale implements Validable<CustomResourceSubresourceScale>, Exportable {
     private String labelSelectorPath;
     private String specReplicasPath;
     private String statusReplicasPath;
@@ -102,5 +106,15 @@ public class CustomResourceSubresourceScale implements Validable<CustomResourceS
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (labelSelectorPath != null ? "\"labelSelectorPath\":\"" +  JsonStrings.escapeJson(labelSelectorPath) + "\"" : ""),
+                    (specReplicasPath != null ? "\"specReplicasPath\":\"" +  JsonStrings.escapeJson(specReplicasPath) + "\"" : ""),
+                    (statusReplicasPath != null ? "\"statusReplicasPath\":\"" +  JsonStrings.escapeJson(statusReplicasPath) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

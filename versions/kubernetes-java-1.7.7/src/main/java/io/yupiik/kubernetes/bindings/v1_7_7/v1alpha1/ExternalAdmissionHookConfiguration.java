@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_7.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_7_7.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_7.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_7.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_7.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ExternalAdmissionHookConfiguration implements Validable<ExternalAdmissionHookConfiguration> {
+public class ExternalAdmissionHookConfiguration implements Validable<ExternalAdmissionHookConfiguration>, Exportable {
     private String apiVersion;
     private List<ExternalAdmissionHook> externalAdmissionHooks;
     private String kind;
@@ -98,6 +102,23 @@ public class ExternalAdmissionHookConfiguration implements Validable<ExternalAdm
 
     @Override
     public ExternalAdmissionHookConfiguration validate() {
+        if (kind == null) {
+            kind = "ExternalAdmissionHookConfiguration";
+        }
+        if (apiVersion == null) {
+            apiVersion = "admissionregistration.k8s.io/v1alpha1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (externalAdmissionHooks != null ? "\"externalAdmissionHooks\":" + externalAdmissionHooks.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

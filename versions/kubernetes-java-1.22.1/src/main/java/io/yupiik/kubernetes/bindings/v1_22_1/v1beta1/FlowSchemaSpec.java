@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_22_1.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_22_1.Exportable;
 import io.yupiik.kubernetes.bindings.v1_22_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class FlowSchemaSpec implements Validable<FlowSchemaSpec> {
+public class FlowSchemaSpec implements Validable<FlowSchemaSpec>, Exportable {
     private FlowDistinguisherMethod distinguisherMethod;
     private Integer matchingPrecedence;
     private PriorityLevelConfigurationReference priorityLevelConfiguration;
@@ -111,5 +114,16 @@ public class FlowSchemaSpec implements Validable<FlowSchemaSpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (distinguisherMethod != null ? "\"distinguisherMethod\":" + distinguisherMethod.asJson() : ""),
+                    (matchingPrecedence != null ? "\"matchingPrecedence\":" + matchingPrecedence : ""),
+                    (priorityLevelConfiguration != null ? "\"priorityLevelConfiguration\":" + priorityLevelConfiguration.asJson() : ""),
+                    (rules != null ? "\"rules\":" + rules.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

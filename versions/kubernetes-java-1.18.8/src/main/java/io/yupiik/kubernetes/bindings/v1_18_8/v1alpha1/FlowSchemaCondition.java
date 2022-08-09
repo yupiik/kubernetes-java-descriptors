@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_8.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_18_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class FlowSchemaCondition implements Validable<FlowSchemaCondition> {
+public class FlowSchemaCondition implements Validable<FlowSchemaCondition>, Exportable {
     private String lastTransitionTime;
     private String message;
     private String reason;
@@ -116,5 +120,17 @@ public class FlowSchemaCondition implements Validable<FlowSchemaCondition> {
     @Override
     public FlowSchemaCondition validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (lastTransitionTime != null ? "\"lastTransitionTime\":\"" +  JsonStrings.escapeJson(lastTransitionTime) + "\"" : ""),
+                    (message != null ? "\"message\":\"" +  JsonStrings.escapeJson(message) + "\"" : ""),
+                    (reason != null ? "\"reason\":\"" +  JsonStrings.escapeJson(reason) + "\"" : ""),
+                    (status != null ? "\"status\":\"" +  JsonStrings.escapeJson(status) + "\"" : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

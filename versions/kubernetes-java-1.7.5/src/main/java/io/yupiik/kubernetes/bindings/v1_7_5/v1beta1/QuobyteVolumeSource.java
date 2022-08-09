@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_5.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_7_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class QuobyteVolumeSource implements Validable<QuobyteVolumeSource> {
+public class QuobyteVolumeSource implements Validable<QuobyteVolumeSource>, Exportable {
     private String group;
     private Boolean readOnly;
     private String registry;
@@ -136,5 +140,17 @@ public class QuobyteVolumeSource implements Validable<QuobyteVolumeSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (group != null ? "\"group\":\"" +  JsonStrings.escapeJson(group) + "\"" : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (registry != null ? "\"registry\":\"" +  JsonStrings.escapeJson(registry) + "\"" : ""),
+                    (user != null ? "\"user\":\"" +  JsonStrings.escapeJson(user) + "\"" : ""),
+                    (volume != null ? "\"volume\":\"" +  JsonStrings.escapeJson(volume) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

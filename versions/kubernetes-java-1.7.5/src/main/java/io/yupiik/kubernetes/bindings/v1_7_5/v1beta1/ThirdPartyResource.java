@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_5.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_7_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ThirdPartyResource implements Validable<ThirdPartyResource> {
+public class ThirdPartyResource implements Validable<ThirdPartyResource>, Exportable {
     private String apiVersion;
     private String description;
     private String kind;
@@ -115,6 +119,24 @@ public class ThirdPartyResource implements Validable<ThirdPartyResource> {
 
     @Override
     public ThirdPartyResource validate() {
+        if (kind == null) {
+            kind = "ThirdPartyResource";
+        }
+        if (apiVersion == null) {
+            apiVersion = "extensions/v1beta1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (description != null ? "\"description\":\"" +  JsonStrings.escapeJson(description) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (versions != null ? "\"versions\":" + versions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_8.v1;
 
+import io.yupiik.kubernetes.bindings.v1_16_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ContainerStatus implements Validable<ContainerStatus> {
+public class ContainerStatus implements Validable<ContainerStatus>, Exportable {
     private String containerID;
     private String image;
     private String imageID;
@@ -212,5 +216,21 @@ public class ContainerStatus implements Validable<ContainerStatus> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (containerID != null ? "\"containerID\":\"" +  JsonStrings.escapeJson(containerID) + "\"" : ""),
+                    (image != null ? "\"image\":\"" +  JsonStrings.escapeJson(image) + "\"" : ""),
+                    (imageID != null ? "\"imageID\":\"" +  JsonStrings.escapeJson(imageID) + "\"" : ""),
+                    (lastState != null ? "\"lastState\":" + lastState.asJson() : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    "\"ready\":" + ready,
+                    "\"restartCount\":" + restartCount,
+                    (started != null ? "\"started\":" + started : ""),
+                    (state != null ? "\"state\":" + state.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

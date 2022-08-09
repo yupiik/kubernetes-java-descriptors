@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_2.v2beta1;
 
+import io.yupiik.kubernetes.bindings.v1_21_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_21_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class HorizontalPodAutoscalerStatus implements Validable<HorizontalPodAutoscalerStatus> {
+public class HorizontalPodAutoscalerStatus implements Validable<HorizontalPodAutoscalerStatus>, Exportable {
     private List<HorizontalPodAutoscalerCondition> conditions;
     private List<MetricStatus> currentMetrics;
     private int currentReplicas;
@@ -145,5 +149,18 @@ public class HorizontalPodAutoscalerStatus implements Validable<HorizontalPodAut
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (currentMetrics != null ? "\"currentMetrics\":" + currentMetrics.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    "\"currentReplicas\":" + currentReplicas,
+                    "\"desiredReplicas\":" + desiredReplicas,
+                    (lastScaleTime != null ? "\"lastScaleTime\":\"" +  JsonStrings.escapeJson(lastScaleTime) + "\"" : ""),
+                    (observedGeneration != null ? "\"observedGeneration\":" + observedGeneration : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

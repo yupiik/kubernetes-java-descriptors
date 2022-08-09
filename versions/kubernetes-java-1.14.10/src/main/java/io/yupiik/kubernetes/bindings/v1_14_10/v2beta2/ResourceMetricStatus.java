@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_14_10.v2beta2;
 
+import io.yupiik.kubernetes.bindings.v1_14_10.Exportable;
+import io.yupiik.kubernetes.bindings.v1_14_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_14_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_14_10.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ResourceMetricStatus implements Validable<ResourceMetricStatus> {
+public class ResourceMetricStatus implements Validable<ResourceMetricStatus>, Exportable {
     private MetricValueStatus current;
     private String name;
 
@@ -85,5 +89,14 @@ public class ResourceMetricStatus implements Validable<ResourceMetricStatus> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (current != null ? "\"current\":" + current.asJson() : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

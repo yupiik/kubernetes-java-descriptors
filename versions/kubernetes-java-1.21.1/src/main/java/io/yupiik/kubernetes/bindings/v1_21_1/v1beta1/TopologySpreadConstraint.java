@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_1.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_21_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_21_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class TopologySpreadConstraint implements Validable<TopologySpreadConstraint> {
+public class TopologySpreadConstraint implements Validable<TopologySpreadConstraint>, Exportable {
     private LabelSelector labelSelector;
     private int maxSkew;
     private String topologyKey;
@@ -119,5 +123,16 @@ public class TopologySpreadConstraint implements Validable<TopologySpreadConstra
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (labelSelector != null ? "\"labelSelector\":" + labelSelector.asJson() : ""),
+                    "\"maxSkew\":" + maxSkew,
+                    (topologyKey != null ? "\"topologyKey\":\"" +  JsonStrings.escapeJson(topologyKey) + "\"" : ""),
+                    (whenUnsatisfiable != null ? "\"whenUnsatisfiable\":\"" +  JsonStrings.escapeJson(whenUnsatisfiable) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_12_0.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_12_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_12_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_12_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_12_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ServiceAccountTokenProjection implements Validable<ServiceAccountTokenProjection> {
+public class ServiceAccountTokenProjection implements Validable<ServiceAccountTokenProjection>, Exportable {
     private String audience;
     private Integer expirationSeconds;
     private String path;
@@ -94,5 +98,15 @@ public class ServiceAccountTokenProjection implements Validable<ServiceAccountTo
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (audience != null ? "\"audience\":\"" +  JsonStrings.escapeJson(audience) + "\"" : ""),
+                    (expirationSeconds != null ? "\"expirationSeconds\":" + expirationSeconds : ""),
+                    (path != null ? "\"path\":\"" +  JsonStrings.escapeJson(path) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

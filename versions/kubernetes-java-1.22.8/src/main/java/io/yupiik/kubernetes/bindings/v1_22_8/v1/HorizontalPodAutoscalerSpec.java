@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_22_8.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_22_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class HorizontalPodAutoscalerSpec implements Validable<HorizontalPodAutoscalerSpec> {
+public class HorizontalPodAutoscalerSpec implements Validable<HorizontalPodAutoscalerSpec>, Exportable {
     private int maxReplicas;
     private Integer minReplicas;
     private CrossVersionObjectReference scaleTargetRef;
@@ -111,5 +114,16 @@ public class HorizontalPodAutoscalerSpec implements Validable<HorizontalPodAutos
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    "\"maxReplicas\":" + maxReplicas,
+                    (minReplicas != null ? "\"minReplicas\":" + minReplicas : ""),
+                    (scaleTargetRef != null ? "\"scaleTargetRef\":" + scaleTargetRef.asJson() : ""),
+                    (targetCPUUtilizationPercentage != null ? "\"targetCPUUtilizationPercentage\":" + targetCPUUtilizationPercentage : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

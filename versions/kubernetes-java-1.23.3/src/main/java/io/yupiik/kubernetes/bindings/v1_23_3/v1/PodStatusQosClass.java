@@ -1,7 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_23_3.v1;
 
-public enum PodStatusQosClass {
+import io.yupiik.kubernetes.bindings.v1_23_3.Exportable;
+
+public enum PodStatusQosClass implements Exportable {
     BestEffort,
     Burstable,
     Guaranteed
+    ;
+
+    @Override
+    public String asJson() {
+        return "\"" + name() + "\"";
+    }
 }

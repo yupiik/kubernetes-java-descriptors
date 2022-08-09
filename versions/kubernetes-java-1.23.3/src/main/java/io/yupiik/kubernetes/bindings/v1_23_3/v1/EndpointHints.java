@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_23_3.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class EndpointHints implements Validable<EndpointHints> {
+public class EndpointHints implements Validable<EndpointHints>, Exportable {
     private List<ForZone> forZones;
 
     public EndpointHints() {
@@ -48,5 +51,13 @@ public class EndpointHints implements Validable<EndpointHints> {
     @Override
     public EndpointHints validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (forZones != null ? "\"forZones\":" + forZones.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

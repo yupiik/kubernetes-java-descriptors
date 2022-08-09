@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_15_2.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_15_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_15_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodDNSConfig implements Validable<PodDNSConfig> {
+public class PodDNSConfig implements Validable<PodDNSConfig>, Exportable {
     private List<String> nameservers;
     private List<PodDNSConfigOption> options;
     private List<String> searches;
@@ -82,5 +86,15 @@ public class PodDNSConfig implements Validable<PodDNSConfig> {
     @Override
     public PodDNSConfig validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (nameservers != null ? "\"nameservers\":" + nameservers.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (options != null ? "\"options\":" + options.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (searches != null ? "\"searches\":" + searches.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

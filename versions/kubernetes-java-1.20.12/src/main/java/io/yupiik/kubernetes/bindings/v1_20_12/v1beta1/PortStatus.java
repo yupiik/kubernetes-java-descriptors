@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_20_12.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_20_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_20_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PortStatus implements Validable<PortStatus> {
+public class PortStatus implements Validable<PortStatus>, Exportable {
     private String error;
     private int port;
     private String protocol;
@@ -94,5 +98,15 @@ public class PortStatus implements Validable<PortStatus> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (error != null ? "\"error\":\"" +  JsonStrings.escapeJson(error) + "\"" : ""),
+                    "\"port\":" + port,
+                    (protocol != null ? "\"protocol\":\"" +  JsonStrings.escapeJson(protocol) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_18_16.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_18_16.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_16.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_16.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PreferredSchedulingTerm implements Validable<PreferredSchedulingTerm> {
+public class PreferredSchedulingTerm implements Validable<PreferredSchedulingTerm>, Exportable {
     private NodeSelectorTerm preference;
     private int weight;
 
@@ -77,5 +80,14 @@ public class PreferredSchedulingTerm implements Validable<PreferredSchedulingTer
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (preference != null ? "\"preference\":" + preference.asJson() : ""),
+                    "\"weight\":" + weight)
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

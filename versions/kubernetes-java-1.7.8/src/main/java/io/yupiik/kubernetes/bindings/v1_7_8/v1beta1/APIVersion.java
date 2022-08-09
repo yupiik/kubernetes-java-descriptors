@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_8.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_7_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class APIVersion implements Validable<APIVersion> {
+public class APIVersion implements Validable<APIVersion>, Exportable {
     private String name;
 
     public APIVersion() {
@@ -48,5 +52,13 @@ public class APIVersion implements Validable<APIVersion> {
     @Override
     public APIVersion validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

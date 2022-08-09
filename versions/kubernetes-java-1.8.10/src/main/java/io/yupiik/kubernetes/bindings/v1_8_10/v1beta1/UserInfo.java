@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_8_10.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_8_10.Exportable;
+import io.yupiik.kubernetes.bindings.v1_8_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_10.ValidationException;
 import jakarta.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class UserInfo implements Validable<UserInfo> {
+public class UserInfo implements Validable<UserInfo>, Exportable {
     private JsonObject extra;
     private List<String> groups;
     private String uid;
@@ -100,5 +104,16 @@ public class UserInfo implements Validable<UserInfo> {
     @Override
     public UserInfo validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (extra != null ? "\"extra\":" + extra : ""),
+                    (groups != null ? "\"groups\":" + groups.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (uid != null ? "\"uid\":\"" +  JsonStrings.escapeJson(uid) + "\"" : ""),
+                    (username != null ? "\"username\":\"" +  JsonStrings.escapeJson(username) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

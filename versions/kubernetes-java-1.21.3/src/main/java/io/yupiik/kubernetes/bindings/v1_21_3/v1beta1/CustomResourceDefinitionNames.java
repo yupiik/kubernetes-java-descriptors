@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_3.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_21_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_21_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CustomResourceDefinitionNames implements Validable<CustomResourceDefinitionNames> {
+public class CustomResourceDefinitionNames implements Validable<CustomResourceDefinitionNames>, Exportable {
     private List<String> categories;
     private String kind;
     private String listKind;
@@ -153,5 +157,18 @@ public class CustomResourceDefinitionNames implements Validable<CustomResourceDe
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (categories != null ? "\"categories\":" + categories.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (listKind != null ? "\"listKind\":\"" +  JsonStrings.escapeJson(listKind) + "\"" : ""),
+                    (plural != null ? "\"plural\":\"" +  JsonStrings.escapeJson(plural) + "\"" : ""),
+                    (shortNames != null ? "\"shortNames\":" + shortNames.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (singular != null ? "\"singular\":\"" +  JsonStrings.escapeJson(singular) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

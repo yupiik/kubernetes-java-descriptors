@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_11_9.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_11_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_11_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_11_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_11_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ReplicaSetCondition implements Validable<ReplicaSetCondition> {
+public class ReplicaSetCondition implements Validable<ReplicaSetCondition>, Exportable {
     private String lastTransitionTime;
     private String message;
     private String reason;
@@ -136,5 +140,17 @@ public class ReplicaSetCondition implements Validable<ReplicaSetCondition> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (lastTransitionTime != null ? "\"lastTransitionTime\":\"" +  JsonStrings.escapeJson(lastTransitionTime) + "\"" : ""),
+                    (message != null ? "\"message\":\"" +  JsonStrings.escapeJson(message) + "\"" : ""),
+                    (reason != null ? "\"reason\":\"" +  JsonStrings.escapeJson(reason) + "\"" : ""),
+                    (status != null ? "\"status\":\"" +  JsonStrings.escapeJson(status) + "\"" : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

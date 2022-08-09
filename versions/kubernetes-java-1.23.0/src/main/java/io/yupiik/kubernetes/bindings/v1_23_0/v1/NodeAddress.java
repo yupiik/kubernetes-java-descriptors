@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_23_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_23_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NodeAddress implements Validable<NodeAddress> {
+public class NodeAddress implements Validable<NodeAddress>, Exportable {
     private String address;
     private NodeAddressType type;
 
@@ -85,5 +89,14 @@ public class NodeAddress implements Validable<NodeAddress> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (address != null ? "\"address\":\"" +  JsonStrings.escapeJson(address) + "\"" : ""),
+                    (type != null ? "\"type\":" + type.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

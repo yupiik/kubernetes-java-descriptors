@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_16_12.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_16_12.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class RollbackConfig implements Validable<RollbackConfig> {
+public class RollbackConfig implements Validable<RollbackConfig>, Exportable {
     private Integer revision;
 
     public RollbackConfig() {
@@ -48,5 +51,13 @@ public class RollbackConfig implements Validable<RollbackConfig> {
     @Override
     public RollbackConfig validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (revision != null ? "\"revision\":" + revision : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

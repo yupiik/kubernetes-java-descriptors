@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_22_3.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_22_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class TopologySelectorTerm implements Validable<TopologySelectorTerm> {
+public class TopologySelectorTerm implements Validable<TopologySelectorTerm>, Exportable {
     private List<TopologySelectorLabelRequirement> matchLabelExpressions;
 
     public TopologySelectorTerm() {
@@ -48,5 +51,13 @@ public class TopologySelectorTerm implements Validable<TopologySelectorTerm> {
     @Override
     public TopologySelectorTerm validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (matchLabelExpressions != null ? "\"matchLabelExpressions\":" + matchLabelExpressions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

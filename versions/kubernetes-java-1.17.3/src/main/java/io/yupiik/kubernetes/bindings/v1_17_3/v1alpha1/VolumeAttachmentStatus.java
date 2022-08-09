@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_17_3.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_17_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_17_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class VolumeAttachmentStatus implements Validable<VolumeAttachmentStatus> {
+public class VolumeAttachmentStatus implements Validable<VolumeAttachmentStatus>, Exportable {
     private VolumeError attachError;
     private boolean attached;
     private Map<String, String> attachmentMetadata;
@@ -100,5 +104,18 @@ public class VolumeAttachmentStatus implements Validable<VolumeAttachmentStatus>
     @Override
     public VolumeAttachmentStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (attachError != null ? "\"attachError\":" + attachError.asJson() : ""),
+                    "\"attached\":" + attached,
+                    (attachmentMetadata != null ? "\"attachmentMetadata\":" + attachmentMetadata.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""),
+                    (detachError != null ? "\"detachError\":" + detachError.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

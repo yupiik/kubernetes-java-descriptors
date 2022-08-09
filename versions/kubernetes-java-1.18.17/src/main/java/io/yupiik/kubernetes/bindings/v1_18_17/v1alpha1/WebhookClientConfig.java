@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_17.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_18_17.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_17.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_17.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_17.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class WebhookClientConfig implements Validable<WebhookClientConfig> {
+public class WebhookClientConfig implements Validable<WebhookClientConfig>, Exportable {
     private String caBundle;
     private ServiceReference service;
     private String url;
@@ -82,5 +86,15 @@ public class WebhookClientConfig implements Validable<WebhookClientConfig> {
     @Override
     public WebhookClientConfig validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (caBundle != null ? "\"caBundle\":\"" +  JsonStrings.escapeJson(caBundle) + "\"" : ""),
+                    (service != null ? "\"service\":" + service.asJson() : ""),
+                    (url != null ? "\"url\":\"" +  JsonStrings.escapeJson(url) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

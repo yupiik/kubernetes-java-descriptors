@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_17_17.v1;
 
+import io.yupiik.kubernetes.bindings.v1_17_17.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_17.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_17.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ReplicationControllerStatus implements Validable<ReplicationControllerStatus> {
+public class ReplicationControllerStatus implements Validable<ReplicationControllerStatus>, Exportable {
     private Integer availableReplicas;
     private List<ReplicationControllerCondition> conditions;
     private Integer fullyLabeledReplicas;
@@ -133,5 +136,18 @@ public class ReplicationControllerStatus implements Validable<ReplicationControl
     @Override
     public ReplicationControllerStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (availableReplicas != null ? "\"availableReplicas\":" + availableReplicas : ""),
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (fullyLabeledReplicas != null ? "\"fullyLabeledReplicas\":" + fullyLabeledReplicas : ""),
+                    (observedGeneration != null ? "\"observedGeneration\":" + observedGeneration : ""),
+                    (readyReplicas != null ? "\"readyReplicas\":" + readyReplicas : ""),
+                    "\"replicas\":" + replicas)
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

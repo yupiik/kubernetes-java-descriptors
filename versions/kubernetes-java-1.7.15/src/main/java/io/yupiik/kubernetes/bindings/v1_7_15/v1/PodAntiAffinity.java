@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_7_15.v1;
 
+import io.yupiik.kubernetes.bindings.v1_7_15.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_15.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_15.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodAntiAffinity implements Validable<PodAntiAffinity> {
+public class PodAntiAffinity implements Validable<PodAntiAffinity>, Exportable {
     private List<WeightedPodAffinityTerm> preferredDuringSchedulingIgnoredDuringExecution;
     private List<PodAffinityTerm> requiredDuringSchedulingIgnoredDuringExecution;
 
@@ -65,5 +68,14 @@ public class PodAntiAffinity implements Validable<PodAntiAffinity> {
     @Override
     public PodAntiAffinity validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (preferredDuringSchedulingIgnoredDuringExecution != null ? "\"preferredDuringSchedulingIgnoredDuringExecution\":" + preferredDuringSchedulingIgnoredDuringExecution.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (requiredDuringSchedulingIgnoredDuringExecution != null ? "\"requiredDuringSchedulingIgnoredDuringExecution\":" + requiredDuringSchedulingIgnoredDuringExecution.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

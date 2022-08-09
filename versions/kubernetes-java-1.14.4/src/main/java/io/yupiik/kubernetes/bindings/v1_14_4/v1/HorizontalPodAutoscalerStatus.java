@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_14_4.v1;
 
+import io.yupiik.kubernetes.bindings.v1_14_4.Exportable;
+import io.yupiik.kubernetes.bindings.v1_14_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_14_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_14_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class HorizontalPodAutoscalerStatus implements Validable<HorizontalPodAutoscalerStatus> {
+public class HorizontalPodAutoscalerStatus implements Validable<HorizontalPodAutoscalerStatus>, Exportable {
     private Integer currentCPUUtilizationPercentage;
     private int currentReplicas;
     private int desiredReplicas;
@@ -116,5 +120,17 @@ public class HorizontalPodAutoscalerStatus implements Validable<HorizontalPodAut
     @Override
     public HorizontalPodAutoscalerStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (currentCPUUtilizationPercentage != null ? "\"currentCPUUtilizationPercentage\":" + currentCPUUtilizationPercentage : ""),
+                    "\"currentReplicas\":" + currentReplicas,
+                    "\"desiredReplicas\":" + desiredReplicas,
+                    (lastScaleTime != null ? "\"lastScaleTime\":\"" +  JsonStrings.escapeJson(lastScaleTime) + "\"" : ""),
+                    (observedGeneration != null ? "\"observedGeneration\":" + observedGeneration : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

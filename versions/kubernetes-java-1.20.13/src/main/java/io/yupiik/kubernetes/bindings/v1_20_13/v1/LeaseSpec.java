@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_20_13.v1;
 
+import io.yupiik.kubernetes.bindings.v1_20_13.Exportable;
+import io.yupiik.kubernetes.bindings.v1_20_13.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_13.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_13.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class LeaseSpec implements Validable<LeaseSpec> {
+public class LeaseSpec implements Validable<LeaseSpec>, Exportable {
     private String acquireTime;
     private String holderIdentity;
     private Integer leaseDurationSeconds;
@@ -116,5 +120,17 @@ public class LeaseSpec implements Validable<LeaseSpec> {
     @Override
     public LeaseSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (acquireTime != null ? "\"acquireTime\":\"" +  JsonStrings.escapeJson(acquireTime) + "\"" : ""),
+                    (holderIdentity != null ? "\"holderIdentity\":\"" +  JsonStrings.escapeJson(holderIdentity) + "\"" : ""),
+                    (leaseDurationSeconds != null ? "\"leaseDurationSeconds\":" + leaseDurationSeconds : ""),
+                    (leaseTransitions != null ? "\"leaseTransitions\":" + leaseTransitions : ""),
+                    (renewTime != null ? "\"renewTime\":\"" +  JsonStrings.escapeJson(renewTime) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

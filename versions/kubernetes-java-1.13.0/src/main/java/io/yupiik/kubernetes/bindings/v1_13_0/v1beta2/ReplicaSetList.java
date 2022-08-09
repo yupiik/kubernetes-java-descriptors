@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_13_0.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_13_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_13_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ReplicaSetList implements Validable<ReplicaSetList> {
+public class ReplicaSetList implements Validable<ReplicaSetList>, Exportable {
     private String apiVersion;
     private List<ReplicaSet> items;
     private String kind;
@@ -98,6 +102,12 @@ public class ReplicaSetList implements Validable<ReplicaSetList> {
 
     @Override
     public ReplicaSetList validate() {
+        if (kind == null) {
+            kind = "ReplicaSetList";
+        }
+        if (apiVersion == null) {
+            apiVersion = "apps/v1beta2";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (items == null) {
             if (__errors_jsonSchema == null) {
@@ -111,5 +121,16 @@ public class ReplicaSetList implements Validable<ReplicaSetList> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (items != null ? "\"items\":" + items.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

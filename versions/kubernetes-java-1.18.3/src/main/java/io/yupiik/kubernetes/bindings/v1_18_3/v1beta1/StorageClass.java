@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_18_3.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_18_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class StorageClass implements Validable<StorageClass> {
+public class StorageClass implements Validable<StorageClass>, Exportable {
     private Boolean allowVolumeExpansion;
     private List<TopologySelectorTerm> allowedTopologies;
     private String apiVersion;
@@ -201,6 +205,12 @@ public class StorageClass implements Validable<StorageClass> {
 
     @Override
     public StorageClass validate() {
+        if (kind == null) {
+            kind = "StorageClass";
+        }
+        if (apiVersion == null) {
+            apiVersion = "storage.k8s.io/v1beta1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (provisioner == null) {
             if (__errors_jsonSchema == null) {
@@ -214,5 +224,24 @@ public class StorageClass implements Validable<StorageClass> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (allowVolumeExpansion != null ? "\"allowVolumeExpansion\":" + allowVolumeExpansion : ""),
+                    (allowedTopologies != null ? "\"allowedTopologies\":" + allowedTopologies.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (mountOptions != null ? "\"mountOptions\":" + mountOptions.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (parameters != null ? "\"parameters\":" + parameters.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""),
+                    (provisioner != null ? "\"provisioner\":\"" +  JsonStrings.escapeJson(provisioner) + "\"" : ""),
+                    (reclaimPolicy != null ? "\"reclaimPolicy\":\"" +  JsonStrings.escapeJson(reclaimPolicy) + "\"" : ""),
+                    (volumeBindingMode != null ? "\"volumeBindingMode\":\"" +  JsonStrings.escapeJson(volumeBindingMode) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

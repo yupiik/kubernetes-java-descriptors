@@ -1,6 +1,14 @@
 package io.yupiik.kubernetes.bindings.v1_23_0.v1;
 
-public enum ServiceSpecExternalTrafficPolicy {
+import io.yupiik.kubernetes.bindings.v1_23_0.Exportable;
+
+public enum ServiceSpecExternalTrafficPolicy implements Exportable {
     Cluster,
     Local
+    ;
+
+    @Override
+    public String asJson() {
+        return "\"" + name() + "\"";
+    }
 }

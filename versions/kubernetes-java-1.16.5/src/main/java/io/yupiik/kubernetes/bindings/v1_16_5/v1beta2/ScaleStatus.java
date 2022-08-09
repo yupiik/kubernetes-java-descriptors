@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_16_5.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_16_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ScaleStatus implements Validable<ScaleStatus> {
+public class ScaleStatus implements Validable<ScaleStatus>, Exportable {
     private int replicas;
     private Map<String, String> selector;
     private String targetSelector;
@@ -83,5 +87,17 @@ public class ScaleStatus implements Validable<ScaleStatus> {
     @Override
     public ScaleStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    "\"replicas\":" + replicas,
+                    (selector != null ? "\"selector\":" + selector.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""),
+                    (targetSelector != null ? "\"targetSelector\":\"" +  JsonStrings.escapeJson(targetSelector) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

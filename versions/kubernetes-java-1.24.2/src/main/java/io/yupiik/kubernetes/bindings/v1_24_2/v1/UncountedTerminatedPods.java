@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_24_2.v1;
 
+import io.yupiik.kubernetes.bindings.v1_24_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_24_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_24_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_24_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class UncountedTerminatedPods implements Validable<UncountedTerminatedPods> {
+public class UncountedTerminatedPods implements Validable<UncountedTerminatedPods>, Exportable {
     private List<String> failed;
     private List<String> succeeded;
 
@@ -65,5 +69,14 @@ public class UncountedTerminatedPods implements Validable<UncountedTerminatedPod
     @Override
     public UncountedTerminatedPods validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (failed != null ? "\"failed\":" + failed.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (succeeded != null ? "\"succeeded\":" + succeeded.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

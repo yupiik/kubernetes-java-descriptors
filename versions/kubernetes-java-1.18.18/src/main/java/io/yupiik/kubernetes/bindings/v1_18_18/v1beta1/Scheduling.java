@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_18_18.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_18_18.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_18.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_18.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_18.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Scheduling implements Validable<Scheduling> {
+public class Scheduling implements Validable<Scheduling>, Exportable {
     private Map<String, String> nodeSelector;
     private List<Toleration> tolerations;
 
@@ -66,5 +70,16 @@ public class Scheduling implements Validable<Scheduling> {
     @Override
     public Scheduling validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (nodeSelector != null ? "\"nodeSelector\":" + nodeSelector.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""),
+                    (tolerations != null ? "\"tolerations\":" + tolerations.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

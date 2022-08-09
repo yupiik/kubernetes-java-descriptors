@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_14_9.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_14_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_14_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_14_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_14_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PriorityClass implements Validable<PriorityClass> {
+public class PriorityClass implements Validable<PriorityClass>, Exportable {
     private String apiVersion;
     private String description;
     private Boolean globalDefault;
@@ -132,6 +136,25 @@ public class PriorityClass implements Validable<PriorityClass> {
 
     @Override
     public PriorityClass validate() {
+        if (kind == null) {
+            kind = "PriorityClass";
+        }
+        if (apiVersion == null) {
+            apiVersion = "scheduling.k8s.io/v1alpha1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (description != null ? "\"description\":\"" +  JsonStrings.escapeJson(description) + "\"" : ""),
+                    (globalDefault != null ? "\"globalDefault\":" + globalDefault : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    "\"value\":" + value)
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

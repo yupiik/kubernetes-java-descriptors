@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_9_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_9_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_9_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_9_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_9_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ResourceFieldSelector implements Validable<ResourceFieldSelector> {
+public class ResourceFieldSelector implements Validable<ResourceFieldSelector>, Exportable {
     private String containerName;
     private String divisor;
     private String resource;
@@ -94,5 +98,15 @@ public class ResourceFieldSelector implements Validable<ResourceFieldSelector> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (containerName != null ? "\"containerName\":\"" +  JsonStrings.escapeJson(containerName) + "\"" : ""),
+                    (divisor != null ? "\"divisor\":\"" +  JsonStrings.escapeJson(divisor) + "\"" : ""),
+                    (resource != null ? "\"resource\":\"" +  JsonStrings.escapeJson(resource) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

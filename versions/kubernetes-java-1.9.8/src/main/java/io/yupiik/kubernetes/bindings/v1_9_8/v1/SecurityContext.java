@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_9_8.v1;
 
+import io.yupiik.kubernetes.bindings.v1_9_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_9_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_9_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class SecurityContext implements Validable<SecurityContext> {
+public class SecurityContext implements Validable<SecurityContext>, Exportable {
     private Boolean allowPrivilegeEscalation;
     private Capabilities capabilities;
     private Boolean privileged;
@@ -150,5 +153,19 @@ public class SecurityContext implements Validable<SecurityContext> {
     @Override
     public SecurityContext validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (allowPrivilegeEscalation != null ? "\"allowPrivilegeEscalation\":" + allowPrivilegeEscalation : ""),
+                    (capabilities != null ? "\"capabilities\":" + capabilities.asJson() : ""),
+                    (privileged != null ? "\"privileged\":" + privileged : ""),
+                    (readOnlyRootFilesystem != null ? "\"readOnlyRootFilesystem\":" + readOnlyRootFilesystem : ""),
+                    (runAsNonRoot != null ? "\"runAsNonRoot\":" + runAsNonRoot : ""),
+                    (runAsUser != null ? "\"runAsUser\":" + runAsUser : ""),
+                    (seLinuxOptions != null ? "\"seLinuxOptions\":" + seLinuxOptions.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_3.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_18_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class GlusterfsPersistentVolumeSource implements Validable<GlusterfsPersistentVolumeSource> {
+public class GlusterfsPersistentVolumeSource implements Validable<GlusterfsPersistentVolumeSource>, Exportable {
     private String endpoints;
     private String endpointsNamespace;
     private String path;
@@ -119,5 +123,16 @@ public class GlusterfsPersistentVolumeSource implements Validable<GlusterfsPersi
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (endpoints != null ? "\"endpoints\":\"" +  JsonStrings.escapeJson(endpoints) + "\"" : ""),
+                    (endpointsNamespace != null ? "\"endpointsNamespace\":\"" +  JsonStrings.escapeJson(endpointsNamespace) + "\"" : ""),
+                    (path != null ? "\"path\":\"" +  JsonStrings.escapeJson(path) + "\"" : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

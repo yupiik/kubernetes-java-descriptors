@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_19.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_19.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_19.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_19.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_19.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class IPBlock implements Validable<IPBlock> {
+public class IPBlock implements Validable<IPBlock>, Exportable {
     private String cidr;
     private List<String> except;
 
@@ -77,5 +81,14 @@ public class IPBlock implements Validable<IPBlock> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (cidr != null ? "\"cidr\":\"" +  JsonStrings.escapeJson(cidr) + "\"" : ""),
+                    (except != null ? "\"except\":" + except.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

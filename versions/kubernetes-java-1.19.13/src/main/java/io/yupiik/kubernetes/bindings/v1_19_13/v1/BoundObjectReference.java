@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_13.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_13.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_13.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_13.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_13.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class BoundObjectReference implements Validable<BoundObjectReference> {
+public class BoundObjectReference implements Validable<BoundObjectReference>, Exportable {
     private String apiVersion;
     private String kind;
     private String name;
@@ -99,5 +103,16 @@ public class BoundObjectReference implements Validable<BoundObjectReference> {
     @Override
     public BoundObjectReference validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (uid != null ? "\"uid\":\"" +  JsonStrings.escapeJson(uid) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

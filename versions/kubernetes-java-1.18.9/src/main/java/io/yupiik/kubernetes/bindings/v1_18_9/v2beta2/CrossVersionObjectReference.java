@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_9.v2beta2;
 
+import io.yupiik.kubernetes.bindings.v1_18_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CrossVersionObjectReference implements Validable<CrossVersionObjectReference> {
+public class CrossVersionObjectReference implements Validable<CrossVersionObjectReference>, Exportable {
     private String apiVersion;
     private String kind;
     private String name;
@@ -102,5 +106,15 @@ public class CrossVersionObjectReference implements Validable<CrossVersionObject
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

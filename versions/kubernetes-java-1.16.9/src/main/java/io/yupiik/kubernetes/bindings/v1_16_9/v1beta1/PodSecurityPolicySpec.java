@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_9.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_16_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodSecurityPolicySpec implements Validable<PodSecurityPolicySpec> {
+public class PodSecurityPolicySpec implements Validable<PodSecurityPolicySpec>, Exportable {
     private Boolean allowPrivilegeEscalation;
     private List<AllowedCSIDriver> allowedCSIDrivers;
     private List<String> allowedCapabilities;
@@ -475,5 +479,36 @@ public class PodSecurityPolicySpec implements Validable<PodSecurityPolicySpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (allowPrivilegeEscalation != null ? "\"allowPrivilegeEscalation\":" + allowPrivilegeEscalation : ""),
+                    (allowedCSIDrivers != null ? "\"allowedCSIDrivers\":" + allowedCSIDrivers.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (allowedCapabilities != null ? "\"allowedCapabilities\":" + allowedCapabilities.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (allowedFlexVolumes != null ? "\"allowedFlexVolumes\":" + allowedFlexVolumes.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (allowedHostPaths != null ? "\"allowedHostPaths\":" + allowedHostPaths.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (allowedProcMountTypes != null ? "\"allowedProcMountTypes\":" + allowedProcMountTypes.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (allowedUnsafeSysctls != null ? "\"allowedUnsafeSysctls\":" + allowedUnsafeSysctls.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (defaultAddCapabilities != null ? "\"defaultAddCapabilities\":" + defaultAddCapabilities.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (defaultAllowPrivilegeEscalation != null ? "\"defaultAllowPrivilegeEscalation\":" + defaultAllowPrivilegeEscalation : ""),
+                    (forbiddenSysctls != null ? "\"forbiddenSysctls\":" + forbiddenSysctls.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (fsGroup != null ? "\"fsGroup\":" + fsGroup.asJson() : ""),
+                    (hostIPC != null ? "\"hostIPC\":" + hostIPC : ""),
+                    (hostNetwork != null ? "\"hostNetwork\":" + hostNetwork : ""),
+                    (hostPID != null ? "\"hostPID\":" + hostPID : ""),
+                    (hostPorts != null ? "\"hostPorts\":" + hostPorts.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (privileged != null ? "\"privileged\":" + privileged : ""),
+                    (readOnlyRootFilesystem != null ? "\"readOnlyRootFilesystem\":" + readOnlyRootFilesystem : ""),
+                    (requiredDropCapabilities != null ? "\"requiredDropCapabilities\":" + requiredDropCapabilities.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (runAsGroup != null ? "\"runAsGroup\":" + runAsGroup.asJson() : ""),
+                    (runAsUser != null ? "\"runAsUser\":" + runAsUser.asJson() : ""),
+                    (runtimeClass != null ? "\"runtimeClass\":" + runtimeClass.asJson() : ""),
+                    (seLinux != null ? "\"seLinux\":" + seLinux.asJson() : ""),
+                    (supplementalGroups != null ? "\"supplementalGroups\":" + supplementalGroups.asJson() : ""),
+                    (volumes != null ? "\"volumes\":" + volumes.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_11.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_11.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_11.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_11.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class APIResource implements Validable<APIResource> {
+public class APIResource implements Validable<APIResource>, Exportable {
     private List<String> categories;
     private String group;
     private String kind;
@@ -237,5 +241,22 @@ public class APIResource implements Validable<APIResource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (categories != null ? "\"categories\":" + categories.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (group != null ? "\"group\":\"" +  JsonStrings.escapeJson(group) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    "\"namespaced\":" + namespaced,
+                    (shortNames != null ? "\"shortNames\":" + shortNames.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (singularName != null ? "\"singularName\":\"" +  JsonStrings.escapeJson(singularName) + "\"" : ""),
+                    (storageVersionHash != null ? "\"storageVersionHash\":\"" +  JsonStrings.escapeJson(storageVersionHash) + "\"" : ""),
+                    (verbs != null ? "\"verbs\":" + verbs.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (version != null ? "\"version\":\"" +  JsonStrings.escapeJson(version) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

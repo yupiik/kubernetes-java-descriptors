@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_13.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_16_13.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_13.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_13.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_13.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class HTTPGetAction implements Validable<HTTPGetAction> {
+public class HTTPGetAction implements Validable<HTTPGetAction>, Exportable {
     private String host;
     private List<HTTPHeader> httpHeaders;
     private String path;
@@ -128,5 +132,17 @@ public class HTTPGetAction implements Validable<HTTPGetAction> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (host != null ? "\"host\":\"" +  JsonStrings.escapeJson(host) + "\"" : ""),
+                    (httpHeaders != null ? "\"httpHeaders\":" + httpHeaders.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (path != null ? "\"path\":\"" +  JsonStrings.escapeJson(path) + "\"" : ""),
+                    (port != null ? "\"port\":\"" +  JsonStrings.escapeJson(port) + "\"" : ""),
+                    (scheme != null ? "\"scheme\":\"" +  JsonStrings.escapeJson(scheme) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

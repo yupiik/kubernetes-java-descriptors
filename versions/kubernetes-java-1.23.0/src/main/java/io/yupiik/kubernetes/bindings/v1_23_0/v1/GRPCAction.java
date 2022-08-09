@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_23_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_23_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class GRPCAction implements Validable<GRPCAction> {
+public class GRPCAction implements Validable<GRPCAction>, Exportable {
     private int port;
     private String service;
 
@@ -65,5 +69,14 @@ public class GRPCAction implements Validable<GRPCAction> {
     @Override
     public GRPCAction validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    "\"port\":" + port,
+                    (service != null ? "\"service\":\"" +  JsonStrings.escapeJson(service) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

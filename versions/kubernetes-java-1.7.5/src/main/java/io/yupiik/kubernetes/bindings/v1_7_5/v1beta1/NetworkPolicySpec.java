@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_7_5.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_7_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NetworkPolicySpec implements Validable<NetworkPolicySpec> {
+public class NetworkPolicySpec implements Validable<NetworkPolicySpec>, Exportable {
     private List<NetworkPolicyIngressRule> ingress;
     private LabelSelector podSelector;
 
@@ -77,5 +80,14 @@ public class NetworkPolicySpec implements Validable<NetworkPolicySpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (ingress != null ? "\"ingress\":" + ingress.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (podSelector != null ? "\"podSelector\":" + podSelector.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

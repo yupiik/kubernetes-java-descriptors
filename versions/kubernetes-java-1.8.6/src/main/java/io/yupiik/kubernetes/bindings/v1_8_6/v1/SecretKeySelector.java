@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_8_6.v1;
 
+import io.yupiik.kubernetes.bindings.v1_8_6.Exportable;
+import io.yupiik.kubernetes.bindings.v1_8_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_6.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_6.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class SecretKeySelector implements Validable<SecretKeySelector> {
+public class SecretKeySelector implements Validable<SecretKeySelector>, Exportable {
     private String key;
     private String name;
     private Boolean optional;
@@ -94,5 +98,15 @@ public class SecretKeySelector implements Validable<SecretKeySelector> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (key != null ? "\"key\":\"" +  JsonStrings.escapeJson(key) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (optional != null ? "\"optional\":" + optional : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

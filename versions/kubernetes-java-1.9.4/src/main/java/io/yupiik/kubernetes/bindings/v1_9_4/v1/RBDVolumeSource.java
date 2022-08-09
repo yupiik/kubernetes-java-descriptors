@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_9_4.v1;
 
+import io.yupiik.kubernetes.bindings.v1_9_4.Exportable;
+import io.yupiik.kubernetes.bindings.v1_9_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_9_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_9_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class RBDVolumeSource implements Validable<RBDVolumeSource> {
+public class RBDVolumeSource implements Validable<RBDVolumeSource>, Exportable {
     private String fsType;
     private String image;
     private String keyring;
@@ -187,5 +191,20 @@ public class RBDVolumeSource implements Validable<RBDVolumeSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (fsType != null ? "\"fsType\":\"" +  JsonStrings.escapeJson(fsType) + "\"" : ""),
+                    (image != null ? "\"image\":\"" +  JsonStrings.escapeJson(image) + "\"" : ""),
+                    (keyring != null ? "\"keyring\":\"" +  JsonStrings.escapeJson(keyring) + "\"" : ""),
+                    (monitors != null ? "\"monitors\":" + monitors.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (pool != null ? "\"pool\":\"" +  JsonStrings.escapeJson(pool) + "\"" : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (secretRef != null ? "\"secretRef\":" + secretRef.asJson() : ""),
+                    (user != null ? "\"user\":\"" +  JsonStrings.escapeJson(user) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

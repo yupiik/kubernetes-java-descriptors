@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_13_0.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_13_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_13_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class DeploymentRollback implements Validable<DeploymentRollback> {
+public class DeploymentRollback implements Validable<DeploymentRollback>, Exportable {
     private String apiVersion;
     private String kind;
     private String name;
@@ -116,6 +120,12 @@ public class DeploymentRollback implements Validable<DeploymentRollback> {
 
     @Override
     public DeploymentRollback validate() {
+        if (kind == null) {
+            kind = "DeploymentRollback";
+        }
+        if (apiVersion == null) {
+            apiVersion = "apps/v1beta1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (name == null) {
             if (__errors_jsonSchema == null) {
@@ -137,5 +147,19 @@ public class DeploymentRollback implements Validable<DeploymentRollback> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (rollbackTo != null ? "\"rollbackTo\":" + rollbackTo.asJson() : ""),
+                    (updatedAnnotations != null ? "\"updatedAnnotations\":" + updatedAnnotations.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

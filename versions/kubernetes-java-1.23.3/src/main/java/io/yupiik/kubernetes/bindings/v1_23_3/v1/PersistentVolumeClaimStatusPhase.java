@@ -1,7 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_23_3.v1;
 
-public enum PersistentVolumeClaimStatusPhase {
+import io.yupiik.kubernetes.bindings.v1_23_3.Exportable;
+
+public enum PersistentVolumeClaimStatusPhase implements Exportable {
     Lost,
     Bound,
     Pending
+    ;
+
+    @Override
+    public String asJson() {
+        return "\"" + name() + "\"";
+    }
 }

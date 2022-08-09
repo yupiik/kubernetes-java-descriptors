@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_13_2.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_13_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_13_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class FlexVolumeSource implements Validable<FlexVolumeSource> {
+public class FlexVolumeSource implements Validable<FlexVolumeSource>, Exportable {
     private String driver;
     private String fsType;
     private Map<String, String> options;
@@ -129,5 +133,19 @@ public class FlexVolumeSource implements Validable<FlexVolumeSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (driver != null ? "\"driver\":\"" +  JsonStrings.escapeJson(driver) + "\"" : ""),
+                    (fsType != null ? "\"fsType\":\"" +  JsonStrings.escapeJson(fsType) + "\"" : ""),
+                    (options != null ? "\"options\":" + options.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (secretRef != null ? "\"secretRef\":" + secretRef.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

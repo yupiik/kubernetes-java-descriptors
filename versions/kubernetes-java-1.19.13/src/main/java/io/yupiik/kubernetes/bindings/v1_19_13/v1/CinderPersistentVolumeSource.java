@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_13.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_13.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_13.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_13.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_13.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CinderPersistentVolumeSource implements Validable<CinderPersistentVolumeSource> {
+public class CinderPersistentVolumeSource implements Validable<CinderPersistentVolumeSource>, Exportable {
     private String fsType;
     private Boolean readOnly;
     private SecretReference secretRef;
@@ -111,5 +115,16 @@ public class CinderPersistentVolumeSource implements Validable<CinderPersistentV
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (fsType != null ? "\"fsType\":\"" +  JsonStrings.escapeJson(fsType) + "\"" : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (secretRef != null ? "\"secretRef\":" + secretRef.asJson() : ""),
+                    (volumeID != null ? "\"volumeID\":\"" +  JsonStrings.escapeJson(volumeID) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

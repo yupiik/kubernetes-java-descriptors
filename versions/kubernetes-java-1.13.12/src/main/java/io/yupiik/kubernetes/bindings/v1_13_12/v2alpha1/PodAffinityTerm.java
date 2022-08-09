@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_13_12.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_13_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_13_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodAffinityTerm implements Validable<PodAffinityTerm> {
+public class PodAffinityTerm implements Validable<PodAffinityTerm>, Exportable {
     private LabelSelector labelSelector;
     private List<String> namespaces;
     private String topologyKey;
@@ -94,5 +98,15 @@ public class PodAffinityTerm implements Validable<PodAffinityTerm> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (labelSelector != null ? "\"labelSelector\":" + labelSelector.asJson() : ""),
+                    (namespaces != null ? "\"namespaces\":" + namespaces.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (topologyKey != null ? "\"topologyKey\":\"" +  JsonStrings.escapeJson(topologyKey) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

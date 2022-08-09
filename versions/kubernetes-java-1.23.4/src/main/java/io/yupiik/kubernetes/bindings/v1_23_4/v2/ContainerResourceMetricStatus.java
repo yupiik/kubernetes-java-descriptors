@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_23_4.v2;
 
+import io.yupiik.kubernetes.bindings.v1_23_4.Exportable;
+import io.yupiik.kubernetes.bindings.v1_23_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ContainerResourceMetricStatus implements Validable<ContainerResourceMetricStatus> {
+public class ContainerResourceMetricStatus implements Validable<ContainerResourceMetricStatus>, Exportable {
     private String container;
     private MetricValueStatus current;
     private String name;
@@ -110,5 +114,15 @@ public class ContainerResourceMetricStatus implements Validable<ContainerResourc
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (container != null ? "\"container\":\"" +  JsonStrings.escapeJson(container) + "\"" : ""),
+                    (current != null ? "\"current\":" + current.asJson() : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

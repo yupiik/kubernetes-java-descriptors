@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_22_12.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_22_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodStatus implements Validable<PodStatus> {
+public class PodStatus implements Validable<PodStatus>, Exportable {
     private List<PodCondition> conditions;
     private List<ContainerStatus> containerStatuses;
     private List<ContainerStatus> ephemeralContainerStatuses;
@@ -252,5 +256,25 @@ public class PodStatus implements Validable<PodStatus> {
     @Override
     public PodStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (containerStatuses != null ? "\"containerStatuses\":" + containerStatuses.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (ephemeralContainerStatuses != null ? "\"ephemeralContainerStatuses\":" + ephemeralContainerStatuses.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (hostIP != null ? "\"hostIP\":\"" +  JsonStrings.escapeJson(hostIP) + "\"" : ""),
+                    (initContainerStatuses != null ? "\"initContainerStatuses\":" + initContainerStatuses.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (message != null ? "\"message\":\"" +  JsonStrings.escapeJson(message) + "\"" : ""),
+                    (nominatedNodeName != null ? "\"nominatedNodeName\":\"" +  JsonStrings.escapeJson(nominatedNodeName) + "\"" : ""),
+                    (phase != null ? "\"phase\":\"" +  JsonStrings.escapeJson(phase) + "\"" : ""),
+                    (podIP != null ? "\"podIP\":\"" +  JsonStrings.escapeJson(podIP) + "\"" : ""),
+                    (podIPs != null ? "\"podIPs\":" + podIPs.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (qosClass != null ? "\"qosClass\":\"" +  JsonStrings.escapeJson(qosClass) + "\"" : ""),
+                    (reason != null ? "\"reason\":\"" +  JsonStrings.escapeJson(reason) + "\"" : ""),
+                    (startTime != null ? "\"startTime\":\"" +  JsonStrings.escapeJson(startTime) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

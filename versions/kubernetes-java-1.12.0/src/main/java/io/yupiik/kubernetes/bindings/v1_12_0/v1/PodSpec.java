@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_12_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_12_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_12_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_12_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_12_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodSpec implements Validable<PodSpec> {
+public class PodSpec implements Validable<PodSpec>, Exportable {
     private Integer activeDeadlineSeconds;
     private Affinity affinity;
     private Boolean automountServiceAccountToken;
@@ -537,5 +541,43 @@ public class PodSpec implements Validable<PodSpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (activeDeadlineSeconds != null ? "\"activeDeadlineSeconds\":" + activeDeadlineSeconds : ""),
+                    (affinity != null ? "\"affinity\":" + affinity.asJson() : ""),
+                    (automountServiceAccountToken != null ? "\"automountServiceAccountToken\":" + automountServiceAccountToken : ""),
+                    (containers != null ? "\"containers\":" + containers.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (dnsConfig != null ? "\"dnsConfig\":" + dnsConfig.asJson() : ""),
+                    (dnsPolicy != null ? "\"dnsPolicy\":\"" +  JsonStrings.escapeJson(dnsPolicy) + "\"" : ""),
+                    (hostAliases != null ? "\"hostAliases\":" + hostAliases.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (hostIPC != null ? "\"hostIPC\":" + hostIPC : ""),
+                    (hostNetwork != null ? "\"hostNetwork\":" + hostNetwork : ""),
+                    (hostPID != null ? "\"hostPID\":" + hostPID : ""),
+                    (hostname != null ? "\"hostname\":\"" +  JsonStrings.escapeJson(hostname) + "\"" : ""),
+                    (imagePullSecrets != null ? "\"imagePullSecrets\":" + imagePullSecrets.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (initContainers != null ? "\"initContainers\":" + initContainers.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (nodeName != null ? "\"nodeName\":\"" +  JsonStrings.escapeJson(nodeName) + "\"" : ""),
+                    (nodeSelector != null ? "\"nodeSelector\":" + nodeSelector.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""),
+                    (priority != null ? "\"priority\":" + priority : ""),
+                    (priorityClassName != null ? "\"priorityClassName\":\"" +  JsonStrings.escapeJson(priorityClassName) + "\"" : ""),
+                    (readinessGates != null ? "\"readinessGates\":" + readinessGates.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (restartPolicy != null ? "\"restartPolicy\":\"" +  JsonStrings.escapeJson(restartPolicy) + "\"" : ""),
+                    (runtimeClassName != null ? "\"runtimeClassName\":\"" +  JsonStrings.escapeJson(runtimeClassName) + "\"" : ""),
+                    (schedulerName != null ? "\"schedulerName\":\"" +  JsonStrings.escapeJson(schedulerName) + "\"" : ""),
+                    (securityContext != null ? "\"securityContext\":" + securityContext.asJson() : ""),
+                    (serviceAccount != null ? "\"serviceAccount\":\"" +  JsonStrings.escapeJson(serviceAccount) + "\"" : ""),
+                    (serviceAccountName != null ? "\"serviceAccountName\":\"" +  JsonStrings.escapeJson(serviceAccountName) + "\"" : ""),
+                    (shareProcessNamespace != null ? "\"shareProcessNamespace\":" + shareProcessNamespace : ""),
+                    (subdomain != null ? "\"subdomain\":\"" +  JsonStrings.escapeJson(subdomain) + "\"" : ""),
+                    (terminationGracePeriodSeconds != null ? "\"terminationGracePeriodSeconds\":" + terminationGracePeriodSeconds : ""),
+                    (tolerations != null ? "\"tolerations\":" + tolerations.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (volumes != null ? "\"volumes\":" + volumes.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

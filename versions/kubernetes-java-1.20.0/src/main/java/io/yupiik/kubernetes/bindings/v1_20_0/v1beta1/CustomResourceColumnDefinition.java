@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_20_0.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_20_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_20_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CustomResourceColumnDefinition implements Validable<CustomResourceColumnDefinition> {
+public class CustomResourceColumnDefinition implements Validable<CustomResourceColumnDefinition>, Exportable {
     private String JSONPath;
     private String description;
     private String format;
@@ -161,5 +165,18 @@ public class CustomResourceColumnDefinition implements Validable<CustomResourceC
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (JSONPath != null ? "\"JSONPath\":\"" +  JsonStrings.escapeJson(JSONPath) + "\"" : ""),
+                    (description != null ? "\"description\":\"" +  JsonStrings.escapeJson(description) + "\"" : ""),
+                    (format != null ? "\"format\":\"" +  JsonStrings.escapeJson(format) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (priority != null ? "\"priority\":" + priority : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

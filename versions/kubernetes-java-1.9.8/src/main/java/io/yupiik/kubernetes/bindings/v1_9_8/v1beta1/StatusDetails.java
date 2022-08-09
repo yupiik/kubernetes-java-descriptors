@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_9_8.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_9_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_9_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_9_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_9_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class StatusDetails implements Validable<StatusDetails> {
+public class StatusDetails implements Validable<StatusDetails>, Exportable {
     private List<StatusCause> causes;
     private String group;
     private String kind;
@@ -133,5 +137,18 @@ public class StatusDetails implements Validable<StatusDetails> {
     @Override
     public StatusDetails validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (causes != null ? "\"causes\":" + causes.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (group != null ? "\"group\":\"" +  JsonStrings.escapeJson(group) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (retryAfterSeconds != null ? "\"retryAfterSeconds\":" + retryAfterSeconds : ""),
+                    (uid != null ? "\"uid\":\"" +  JsonStrings.escapeJson(uid) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

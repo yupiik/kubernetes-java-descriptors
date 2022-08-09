@@ -1,5 +1,6 @@
 package io.yupiik.kubernetes.bindings.v1_23_3.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_3.ValidationException;
 import jakarta.json.JsonObject;
@@ -7,8 +8,10 @@ import jakarta.json.bind.annotation.JsonbProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class LimitRangeItem implements Validable<LimitRangeItem> {
+public class LimitRangeItem implements Validable<LimitRangeItem>, Exportable {
     private JsonObject defaultRequest;
     @JsonbProperty("default")
     private JsonObject defaultValue;
@@ -148,5 +151,18 @@ public class LimitRangeItem implements Validable<LimitRangeItem> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (defaultRequest != null ? "\"defaultRequest\":" + defaultRequest : ""),
+                    (defaultValue != null ? "\"default\":" + defaultValue : ""),
+                    (max != null ? "\"max\":" + max : ""),
+                    (maxLimitRequestRatio != null ? "\"maxLimitRequestRatio\":" + maxLimitRequestRatio : ""),
+                    (min != null ? "\"min\":" + min : ""),
+                    (type != null ? "\"type\":" + type.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

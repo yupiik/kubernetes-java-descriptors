@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_19_1.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_19_1.Exportable;
 import io.yupiik.kubernetes.bindings.v1_19_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class QueuingConfiguration implements Validable<QueuingConfiguration> {
+public class QueuingConfiguration implements Validable<QueuingConfiguration>, Exportable {
     private Integer handSize;
     private Integer queueLengthLimit;
     private Integer queues;
@@ -82,5 +85,15 @@ public class QueuingConfiguration implements Validable<QueuingConfiguration> {
     @Override
     public QueuingConfiguration validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (handSize != null ? "\"handSize\":" + handSize : ""),
+                    (queueLengthLimit != null ? "\"queueLengthLimit\":" + queueLengthLimit : ""),
+                    (queues != null ? "\"queues\":" + queues : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

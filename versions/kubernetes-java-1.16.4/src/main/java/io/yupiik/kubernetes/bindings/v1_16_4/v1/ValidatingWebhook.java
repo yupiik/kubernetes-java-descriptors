@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_4.v1;
 
+import io.yupiik.kubernetes.bindings.v1_16_4.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ValidatingWebhook implements Validable<ValidatingWebhook> {
+public class ValidatingWebhook implements Validable<ValidatingWebhook>, Exportable {
     private List<String> admissionReviewVersions;
     private WebhookClientConfig clientConfig;
     private String failurePolicy;
@@ -237,5 +241,22 @@ public class ValidatingWebhook implements Validable<ValidatingWebhook> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (admissionReviewVersions != null ? "\"admissionReviewVersions\":" + admissionReviewVersions.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (clientConfig != null ? "\"clientConfig\":" + clientConfig.asJson() : ""),
+                    (failurePolicy != null ? "\"failurePolicy\":\"" +  JsonStrings.escapeJson(failurePolicy) + "\"" : ""),
+                    (matchPolicy != null ? "\"matchPolicy\":\"" +  JsonStrings.escapeJson(matchPolicy) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (namespaceSelector != null ? "\"namespaceSelector\":" + namespaceSelector.asJson() : ""),
+                    (objectSelector != null ? "\"objectSelector\":" + objectSelector.asJson() : ""),
+                    (rules != null ? "\"rules\":" + rules.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (sideEffects != null ? "\"sideEffects\":\"" +  JsonStrings.escapeJson(sideEffects) + "\"" : ""),
+                    (timeoutSeconds != null ? "\"timeoutSeconds\":" + timeoutSeconds : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

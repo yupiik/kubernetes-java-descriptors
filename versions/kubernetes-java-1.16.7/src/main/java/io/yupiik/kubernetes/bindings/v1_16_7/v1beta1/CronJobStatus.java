@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_7.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_16_7.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_7.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_7.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_7.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CronJobStatus implements Validable<CronJobStatus> {
+public class CronJobStatus implements Validable<CronJobStatus>, Exportable {
     private List<ObjectReference> active;
     private String lastScheduleTime;
 
@@ -65,5 +69,14 @@ public class CronJobStatus implements Validable<CronJobStatus> {
     @Override
     public CronJobStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (active != null ? "\"active\":" + active.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (lastScheduleTime != null ? "\"lastScheduleTime\":\"" +  JsonStrings.escapeJson(lastScheduleTime) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

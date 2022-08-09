@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_1.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_18_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class IngressClass implements Validable<IngressClass> {
+public class IngressClass implements Validable<IngressClass>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -98,6 +102,23 @@ public class IngressClass implements Validable<IngressClass> {
 
     @Override
     public IngressClass validate() {
+        if (kind == null) {
+            kind = "IngressClass";
+        }
+        if (apiVersion == null) {
+            apiVersion = "networking.k8s.io/v1beta1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

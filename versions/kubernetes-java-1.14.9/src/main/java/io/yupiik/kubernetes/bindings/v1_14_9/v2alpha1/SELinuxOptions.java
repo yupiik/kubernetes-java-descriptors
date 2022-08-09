@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_14_9.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_14_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_14_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_14_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_14_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class SELinuxOptions implements Validable<SELinuxOptions> {
+public class SELinuxOptions implements Validable<SELinuxOptions>, Exportable {
     private String level;
     private String role;
     private String type;
@@ -99,5 +103,16 @@ public class SELinuxOptions implements Validable<SELinuxOptions> {
     @Override
     public SELinuxOptions validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (level != null ? "\"level\":\"" +  JsonStrings.escapeJson(level) + "\"" : ""),
+                    (role != null ? "\"role\":\"" +  JsonStrings.escapeJson(role) + "\"" : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""),
+                    (user != null ? "\"user\":\"" +  JsonStrings.escapeJson(user) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

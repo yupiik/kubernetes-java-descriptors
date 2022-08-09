@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_16_10.v1;
 
+import io.yupiik.kubernetes.bindings.v1_16_10.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_10.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CSIPersistentVolumeSource implements Validable<CSIPersistentVolumeSource> {
+public class CSIPersistentVolumeSource implements Validable<CSIPersistentVolumeSource>, Exportable {
     private SecretReference controllerExpandSecretRef;
     private SecretReference controllerPublishSecretRef;
     private String driver;
@@ -205,5 +209,23 @@ public class CSIPersistentVolumeSource implements Validable<CSIPersistentVolumeS
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (controllerExpandSecretRef != null ? "\"controllerExpandSecretRef\":" + controllerExpandSecretRef.asJson() : ""),
+                    (controllerPublishSecretRef != null ? "\"controllerPublishSecretRef\":" + controllerPublishSecretRef.asJson() : ""),
+                    (driver != null ? "\"driver\":\"" +  JsonStrings.escapeJson(driver) + "\"" : ""),
+                    (fsType != null ? "\"fsType\":\"" +  JsonStrings.escapeJson(fsType) + "\"" : ""),
+                    (nodePublishSecretRef != null ? "\"nodePublishSecretRef\":" + nodePublishSecretRef.asJson() : ""),
+                    (nodeStageSecretRef != null ? "\"nodeStageSecretRef\":" + nodeStageSecretRef.asJson() : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (volumeAttributes != null ? "\"volumeAttributes\":" + volumeAttributes.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""),
+                    (volumeHandle != null ? "\"volumeHandle\":\"" +  JsonStrings.escapeJson(volumeHandle) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

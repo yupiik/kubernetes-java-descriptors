@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NodeConfigStatus implements Validable<NodeConfigStatus> {
+public class NodeConfigStatus implements Validable<NodeConfigStatus>, Exportable {
     private NodeConfigSource active;
     private NodeConfigSource assigned;
     private String error;
@@ -99,5 +103,16 @@ public class NodeConfigStatus implements Validable<NodeConfigStatus> {
     @Override
     public NodeConfigStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (active != null ? "\"active\":" + active.asJson() : ""),
+                    (assigned != null ? "\"assigned\":" + assigned.asJson() : ""),
+                    (error != null ? "\"error\":\"" +  JsonStrings.escapeJson(error) + "\"" : ""),
+                    (lastKnownGood != null ? "\"lastKnownGood\":" + lastKnownGood.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

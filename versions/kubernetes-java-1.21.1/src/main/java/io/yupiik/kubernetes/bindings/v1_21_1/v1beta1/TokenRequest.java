@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_1.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_21_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_21_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class TokenRequest implements Validable<TokenRequest> {
+public class TokenRequest implements Validable<TokenRequest>, Exportable {
     private String audience;
     private Integer expirationSeconds;
 
@@ -77,5 +81,14 @@ public class TokenRequest implements Validable<TokenRequest> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (audience != null ? "\"audience\":\"" +  JsonStrings.escapeJson(audience) + "\"" : ""),
+                    (expirationSeconds != null ? "\"expirationSeconds\":" + expirationSeconds : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

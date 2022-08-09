@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_11.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_11.Exportable;
+import io.yupiik.kubernetes.bindings.v1_21_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_11.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_11.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NodeList implements Validable<NodeList> {
+public class NodeList implements Validable<NodeList>, Exportable {
     private String apiVersion;
     private List<Node> items;
     private String kind;
@@ -98,6 +102,12 @@ public class NodeList implements Validable<NodeList> {
 
     @Override
     public NodeList validate() {
+        if (kind == null) {
+            kind = "NodeList";
+        }
+        if (apiVersion == null) {
+            apiVersion = "v1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (items == null) {
             if (__errors_jsonSchema == null) {
@@ -111,5 +121,16 @@ public class NodeList implements Validable<NodeList> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (items != null ? "\"items\":" + items.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

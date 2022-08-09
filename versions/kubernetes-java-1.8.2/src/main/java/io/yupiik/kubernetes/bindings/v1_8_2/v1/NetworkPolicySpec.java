@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_8_2.v1;
 
+import io.yupiik.kubernetes.bindings.v1_8_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_8_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NetworkPolicySpec implements Validable<NetworkPolicySpec> {
+public class NetworkPolicySpec implements Validable<NetworkPolicySpec>, Exportable {
     private List<NetworkPolicyEgressRule> egress;
     private List<NetworkPolicyIngressRule> ingress;
     private LabelSelector podSelector;
@@ -111,5 +115,16 @@ public class NetworkPolicySpec implements Validable<NetworkPolicySpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (egress != null ? "\"egress\":" + egress.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (ingress != null ? "\"ingress\":" + ingress.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (podSelector != null ? "\"podSelector\":" + podSelector.asJson() : ""),
+                    (policyTypes != null ? "\"policyTypes\":" + policyTypes.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

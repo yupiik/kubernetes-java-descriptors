@@ -1,8 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_23_3.v1;
 
-public enum ScopedResourceSelectorRequirementOperator {
+import io.yupiik.kubernetes.bindings.v1_23_3.Exportable;
+
+public enum ScopedResourceSelectorRequirementOperator implements Exportable {
     In,
     Exists,
     NotIn,
     DoesNotExist
+    ;
+
+    @Override
+    public String asJson() {
+        return "\"" + name() + "\"";
+    }
 }

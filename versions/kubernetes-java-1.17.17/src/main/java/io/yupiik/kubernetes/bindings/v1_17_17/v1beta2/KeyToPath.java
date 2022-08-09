@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_17_17.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_17_17.Exportable;
+import io.yupiik.kubernetes.bindings.v1_17_17.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_17.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_17.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class KeyToPath implements Validable<KeyToPath> {
+public class KeyToPath implements Validable<KeyToPath>, Exportable {
     private String key;
     private Integer mode;
     private String path;
@@ -102,5 +106,15 @@ public class KeyToPath implements Validable<KeyToPath> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (key != null ? "\"key\":\"" +  JsonStrings.escapeJson(key) + "\"" : ""),
+                    (mode != null ? "\"mode\":" + mode : ""),
+                    (path != null ? "\"path\":\"" +  JsonStrings.escapeJson(path) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

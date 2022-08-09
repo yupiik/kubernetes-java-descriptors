@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_9.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_21_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class TokenRequestStatus implements Validable<TokenRequestStatus> {
+public class TokenRequestStatus implements Validable<TokenRequestStatus>, Exportable {
     private String expirationTimestamp;
     private String token;
 
@@ -85,5 +89,14 @@ public class TokenRequestStatus implements Validable<TokenRequestStatus> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (expirationTimestamp != null ? "\"expirationTimestamp\":\"" +  JsonStrings.escapeJson(expirationTimestamp) + "\"" : ""),
+                    (token != null ? "\"token\":\"" +  JsonStrings.escapeJson(token) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

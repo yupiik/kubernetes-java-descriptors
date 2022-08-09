@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_8_4.v1;
 
+import io.yupiik.kubernetes.bindings.v1_8_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_8_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ClientIPConfig implements Validable<ClientIPConfig> {
+public class ClientIPConfig implements Validable<ClientIPConfig>, Exportable {
     private Integer timeoutSeconds;
 
     public ClientIPConfig() {
@@ -48,5 +51,13 @@ public class ClientIPConfig implements Validable<ClientIPConfig> {
     @Override
     public ClientIPConfig validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (timeoutSeconds != null ? "\"timeoutSeconds\":" + timeoutSeconds : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

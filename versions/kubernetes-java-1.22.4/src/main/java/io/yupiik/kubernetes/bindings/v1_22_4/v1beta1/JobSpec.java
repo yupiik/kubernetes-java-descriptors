@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_22_4.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_22_4.Exportable;
+import io.yupiik.kubernetes.bindings.v1_22_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class JobSpec implements Validable<JobSpec> {
+public class JobSpec implements Validable<JobSpec>, Exportable {
     private Integer activeDeadlineSeconds;
     private Integer backoffLimit;
     private String completionMode;
@@ -213,5 +217,22 @@ public class JobSpec implements Validable<JobSpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (activeDeadlineSeconds != null ? "\"activeDeadlineSeconds\":" + activeDeadlineSeconds : ""),
+                    (backoffLimit != null ? "\"backoffLimit\":" + backoffLimit : ""),
+                    (completionMode != null ? "\"completionMode\":\"" +  JsonStrings.escapeJson(completionMode) + "\"" : ""),
+                    (completions != null ? "\"completions\":" + completions : ""),
+                    (manualSelector != null ? "\"manualSelector\":" + manualSelector : ""),
+                    (parallelism != null ? "\"parallelism\":" + parallelism : ""),
+                    (selector != null ? "\"selector\":" + selector.asJson() : ""),
+                    (suspend != null ? "\"suspend\":" + suspend : ""),
+                    (template != null ? "\"template\":" + template.asJson() : ""),
+                    (ttlSecondsAfterFinished != null ? "\"ttlSecondsAfterFinished\":" + ttlSecondsAfterFinished : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

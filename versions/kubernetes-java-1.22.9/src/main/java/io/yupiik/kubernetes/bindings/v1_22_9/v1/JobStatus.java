@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_22_9.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_22_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class JobStatus implements Validable<JobStatus> {
+public class JobStatus implements Validable<JobStatus>, Exportable {
     private Integer active;
     private String completedIndexes;
     private String completionTime;
@@ -167,5 +171,20 @@ public class JobStatus implements Validable<JobStatus> {
     @Override
     public JobStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (active != null ? "\"active\":" + active : ""),
+                    (completedIndexes != null ? "\"completedIndexes\":\"" +  JsonStrings.escapeJson(completedIndexes) + "\"" : ""),
+                    (completionTime != null ? "\"completionTime\":\"" +  JsonStrings.escapeJson(completionTime) + "\"" : ""),
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (failed != null ? "\"failed\":" + failed : ""),
+                    (startTime != null ? "\"startTime\":\"" +  JsonStrings.escapeJson(startTime) + "\"" : ""),
+                    (succeeded != null ? "\"succeeded\":" + succeeded : ""),
+                    (uncountedTerminatedPods != null ? "\"uncountedTerminatedPods\":" + uncountedTerminatedPods.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

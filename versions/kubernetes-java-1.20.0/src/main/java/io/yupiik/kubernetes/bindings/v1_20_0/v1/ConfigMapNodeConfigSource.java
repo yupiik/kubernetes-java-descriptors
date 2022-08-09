@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_20_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_20_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_20_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ConfigMapNodeConfigSource implements Validable<ConfigMapNodeConfigSource> {
+public class ConfigMapNodeConfigSource implements Validable<ConfigMapNodeConfigSource>, Exportable {
     private String kubeletConfigKey;
     private String name;
     private String namespace;
@@ -144,5 +148,17 @@ public class ConfigMapNodeConfigSource implements Validable<ConfigMapNodeConfigS
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (kubeletConfigKey != null ? "\"kubeletConfigKey\":\"" +  JsonStrings.escapeJson(kubeletConfigKey) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (namespace != null ? "\"namespace\":\"" +  JsonStrings.escapeJson(namespace) + "\"" : ""),
+                    (resourceVersion != null ? "\"resourceVersion\":\"" +  JsonStrings.escapeJson(resourceVersion) + "\"" : ""),
+                    (uid != null ? "\"uid\":\"" +  JsonStrings.escapeJson(uid) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_16_7.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_16_7.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_7.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_7.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class IDRange implements Validable<IDRange> {
+public class IDRange implements Validable<IDRange>, Exportable {
     private int max;
     private int min;
 
@@ -65,5 +68,14 @@ public class IDRange implements Validable<IDRange> {
     @Override
     public IDRange validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    "\"max\":" + max,
+                    "\"min\":" + min)
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

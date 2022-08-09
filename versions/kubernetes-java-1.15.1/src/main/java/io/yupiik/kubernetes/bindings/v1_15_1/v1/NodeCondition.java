@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_15_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_15_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_15_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NodeCondition implements Validable<NodeCondition> {
+public class NodeCondition implements Validable<NodeCondition>, Exportable {
     private String lastHeartbeatTime;
     private String lastTransitionTime;
     private String message;
@@ -153,5 +157,18 @@ public class NodeCondition implements Validable<NodeCondition> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (lastHeartbeatTime != null ? "\"lastHeartbeatTime\":\"" +  JsonStrings.escapeJson(lastHeartbeatTime) + "\"" : ""),
+                    (lastTransitionTime != null ? "\"lastTransitionTime\":\"" +  JsonStrings.escapeJson(lastTransitionTime) + "\"" : ""),
+                    (message != null ? "\"message\":\"" +  JsonStrings.escapeJson(message) + "\"" : ""),
+                    (reason != null ? "\"reason\":\"" +  JsonStrings.escapeJson(reason) + "\"" : ""),
+                    (status != null ? "\"status\":\"" +  JsonStrings.escapeJson(status) + "\"" : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_8_3.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_8_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_8_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Rule implements Validable<Rule> {
+public class Rule implements Validable<Rule>, Exportable {
     private List<String> apiGroups;
     private List<String> apiVersions;
     private List<String> resources;
@@ -82,5 +86,15 @@ public class Rule implements Validable<Rule> {
     @Override
     public Rule validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiGroups != null ? "\"apiGroups\":" + apiGroups.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (apiVersions != null ? "\"apiVersions\":" + apiVersions.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (resources != null ? "\"resources\":" + resources.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

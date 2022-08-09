@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_23_0.v2beta1;
 
+import io.yupiik.kubernetes.bindings.v1_23_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_23_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ContainerResourceMetricStatus implements Validable<ContainerResourceMetricStatus> {
+public class ContainerResourceMetricStatus implements Validable<ContainerResourceMetricStatus>, Exportable {
     private String container;
     private Integer currentAverageUtilization;
     private String currentAverageValue;
@@ -127,5 +131,16 @@ public class ContainerResourceMetricStatus implements Validable<ContainerResourc
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (container != null ? "\"container\":\"" +  JsonStrings.escapeJson(container) + "\"" : ""),
+                    (currentAverageUtilization != null ? "\"currentAverageUtilization\":" + currentAverageUtilization : ""),
+                    (currentAverageValue != null ? "\"currentAverageValue\":\"" +  JsonStrings.escapeJson(currentAverageValue) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_18_12.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_12.ValidationException;
 import jakarta.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ControllerRevision implements Validable<ControllerRevision> {
+public class ControllerRevision implements Validable<ControllerRevision>, Exportable {
     private String apiVersion;
     private JsonObject data;
     private String kind;
@@ -116,6 +120,24 @@ public class ControllerRevision implements Validable<ControllerRevision> {
 
     @Override
     public ControllerRevision validate() {
+        if (kind == null) {
+            kind = "ControllerRevision";
+        }
+        if (apiVersion == null) {
+            apiVersion = "apps/v1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (data != null ? "\"data\":" + data : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    "\"revision\":" + revision)
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

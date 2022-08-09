@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_12_5.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_12_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_12_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_12_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_12_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class StatefulSet implements Validable<StatefulSet> {
+public class StatefulSet implements Validable<StatefulSet>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -115,6 +119,24 @@ public class StatefulSet implements Validable<StatefulSet> {
 
     @Override
     public StatefulSet validate() {
+        if (kind == null) {
+            kind = "StatefulSet";
+        }
+        if (apiVersion == null) {
+            apiVersion = "apps/v1beta2";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""),
+                    (status != null ? "\"status\":" + status.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

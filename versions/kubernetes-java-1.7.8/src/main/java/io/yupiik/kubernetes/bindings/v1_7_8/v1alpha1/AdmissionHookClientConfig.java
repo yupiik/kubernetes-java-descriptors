@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_7_8.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_7_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_7_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class AdmissionHookClientConfig implements Validable<AdmissionHookClientConfig> {
+public class AdmissionHookClientConfig implements Validable<AdmissionHookClientConfig>, Exportable {
     private String caBundle;
     private ServiceReference service;
 
@@ -85,5 +89,14 @@ public class AdmissionHookClientConfig implements Validable<AdmissionHookClientC
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (caBundle != null ? "\"caBundle\":\"" +  JsonStrings.escapeJson(caBundle) + "\"" : ""),
+                    (service != null ? "\"service\":" + service.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

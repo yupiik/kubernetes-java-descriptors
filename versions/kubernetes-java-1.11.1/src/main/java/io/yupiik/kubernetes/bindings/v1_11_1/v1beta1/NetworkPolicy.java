@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_11_1.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_11_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_11_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_11_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_11_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NetworkPolicy implements Validable<NetworkPolicy> {
+public class NetworkPolicy implements Validable<NetworkPolicy>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -98,6 +102,23 @@ public class NetworkPolicy implements Validable<NetworkPolicy> {
 
     @Override
     public NetworkPolicy validate() {
+        if (kind == null) {
+            kind = "NetworkPolicy";
+        }
+        if (apiVersion == null) {
+            apiVersion = "extensions/v1beta1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

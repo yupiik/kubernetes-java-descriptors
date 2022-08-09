@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_13_7.v1;
 
+import io.yupiik.kubernetes.bindings.v1_13_7.Exportable;
+import io.yupiik.kubernetes.bindings.v1_13_7.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_7.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_7.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ScopedResourceSelectorRequirement implements Validable<ScopedResourceSelectorRequirement> {
+public class ScopedResourceSelectorRequirement implements Validable<ScopedResourceSelectorRequirement>, Exportable {
     private String operator;
     private String scopeName;
     private List<String> values;
@@ -102,5 +106,15 @@ public class ScopedResourceSelectorRequirement implements Validable<ScopedResour
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (operator != null ? "\"operator\":\"" +  JsonStrings.escapeJson(operator) + "\"" : ""),
+                    (scopeName != null ? "\"scopeName\":\"" +  JsonStrings.escapeJson(scopeName) + "\"" : ""),
+                    (values != null ? "\"values\":" + values.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

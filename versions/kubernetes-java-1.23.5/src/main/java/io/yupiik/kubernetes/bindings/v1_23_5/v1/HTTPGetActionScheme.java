@@ -1,6 +1,14 @@
 package io.yupiik.kubernetes.bindings.v1_23_5.v1;
 
-public enum HTTPGetActionScheme {
+import io.yupiik.kubernetes.bindings.v1_23_5.Exportable;
+
+public enum HTTPGetActionScheme implements Exportable {
     HTTPS,
     HTTP
+    ;
+
+    @Override
+    public String asJson() {
+        return "\"" + name() + "\"";
+    }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_15.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_19_15.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_15.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_15.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_15.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class IngressSpec implements Validable<IngressSpec> {
+public class IngressSpec implements Validable<IngressSpec>, Exportable {
     private IngressBackend backend;
     private String ingressClassName;
     private List<IngressRule> rules;
@@ -99,5 +103,16 @@ public class IngressSpec implements Validable<IngressSpec> {
     @Override
     public IngressSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (backend != null ? "\"backend\":" + backend.asJson() : ""),
+                    (ingressClassName != null ? "\"ingressClassName\":\"" +  JsonStrings.escapeJson(ingressClassName) + "\"" : ""),
+                    (rules != null ? "\"rules\":" + rules.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (tls != null ? "\"tls\":" + tls.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

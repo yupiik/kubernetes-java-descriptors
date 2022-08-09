@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_22_4.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_4.Exportable;
+import io.yupiik.kubernetes.bindings.v1_22_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ServiceReference implements Validable<ServiceReference> {
+public class ServiceReference implements Validable<ServiceReference>, Exportable {
     private String name;
     private String namespace;
     private Integer port;
@@ -82,5 +86,15 @@ public class ServiceReference implements Validable<ServiceReference> {
     @Override
     public ServiceReference validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (namespace != null ? "\"namespace\":\"" +  JsonStrings.escapeJson(namespace) + "\"" : ""),
+                    (port != null ? "\"port\":" + port : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

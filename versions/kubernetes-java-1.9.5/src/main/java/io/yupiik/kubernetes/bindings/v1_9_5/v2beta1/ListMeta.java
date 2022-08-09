@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_9_5.v2beta1;
 
+import io.yupiik.kubernetes.bindings.v1_9_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_9_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_9_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_9_5.ValidationException;
 import jakarta.json.bind.annotation.JsonbProperty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ListMeta implements Validable<ListMeta> {
+public class ListMeta implements Validable<ListMeta>, Exportable {
     @JsonbProperty("continue")
     private String continueValue;
     private String resourceVersion;
@@ -84,5 +88,15 @@ public class ListMeta implements Validable<ListMeta> {
     @Override
     public ListMeta validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (continueValue != null ? "\"continue\":\"" +  JsonStrings.escapeJson(continueValue) + "\"" : ""),
+                    (resourceVersion != null ? "\"resourceVersion\":\"" +  JsonStrings.escapeJson(resourceVersion) + "\"" : ""),
+                    (selfLink != null ? "\"selfLink\":\"" +  JsonStrings.escapeJson(selfLink) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

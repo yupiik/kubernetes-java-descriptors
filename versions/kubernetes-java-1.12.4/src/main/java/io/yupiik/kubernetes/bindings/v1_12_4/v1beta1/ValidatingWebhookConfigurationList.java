@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_12_4.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_12_4.Exportable;
+import io.yupiik.kubernetes.bindings.v1_12_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_12_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_12_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ValidatingWebhookConfigurationList implements Validable<ValidatingWebhookConfigurationList> {
+public class ValidatingWebhookConfigurationList implements Validable<ValidatingWebhookConfigurationList>, Exportable {
     private String apiVersion;
     private List<ValidatingWebhookConfiguration> items;
     private String kind;
@@ -98,6 +102,12 @@ public class ValidatingWebhookConfigurationList implements Validable<ValidatingW
 
     @Override
     public ValidatingWebhookConfigurationList validate() {
+        if (kind == null) {
+            kind = "ValidatingWebhookConfigurationList";
+        }
+        if (apiVersion == null) {
+            apiVersion = "admissionregistration.k8s.io/v1beta1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (items == null) {
             if (__errors_jsonSchema == null) {
@@ -111,5 +121,16 @@ public class ValidatingWebhookConfigurationList implements Validable<ValidatingW
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (items != null ? "\"items\":" + items.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

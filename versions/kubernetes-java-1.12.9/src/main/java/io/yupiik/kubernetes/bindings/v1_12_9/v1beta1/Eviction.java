@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_12_9.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_12_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_12_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_12_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_12_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Eviction implements Validable<Eviction> {
+public class Eviction implements Validable<Eviction>, Exportable {
     private String apiVersion;
     private DeleteOptions deleteOptions;
     private String kind;
@@ -98,6 +102,23 @@ public class Eviction implements Validable<Eviction> {
 
     @Override
     public Eviction validate() {
+        if (kind == null) {
+            kind = "Eviction";
+        }
+        if (apiVersion == null) {
+            apiVersion = "policy/v1beta1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (deleteOptions != null ? "\"deleteOptions\":" + deleteOptions.asJson() : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

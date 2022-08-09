@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_1.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_18_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class EventSource implements Validable<EventSource> {
+public class EventSource implements Validable<EventSource>, Exportable {
     private String component;
     private String host;
 
@@ -65,5 +69,14 @@ public class EventSource implements Validable<EventSource> {
     @Override
     public EventSource validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (component != null ? "\"component\":\"" +  JsonStrings.escapeJson(component) + "\"" : ""),
+                    (host != null ? "\"host\":\"" +  JsonStrings.escapeJson(host) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

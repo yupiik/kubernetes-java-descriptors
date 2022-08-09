@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_24_2.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_24_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_24_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_24_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_24_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ObjectMeta implements Validable<ObjectMeta> {
+public class ObjectMeta implements Validable<ObjectMeta>, Exportable {
     private Map<String, String> annotations;
     private String clusterName;
     private String creationTimestamp;
@@ -304,5 +308,32 @@ public class ObjectMeta implements Validable<ObjectMeta> {
     @Override
     public ObjectMeta validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (annotations != null ? "\"annotations\":" + annotations.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""),
+                    (clusterName != null ? "\"clusterName\":\"" +  JsonStrings.escapeJson(clusterName) + "\"" : ""),
+                    (creationTimestamp != null ? "\"creationTimestamp\":\"" +  JsonStrings.escapeJson(creationTimestamp) + "\"" : ""),
+                    (deletionGracePeriodSeconds != null ? "\"deletionGracePeriodSeconds\":" + deletionGracePeriodSeconds : ""),
+                    (deletionTimestamp != null ? "\"deletionTimestamp\":\"" +  JsonStrings.escapeJson(deletionTimestamp) + "\"" : ""),
+                    (finalizers != null ? "\"finalizers\":" + finalizers.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (generateName != null ? "\"generateName\":\"" +  JsonStrings.escapeJson(generateName) + "\"" : ""),
+                    (generation != null ? "\"generation\":" + generation : ""),
+                    (labels != null ? "\"labels\":" + labels.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""),
+                    (managedFields != null ? "\"managedFields\":" + managedFields.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (namespace != null ? "\"namespace\":\"" +  JsonStrings.escapeJson(namespace) + "\"" : ""),
+                    (ownerReferences != null ? "\"ownerReferences\":" + ownerReferences.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (resourceVersion != null ? "\"resourceVersion\":\"" +  JsonStrings.escapeJson(resourceVersion) + "\"" : ""),
+                    (selfLink != null ? "\"selfLink\":\"" +  JsonStrings.escapeJson(selfLink) + "\"" : ""),
+                    (uid != null ? "\"uid\":\"" +  JsonStrings.escapeJson(uid) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

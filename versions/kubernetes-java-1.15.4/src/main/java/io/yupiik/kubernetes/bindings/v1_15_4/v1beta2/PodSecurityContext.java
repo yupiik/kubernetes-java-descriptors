@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_15_4.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_15_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_15_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodSecurityContext implements Validable<PodSecurityContext> {
+public class PodSecurityContext implements Validable<PodSecurityContext>, Exportable {
     private Integer fsGroup;
     private Integer runAsGroup;
     private Boolean runAsNonRoot;
@@ -167,5 +170,20 @@ public class PodSecurityContext implements Validable<PodSecurityContext> {
     @Override
     public PodSecurityContext validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (fsGroup != null ? "\"fsGroup\":" + fsGroup : ""),
+                    (runAsGroup != null ? "\"runAsGroup\":" + runAsGroup : ""),
+                    (runAsNonRoot != null ? "\"runAsNonRoot\":" + runAsNonRoot : ""),
+                    (runAsUser != null ? "\"runAsUser\":" + runAsUser : ""),
+                    (seLinuxOptions != null ? "\"seLinuxOptions\":" + seLinuxOptions.asJson() : ""),
+                    (supplementalGroups != null ? "\"supplementalGroups\":" + supplementalGroups.stream().map(__it -> __it == null ? "null" : String.valueOf(__it)).collect(joining(",", "[", "]")) : ""),
+                    (sysctls != null ? "\"sysctls\":" + sysctls.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (windowsOptions != null ? "\"windowsOptions\":" + windowsOptions.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_18_3.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_18_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class APIServiceStatus implements Validable<APIServiceStatus> {
+public class APIServiceStatus implements Validable<APIServiceStatus>, Exportable {
     private List<APIServiceCondition> conditions;
 
     public APIServiceStatus() {
@@ -48,5 +51,13 @@ public class APIServiceStatus implements Validable<APIServiceStatus> {
     @Override
     public APIServiceStatus validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

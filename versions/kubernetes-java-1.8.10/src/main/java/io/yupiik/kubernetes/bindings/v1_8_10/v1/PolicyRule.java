@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_8_10.v1;
 
+import io.yupiik.kubernetes.bindings.v1_8_10.Exportable;
+import io.yupiik.kubernetes.bindings.v1_8_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_10.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PolicyRule implements Validable<PolicyRule> {
+public class PolicyRule implements Validable<PolicyRule>, Exportable {
     private List<String> apiGroups;
     private List<String> nonResourceURLs;
     private List<String> resourceNames;
@@ -128,5 +132,17 @@ public class PolicyRule implements Validable<PolicyRule> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiGroups != null ? "\"apiGroups\":" + apiGroups.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (nonResourceURLs != null ? "\"nonResourceURLs\":" + nonResourceURLs.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (resourceNames != null ? "\"resourceNames\":" + resourceNames.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (resources != null ? "\"resources\":" + resources.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (verbs != null ? "\"verbs\":" + verbs.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

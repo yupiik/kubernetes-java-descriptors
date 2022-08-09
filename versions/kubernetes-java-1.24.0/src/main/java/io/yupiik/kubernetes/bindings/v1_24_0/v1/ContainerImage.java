@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_24_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_24_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_24_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_24_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_24_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ContainerImage implements Validable<ContainerImage> {
+public class ContainerImage implements Validable<ContainerImage>, Exportable {
     private List<String> names;
     private Integer sizeBytes;
 
@@ -65,5 +69,14 @@ public class ContainerImage implements Validable<ContainerImage> {
     @Override
     public ContainerImage validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (names != null ? "\"names\":" + names.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (sizeBytes != null ? "\"sizeBytes\":" + sizeBytes : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

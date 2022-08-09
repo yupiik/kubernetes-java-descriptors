@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_15_5.v2beta2;
 
+import io.yupiik.kubernetes.bindings.v1_15_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_15_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class MetricTarget implements Validable<MetricTarget> {
+public class MetricTarget implements Validable<MetricTarget>, Exportable {
     private Integer averageUtilization;
     private String averageValue;
     private String type;
@@ -111,5 +115,16 @@ public class MetricTarget implements Validable<MetricTarget> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (averageUtilization != null ? "\"averageUtilization\":" + averageUtilization : ""),
+                    (averageValue != null ? "\"averageValue\":\"" +  JsonStrings.escapeJson(averageValue) + "\"" : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""),
+                    (value != null ? "\"value\":\"" +  JsonStrings.escapeJson(value) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_10_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_10_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_10_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_10_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_10_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CephFSVolumeSource implements Validable<CephFSVolumeSource> {
+public class CephFSVolumeSource implements Validable<CephFSVolumeSource>, Exportable {
     private List<String> monitors;
     private String path;
     private Boolean readOnly;
@@ -145,5 +149,18 @@ public class CephFSVolumeSource implements Validable<CephFSVolumeSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (monitors != null ? "\"monitors\":" + monitors.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (path != null ? "\"path\":\"" +  JsonStrings.escapeJson(path) + "\"" : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (secretFile != null ? "\"secretFile\":\"" +  JsonStrings.escapeJson(secretFile) + "\"" : ""),
+                    (secretRef != null ? "\"secretRef\":" + secretRef.asJson() : ""),
+                    (user != null ? "\"user\":\"" +  JsonStrings.escapeJson(user) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

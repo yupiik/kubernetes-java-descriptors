@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_24_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_24_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_24_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_24_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_24_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ContainerStateTerminated implements Validable<ContainerStateTerminated> {
+public class ContainerStateTerminated implements Validable<ContainerStateTerminated>, Exportable {
     private String containerID;
     private int exitCode;
     private String finishedAt;
@@ -150,5 +154,19 @@ public class ContainerStateTerminated implements Validable<ContainerStateTermina
     @Override
     public ContainerStateTerminated validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (containerID != null ? "\"containerID\":\"" +  JsonStrings.escapeJson(containerID) + "\"" : ""),
+                    "\"exitCode\":" + exitCode,
+                    (finishedAt != null ? "\"finishedAt\":\"" +  JsonStrings.escapeJson(finishedAt) + "\"" : ""),
+                    (message != null ? "\"message\":\"" +  JsonStrings.escapeJson(message) + "\"" : ""),
+                    (reason != null ? "\"reason\":\"" +  JsonStrings.escapeJson(reason) + "\"" : ""),
+                    (signal != null ? "\"signal\":" + signal : ""),
+                    (startedAt != null ? "\"startedAt\":\"" +  JsonStrings.escapeJson(startedAt) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

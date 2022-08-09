@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_8_6.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_8_6.Exportable;
+import io.yupiik.kubernetes.bindings.v1_8_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_6.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_6.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class EnvFromSource implements Validable<EnvFromSource> {
+public class EnvFromSource implements Validable<EnvFromSource>, Exportable {
     private ConfigMapEnvSource configMapRef;
     private String prefix;
     private SecretEnvSource secretRef;
@@ -82,5 +86,15 @@ public class EnvFromSource implements Validable<EnvFromSource> {
     @Override
     public EnvFromSource validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (configMapRef != null ? "\"configMapRef\":" + configMapRef.asJson() : ""),
+                    (prefix != null ? "\"prefix\":\"" +  JsonStrings.escapeJson(prefix) + "\"" : ""),
+                    (secretRef != null ? "\"secretRef\":" + secretRef.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

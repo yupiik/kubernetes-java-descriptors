@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_22_11.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_11.Exportable;
+import io.yupiik.kubernetes.bindings.v1_22_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_11.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_11.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Event implements Validable<Event> {
+public class Event implements Validable<Event>, Exportable {
     private String action;
     private String apiVersion;
     private Integer count;
@@ -319,6 +323,12 @@ public class Event implements Validable<Event> {
 
     @Override
     public Event validate() {
+        if (kind == null) {
+            kind = "Event";
+        }
+        if (apiVersion == null) {
+            apiVersion = "v1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (involvedObject == null) {
             if (__errors_jsonSchema == null) {
@@ -340,5 +350,29 @@ public class Event implements Validable<Event> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (action != null ? "\"action\":\"" +  JsonStrings.escapeJson(action) + "\"" : ""),
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (count != null ? "\"count\":" + count : ""),
+                    (eventTime != null ? "\"eventTime\":\"" +  JsonStrings.escapeJson(eventTime) + "\"" : ""),
+                    (firstTimestamp != null ? "\"firstTimestamp\":\"" +  JsonStrings.escapeJson(firstTimestamp) + "\"" : ""),
+                    (involvedObject != null ? "\"involvedObject\":" + involvedObject.asJson() : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (lastTimestamp != null ? "\"lastTimestamp\":\"" +  JsonStrings.escapeJson(lastTimestamp) + "\"" : ""),
+                    (message != null ? "\"message\":\"" +  JsonStrings.escapeJson(message) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (reason != null ? "\"reason\":\"" +  JsonStrings.escapeJson(reason) + "\"" : ""),
+                    (related != null ? "\"related\":" + related.asJson() : ""),
+                    (reportingComponent != null ? "\"reportingComponent\":\"" +  JsonStrings.escapeJson(reportingComponent) + "\"" : ""),
+                    (reportingInstance != null ? "\"reportingInstance\":\"" +  JsonStrings.escapeJson(reportingInstance) + "\"" : ""),
+                    (series != null ? "\"series\":" + series.asJson() : ""),
+                    (source != null ? "\"source\":" + source.asJson() : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

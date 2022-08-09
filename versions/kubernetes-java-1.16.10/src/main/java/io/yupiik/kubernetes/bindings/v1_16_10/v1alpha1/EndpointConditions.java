@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_16_10.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_16_10.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_10.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class EndpointConditions implements Validable<EndpointConditions> {
+public class EndpointConditions implements Validable<EndpointConditions>, Exportable {
     private Boolean ready;
 
     public EndpointConditions() {
@@ -48,5 +51,13 @@ public class EndpointConditions implements Validable<EndpointConditions> {
     @Override
     public EndpointConditions validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (ready != null ? "\"ready\":" + ready : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

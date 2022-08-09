@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_12_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_12_0.Exportable;
 import io.yupiik.kubernetes.bindings.v1_12_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_12_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class EndpointSubset implements Validable<EndpointSubset> {
+public class EndpointSubset implements Validable<EndpointSubset>, Exportable {
     private List<EndpointAddress> addresses;
     private List<EndpointAddress> notReadyAddresses;
     private List<EndpointPort> ports;
@@ -82,5 +85,15 @@ public class EndpointSubset implements Validable<EndpointSubset> {
     @Override
     public EndpointSubset validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (addresses != null ? "\"addresses\":" + addresses.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (notReadyAddresses != null ? "\"notReadyAddresses\":" + notReadyAddresses.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (ports != null ? "\"ports\":" + ports.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

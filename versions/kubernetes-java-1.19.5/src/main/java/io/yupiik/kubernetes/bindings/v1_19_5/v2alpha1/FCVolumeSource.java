@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_5.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_19_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class FCVolumeSource implements Validable<FCVolumeSource> {
+public class FCVolumeSource implements Validable<FCVolumeSource>, Exportable {
     private String fsType;
     private Integer lun;
     private Boolean readOnly;
@@ -116,5 +120,17 @@ public class FCVolumeSource implements Validable<FCVolumeSource> {
     @Override
     public FCVolumeSource validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (fsType != null ? "\"fsType\":\"" +  JsonStrings.escapeJson(fsType) + "\"" : ""),
+                    (lun != null ? "\"lun\":" + lun : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (targetWWNs != null ? "\"targetWWNs\":" + targetWWNs.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (wwids != null ? "\"wwids\":" + wwids.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

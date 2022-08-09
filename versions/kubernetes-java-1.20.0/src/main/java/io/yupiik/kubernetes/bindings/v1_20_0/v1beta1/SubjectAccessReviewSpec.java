@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_20_0.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_20_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_20_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_0.ValidationException;
 import jakarta.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class SubjectAccessReviewSpec implements Validable<SubjectAccessReviewSpec> {
+public class SubjectAccessReviewSpec implements Validable<SubjectAccessReviewSpec>, Exportable {
     private JsonObject extra;
     private List<String> group;
     private NonResourceAttributes nonResourceAttributes;
@@ -134,5 +138,18 @@ public class SubjectAccessReviewSpec implements Validable<SubjectAccessReviewSpe
     @Override
     public SubjectAccessReviewSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (extra != null ? "\"extra\":" + extra : ""),
+                    (group != null ? "\"group\":" + group.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (nonResourceAttributes != null ? "\"nonResourceAttributes\":" + nonResourceAttributes.asJson() : ""),
+                    (resourceAttributes != null ? "\"resourceAttributes\":" + resourceAttributes.asJson() : ""),
+                    (uid != null ? "\"uid\":\"" +  JsonStrings.escapeJson(uid) + "\"" : ""),
+                    (user != null ? "\"user\":\"" +  JsonStrings.escapeJson(user) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_23_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_23_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_23_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ReplicationControllerSpec implements Validable<ReplicationControllerSpec> {
+public class ReplicationControllerSpec implements Validable<ReplicationControllerSpec>, Exportable {
     private Integer minReadySeconds;
     private Integer replicas;
     private Map<String, String> selector;
@@ -100,5 +104,18 @@ public class ReplicationControllerSpec implements Validable<ReplicationControlle
     @Override
     public ReplicationControllerSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (minReadySeconds != null ? "\"minReadySeconds\":" + minReadySeconds : ""),
+                    (replicas != null ? "\"replicas\":" + replicas : ""),
+                    (selector != null ? "\"selector\":" + selector.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""),
+                    (template != null ? "\"template\":" + template.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

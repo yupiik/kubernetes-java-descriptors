@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_3.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_18_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CertificateSigningRequestCondition implements Validable<CertificateSigningRequestCondition> {
+public class CertificateSigningRequestCondition implements Validable<CertificateSigningRequestCondition>, Exportable {
     private String lastUpdateTime;
     private String message;
     private String reason;
@@ -111,5 +115,16 @@ public class CertificateSigningRequestCondition implements Validable<Certificate
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (lastUpdateTime != null ? "\"lastUpdateTime\":\"" +  JsonStrings.escapeJson(lastUpdateTime) + "\"" : ""),
+                    (message != null ? "\"message\":\"" +  JsonStrings.escapeJson(message) + "\"" : ""),
+                    (reason != null ? "\"reason\":\"" +  JsonStrings.escapeJson(reason) + "\"" : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_17_16.v1;
 
+import io.yupiik.kubernetes.bindings.v1_17_16.Exportable;
+import io.yupiik.kubernetes.bindings.v1_17_16.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_16.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_16.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NamespaceSpec implements Validable<NamespaceSpec> {
+public class NamespaceSpec implements Validable<NamespaceSpec>, Exportable {
     private List<String> finalizers;
 
     public NamespaceSpec() {
@@ -48,5 +52,13 @@ public class NamespaceSpec implements Validable<NamespaceSpec> {
     @Override
     public NamespaceSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (finalizers != null ? "\"finalizers\":" + finalizers.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

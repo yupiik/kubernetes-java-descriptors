@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_3.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_16_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class EmptyDirVolumeSource implements Validable<EmptyDirVolumeSource> {
+public class EmptyDirVolumeSource implements Validable<EmptyDirVolumeSource>, Exportable {
     private String medium;
     private String sizeLimit;
 
@@ -65,5 +69,14 @@ public class EmptyDirVolumeSource implements Validable<EmptyDirVolumeSource> {
     @Override
     public EmptyDirVolumeSource validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (medium != null ? "\"medium\":\"" +  JsonStrings.escapeJson(medium) + "\"" : ""),
+                    (sizeLimit != null ? "\"sizeLimit\":\"" +  JsonStrings.escapeJson(sizeLimit) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

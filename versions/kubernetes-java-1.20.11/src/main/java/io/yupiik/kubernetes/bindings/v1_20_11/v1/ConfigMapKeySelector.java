@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_20_11.v1;
 
+import io.yupiik.kubernetes.bindings.v1_20_11.Exportable;
+import io.yupiik.kubernetes.bindings.v1_20_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_11.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_11.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ConfigMapKeySelector implements Validable<ConfigMapKeySelector> {
+public class ConfigMapKeySelector implements Validable<ConfigMapKeySelector>, Exportable {
     private String key;
     private String name;
     private Boolean optional;
@@ -94,5 +98,15 @@ public class ConfigMapKeySelector implements Validable<ConfigMapKeySelector> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (key != null ? "\"key\":\"" +  JsonStrings.escapeJson(key) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (optional != null ? "\"optional\":" + optional : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_11_9.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_11_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_11_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_11_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_11_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Sysctl implements Validable<Sysctl> {
+public class Sysctl implements Validable<Sysctl>, Exportable {
     private String name;
     private String value;
 
@@ -85,5 +89,14 @@ public class Sysctl implements Validable<Sysctl> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (value != null ? "\"value\":\"" +  JsonStrings.escapeJson(value) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_17_9.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_17_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_17_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_17_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ResourceAttributes implements Validable<ResourceAttributes> {
+public class ResourceAttributes implements Validable<ResourceAttributes>, Exportable {
     private String group;
     private String name;
     private String namespace;
@@ -150,5 +154,19 @@ public class ResourceAttributes implements Validable<ResourceAttributes> {
     @Override
     public ResourceAttributes validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (group != null ? "\"group\":\"" +  JsonStrings.escapeJson(group) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (namespace != null ? "\"namespace\":\"" +  JsonStrings.escapeJson(namespace) + "\"" : ""),
+                    (resource != null ? "\"resource\":\"" +  JsonStrings.escapeJson(resource) + "\"" : ""),
+                    (subresource != null ? "\"subresource\":\"" +  JsonStrings.escapeJson(subresource) + "\"" : ""),
+                    (verb != null ? "\"verb\":\"" +  JsonStrings.escapeJson(verb) + "\"" : ""),
+                    (version != null ? "\"version\":\"" +  JsonStrings.escapeJson(version) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

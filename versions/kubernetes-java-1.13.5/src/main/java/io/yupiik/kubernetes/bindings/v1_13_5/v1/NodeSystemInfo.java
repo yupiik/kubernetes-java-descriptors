@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_13_5.v1;
 
+import io.yupiik.kubernetes.bindings.v1_13_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_13_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NodeSystemInfo implements Validable<NodeSystemInfo> {
+public class NodeSystemInfo implements Validable<NodeSystemInfo>, Exportable {
     private String architecture;
     private String bootID;
     private String containerRuntimeVersion;
@@ -285,5 +289,22 @@ public class NodeSystemInfo implements Validable<NodeSystemInfo> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (architecture != null ? "\"architecture\":\"" +  JsonStrings.escapeJson(architecture) + "\"" : ""),
+                    (bootID != null ? "\"bootID\":\"" +  JsonStrings.escapeJson(bootID) + "\"" : ""),
+                    (containerRuntimeVersion != null ? "\"containerRuntimeVersion\":\"" +  JsonStrings.escapeJson(containerRuntimeVersion) + "\"" : ""),
+                    (kernelVersion != null ? "\"kernelVersion\":\"" +  JsonStrings.escapeJson(kernelVersion) + "\"" : ""),
+                    (kubeProxyVersion != null ? "\"kubeProxyVersion\":\"" +  JsonStrings.escapeJson(kubeProxyVersion) + "\"" : ""),
+                    (kubeletVersion != null ? "\"kubeletVersion\":\"" +  JsonStrings.escapeJson(kubeletVersion) + "\"" : ""),
+                    (machineID != null ? "\"machineID\":\"" +  JsonStrings.escapeJson(machineID) + "\"" : ""),
+                    (operatingSystem != null ? "\"operatingSystem\":\"" +  JsonStrings.escapeJson(operatingSystem) + "\"" : ""),
+                    (osImage != null ? "\"osImage\":\"" +  JsonStrings.escapeJson(osImage) + "\"" : ""),
+                    (systemUUID != null ? "\"systemUUID\":\"" +  JsonStrings.escapeJson(systemUUID) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

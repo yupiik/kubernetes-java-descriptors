@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_20_9.v1;
 
+import io.yupiik.kubernetes.bindings.v1_20_9.Exportable;
 import io.yupiik.kubernetes.bindings.v1_20_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ContainerState implements Validable<ContainerState> {
+public class ContainerState implements Validable<ContainerState>, Exportable {
     private ContainerStateRunning running;
     private ContainerStateTerminated terminated;
     private ContainerStateWaiting waiting;
@@ -82,5 +85,15 @@ public class ContainerState implements Validable<ContainerState> {
     @Override
     public ContainerState validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (running != null ? "\"running\":" + running.asJson() : ""),
+                    (terminated != null ? "\"terminated\":" + terminated.asJson() : ""),
+                    (waiting != null ? "\"waiting\":" + waiting.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

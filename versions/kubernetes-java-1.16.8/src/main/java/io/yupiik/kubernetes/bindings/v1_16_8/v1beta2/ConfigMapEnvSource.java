@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_8.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_16_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ConfigMapEnvSource implements Validable<ConfigMapEnvSource> {
+public class ConfigMapEnvSource implements Validable<ConfigMapEnvSource>, Exportable {
     private String name;
     private Boolean optional;
 
@@ -65,5 +69,14 @@ public class ConfigMapEnvSource implements Validable<ConfigMapEnvSource> {
     @Override
     public ConfigMapEnvSource validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (optional != null ? "\"optional\":" + optional : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,13 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_14_6.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_14_6.Exportable;
 import io.yupiik.kubernetes.bindings.v1_14_6.Validable;
 import io.yupiik.kubernetes.bindings.v1_14_6.ValidationException;
 import jakarta.json.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ResourceRequirements implements Validable<ResourceRequirements> {
+public class ResourceRequirements implements Validable<ResourceRequirements>, Exportable {
     private JsonObject limits;
     private JsonObject requests;
 
@@ -66,5 +69,14 @@ public class ResourceRequirements implements Validable<ResourceRequirements> {
     @Override
     public ResourceRequirements validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (limits != null ? "\"limits\":" + limits : ""),
+                    (requests != null ? "\"requests\":" + requests : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

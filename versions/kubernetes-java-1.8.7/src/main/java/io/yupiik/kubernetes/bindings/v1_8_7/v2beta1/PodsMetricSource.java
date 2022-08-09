@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_8_7.v2beta1;
 
+import io.yupiik.kubernetes.bindings.v1_8_7.Exportable;
+import io.yupiik.kubernetes.bindings.v1_8_7.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_7.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_7.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodsMetricSource implements Validable<PodsMetricSource> {
+public class PodsMetricSource implements Validable<PodsMetricSource>, Exportable {
     private String metricName;
     private String targetAverageValue;
 
@@ -85,5 +89,14 @@ public class PodsMetricSource implements Validable<PodsMetricSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (metricName != null ? "\"metricName\":\"" +  JsonStrings.escapeJson(metricName) + "\"" : ""),
+                    (targetAverageValue != null ? "\"targetAverageValue\":\"" +  JsonStrings.escapeJson(targetAverageValue) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

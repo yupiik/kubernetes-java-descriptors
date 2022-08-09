@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_8_2.v1;
 
+import io.yupiik.kubernetes.bindings.v1_8_2.Exportable;
 import io.yupiik.kubernetes.bindings.v1_8_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class SelfSubjectAccessReviewSpec implements Validable<SelfSubjectAccessReviewSpec> {
+public class SelfSubjectAccessReviewSpec implements Validable<SelfSubjectAccessReviewSpec>, Exportable {
     private NonResourceAttributes nonResourceAttributes;
     private ResourceAttributes resourceAttributes;
 
@@ -65,5 +68,14 @@ public class SelfSubjectAccessReviewSpec implements Validable<SelfSubjectAccessR
     @Override
     public SelfSubjectAccessReviewSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (nonResourceAttributes != null ? "\"nonResourceAttributes\":" + nonResourceAttributes.asJson() : ""),
+                    (resourceAttributes != null ? "\"resourceAttributes\":" + resourceAttributes.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

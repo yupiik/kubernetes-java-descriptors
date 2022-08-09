@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_20_10.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_20_10.Exportable;
+import io.yupiik.kubernetes.bindings.v1_20_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_10.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_10.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Event implements Validable<Event> {
+public class Event implements Validable<Event>, Exportable {
     private String action;
     private String apiVersion;
     private Integer deprecatedCount;
@@ -319,6 +323,12 @@ public class Event implements Validable<Event> {
 
     @Override
     public Event validate() {
+        if (kind == null) {
+            kind = "Event";
+        }
+        if (apiVersion == null) {
+            apiVersion = "events.k8s.io/v1beta1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (eventTime == null) {
             if (__errors_jsonSchema == null) {
@@ -340,5 +350,29 @@ public class Event implements Validable<Event> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (action != null ? "\"action\":\"" +  JsonStrings.escapeJson(action) + "\"" : ""),
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (deprecatedCount != null ? "\"deprecatedCount\":" + deprecatedCount : ""),
+                    (deprecatedFirstTimestamp != null ? "\"deprecatedFirstTimestamp\":\"" +  JsonStrings.escapeJson(deprecatedFirstTimestamp) + "\"" : ""),
+                    (deprecatedLastTimestamp != null ? "\"deprecatedLastTimestamp\":\"" +  JsonStrings.escapeJson(deprecatedLastTimestamp) + "\"" : ""),
+                    (deprecatedSource != null ? "\"deprecatedSource\":" + deprecatedSource.asJson() : ""),
+                    (eventTime != null ? "\"eventTime\":\"" +  JsonStrings.escapeJson(eventTime) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (note != null ? "\"note\":\"" +  JsonStrings.escapeJson(note) + "\"" : ""),
+                    (reason != null ? "\"reason\":\"" +  JsonStrings.escapeJson(reason) + "\"" : ""),
+                    (regarding != null ? "\"regarding\":" + regarding.asJson() : ""),
+                    (related != null ? "\"related\":" + related.asJson() : ""),
+                    (reportingController != null ? "\"reportingController\":\"" +  JsonStrings.escapeJson(reportingController) + "\"" : ""),
+                    (reportingInstance != null ? "\"reportingInstance\":\"" +  JsonStrings.escapeJson(reportingInstance) + "\"" : ""),
+                    (series != null ? "\"series\":" + series.asJson() : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

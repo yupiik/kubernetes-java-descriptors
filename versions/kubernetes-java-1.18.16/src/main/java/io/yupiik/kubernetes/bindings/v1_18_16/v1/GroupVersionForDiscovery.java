@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_16.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_16.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_16.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_16.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_16.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class GroupVersionForDiscovery implements Validable<GroupVersionForDiscovery> {
+public class GroupVersionForDiscovery implements Validable<GroupVersionForDiscovery>, Exportable {
     private String groupVersion;
     private String version;
 
@@ -85,5 +89,14 @@ public class GroupVersionForDiscovery implements Validable<GroupVersionForDiscov
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (groupVersion != null ? "\"groupVersion\":\"" +  JsonStrings.escapeJson(groupVersion) + "\"" : ""),
+                    (version != null ? "\"version\":\"" +  JsonStrings.escapeJson(version) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

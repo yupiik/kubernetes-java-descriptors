@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_14_3.v1;
 
+import io.yupiik.kubernetes.bindings.v1_14_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_14_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_14_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_14_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Endpoints implements Validable<Endpoints> {
+public class Endpoints implements Validable<Endpoints>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -98,6 +102,23 @@ public class Endpoints implements Validable<Endpoints> {
 
     @Override
     public Endpoints validate() {
+        if (kind == null) {
+            kind = "Endpoints";
+        }
+        if (apiVersion == null) {
+            apiVersion = "v1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (subsets != null ? "\"subsets\":" + subsets.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

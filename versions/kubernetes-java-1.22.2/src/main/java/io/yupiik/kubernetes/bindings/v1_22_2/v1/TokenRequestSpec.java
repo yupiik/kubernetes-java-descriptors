@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_22_2.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_22_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class TokenRequestSpec implements Validable<TokenRequestSpec> {
+public class TokenRequestSpec implements Validable<TokenRequestSpec>, Exportable {
     private List<String> audiences;
     private BoundObjectReference boundObjectRef;
     private Integer expirationSeconds;
@@ -94,5 +98,15 @@ public class TokenRequestSpec implements Validable<TokenRequestSpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (audiences != null ? "\"audiences\":" + audiences.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (boundObjectRef != null ? "\"boundObjectRef\":" + boundObjectRef.asJson() : ""),
+                    (expirationSeconds != null ? "\"expirationSeconds\":" + expirationSeconds : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

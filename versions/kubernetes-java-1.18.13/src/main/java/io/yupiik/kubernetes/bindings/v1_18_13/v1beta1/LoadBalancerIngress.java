@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_13.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_18_13.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_13.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_13.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_13.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class LoadBalancerIngress implements Validable<LoadBalancerIngress> {
+public class LoadBalancerIngress implements Validable<LoadBalancerIngress>, Exportable {
     private String hostname;
     private String ip;
 
@@ -65,5 +69,14 @@ public class LoadBalancerIngress implements Validable<LoadBalancerIngress> {
     @Override
     public LoadBalancerIngress validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (hostname != null ? "\"hostname\":\"" +  JsonStrings.escapeJson(hostname) + "\"" : ""),
+                    (ip != null ? "\"ip\":\"" +  JsonStrings.escapeJson(ip) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

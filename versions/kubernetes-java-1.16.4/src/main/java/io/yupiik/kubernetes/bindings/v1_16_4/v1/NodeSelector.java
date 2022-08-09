@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_16_4.v1;
 
+import io.yupiik.kubernetes.bindings.v1_16_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class NodeSelector implements Validable<NodeSelector> {
+public class NodeSelector implements Validable<NodeSelector>, Exportable {
     private List<NodeSelectorTerm> nodeSelectorTerms;
 
     public NodeSelector() {
@@ -60,5 +63,13 @@ public class NodeSelector implements Validable<NodeSelector> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (nodeSelectorTerms != null ? "\"nodeSelectorTerms\":" + nodeSelectorTerms.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_6.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_16_6.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_6.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_6.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class WindowsSecurityContextOptions implements Validable<WindowsSecurityContextOptions> {
+public class WindowsSecurityContextOptions implements Validable<WindowsSecurityContextOptions>, Exportable {
     private String gmsaCredentialSpec;
     private String gmsaCredentialSpecName;
     private String runAsUserName;
@@ -82,5 +86,15 @@ public class WindowsSecurityContextOptions implements Validable<WindowsSecurityC
     @Override
     public WindowsSecurityContextOptions validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (gmsaCredentialSpec != null ? "\"gmsaCredentialSpec\":\"" +  JsonStrings.escapeJson(gmsaCredentialSpec) + "\"" : ""),
+                    (gmsaCredentialSpecName != null ? "\"gmsaCredentialSpecName\":\"" +  JsonStrings.escapeJson(gmsaCredentialSpecName) + "\"" : ""),
+                    (runAsUserName != null ? "\"runAsUserName\":\"" +  JsonStrings.escapeJson(runAsUserName) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

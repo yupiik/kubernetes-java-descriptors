@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_22_4.v1;
 
+import io.yupiik.kubernetes.bindings.v1_22_4.Exportable;
+import io.yupiik.kubernetes.bindings.v1_22_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CustomResourceConversion implements Validable<CustomResourceConversion> {
+public class CustomResourceConversion implements Validable<CustomResourceConversion>, Exportable {
     private String strategy;
     private WebhookConversion webhook;
 
@@ -77,5 +81,14 @@ public class CustomResourceConversion implements Validable<CustomResourceConvers
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (strategy != null ? "\"strategy\":\"" +  JsonStrings.escapeJson(strategy) + "\"" : ""),
+                    (webhook != null ? "\"webhook\":" + webhook.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

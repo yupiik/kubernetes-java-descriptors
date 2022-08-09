@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_21_2.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_2.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class LimitRangeSpec implements Validable<LimitRangeSpec> {
+public class LimitRangeSpec implements Validable<LimitRangeSpec>, Exportable {
     private List<LimitRangeItem> limits;
 
     public LimitRangeSpec() {
@@ -60,5 +63,13 @@ public class LimitRangeSpec implements Validable<LimitRangeSpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (limits != null ? "\"limits\":" + limits.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_12.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_19_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Toleration implements Validable<Toleration> {
+public class Toleration implements Validable<Toleration>, Exportable {
     private String effect;
     private String key;
     private String operator;
@@ -116,5 +120,17 @@ public class Toleration implements Validable<Toleration> {
     @Override
     public Toleration validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (effect != null ? "\"effect\":\"" +  JsonStrings.escapeJson(effect) + "\"" : ""),
+                    (key != null ? "\"key\":\"" +  JsonStrings.escapeJson(key) + "\"" : ""),
+                    (operator != null ? "\"operator\":\"" +  JsonStrings.escapeJson(operator) + "\"" : ""),
+                    (tolerationSeconds != null ? "\"tolerationSeconds\":" + tolerationSeconds : ""),
+                    (value != null ? "\"value\":\"" +  JsonStrings.escapeJson(value) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_20_4.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_20_4.Exportable;
+import io.yupiik.kubernetes.bindings.v1_20_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_20_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ResourcePolicyRule implements Validable<ResourcePolicyRule> {
+public class ResourcePolicyRule implements Validable<ResourcePolicyRule>, Exportable {
     private List<String> apiGroups;
     private Boolean clusterScope;
     private List<String> namespaces;
@@ -144,5 +148,17 @@ public class ResourcePolicyRule implements Validable<ResourcePolicyRule> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiGroups != null ? "\"apiGroups\":" + apiGroups.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (clusterScope != null ? "\"clusterScope\":" + clusterScope : ""),
+                    (namespaces != null ? "\"namespaces\":" + namespaces.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (resources != null ? "\"resources\":" + resources.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (verbs != null ? "\"verbs\":" + verbs.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

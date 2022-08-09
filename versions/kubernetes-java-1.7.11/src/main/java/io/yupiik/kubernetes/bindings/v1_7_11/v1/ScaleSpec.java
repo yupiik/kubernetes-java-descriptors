@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_7_11.v1;
 
+import io.yupiik.kubernetes.bindings.v1_7_11.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_11.Validable;
 import io.yupiik.kubernetes.bindings.v1_7_11.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ScaleSpec implements Validable<ScaleSpec> {
+public class ScaleSpec implements Validable<ScaleSpec>, Exportable {
     private Integer replicas;
 
     public ScaleSpec() {
@@ -48,5 +51,13 @@ public class ScaleSpec implements Validable<ScaleSpec> {
     @Override
     public ScaleSpec validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (replicas != null ? "\"replicas\":" + replicas : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

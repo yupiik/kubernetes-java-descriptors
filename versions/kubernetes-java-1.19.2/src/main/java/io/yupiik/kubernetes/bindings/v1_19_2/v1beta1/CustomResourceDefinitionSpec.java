@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_2.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_19_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class CustomResourceDefinitionSpec implements Validable<CustomResourceDefinitionSpec> {
+public class CustomResourceDefinitionSpec implements Validable<CustomResourceDefinitionSpec>, Exportable {
     private List<CustomResourceColumnDefinition> additionalPrinterColumns;
     private CustomResourceConversion conversion;
     private String group;
@@ -229,5 +233,22 @@ public class CustomResourceDefinitionSpec implements Validable<CustomResourceDef
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (additionalPrinterColumns != null ? "\"additionalPrinterColumns\":" + additionalPrinterColumns.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (conversion != null ? "\"conversion\":" + conversion.asJson() : ""),
+                    (group != null ? "\"group\":\"" +  JsonStrings.escapeJson(group) + "\"" : ""),
+                    (names != null ? "\"names\":" + names.asJson() : ""),
+                    (preserveUnknownFields != null ? "\"preserveUnknownFields\":" + preserveUnknownFields : ""),
+                    (scope != null ? "\"scope\":\"" +  JsonStrings.escapeJson(scope) + "\"" : ""),
+                    (subresources != null ? "\"subresources\":" + subresources.asJson() : ""),
+                    (validation != null ? "\"validation\":" + validation.asJson() : ""),
+                    (version != null ? "\"version\":\"" +  JsonStrings.escapeJson(version) + "\"" : ""),
+                    (versions != null ? "\"versions\":" + versions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

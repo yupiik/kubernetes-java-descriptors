@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_18_17.v1;
 
+import io.yupiik.kubernetes.bindings.v1_18_17.Exportable;
+import io.yupiik.kubernetes.bindings.v1_18_17.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_17.Validable;
 import io.yupiik.kubernetes.bindings.v1_18_17.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class APIResourceList implements Validable<APIResourceList> {
+public class APIResourceList implements Validable<APIResourceList>, Exportable {
     private String apiVersion;
     private String groupVersion;
     private String kind;
@@ -98,6 +102,12 @@ public class APIResourceList implements Validable<APIResourceList> {
 
     @Override
     public APIResourceList validate() {
+        if (kind == null) {
+            kind = "APIResourceList";
+        }
+        if (apiVersion == null) {
+            apiVersion = "v1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (groupVersion == null) {
             if (__errors_jsonSchema == null) {
@@ -119,5 +129,16 @@ public class APIResourceList implements Validable<APIResourceList> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (groupVersion != null ? "\"groupVersion\":\"" +  JsonStrings.escapeJson(groupVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (resources != null ? "\"resources\":" + resources.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_14_5.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_14_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_14_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_14_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_14_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class RuntimeClassSpec implements Validable<RuntimeClassSpec> {
+public class RuntimeClassSpec implements Validable<RuntimeClassSpec>, Exportable {
     private String runtimeHandler;
 
     public RuntimeClassSpec() {
@@ -60,5 +64,13 @@ public class RuntimeClassSpec implements Validable<RuntimeClassSpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (runtimeHandler != null ? "\"runtimeHandler\":\"" +  JsonStrings.escapeJson(runtimeHandler) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

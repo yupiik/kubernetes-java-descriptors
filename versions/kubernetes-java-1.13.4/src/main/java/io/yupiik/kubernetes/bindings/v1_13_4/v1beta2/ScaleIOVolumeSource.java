@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_13_4.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_13_4.Exportable;
+import io.yupiik.kubernetes.bindings.v1_13_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class ScaleIOVolumeSource implements Validable<ScaleIOVolumeSource> {
+public class ScaleIOVolumeSource implements Validable<ScaleIOVolumeSource>, Exportable {
     private String fsType;
     private String gateway;
     private String protectionDomain;
@@ -229,5 +233,22 @@ public class ScaleIOVolumeSource implements Validable<ScaleIOVolumeSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (fsType != null ? "\"fsType\":\"" +  JsonStrings.escapeJson(fsType) + "\"" : ""),
+                    (gateway != null ? "\"gateway\":\"" +  JsonStrings.escapeJson(gateway) + "\"" : ""),
+                    (protectionDomain != null ? "\"protectionDomain\":\"" +  JsonStrings.escapeJson(protectionDomain) + "\"" : ""),
+                    (readOnly != null ? "\"readOnly\":" + readOnly : ""),
+                    (secretRef != null ? "\"secretRef\":" + secretRef.asJson() : ""),
+                    (sslEnabled != null ? "\"sslEnabled\":" + sslEnabled : ""),
+                    (storageMode != null ? "\"storageMode\":\"" +  JsonStrings.escapeJson(storageMode) + "\"" : ""),
+                    (storagePool != null ? "\"storagePool\":\"" +  JsonStrings.escapeJson(storagePool) + "\"" : ""),
+                    (system != null ? "\"system\":\"" +  JsonStrings.escapeJson(system) + "\"" : ""),
+                    (volumeName != null ? "\"volumeName\":\"" +  JsonStrings.escapeJson(volumeName) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_23_8.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_23_8.Exportable;
+import io.yupiik.kubernetes.bindings.v1_23_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_8.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_8.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class DeleteOptions implements Validable<DeleteOptions> {
+public class DeleteOptions implements Validable<DeleteOptions>, Exportable {
     private String apiVersion;
     private List<String> dryRun;
     private Integer gracePeriodSeconds;
@@ -150,5 +154,19 @@ public class DeleteOptions implements Validable<DeleteOptions> {
     @Override
     public DeleteOptions validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (dryRun != null ? "\"dryRun\":" + dryRun.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (gracePeriodSeconds != null ? "\"gracePeriodSeconds\":" + gracePeriodSeconds : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (orphanDependents != null ? "\"orphanDependents\":" + orphanDependents : ""),
+                    (preconditions != null ? "\"preconditions\":" + preconditions.asJson() : ""),
+                    (propagationPolicy != null ? "\"propagationPolicy\":\"" +  JsonStrings.escapeJson(propagationPolicy) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

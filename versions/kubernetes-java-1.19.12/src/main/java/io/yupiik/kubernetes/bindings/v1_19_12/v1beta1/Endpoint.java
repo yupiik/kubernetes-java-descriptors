@@ -1,13 +1,17 @@
 package io.yupiik.kubernetes.bindings.v1_19_12.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_19_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Endpoint implements Validable<Endpoint> {
+public class Endpoint implements Validable<Endpoint>, Exportable {
     private List<String> addresses;
     private EndpointConditions conditions;
     private String hostname;
@@ -129,5 +133,19 @@ public class Endpoint implements Validable<Endpoint> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (addresses != null ? "\"addresses\":" + addresses.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (conditions != null ? "\"conditions\":" + conditions.asJson() : ""),
+                    (hostname != null ? "\"hostname\":\"" +  JsonStrings.escapeJson(hostname) + "\"" : ""),
+                    (targetRef != null ? "\"targetRef\":" + targetRef.asJson() : ""),
+                    (topology != null ? "\"topology\":" + topology.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

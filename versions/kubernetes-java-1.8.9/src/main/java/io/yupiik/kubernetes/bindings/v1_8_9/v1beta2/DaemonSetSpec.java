@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_8_9.v1beta2;
 
+import io.yupiik.kubernetes.bindings.v1_8_9.Exportable;
 import io.yupiik.kubernetes.bindings.v1_8_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_8_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class DaemonSetSpec implements Validable<DaemonSetSpec> {
+public class DaemonSetSpec implements Validable<DaemonSetSpec>, Exportable {
     private Integer minReadySeconds;
     private Integer revisionHistoryLimit;
     private LabelSelector selector;
@@ -136,5 +139,17 @@ public class DaemonSetSpec implements Validable<DaemonSetSpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (minReadySeconds != null ? "\"minReadySeconds\":" + minReadySeconds : ""),
+                    (revisionHistoryLimit != null ? "\"revisionHistoryLimit\":" + revisionHistoryLimit : ""),
+                    (selector != null ? "\"selector\":" + selector.asJson() : ""),
+                    (template != null ? "\"template\":" + template.asJson() : ""),
+                    (updateStrategy != null ? "\"updateStrategy\":" + updateStrategy.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

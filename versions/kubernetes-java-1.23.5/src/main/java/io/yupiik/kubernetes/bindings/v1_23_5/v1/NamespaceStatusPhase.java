@@ -1,6 +1,14 @@
 package io.yupiik.kubernetes.bindings.v1_23_5.v1;
 
-public enum NamespaceStatusPhase {
+import io.yupiik.kubernetes.bindings.v1_23_5.Exportable;
+
+public enum NamespaceStatusPhase implements Exportable {
     Terminating,
     Active
+    ;
+
+    @Override
+    public String asJson() {
+        return "\"" + name() + "\"";
+    }
 }

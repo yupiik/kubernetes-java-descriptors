@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_23_2.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_23_2.Exportable;
+import io.yupiik.kubernetes.bindings.v1_23_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_2.Validable;
 import io.yupiik.kubernetes.bindings.v1_23_2.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class Capabilities implements Validable<Capabilities> {
+public class Capabilities implements Validable<Capabilities>, Exportable {
     private List<String> add;
     private List<String> drop;
 
@@ -65,5 +69,14 @@ public class Capabilities implements Validable<Capabilities> {
     @Override
     public Capabilities validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (add != null ? "\"add\":" + add.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (drop != null ? "\"drop\":" + drop.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

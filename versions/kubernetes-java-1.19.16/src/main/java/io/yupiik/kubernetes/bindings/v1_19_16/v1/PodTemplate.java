@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_19_16.v1;
 
+import io.yupiik.kubernetes.bindings.v1_19_16.Exportable;
+import io.yupiik.kubernetes.bindings.v1_19_16.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_16.Validable;
 import io.yupiik.kubernetes.bindings.v1_19_16.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class PodTemplate implements Validable<PodTemplate> {
+public class PodTemplate implements Validable<PodTemplate>, Exportable {
     private String apiVersion;
     private String kind;
     private ObjectMeta metadata;
@@ -98,6 +102,23 @@ public class PodTemplate implements Validable<PodTemplate> {
 
     @Override
     public PodTemplate validate() {
+        if (kind == null) {
+            kind = "PodTemplate";
+        }
+        if (apiVersion == null) {
+            apiVersion = "v1";
+        }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (template != null ? "\"template\":" + template.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

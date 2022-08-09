@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_13_0.v1;
 
+import io.yupiik.kubernetes.bindings.v1_13_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_13_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_0.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_0.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class StatefulSetUpdateStrategy implements Validable<StatefulSetUpdateStrategy> {
+public class StatefulSetUpdateStrategy implements Validable<StatefulSetUpdateStrategy>, Exportable {
     private RollingUpdateStatefulSetStrategy rollingUpdate;
     private String type;
 
@@ -65,5 +69,14 @@ public class StatefulSetUpdateStrategy implements Validable<StatefulSetUpdateStr
     @Override
     public StatefulSetUpdateStrategy validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (rollingUpdate != null ? "\"rollingUpdate\":" + rollingUpdate.asJson() : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

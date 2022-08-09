@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_16_9.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_16_9.Exportable;
+import io.yupiik.kubernetes.bindings.v1_16_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_9.Validable;
 import io.yupiik.kubernetes.bindings.v1_16_9.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class HostPathVolumeSource implements Validable<HostPathVolumeSource> {
+public class HostPathVolumeSource implements Validable<HostPathVolumeSource>, Exportable {
     private String path;
     private String type;
 
@@ -77,5 +81,14 @@ public class HostPathVolumeSource implements Validable<HostPathVolumeSource> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (path != null ? "\"path\":\"" +  JsonStrings.escapeJson(path) + "\"" : ""),
+                    (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

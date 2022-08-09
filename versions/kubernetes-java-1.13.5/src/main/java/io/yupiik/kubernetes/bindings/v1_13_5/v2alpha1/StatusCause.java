@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_13_5.v2alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_13_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_13_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_13_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class StatusCause implements Validable<StatusCause> {
+public class StatusCause implements Validable<StatusCause>, Exportable {
     private String field;
     private String message;
     private String reason;
@@ -82,5 +86,15 @@ public class StatusCause implements Validable<StatusCause> {
     @Override
     public StatusCause validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (field != null ? "\"field\":\"" +  JsonStrings.escapeJson(field) + "\"" : ""),
+                    (message != null ? "\"message\":\"" +  JsonStrings.escapeJson(message) + "\"" : ""),
+                    (reason != null ? "\"reason\":\"" +  JsonStrings.escapeJson(reason) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_14_4.v2beta1;
 
+import io.yupiik.kubernetes.bindings.v1_14_4.Exportable;
+import io.yupiik.kubernetes.bindings.v1_14_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_14_4.Validable;
 import io.yupiik.kubernetes.bindings.v1_14_4.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class RawExtension implements Validable<RawExtension> {
+public class RawExtension implements Validable<RawExtension>, Exportable {
     private String Raw;
 
     public RawExtension() {
@@ -60,5 +64,13 @@ public class RawExtension implements Validable<RawExtension> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (Raw != null ? "\"Raw\":\"" +  JsonStrings.escapeJson(Raw) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

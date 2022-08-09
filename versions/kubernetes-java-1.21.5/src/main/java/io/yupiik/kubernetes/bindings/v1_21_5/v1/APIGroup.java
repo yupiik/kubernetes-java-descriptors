@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_21_5.v1;
 
+import io.yupiik.kubernetes.bindings.v1_21_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_21_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_5.Validable;
 import io.yupiik.kubernetes.bindings.v1_21_5.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class APIGroup implements Validable<APIGroup> {
+public class APIGroup implements Validable<APIGroup>, Exportable {
     private String apiVersion;
     private String kind;
     private String name;
@@ -132,6 +136,12 @@ public class APIGroup implements Validable<APIGroup> {
 
     @Override
     public APIGroup validate() {
+        if (kind == null) {
+            kind = "APIGroup";
+        }
+        if (apiVersion == null) {
+            apiVersion = "v1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
         if (name == null) {
             if (__errors_jsonSchema == null) {
@@ -153,5 +163,18 @@ public class APIGroup implements Validable<APIGroup> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (preferredVersion != null ? "\"preferredVersion\":" + preferredVersion.asJson() : ""),
+                    (serverAddressByClientCIDRs != null ? "\"serverAddressByClientCIDRs\":" + serverAddressByClientCIDRs.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (versions != null ? "\"versions\":" + versions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

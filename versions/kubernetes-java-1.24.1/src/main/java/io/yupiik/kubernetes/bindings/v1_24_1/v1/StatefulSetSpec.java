@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_24_1.v1;
 
+import io.yupiik.kubernetes.bindings.v1_24_1.Exportable;
+import io.yupiik.kubernetes.bindings.v1_24_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_24_1.Validable;
 import io.yupiik.kubernetes.bindings.v1_24_1.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class StatefulSetSpec implements Validable<StatefulSetSpec> {
+public class StatefulSetSpec implements Validable<StatefulSetSpec>, Exportable {
     private Integer minReadySeconds;
     private StatefulSetPersistentVolumeClaimRetentionPolicy persistentVolumeClaimRetentionPolicy;
     private String podManagementPolicy;
@@ -229,5 +233,22 @@ public class StatefulSetSpec implements Validable<StatefulSetSpec> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (minReadySeconds != null ? "\"minReadySeconds\":" + minReadySeconds : ""),
+                    (persistentVolumeClaimRetentionPolicy != null ? "\"persistentVolumeClaimRetentionPolicy\":" + persistentVolumeClaimRetentionPolicy.asJson() : ""),
+                    (podManagementPolicy != null ? "\"podManagementPolicy\":\"" +  JsonStrings.escapeJson(podManagementPolicy) + "\"" : ""),
+                    (replicas != null ? "\"replicas\":" + replicas : ""),
+                    (revisionHistoryLimit != null ? "\"revisionHistoryLimit\":" + revisionHistoryLimit : ""),
+                    (selector != null ? "\"selector\":" + selector.asJson() : ""),
+                    (serviceName != null ? "\"serviceName\":\"" +  JsonStrings.escapeJson(serviceName) + "\"" : ""),
+                    (template != null ? "\"template\":" + template.asJson() : ""),
+                    (updateStrategy != null ? "\"updateStrategy\":" + updateStrategy.asJson() : ""),
+                    (volumeClaimTemplates != null ? "\"volumeClaimTemplates\":" + volumeClaimTemplates.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

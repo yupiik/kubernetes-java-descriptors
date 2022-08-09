@@ -1,12 +1,16 @@
 package io.yupiik.kubernetes.bindings.v1_15_12.v1beta1;
 
+import io.yupiik.kubernetes.bindings.v1_15_12.Exportable;
+import io.yupiik.kubernetes.bindings.v1_15_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_12.Validable;
 import io.yupiik.kubernetes.bindings.v1_15_12.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class RoleRef implements Validable<RoleRef> {
+public class RoleRef implements Validable<RoleRef>, Exportable {
     private String apiGroup;
     private String kind;
     private String name;
@@ -110,5 +114,15 @@ public class RoleRef implements Validable<RoleRef> {
             throw new ValidationException(__errors_jsonSchema);
         }
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiGroup != null ? "\"apiGroup\":\"" +  JsonStrings.escapeJson(apiGroup) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }

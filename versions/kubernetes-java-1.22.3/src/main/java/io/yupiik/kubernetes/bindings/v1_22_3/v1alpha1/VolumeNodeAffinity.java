@@ -1,12 +1,15 @@
 package io.yupiik.kubernetes.bindings.v1_22_3.v1alpha1;
 
+import io.yupiik.kubernetes.bindings.v1_22_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_22_3.Validable;
 import io.yupiik.kubernetes.bindings.v1_22_3.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
 
-public class VolumeNodeAffinity implements Validable<VolumeNodeAffinity> {
+public class VolumeNodeAffinity implements Validable<VolumeNodeAffinity>, Exportable {
     private NodeSelector required;
 
     public VolumeNodeAffinity() {
@@ -48,5 +51,13 @@ public class VolumeNodeAffinity implements Validable<VolumeNodeAffinity> {
     @Override
     public VolumeNodeAffinity validate() {
         return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (required != null ? "\"required\":" + required.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
     }
 }
