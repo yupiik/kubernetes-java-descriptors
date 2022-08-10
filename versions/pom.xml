@@ -18,7 +18,7 @@
     <dependency>
       <groupId>io.yupiik.uship</groupId>
       <artifactId>json-dependencies</artifactId>
-      <version>1.0.8</version>
+      <version>${yupiik-uship.version}</version>
       <type>pom</type>
       <scope>provided</scope>
     </dependency>

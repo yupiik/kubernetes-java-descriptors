@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>kubernetes-java-descriptors</artifactId>
+    <groupId>io.yupiik.kubernetes</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>documentation</artifactId>
+  <name>Kubernetes Java Descriptors :: Documentation</name>
+
+  <build>
+    <plugins>
+      <plugin> <!-- mvn compile yupiik-tools:serve-minisite -->
+        <groupId>io.yupiik.maven</groupId>
+        <artifactId>yupiik-tools-maven-plugin</artifactId>
+        <version>1.1.0-SNAPSHOT</version>
+        <configuration>
+          <logoText>Kubernetes Java Descriptors</logoText>
+          <indexText>Kubernetes Java Descriptors</indexText>
+          <indexSubTitle>Project documentation.</indexSubTitle>
+          <attributes>
+            <partialsdir>${project.basedir}/src/main/minisite/content/_partials</partialsdir>
+          </attributes>
+          <preActions>
+            <preAction>
+              <type>io.yupiik.kubernetes.documentation.ListBindings</type>
+              <configuration>
+                <uship.version>${yupiik-uship.version}</uship.version>
+              </configuration>
+            </preAction>
+          </preActions>
+        </configuration>
+        <!--
+        config to do when we set up github pages
+        -->
+      </plugin>
+    </plugins>
+  </build>
+</project>

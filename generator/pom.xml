@@ -16,7 +16,7 @@
     <dependency>
       <groupId>io.yupiik.uship</groupId>
       <artifactId>backbone-johnzon</artifactId>
-      <version>1.0.8</version>
+      <version>${yupiik-uship.version}</version>
     </dependency>
     <dependency>
       <groupId>org.apache.johnzon</groupId>

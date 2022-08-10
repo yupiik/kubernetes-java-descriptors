@@ -1,0 +1,115 @@
+= CI Setup
+:minisite-index: 400
+:minisite-index-title: CI Setup
+:minisite-index-icon: industry
+:minisite-index-description: Some example of CI oriented usages.
+
+== Maven setup
+
+Maven setup is likely the easiest, what you have to do is:
+
+. Create a descriptor generation module,
+. Add the needed dependencies in this pom module (see xref:kubernetes-java-bindings.adoc[bindings] page if needed),
+. Write a main with the generation,
+. Use `exec-maven-plugin` to run your main.
+
+Here is a skeleton:
+
+[source,java]
+----
+public class MyGenerator {
+    public static void main(final String... args){
+        final var output = Files.createDirectories(Path.of(args[0])); <1>
+
+        final var deployment = new Deployment() <2>
+                    .spec(new DeploymentSpec()
+                    // ... complete the generation as needed
+        );
+
+        Files.writeString( <3>
+                output.resolve("my-deployment.json"),
+                deployment.asJson());
+    }
+
+    private MyGenerator() {
+        // no-op
+    }
+}
+----
+<.> Get and create the output directory for this run (generally in `target/`/`${project.build.directory}`),
+<.> Create your in memory descriptor,
+<.> Write your descriptor on the disk (or in a zip directly if you prefer).
+
+Now to execute this main you can just use this `exec-maven-plugin` in your Apache Maven configuration:
+
+[source,xml]
+----
+<plugin>
+  <groupId>org.codehaus.mojo</groupId>
+  <artifactId>exec-maven-plugin</artifactId>
+  <version>3.1.0</version>
+  <executions>
+    <execution>
+      <id>generate-k8s-descriptors</id>
+      <phase>prepare-package</phase>
+      <goals>
+        <goal>java</goal>
+      </goals>
+      <configuration>
+        <stopUnresponsiveDaemonThreads>false</stopUnresponsiveDaemonThreads>
+        <cleanupDaemonThreads>false</cleanupDaemonThreads>
+        <mainClass>org.superbiz.MyGenerator</mainClass>
+        <arguments>
+          <argument>${project.build.directory}/k8s-descriptors</argument>
+        </arguments>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>
+----
+
+Now if you run `mvn prepare-package` you will get your descriptors dumped in `target/k8s-descriptors` folder.
+
+== JShell setup
+
+You can use this project with JShell, you just need to ensure the JShell classpath is correct when executing your script.
+As of today, you must ensure it contains:
+
+* (optional for some setup but recommended) a JSON-P API and implementation,
+* (optional) a JSON-B API and implementation,
+* The `kubernetes-java-xxx` version you need,
+* (optional) `bundlebee-java` if you use it.
+
+Here is how to run a custom JShell script (note it assumes it runs on Linux and the jar were downloaded in current folder):
+
+[source,bash]
+----
+jshell \
+  --class-path \
+  geronimo-json_1.1_spec-1.4-jakarta.jar:johnzon-core-1.2.18-jakarta.jar:kubernetes-java-1.24.3-1.0.0.jar \
+  my-script.jsh
+----
+
+Then you just need to write your script almost as in plain java:
+
+[source,java]
+----
+import io.yupiik.kubernetes.bindings.v1_24_3.v1.*; // <1>
+
+{ // <2>
+  final var output = Files.createDirectories(Path.of("target/k8s-descriptors"));
+
+  final var deployment = new Deployment()
+            .spec(new DeploymentSpec()
+                /* ... */);
+
+  Files.writeString(
+        output.resolve("my-deployment.json"),
+        deployment.asJson());
+}
+
+/exit // <3>
+----
+<.> Import the classes you need (here we use a wildcard import on the model because it is safe for our script but you can use explicit imports),
+<.> A small trick to write a readable script is to enable multiline snippet by wrapping the code in a block (rest of the code is similar to previous ones),
+<.> Finally when finished we exit JShell.

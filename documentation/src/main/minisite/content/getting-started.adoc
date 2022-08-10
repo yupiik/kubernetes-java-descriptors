@@ -1,0 +1,281 @@
+= Getting Started
+:minisite-index: 100
+:minisite-index-title: Getting Started
+:minisite-index-icon: play
+:minisite-index-description: Overview of the project.
+
+[abstract]
+This project aims at providing code models for _Java_ applications.
+It is primarily intended for CI/CD pipelines to automate the descriptor generation and integrate with company rules.
+It guarantees your descriptors respect the Kubernetes schema your Kubernetes cluster supports (thanks its versioning).
+
+== Key features
+
+* Versionned Kubernetes API (so you can change of cluster easily and identify the breaking change if any),
+* Typed API (so less typo error),
+* Java based (so well known and tooled in the industry),
+* Java based bis (so easily industrializable - you can create reusable libraries to help you to avoid to write the boilerplate),
+* DSL provided: easy to write code generating descriptors,
+* JSON-P friendly (so it is easy to reuse JSON features like formatting, JSON-Patch etc...),
+* JSON-B friendly (so you can bind descriptors you would load yourself or already generated quite easily),
+* Light (By default the modules are dependency free until you generate a descriptor needing JSON-P which is the only required library at _runtime_).
+
+== Overview
+
+High level, the project provides you dependencies/libraries with enable you to use a DSL to create descriptors.
+
+If we want to create the descriptor corresponding to this YAML (sample taken from Kubernetes documentation):
+
+[source,yaml]
+----
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+----
+
+you can write this snippet:
+
+[source,java]
+----
+final var deploymentJson = new Deployment()
+        .metadata(new ObjectMeta()
+                .name("nginx-deployment")
+                .labels(Map.of("app", "nginx")))
+        .spec(new DeploymentSpec()
+                .replicas(3)
+                .selector(new LabelSelector()
+                        .matchLabels(Map.of("app", "nginx")))
+                .template(new PodTemplateSpec()
+                        .metadata(new ObjectMeta()
+                                .labels(Map.of("app", "nginx")))
+                        .spec(new PodSpec()
+                                .containers(List.of(new Container()
+                                        .name("nginx")
+                                        .image("nginx:1.14.2")
+                                        .ports(List.of(new ContainerPort()
+                                                .containerPort(80))))))))
+        .validate()
+        .asJson();
+System.out.println(deploymentJson);
+----
+
+The output is not formatted but you can use JSON-P to format it quite easily:
+
+[source,java]
+----
+// these instances are reusable and you should reuse them
+// (for mem optimization when using this method for multiple descriptors)
+final var readerFactory = Json.createReaderFactory(Map.of());
+final var writerFactory = Json.createWriterFactory(Map.of(JsonGenerator.PRETTY_PRINTING, true));
+
+// format():
+final var out = new StringWriter();
+try (final var reader  = readerFactory.createReader(new StringReader(deploymentJson));
+     final var writer = writerFactory.createWriter(out)) {
+    writer.write(reader.readValue());
+}
+System.out.println(out);
+----
+
+This will output this descriptor (keep in mind JSON is a valid YAML descriptor):
+
+[source,json]
+----
+{
+  "apiVersion":"apps/v1",
+  "kind":"Deployment",
+  "metadata":{
+    "labels":{
+      "app":"nginx"
+    },
+    "name":"nginx-deployment"
+  },
+  "spec":{
+    "replicas":3,
+    "selector":{
+      "matchLabels":{
+        "app":"nginx"
+      }
+    },
+    "template":{
+      "metadata":{
+        "labels":{
+          "app":"nginx"
+        }
+      },
+      "spec":{
+        "containers":[
+          {
+            "image":"nginx:1.14.2",
+            "name":"nginx",
+            "ports":[
+              {
+                "containerPort":80
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
+----
+
+For now we didn't do much better than what we would have done manually but now, if we rewrite our base generation we can see why coding its descriptors is interesting:
+
+[source,java]
+----
+// <1>
+final var name = "nginx";
+final var labels = Map.of("app", name);
+
+<2>
+final var deploymentJson = new Deployment()
+        .metadata(new ObjectMeta()
+                .name(name + "-deployment")
+                .labels(labels))
+        .spec(new DeploymentSpec()
+                .replicas(3)
+                .selector(new LabelSelector()
+                        .matchLabels(labels))
+                .template(new PodTemplateSpec()
+                        .metadata(new ObjectMeta()
+                                .labels(labels))
+                        .spec(new PodSpec()
+                                .containers(List.of(new Container()
+                                        .name(name)
+                                        .image("nginx:1.14.2")
+                                        .ports(List.of(new ContainerPort()
+                                                .containerPort(80))))))))
+        .validate()
+        .asJson();
+----
+<.> We can extract variables reused accross the descriptor without copy/paste or search/replace operation which are error prone,
+<.> We just inject variables instead of values.
+
+Until there you can reach this same goal with Yupiik Bundlebee or Helm since it is mainly using placeholders but what if you could use your own easy to write functions?
+This is exactly what makes it very powerful and enterprise friendly:
+
+[source,java]
+----
+// <1>
+private Deployment enforceOpsStandards(final Deployment spec,
+                                       final Map<String, String> labels,
+                                       final JsonBuilderFactory jsonBuilderFactory) {
+    final var template = spec.getSpec().getTemplate();
+
+    // <2>
+    if (spec.getMetadata().getLabels() != null &&
+            !spec.getMetadata().getLabels().isEmpty()) {
+        if (template.getMetadata() == null) {
+            template.setMetadata(new ObjectMeta());
+        }
+        if (template.getMetadata().getLabels() == null) {
+            template.getMetadata().labels(spec.getMetadata().getLabels());
+        } else { // merge and don't override pod with deployment label if already there
+            spec.getMetadata().getLabels().forEach(spec.getMetadata().getLabels()::putIfAbsent);
+        }
+    }
+
+    // <3>
+    template.getSpec().getContainers().stream()
+            .filter(c -> c.getResources() == null || c.getResources().getLimits() == null)
+            .forEach(c -> c.resources(new ResourceRequirements()
+                    .requests(jsonBuilderFactory.createObjectBuilder()
+                            .add("memory", "64Mi")
+                            .add("cpu", "250m")
+                            .build())
+                    .limits(jsonBuilderFactory.createObjectBuilder()
+                            .add("memory", "64Mi")
+                            .add("cpu", "250m")
+                            .build())));
+    return spec;
+}
+
+// <4>
+final var jsonBuilderFactory = Json.createBuilderFactory(Map.of()); // optional, depends enforceOpsStandards()
+final var deployment = createDeployment();
+final var json = enforceOpsStandards(deployment, labels, jsonBuilderFactory) // <5>
+                .validate()
+                .asJson();
+----
+<.> We create a reusable function in our preferred language (or "well known" at least),
+<.> This function enforces pods to inherit from deployment labels,
+<.> And also containers to have limits for resources.
+<.> The usage is pretty straight forward since it is just calling a java function from java code.
+<.> Extracted like that, all the project/ops/architects rules can easily be enforced and validated at build/CI time.
+
+TIP: if you set properly the classpath this is compatible with JShell but a `mvn exec:java` setup also works very smoothly.
+
+== Go further with BundleBee
+
+link:https://www.yupiik.io/bundlebee[Yupiik BundleBee] is a Kubernetes package manager to ease your deployment on your Kubernetes clusters (from minikube to production clusters).
+It is also based on descriptors and the module `bundlebee-java` provides you an enriched DSL to generate them easily and integrated with any version of `kubernetes-java` descriptors:
+
+[source,java]
+----
+// <1>
+final var deployment = new Deployment()
+        .metadata(new ObjectMeta()
+                .name("demo-deployment"))
+        .spec(new DeploymentSpec()
+            .replicas(1)
+            .selector(new LabelSelector()
+                .matchLabels(Map.of("app", "demo")))
+            .template(new PodTemplateSpec()
+                .spec(new PodSpec()
+                    .containers(List.of(new Container()
+                        .name(name)
+                        .image("nginx:1.14.2")
+                        .ports(List.of(new ContainerPort()
+                            .containerPort(80))))))))
+        .validate();
+
+<2>
+new Manifest()
+    .alveoli(List.of(
+        new Alveolus() <3>
+            .name("my-deployment")
+            .descriptors(List.of(
+                new Descriptor()
+                    .name("deployment.yaml")
+                    .interpolate(true)
+                    .underlyingDescriptor(myDeployment) <4>
+                    .validate()))
+            .validate()))
+    .validate()
+    .writeTo(Path.of("target/bundlebee_dump")); <5>
+----
+<.> Create a deployment - or more generally a Kubernetes descriptor - with the technique seen in previous part but don't serialize it yet,
+<.> Create a manifest (BundleBee entry point),
+<.> Create an alveolus (a library/application recipe in BundleBee semantic),
+<.> Bind the descriptor you created to the reference BundleBee uses,
+<.> Finally dump the manifest in a folder. This will create the correct BundleBee layout and if the `underlyingDescriptor` instance is attached and an `Exportable` of the `kubernetes-java-$version` module you use, then it will dump the descriptor as well in a single step!
+
+TIP: don't hesitate to create functions to instantiate the `Descriptor` using conventions to enforce the consistency in your deployment code.
+A typical case is to ame the descriptor from its underlying descriptor (reusing metadata name for example).
+
+== Choose your version
+
+To ensure you target the right descriptor for your cluster, it is recommended to use as dependency the module you target.
+Typically, if you target Kubernetes 1.24.3, you will use the module `kubernetes-java-1.24.3`.
+
+You can check on the xref:kubernetes-java-bindings.adoc[binding list] page the one you need.

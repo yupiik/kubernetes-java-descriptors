@@ -1,0 +1,67 @@
+= Bundlebee Integration
+:minisite-index: 300
+:minisite-index-title: Bundlebee Integration
+:minisite-index-icon: box
+:minisite-index-description: How to use this project to generate more advanced Yupiik Bundlebee projects.
+
+[abstract]
+Yupiik BundleBee integration module enables to ease the BundleBee manifest and layout management.
+
+== Dependency
+
+[source,xml]
+----
+<dependency>
+  <groupId>io.yupiik.kubernetes</groupId>
+  <artifactId>bundlebee-java</artifactId>
+  <version>${kubernetes-java-descriptors.version}</version>
+</dependency>
+----
+
+== Sample
+
+It is also based on descriptors and the module `bundlebee-java` provides you an enriched DSL to generate them easily and integrated with any version of `kubernetes-java` descriptors:
+
+[source,java]
+----
+// <1>
+final var deployment = new Deployment()
+        .metadata(new ObjectMeta()
+                .name("demo-deployment"))
+        .spec(new DeploymentSpec()
+            .replicas(1)
+            .selector(new LabelSelector()
+                .matchLabels(Map.of("app", "demo")))
+            .template(new PodTemplateSpec()
+                .spec(new PodSpec()
+                    .containers(List.of(new Container()
+                        .name(name)
+                        .image("nginx:1.14.2")
+                        .ports(List.of(new ContainerPort()
+                            .containerPort(80))))))))
+        .validate();
+
+<2>
+new Manifest()
+    .alveoli(List.of(
+        new Alveolus() <3>
+            .name("my-deployment")
+            .descriptors(List.of(
+                new Descriptor()
+                    .name("deployment.yaml")
+                    .interpolate(true)
+                    .underlyingDescriptor(myDeployment) <4>
+                    .validate()))
+            .validate()))
+    .validate()
+    .writeTo(Path.of("target/bundlebee_dump")); <5>
+----
+<.> Create a deployment - or more generally a Kubernetes descriptor - with the technique seen in previous part but don't serialize it yet,
+<.> Create a manifest (BundleBee entry point),
+<.> Create an alveolus (a library/application recipe in BundleBee semantic),
+<.> Bind the descriptor you created to the reference BundleBee uses,
+<.> Finally dump the manifest in a folder. This will create the correct BundleBee layout and if the `underlyingDescriptor` instance is attached and an `Exportable` of the `kubernetes-java-$version` module you use, then it will dump the descriptor as well in a single step!
+
+TIP: don't hesitate to create functions to instantiate the `Descriptor` using conventions to enforce the consistency in your deployment code.
+A typical case is to ame the descriptor from its underlying descriptor (reusing metadata name for example).
+

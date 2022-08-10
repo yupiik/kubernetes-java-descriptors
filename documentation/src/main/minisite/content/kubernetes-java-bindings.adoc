@@ -1,0 +1,7 @@
+= Kubernetes Java Bindings
+:minisite-index: 200
+:minisite-index-title: Kubernetes Java Bindings
+:minisite-index-icon: cloud
+:minisite-index-description: How to pick the right dependency to generate your Kubernetes descriptors.
+
+include::{partialsdir}/generated/bindings.adoc[]
