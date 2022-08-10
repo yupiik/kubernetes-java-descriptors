@@ -51,6 +51,8 @@
             <argument>${project.parent.basedir}/versions</argument>
             <argument>${bundlebee.schema.extension}</argument>
             <argument>${generator.threads}</argument>
+            <argument>${generator.bundlebee.schema}</argument>
+            <argument>${generator.type}</argument>
           </arguments>
         </configuration>
       </plugin>

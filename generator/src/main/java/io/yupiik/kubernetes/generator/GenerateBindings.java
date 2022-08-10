@@ -1,6 +1,7 @@
 package io.yupiik.kubernetes.generator;
 
 import jakarta.json.Json;
+import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonReaderFactory;
 import jakarta.json.JsonString;
@@ -42,6 +43,7 @@ import java.util.zip.ZipInputStream;
 
 import static java.net.http.HttpResponse.BodyHandlers.ofString;
 import static java.util.Comparator.comparing;
+import static java.util.Locale.ROOT;
 import static java.util.Objects.requireNonNull;
 import static java.util.Optional.ofNullable;
 import static java.util.function.Function.identity;
@@ -59,6 +61,8 @@ public final class GenerateBindings {
     private final Path versionsBase;
     private final String schemaExtension;
     private final int threads;
+    private final String bundlebeeSchema;
+    private final String type;
 
     private GenerateBindings(final String... args) throws IOException {
         url = args[0];
@@ -69,10 +73,66 @@ public final class GenerateBindings {
         versionsBase = Path.of(args[5]);
         schemaExtension = args[6];
         threads = Integer.parseInt(args[7]);
+        bundlebeeSchema = args[8];
+        type = args[9];
     }
 
     public void run() throws IOException, InterruptedException {
         final var httpClient = HttpClient.newBuilder().followRedirects(HttpClient.Redirect.ALWAYS).build();
+        switch (type.toUpperCase(ROOT)) {
+            case "ALL" -> {
+                doBundleBeeGeneration(httpClient);
+                doK8sGeneration(httpClient);
+            }
+            case "KUBERNETES" -> doK8sGeneration(httpClient);
+            case "BUNDLEBEE" -> doBundleBeeGeneration(httpClient);
+            default -> throw new IllegalArgumentException("Unsupported type: '" + type + "'");
+        }
+    }
+
+    private void doBundleBeeGeneration(final HttpClient httpClient) throws IOException, InterruptedException {
+        logger.info(() -> "Downloading '" + bundlebeeSchema + "'");
+        final var response = httpClient
+                .send(
+                        HttpRequest.newBuilder()
+                                .GET()
+                                .uri(URI.create(bundlebeeSchema))
+                                .build(),
+                        ofString());
+
+        logger.info(() -> "Response HTTP " + response.statusCode());
+        if (response.statusCode() != 200) {
+            throw new IllegalStateException(response.toString());
+        }
+
+        final var jsonReaderFactory = Json.createReaderFactory(Map.of());
+        final JsonObject schema;
+        try (final var reader = jsonReaderFactory.createReader(new StringReader(response.body()))) {
+            schema = reader.readObject();
+        }
+
+        final var root = Files.createDirectories(versionsBase.getParent().resolve("bundlebee-java"));
+
+        final var basePackage = "io.yupiik.kubernetes.bindings.bundlebee";
+        writeHelpers(root, basePackage);
+
+        final var definitions = buildDefinitions(schema);
+        final var refRegistry = new HashMap<String, String>();
+        try {
+            generateFromSchema(
+                    () -> "bundlebee.schema.json",
+                    "Manifest" + schemaExtension,
+                    basePackage, () -> definitions, refRegistry, root, schema, "v1", true);
+        } catch (final IOException ex) {
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    private JsonObject buildDefinitions(final JsonObject schema) {
+        return schema.getJsonObject("definitions");
+    }
+
+    private void doK8sGeneration(HttpClient httpClient) throws IOException, InterruptedException {
         final var unzip = work.resolve("unzip");
         final var schemas = (Files.isDirectory(unzip) ?
                 // reuse existing one, avoids the long/slow download when working (this is why clean is important for updates)
@@ -121,7 +181,26 @@ public final class GenerateBindings {
         };
 
         final var basePackage = "io.yupiik.kubernetes.bindings.v" + k8sApiVersion.replace('.', '_');
-        // todo: serializable (json/yaml)?
+        writeHelpers(root, basePackage);
+
+        final var refRegistry = new HashMap<String, String>();
+        Files.walkFileTree(path, new SimpleFileVisitor<>() {
+            @Override
+            public FileVisitResult visitFile(final Path schema, final BasicFileAttributes attrs) throws IOException {
+                final var name = schema.getFileName().toString();
+                if (!name.endsWith(schemaExtension)) {
+                    return super.visitFile(schema, attrs);
+                }
+
+                onSchema(schema, name, readerFactory, path, basePackage, definitions, refRegistry, root);
+                return super.visitFile(schema, attrs);
+            }
+        });
+
+        return k8sApiVersion;
+    }
+
+    private void writeHelpers(final Path root, final String basePackage) throws IOException {
         writeJava(root, basePackage, "JsonStrings", "package " + basePackage + ";\n" +
                 "\n" +
                 "// internal class, public to share it accross subpackages but shouldn't be used by client code\n" +
@@ -238,22 +317,6 @@ public final class GenerateBindings {
                 "    }\n" +
                 "}\n" +
                 "\n");
-
-        final var refRegistry = new HashMap<String, String>();
-        Files.walkFileTree(path, new SimpleFileVisitor<>() {
-            @Override
-            public FileVisitResult visitFile(final Path schema, final BasicFileAttributes attrs) throws IOException {
-                final var name = schema.getFileName().toString();
-                if (!name.endsWith(schemaExtension)) {
-                    return super.visitFile(schema, attrs);
-                }
-
-                onSchema(schema, name, readerFactory, path, basePackage, definitions, refRegistry, root);
-                return super.visitFile(schema, attrs);
-            }
-        });
-
-        return k8sApiVersion;
     }
 
     private void writeJava(final Path root, final String basePackage, final String clazz, final String content) throws IOException {
@@ -276,25 +339,33 @@ public final class GenerateBindings {
                     .map(it -> it.toString().replace('.', '_'))
                     .collect(joining("."));
 
-            final var packageName = basePackage + (rel.isEmpty() ? "" : "." + rel);
-            final var pojoConfiguration = new PojoGenerator.PojoConfiguration()
-                    .setClassName(name.substring(0, name.length() - schemaExtension.length()))
-                    .setPackageName(packageName)
-                    .setOnRef(ref -> onRef(definitions, packageName, ref, refRegistry, basePackage));
-
-            final var bindings = new K8sPojoGenerator(pojoConfiguration, readSchema, basePackage)
-                    .visitSchema(readSchema)
-                    .generate();
-            refRegistry.putAll(bindings);
-
-            logger.info(() -> "Generated #" + bindings.size() + " classes from '" + path.getParent().relativize(schema) + "'");
-            for (final var entry : bindings.entrySet()) {
-                final var out = root.resolve("src/main/java").resolve(entry.getKey());
-                Files.createDirectories(out.getParent());
-                Files.writeString(out, entry.getValue());
-            }
+            generateFromSchema(
+                    () -> path.getParent().relativize(schema).toString(),
+                    name, basePackage, definitions, refRegistry, root, readSchema, rel, false);
         } catch (final RuntimeException re) {
             throw new IllegalStateException("Can't generate binding for '" + schema + "'", re);
+        }
+    }
+
+    private void generateFromSchema(final Supplier<String> source, final String name, final String basePackage,
+                                    final Supplier<JsonObject> definitions, final Map<String, String> refRegistry,
+                                    final Path root, final JsonObject readSchema, final String rel, final boolean useId) throws IOException {
+        final var packageName = basePackage + (rel.isEmpty() ? "" : "." + rel);
+        final var pojoConfiguration = new PojoGenerator.PojoConfiguration()
+                .setClassName(name.substring(0, name.length() - schemaExtension.length()))
+                .setPackageName(packageName)
+                .setOnRef(ref -> onRef(definitions, packageName, ref, refRegistry, basePackage, useId));
+
+        final var bindings = new K8sPojoGenerator(pojoConfiguration, readSchema, basePackage, useId)
+                .visitSchema(readSchema)
+                .generate();
+        refRegistry.putAll(bindings);
+
+        logger.info(() -> "Generated #" + bindings.size() + " classes from '" + source + "'");
+        for (final var entry : bindings.entrySet()) {
+            final var out = root.resolve("src/main/java").resolve(entry.getKey());
+            Files.createDirectories(out.getParent());
+            Files.writeString(out, entry.getValue());
         }
     }
 
@@ -344,7 +415,7 @@ public final class GenerateBindings {
     }
 
     private String onRef(final Supplier<JsonObject> definitions, final String packageName, final PojoGenerator.Ref ref,
-                         final Map<String, String> previousRefs, final String basePackage) {
+                         final Map<String, String> previousRefs, final String basePackage, final boolean useId) {
         final var refName = ref.getRef().substring(ref.getRef().lastIndexOf('/') + 1);
 
         // check for JSONSchemaProps mainly
@@ -399,8 +470,8 @@ public final class GenerateBindings {
                                             new PojoGenerator.PojoConfiguration()
                                                     .setClassName(refClassName)
                                                     .setPackageName(packageName)
-                                                    .setOnRef(r -> onRef(definitions, packageName, r, previousRefs, basePackage)),
-                                            schema, basePackage)
+                                                    .setOnRef(r -> onRef(definitions, packageName, r, previousRefs, basePackage, useId)),
+                                            schema, basePackage, useId)
                                             .visitSchema(schema)
                                             .generate());
                                 }
@@ -491,7 +562,9 @@ public final class GenerateBindings {
                                 !name.startsWith("v1.1.") &&
                                 !name.startsWith("v1.2.") &&
                                 !name.startsWith("v1.3.") &&
-                                !name.startsWith("v1.4.");
+                                !name.startsWith("v1.4.") &&
+                                !name.startsWith("v1.5.") &&
+                                !name.startsWith("v1.6.");
                     })
                     .sorted(comparing(it -> it.getFileName().toString()))
                     .map(t -> pool.submit(() -> {
@@ -591,16 +664,21 @@ public final class GenerateBindings {
         private final JsonObject schema;
         private final String clazz;
         private final String basePackage;
+        private final boolean useRefAndIdForNaming;
+        private final PojoConfiguration conf;
 
         private String asJson;
         private boolean lastEnumHasInjection;
+        private JsonObject lastTypeSchema;
 
         private K8sPojoGenerator(final PojoGenerator.PojoConfiguration conf, final JsonObject schema,
-                                 final String basePackage) {
-            super(conf);
+                                 final String basePackage, final boolean useIdForNaming) {
+            super(useIdForNaming && schema.containsKey("$id") ? fixConf(conf, schema) : conf);
+            this.conf = conf;
             this.clazz = conf.getClassName();
             this.basePackage = basePackage;
             this.schema = schema;
+            this.useRefAndIdForNaming = useIdForNaming;
         }
 
         @Override
@@ -629,7 +707,11 @@ public final class GenerateBindings {
 
         @Override
         protected PojoGenerator newSubPojoGenerator(final PojoConfiguration pojoConfiguration, final JsonObject schema) {
-            return new K8sPojoGenerator(pojoConfiguration, schema, basePackage);
+            if (useRefAndIdForNaming && schema.containsKey("$id")) {
+                final PojoConfiguration conf = fixConf(pojoConfiguration, schema);
+                return new K8sPojoGenerator(conf, schema, basePackage, useRefAndIdForNaming);
+            }
+            return new K8sPojoGenerator(pojoConfiguration, schema, basePackage, useRefAndIdForNaming);
         }
 
         @Override
@@ -671,6 +753,50 @@ public final class GenerateBindings {
                     "\n" + asJson);
         }
 
+        @Override
+        protected String enumName(final String javaName, final JsonObject schema) {
+            if (useRefAndIdForNaming && lastTypeSchema.containsKey("$id")) {
+                return nameFromId(lastTypeSchema.getString("$id"));
+            }
+            return super.enumName(javaName, schema);
+        }
+
+        @Override
+        protected String asType(final String javaName, final JsonObject schema, final boolean required) {
+            this.lastTypeSchema = schema;
+            if (useRefAndIdForNaming) {
+                if (isJsonObject(schema)) {
+                    imports.add(Map.class.getName());
+                    return "Map<String, String>";
+                }
+                if ("array".equals(schema.getString("type")) && isJsonObject(schema.getJsonObject("items"))) {
+                    imports.add(JsonArray.class.getName());
+                    return "JsonArray";
+                }
+
+                super.asType(javaName, schema, required); // triggers the nested generations so call it to get the full object graph
+
+                if (schema.containsKey("$ref")) {
+                    final var ref = schema.getString("$ref");
+                    return nameFromId(ref);
+                }
+                if ("array".equals(schema.getString("type"))) {
+                    if (schema.getJsonObject("items").containsKey("$id")) {
+                        return "List<" + nameFromId(schema.getJsonObject("items").getString("$id")) + ">";
+                    }
+                } else if (schema.containsKey("$id")) {
+                    return nameFromId(schema.getString("$id"));
+                }
+            }
+            return super.asType(javaName, schema, required);
+        }
+
+        private boolean isJsonObject(final JsonObject schema) {
+            return "object".equals(schema.getString("type")) &&
+                    schema.containsKey("properties") &&
+                    schema.getJsonObject("properties").isEmpty();
+        }
+
         private String generateAsJson() {
             return "" +
                     "    @Override\n" +
@@ -698,7 +824,7 @@ public final class GenerateBindings {
             final var type = attribute.getType();
             final var key = "\"\\\"" + attribute.getJsonName().replace("\"", "\\\"") + "\\\":";
             return switch (type) {
-                case "int", "long", "float", "double", "boolean", "Integer", "Long", "Float", "Double", "Boolean", "JsonObject", "JsonValue" ->
+                case "int", "long", "float", "double", "boolean", "Integer", "Long", "Float", "Double", "Boolean", "JsonObject", "JsonValue", "JsonArray" ->
                         key + "\" + " + attribute.getJavaName();
                 case "String" -> key + "\\\"\" +  JsonStrings.escapeJson(" + attribute.getJavaName() + ") + \"\\\"\"";
                 default -> {
@@ -709,7 +835,7 @@ public final class GenerateBindings {
                         yield switch (containedType) {
                             case "int", "long", "float", "double", "boolean" ->
                                     prefix + "String.valueOf(__it)" + suffix;
-                            case "Integer", "Long", "Float", "Double", "Boolean", "JsonObject", "JsonValue" ->
+                            case "Integer", "Long", "Float", "Double", "Boolean", "JsonObject", "JsonValue", "JsonArray" ->
                                     prefix + "__it == null ? \"null\" : String.valueOf(__it)" + suffix;
                             case "String" -> prefix +
                                     "__it == null ? \"null\" : (\"\\\"\" + JsonStrings.escapeJson(__it) + \"\\\"\")" + suffix;
@@ -724,7 +850,7 @@ public final class GenerateBindings {
                         yield switch (containedType) {
                             case "int", "long", "float", "double", "boolean" ->
                                     prefix + "String.valueOf(__it.getValue())" + suffix;
-                            case "Integer", "Long", "Float", "Double", "Boolean", "JsonObject", "JsonValue" ->
+                            case "Integer", "Long", "Float", "Double", "Boolean", "JsonObject", "JsonValue", "JsonArray" ->
                                     prefix + "(__it.getValue() == null ? \"null\" : String.valueOf(__it.getValue()))" + suffix;
                             case "String" -> prefix +
                                     "(__it.getValue() == null ? \"null\" : (\"\\\"\" + JsonStrings.escapeJson(__it.getValue()) + \"\\\"\"))" + suffix;
@@ -834,6 +960,21 @@ public final class GenerateBindings {
                     "float".equals(type) ||
                     "double".equals(type) ||
                     "boolean".equals(type);
+        }
+
+        private static PojoConfiguration fixConf(final PojoConfiguration pojoConfiguration, final JsonObject schema) {
+            final var id = schema.getString("$id");
+            return new PojoConfiguration()
+                    .setClassName(nameFromId(id))
+                    .setPackageName(pojoConfiguration.getPackageName())
+                    .setOnRef(pojoConfiguration.getOnRef())
+                    .setFluentSetters(pojoConfiguration.isFluentSetters())
+                    .setAddJsonbProperty(pojoConfiguration.isAddJsonbProperty())
+                    .setAddAllArgsConstructor(pojoConfiguration.isAddAllArgsConstructor());
+        }
+
+        private static String nameFromId(final String id) {
+            return id.substring(id.lastIndexOf('_') + 1);
         }
     }
 }

@@ -19,7 +19,13 @@
     <bundlebee.kubernetes.schemas.base>generated/kubernetes/jsonschema</bundlebee.kubernetes.schemas.base>
     <bundlebee.schema.extension>.jsonschema.raw.json</bundlebee.schema.extension>
     <generator.threads>64</generator.threads>
+    <generator.bundlebee.schema>https://raw.githubusercontent.com/yupiik/bundlebee/gh-pages/generated/jsonschema/manifest.descriptor.json</generator.bundlebee.schema>
+    <generator.type>BUNDLEBEE</generator.type> <!-- KUBERNETES, BUNDLEBEE, ALL -->
   </properties>
+
+  <modules>
+    <module>bundlebee-java</module>
+  </modules>
 
   <profiles>
     <profile> <!-- only used to generate/update the other modules -->

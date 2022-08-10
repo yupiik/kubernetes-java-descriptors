@@ -1,0 +1,10 @@
+= Kubernetes Java Descriptors
+
+Documentation available at TBD.
+
+== TIP
+
+Since the repository is pretty big, it can be useful to mv `.git` folder to something else (`.git_` for ex) while working in an IDE/editor supporting git to disable this support.
+Once work is done, close the IDE and use your `git` client to add/commit/push changes.
+This tip was tested successfully on Intellij Idea which hangs if you don't put a ton of memory or have a huge machine.
+
