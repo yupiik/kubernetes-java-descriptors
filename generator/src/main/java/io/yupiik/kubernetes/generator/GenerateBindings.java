@@ -699,6 +699,11 @@ public final class GenerateBindings {
                             public Object underlyingDescriptor() {
                                 return underlyingDescriptor;
                             }
+                                                    
+                            public Descriptor underlyingDescriptor(final Object instance) {
+                                underlyingDescriptor = instance;
+                                return this;
+                            }
                         """;
                 case BUNDLEBEE_MANIFEST -> """
 

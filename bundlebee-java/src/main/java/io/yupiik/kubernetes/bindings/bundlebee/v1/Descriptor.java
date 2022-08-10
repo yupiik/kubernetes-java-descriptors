@@ -175,4 +175,9 @@ public class Descriptor implements Validable<Descriptor>, Exportable {
     public Object underlyingDescriptor() {
         return underlyingDescriptor;
     }
+
+    public Descriptor underlyingDescriptor(final Object instance) {
+        underlyingDescriptor = instance;
+        return this;
+    }
 }
