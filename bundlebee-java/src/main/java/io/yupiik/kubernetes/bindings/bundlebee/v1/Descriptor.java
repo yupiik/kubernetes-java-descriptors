@@ -3,8 +3,7 @@ package io.yupiik.kubernetes.bindings.bundlebee.v1;
 import io.yupiik.kubernetes.bindings.bundlebee.Exportable;
 import io.yupiik.kubernetes.bindings.bundlebee.JsonStrings;
 import io.yupiik.kubernetes.bindings.bundlebee.Validable;
-import io.yupiik.kubernetes.bindings.bundlebee.ValidationException;
-import java.util.ArrayList;
+import jakarta.json.bind.annotation.JsonbTransient;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -168,5 +167,12 @@ public class Descriptor implements Validable<Descriptor>, Exportable {
                     (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @JsonbTransient
+    private transient Object underlyingDescriptor;
+
+    public Object underlyingDescriptor() {
+        return underlyingDescriptor;
     }
 }

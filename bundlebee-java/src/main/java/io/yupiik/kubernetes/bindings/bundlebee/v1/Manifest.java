@@ -2,10 +2,13 @@ package io.yupiik.kubernetes.bindings.bundlebee.v1;
 
 import io.yupiik.kubernetes.bindings.bundlebee.Exportable;
 import io.yupiik.kubernetes.bindings.bundlebee.Validable;
-import io.yupiik.kubernetes.bindings.bundlebee.ValidationException;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
 
@@ -77,5 +80,45 @@ public class Manifest implements Validable<Manifest>, Exportable {
                     (requirements != null ? "\"requirements\":" + requirements.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    public Manifest writeTo(final Path path) {
+        try {
+            final var logger = Logger.getLogger(getClass().getName());
+            final var bundlebee = Files.createDirectories(path.resolve("bundlebee"));
+            final var k8s = Files.createDirectories(bundlebee.resolve("kubernetes"));
+
+            final var manifestJson = bundlebee.resolve("manifest.json");
+            Files.writeString(manifestJson, asJson());
+            logger.info(() -> "Wrote '" + manifestJson + "'");
+
+            if (alveoli != null) {
+                for (final var alveolus : alveoli) {
+                    if (alveolus.getDescriptors() == null) {
+                        continue;
+                    }
+
+                    for (final var desc : alveolus.getDescriptors()) {
+                        final var file = k8s.resolve(desc.getLocation());
+                        final var underlyingDescriptor = desc.underlyingDescriptor();
+                        if (underlyingDescriptor != null) {
+                            final var asJson = underlyingDescriptor.getClass().getMethod("asJson");
+                            if (!asJson.canAccess(underlyingDescriptor)) {
+                                asJson.setAccessible(true);
+                            }
+                            Files.writeString(file, asJson.invoke(underlyingDescriptor).toString());
+                            logger.info(() -> "Wrote '" + file + "'");
+                        }
+                    }
+                }
+            }
+        } catch (final NoSuchMethodException | IllegalAccessException e) {
+            throw new IllegalStateException("Invalid descriptor", e);
+        } catch (final InvocationTargetException e) {
+            throw new IllegalStateException("Invalid descriptor", e.getTargetException());
+        } catch (final IOException ioe) {
+            throw new IllegalStateException(ioe);
+        }
+        return this;
     }
 }

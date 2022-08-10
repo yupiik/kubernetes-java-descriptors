@@ -20,7 +20,7 @@
     <bundlebee.schema.extension>.jsonschema.raw.json</bundlebee.schema.extension>
     <generator.threads>64</generator.threads>
     <generator.bundlebee.schema>https://raw.githubusercontent.com/yupiik/bundlebee/gh-pages/generated/jsonschema/manifest.descriptor.json</generator.bundlebee.schema>
-    <generator.type>BUNDLEBEE</generator.type> <!-- KUBERNETES, BUNDLEBEE, ALL -->
+    <generator.type>NONE</generator.type> <!-- KUBERNETES, BUNDLEBEE, ALL, NONE (default since safer) -->
   </properties>
 
   <modules>

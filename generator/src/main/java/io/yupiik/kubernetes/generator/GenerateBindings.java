@@ -6,10 +6,12 @@ import jakarta.json.JsonObject;
 import jakarta.json.JsonReaderFactory;
 import jakarta.json.JsonString;
 import jakarta.json.JsonValue;
+import jakarta.json.bind.annotation.JsonbTransient;
 import org.apache.johnzon.jsonschema.generator.PojoGenerator;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -80,6 +82,8 @@ public final class GenerateBindings {
     public void run() throws IOException, InterruptedException {
         final var httpClient = HttpClient.newBuilder().followRedirects(HttpClient.Redirect.ALWAYS).build();
         switch (type.toUpperCase(ROOT)) {
+            case "NONE" -> {
+            }
             case "ALL" -> {
                 doBundleBeeGeneration(httpClient);
                 doK8sGeneration(httpClient);
@@ -661,6 +665,9 @@ public final class GenerateBindings {
     }
 
     private static class K8sPojoGenerator extends PojoGenerator {
+        private static final String BUNDLEBEE_MANIFEST = "io.yupiik.kubernetes.bindings.bundlebee.v1.Manifest";
+        private static final String BUNDLEBEE_DESCRIPTOR = "io.yupiik.kubernetes.bindings.bundlebee.v1.Descriptor";
+
         private final JsonObject schema;
         private final String clazz;
         private final String basePackage;
@@ -668,6 +675,7 @@ public final class GenerateBindings {
         private final PojoConfiguration conf;
 
         private String asJson;
+        private String validator;
         private boolean lastEnumHasInjection;
         private JsonObject lastTypeSchema;
 
@@ -681,14 +689,88 @@ public final class GenerateBindings {
             this.useRefAndIdForNaming = useIdForNaming;
         }
 
+        private String classSpecificMethods() {
+            return switch (fullyQualifiedName()) {
+                case BUNDLEBEE_DESCRIPTOR -> """
+                            
+                            @JsonbTransient
+                            private transient Object underlyingDescriptor;
+                                                    
+                            public Object underlyingDescriptor() {
+                                return underlyingDescriptor;
+                            }
+                        """;
+                case BUNDLEBEE_MANIFEST -> """
+
+                            public Manifest writeTo(final Path path) {
+                                try {
+                                    final var logger = Logger.getLogger(getClass().getName());
+                                    final var bundlebee = Files.createDirectories(path.resolve("bundlebee"));
+                                    final var k8s = Files.createDirectories(bundlebee.resolve("kubernetes"));
+                        
+                                    final var manifestJson = bundlebee.resolve("manifest.json");
+                                    Files.writeString(manifestJson, asJson());
+                                    logger.info(() -> "Wrote '" + manifestJson + "'");
+                        
+                                    if (alveoli != null) {
+                                        for (final var alveolus : alveoli) {
+                                            if (alveolus.getDescriptors() == null) {
+                                                continue;
+                                            }
+                        
+                                            for (final var desc : alveolus.getDescriptors()) {
+                                                final var file = k8s.resolve(desc.getLocation());
+                                                final var underlyingDescriptor = desc.underlyingDescriptor();
+                                                if (underlyingDescriptor != null) {
+                                                    final var asJson = underlyingDescriptor.getClass().getMethod("asJson");
+                                                    if (!asJson.canAccess(underlyingDescriptor)) {
+                                                        asJson.setAccessible(true);
+                                                    }
+                                                    Files.writeString(file, asJson.invoke(underlyingDescriptor).toString());
+                                                    logger.info(() -> "Wrote '" + file + "'");
+                                                }
+                                            }
+                                        }
+                                    }
+                                } catch (final NoSuchMethodException | IllegalAccessException e) {
+                                    throw new IllegalStateException("Invalid descriptor", e);
+                                } catch (final InvocationTargetException e) {
+                                    throw new IllegalStateException("Invalid descriptor", e.getTargetException());
+                                } catch (final IOException ioe) {
+                                    throw new IllegalStateException(ioe);
+                                }
+                                return this;
+                            }
+                        """;
+                default -> "";
+            };
+        }
+
+        private String fullyQualifiedName() {
+            return conf.getPackageName() + '.' + clazz;
+        }
+
         @Override
         public Map<String, String> generate() {
             asJson = generateAsJson(); // enables to handle imports properly having attributes and avoids to regenerate it in beforeClassEnd()
+            validator = generateValidator();
+
+            switch (fullyQualifiedName()) {
+                case BUNDLEBEE_MANIFEST -> {
+                    imports.add(Path.class.getName());
+                    imports.add(Files.class.getName());
+                    imports.add(IOException.class.getName());
+                    imports.add(Logger.class.getName());
+                    imports.add(InvocationTargetException.class.getName());
+                }
+                case BUNDLEBEE_DESCRIPTOR -> imports.add(JsonbTransient.class.getName());
+                default -> {}
+            }
 
             // for afterClassName() and beforeClassEnd()
             imports.add(basePackage + ".Exportable");
             imports.add(basePackage + ".Validable");
-            if (!attributes.isEmpty()) {
+            if (validator.contains("ValidationException")) {
                 imports.add(basePackage + ".ValidationException");
                 imports.add(List.class.getName());
                 imports.add(ArrayList.class.getName());
@@ -749,8 +831,9 @@ public final class GenerateBindings {
         protected String beforeClassEnd() {
             return attributes.isEmpty() ? "" : ("" +
                     "\n" + generateFluentSetter() +
-                    "\n" + generateValidator() +
-                    "\n" + asJson);
+                    "\n" + validator +
+                    "\n" + asJson +
+                    classSpecificMethods());
         }
 
         @Override

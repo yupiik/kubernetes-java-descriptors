@@ -3,8 +3,6 @@ package io.yupiik.kubernetes.bindings.bundlebee.v1;
 import io.yupiik.kubernetes.bindings.bundlebee.Exportable;
 import io.yupiik.kubernetes.bindings.bundlebee.JsonStrings;
 import io.yupiik.kubernetes.bindings.bundlebee.Validable;
-import io.yupiik.kubernetes.bindings.bundlebee.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;

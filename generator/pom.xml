@@ -34,7 +34,7 @@
 
   <build>
     <plugins>
-      <plugin> <!-- update the project (manually): mvn clean compile exec:java -->
+      <plugin> <!-- update the project (manually): mvn clean compile exec:java -Dgenerator.type=KUBERNETES|BUNDLEBEE|NONE|ALL -->
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.1.0</version>
