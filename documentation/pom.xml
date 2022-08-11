@@ -17,7 +17,7 @@
       <plugin> <!-- mvn compile yupiik-tools:serve-minisite -->
         <groupId>io.yupiik.maven</groupId>
         <artifactId>yupiik-tools-maven-plugin</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>1.1.0</version>
         <configuration>
           <logoText>Kubernetes Java Descriptors</logoText>
           <indexText>Kubernetes Java Descriptors</indexText>
