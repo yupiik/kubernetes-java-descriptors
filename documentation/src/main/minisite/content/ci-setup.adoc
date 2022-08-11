@@ -94,22 +94,52 @@ Then you just need to write your script almost as in plain java:
 
 [source,java]
 ----
-import io.yupiik.kubernetes.bindings.v1_24_3.v1.*; // <1>
-
-{ // <2>
-  final var output = Files.createDirectories(Path.of("target/k8s-descriptors"));
-
-  final var deployment = new Deployment()
-            .spec(new DeploymentSpec()
-                /* ... */);
-
-  Files.writeString(
-        output.resolve("my-deployment.json"),
-        deployment.asJson());
-}
-
-/exit // <3>
+include::{partialsdir}/ci.jshell.java[]
 ----
 <.> Import the classes you need (here we use a wildcard import on the model because it is safe for our script but you can use explicit imports),
 <.> A small trick to write a readable script is to enable multiline snippet by wrapping the code in a block (rest of the code is similar to previous ones),
 <.> Finally when finished we exit JShell.
+
+== JBang Setup
+
+link:https://www.jbang.dev/[JBang] can also be used to generate your descriptors.
+Here is a script directly runnable with one of these runner:
+
+* From Maven/Gradle
+* From the command line if you installed `jbang` (either making your script executable - `///usr/bin/env jbang "$0" "$@" ; exit $?` or using `jbang $script`),
+* From `jbang-actions` (Github Actions integration)
+
+[source,java]
+.descriptors.generator.java
+----
+include::{partialsdir}/ci.jbang.java[]
+----
+
+It is pretty much the same script than before but we handled the classpath thanks to `//DEPS` directive which can be convenient if you are already using JBang.
+
+To set it with Github Actions use:
+
+[source,yaml]
+----
+on: [push]
+
+jobs:
+  jbang:
+    runs-on: ubuntu-20.04
+    name: Generate descriptors
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+    - uses: actions/cache@v3
+      with:
+        path: /root/.jbang
+        key: $-jbang-$
+        restore-keys: |
+            $-jbang-
+    - name: jbang
+      uses: jbangdev/jbang-action@v0.97.0
+      with:
+        script: descriptors.generator.java
+      env:
+        JBANG_REPO: /root/.jbang/repository
+----
