@@ -1,0 +1,14 @@
+{
+  "skip": true,
+  "name": "Kubernetes Java Descriptors",
+  "description": "A project providing Kubernetes and BundleBee descriptors/bindings to ease automating its infrastructure as code.",
+  "website": "https://www.yupiik.io/kubernetes-java-descriptors",
+  "logo": "https://www.yupiik.com/img/logo.png",
+  "categories": [
+    "java",
+    "infrastructure as code",
+    "kubernetes",
+    "bundlebee",
+    "deployment"
+  ]
+}
