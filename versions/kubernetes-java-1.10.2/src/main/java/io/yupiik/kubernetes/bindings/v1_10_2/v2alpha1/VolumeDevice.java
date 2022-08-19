@@ -35,7 +35,8 @@ public class VolumeDevice implements Validable<VolumeDevice>, Exportable {
 
     public VolumeDevice(final String devicePath,
                         final String name) {
-        // no-op
+        this.devicePath = devicePath;
+        this.name = name;
     }
 
     public String getDevicePath() {

@@ -37,7 +37,9 @@ public class CustomResourceDefinitionVersion implements Validable<CustomResource
     public CustomResourceDefinitionVersion(final String name,
                                            final boolean served,
                                            final boolean storage) {
-        // no-op
+        this.name = name;
+        this.served = served;
+        this.storage = storage;
     }
 
     public String getName() {

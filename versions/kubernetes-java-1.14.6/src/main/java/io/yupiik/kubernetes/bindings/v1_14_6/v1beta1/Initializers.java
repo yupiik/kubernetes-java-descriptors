@@ -34,7 +34,8 @@ public class Initializers implements Validable<Initializers>, Exportable {
 
     public Initializers(final List<Initializer> pending,
                         final Status result) {
-        // no-op
+        this.pending = pending;
+        this.result = result;
     }
 
     public List<Initializer> getPending() {

@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_19_11.v1;
 import io.yupiik.kubernetes.bindings.v1_19_11.Exportable;
 import io.yupiik.kubernetes.bindings.v1_19_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_11.Validable;
-import io.yupiik.kubernetes.bindings.v1_19_11.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -33,7 +30,7 @@ public class PodIP implements Validable<PodIP>, Exportable {
     }
 
     public PodIP(final String ip) {
-        // no-op
+        this.ip = ip;
     }
 
     public String getIp() {

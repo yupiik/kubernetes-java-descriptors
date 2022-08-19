@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_18_5.v1;
 import io.yupiik.kubernetes.bindings.v1_18_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_5.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -37,7 +34,9 @@ public class WebhookClientConfig implements Validable<WebhookClientConfig>, Expo
     public WebhookClientConfig(final String caBundle,
                                final ServiceReference service,
                                final String url) {
-        // no-op
+        this.caBundle = caBundle;
+        this.service = service;
+        this.url = url;
     }
 
     public String getCaBundle() {

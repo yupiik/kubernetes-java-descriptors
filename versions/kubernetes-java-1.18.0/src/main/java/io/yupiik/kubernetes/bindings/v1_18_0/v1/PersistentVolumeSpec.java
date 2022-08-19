@@ -18,9 +18,7 @@ package io.yupiik.kubernetes.bindings.v1_18_0.v1;
 import io.yupiik.kubernetes.bindings.v1_18_0.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_0.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_0.ValidationException;
 import jakarta.json.JsonObject;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -92,7 +90,36 @@ public class PersistentVolumeSpec implements Validable<PersistentVolumeSpec>, Ex
                                 final StorageOSPersistentVolumeSource storageos,
                                 final String volumeMode,
                                 final VsphereVirtualDiskVolumeSource vsphereVolume) {
-        // no-op
+        this.accessModes = accessModes;
+        this.awsElasticBlockStore = awsElasticBlockStore;
+        this.azureDisk = azureDisk;
+        this.azureFile = azureFile;
+        this.capacity = capacity;
+        this.cephfs = cephfs;
+        this.cinder = cinder;
+        this.claimRef = claimRef;
+        this.csi = csi;
+        this.fc = fc;
+        this.flexVolume = flexVolume;
+        this.flocker = flocker;
+        this.gcePersistentDisk = gcePersistentDisk;
+        this.glusterfs = glusterfs;
+        this.hostPath = hostPath;
+        this.iscsi = iscsi;
+        this.local = local;
+        this.mountOptions = mountOptions;
+        this.nfs = nfs;
+        this.nodeAffinity = nodeAffinity;
+        this.persistentVolumeReclaimPolicy = persistentVolumeReclaimPolicy;
+        this.photonPersistentDisk = photonPersistentDisk;
+        this.portworxVolume = portworxVolume;
+        this.quobyte = quobyte;
+        this.rbd = rbd;
+        this.scaleIO = scaleIO;
+        this.storageClassName = storageClassName;
+        this.storageos = storageos;
+        this.volumeMode = volumeMode;
+        this.vsphereVolume = vsphereVolume;
     }
 
     public List<String> getAccessModes() {

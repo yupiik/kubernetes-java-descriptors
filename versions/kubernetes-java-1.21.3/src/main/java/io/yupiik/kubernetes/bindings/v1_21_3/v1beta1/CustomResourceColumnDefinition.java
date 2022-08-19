@@ -43,7 +43,12 @@ public class CustomResourceColumnDefinition implements Validable<CustomResourceC
                                           final String name,
                                           final Integer priority,
                                           final String type) {
-        // no-op
+        this.JSONPath = JSONPath;
+        this.description = description;
+        this.format = format;
+        this.name = name;
+        this.priority = priority;
+        this.type = type;
     }
 
     public String getJSONPath() {

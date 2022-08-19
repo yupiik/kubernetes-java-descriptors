@@ -18,9 +18,7 @@ package io.yupiik.kubernetes.bindings.v1_20_3.v1;
 import io.yupiik.kubernetes.bindings.v1_20_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_20_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_20_3.ValidationException;
 import jakarta.json.JsonObject;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -54,7 +52,17 @@ public class NodeStatus implements Validable<NodeStatus>, Exportable {
                       final String phase,
                       final List<AttachedVolume> volumesAttached,
                       final List<String> volumesInUse) {
-        // no-op
+        this.addresses = addresses;
+        this.allocatable = allocatable;
+        this.capacity = capacity;
+        this.conditions = conditions;
+        this.config = config;
+        this.daemonEndpoints = daemonEndpoints;
+        this.images = images;
+        this.nodeInfo = nodeInfo;
+        this.phase = phase;
+        this.volumesAttached = volumesAttached;
+        this.volumesInUse = volumesInUse;
     }
 
     public List<NodeAddress> getAddresses() {

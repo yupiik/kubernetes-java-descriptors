@@ -43,7 +43,12 @@ public class RuntimeClass implements Validable<RuntimeClass>, Exportable {
                         final ObjectMeta metadata,
                         final Overhead overhead,
                         final Scheduling scheduling) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.handler = handler;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.overhead = overhead;
+        this.scheduling = scheduling;
     }
 
     public String getApiVersion() {

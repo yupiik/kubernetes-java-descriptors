@@ -41,7 +41,11 @@ public class SubjectAccessReview implements Validable<SubjectAccessReview>, Expo
                                final ObjectMeta metadata,
                                final SubjectAccessReviewSpec spec,
                                final SubjectAccessReviewStatus status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
     public String getApiVersion() {

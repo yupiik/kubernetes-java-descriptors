@@ -39,7 +39,10 @@ public class ClusterRole implements Validable<ClusterRole>, Exportable {
                        final String kind,
                        final ObjectMeta metadata,
                        final List<PolicyRule> rules) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.rules = rules;
     }
 
     public String getApiVersion() {

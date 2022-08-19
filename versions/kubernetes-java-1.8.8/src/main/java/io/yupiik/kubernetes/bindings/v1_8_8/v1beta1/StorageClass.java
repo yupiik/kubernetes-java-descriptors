@@ -48,7 +48,14 @@ public class StorageClass implements Validable<StorageClass>, Exportable {
                         final Map<String, String> parameters,
                         final String provisioner,
                         final String reclaimPolicy) {
-        // no-op
+        this.allowVolumeExpansion = allowVolumeExpansion;
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.mountOptions = mountOptions;
+        this.parameters = parameters;
+        this.provisioner = provisioner;
+        this.reclaimPolicy = reclaimPolicy;
     }
 
     public Boolean getAllowVolumeExpansion() {

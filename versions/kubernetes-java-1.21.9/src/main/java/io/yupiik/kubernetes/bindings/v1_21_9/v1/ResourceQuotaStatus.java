@@ -17,10 +17,7 @@ package io.yupiik.kubernetes.bindings.v1_21_9.v1;
 
 import io.yupiik.kubernetes.bindings.v1_21_9.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_9.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_9.ValidationException;
 import jakarta.json.JsonObject;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -35,7 +32,8 @@ public class ResourceQuotaStatus implements Validable<ResourceQuotaStatus>, Expo
 
     public ResourceQuotaStatus(final JsonObject hard,
                                final JsonObject used) {
-        // no-op
+        this.hard = hard;
+        this.used = used;
     }
 
     public JsonObject getHard() {

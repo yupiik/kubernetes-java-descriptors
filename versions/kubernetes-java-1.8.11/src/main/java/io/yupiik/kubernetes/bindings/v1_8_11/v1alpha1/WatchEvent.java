@@ -35,7 +35,8 @@ public class WatchEvent implements Validable<WatchEvent>, Exportable {
 
     public WatchEvent(final RawExtension object,
                       final String type) {
-        // no-op
+        this.object = object;
+        this.type = type;
     }
 
     public RawExtension getObject() {

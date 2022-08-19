@@ -37,7 +37,9 @@ public class ConfigMapKeySelector implements Validable<ConfigMapKeySelector>, Ex
     public ConfigMapKeySelector(final String key,
                                 final String name,
                                 final Boolean optional) {
-        // no-op
+        this.key = key;
+        this.name = name;
+        this.optional = optional;
     }
 
     public String getKey() {

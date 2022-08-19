@@ -39,7 +39,10 @@ public class ResourceRule implements Validable<ResourceRule>, Exportable {
                         final List<String> resourceNames,
                         final List<String> resources,
                         final List<String> verbs) {
-        // no-op
+        this.apiGroups = apiGroups;
+        this.resourceNames = resourceNames;
+        this.resources = resources;
+        this.verbs = verbs;
     }
 
     public List<String> getApiGroups() {

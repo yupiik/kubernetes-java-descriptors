@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_23_5.v1beta2;
 
 import io.yupiik.kubernetes.bindings.v1_23_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_23_5.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -32,7 +30,7 @@ public class FlowSchemaStatus implements Validable<FlowSchemaStatus>, Exportable
     }
 
     public FlowSchemaStatus(final List<FlowSchemaCondition> conditions) {
-        // no-op
+        this.conditions = conditions;
     }
 
     public List<FlowSchemaCondition> getConditions() {

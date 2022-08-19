@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_21_11.v1;
 import io.yupiik.kubernetes.bindings.v1_21_11.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_11.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_11.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -35,7 +32,8 @@ public class ServiceBackendPort implements Validable<ServiceBackendPort>, Export
 
     public ServiceBackendPort(final String name,
                               final Integer number) {
-        // no-op
+        this.name = name;
+        this.number = number;
     }
 
     public String getName() {

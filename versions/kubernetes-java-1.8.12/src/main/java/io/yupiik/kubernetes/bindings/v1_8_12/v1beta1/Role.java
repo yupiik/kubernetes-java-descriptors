@@ -39,7 +39,10 @@ public class Role implements Validable<Role>, Exportable {
                 final String kind,
                 final ObjectMeta metadata,
                 final List<PolicyRule> rules) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.rules = rules;
     }
 
     public String getApiVersion() {

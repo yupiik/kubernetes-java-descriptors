@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_17_15.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_17_15.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_15.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_15.Validable;
-import io.yupiik.kubernetes.bindings.v1_17_15.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -35,7 +33,8 @@ public class SupplementalGroupsStrategyOptions implements Validable<Supplemental
 
     public SupplementalGroupsStrategyOptions(final List<IDRange> ranges,
                                              final String rule) {
-        // no-op
+        this.ranges = ranges;
+        this.rule = rule;
     }
 
     public List<IDRange> getRanges() {

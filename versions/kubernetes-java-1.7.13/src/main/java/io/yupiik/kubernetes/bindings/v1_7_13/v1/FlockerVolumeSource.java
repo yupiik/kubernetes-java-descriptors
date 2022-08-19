@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_7_13.v1;
 import io.yupiik.kubernetes.bindings.v1_7_13.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_13.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_13.Validable;
-import io.yupiik.kubernetes.bindings.v1_7_13.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -35,7 +32,8 @@ public class FlockerVolumeSource implements Validable<FlockerVolumeSource>, Expo
 
     public FlockerVolumeSource(final String datasetName,
                                final String datasetUUID) {
-        // no-op
+        this.datasetName = datasetName;
+        this.datasetUUID = datasetUUID;
     }
 
     public String getDatasetName() {

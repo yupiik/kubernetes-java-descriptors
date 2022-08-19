@@ -35,7 +35,8 @@ public class WebhookConversion implements Validable<WebhookConversion>, Exportab
 
     public WebhookConversion(final WebhookClientConfig clientConfig,
                              final List<String> conversionReviewVersions) {
-        // no-op
+        this.clientConfig = clientConfig;
+        this.conversionReviewVersions = conversionReviewVersions;
     }
 
     public WebhookClientConfig getClientConfig() {

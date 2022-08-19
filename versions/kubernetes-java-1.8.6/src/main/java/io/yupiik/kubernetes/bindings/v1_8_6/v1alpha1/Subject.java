@@ -39,7 +39,10 @@ public class Subject implements Validable<Subject>, Exportable {
                    final String kind,
                    final String name,
                    final String namespace) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.name = name;
+        this.namespace = namespace;
     }
 
     public String getApiVersion() {

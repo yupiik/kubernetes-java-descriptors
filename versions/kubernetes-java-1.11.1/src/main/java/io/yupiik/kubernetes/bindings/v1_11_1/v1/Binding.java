@@ -39,7 +39,10 @@ public class Binding implements Validable<Binding>, Exportable {
                    final String kind,
                    final ObjectMeta metadata,
                    final ObjectReference target) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.target = target;
     }
 
     public String getApiVersion() {

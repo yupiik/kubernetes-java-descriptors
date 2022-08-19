@@ -92,7 +92,36 @@ public class PodSpec implements Validable<PodSpec>, Exportable {
                    final Integer terminationGracePeriodSeconds,
                    final List<Toleration> tolerations,
                    final List<Volume> volumes) {
-        // no-op
+        this.activeDeadlineSeconds = activeDeadlineSeconds;
+        this.affinity = affinity;
+        this.automountServiceAccountToken = automountServiceAccountToken;
+        this.containers = containers;
+        this.dnsConfig = dnsConfig;
+        this.dnsPolicy = dnsPolicy;
+        this.enableServiceLinks = enableServiceLinks;
+        this.hostAliases = hostAliases;
+        this.hostIPC = hostIPC;
+        this.hostNetwork = hostNetwork;
+        this.hostPID = hostPID;
+        this.hostname = hostname;
+        this.imagePullSecrets = imagePullSecrets;
+        this.initContainers = initContainers;
+        this.nodeName = nodeName;
+        this.nodeSelector = nodeSelector;
+        this.priority = priority;
+        this.priorityClassName = priorityClassName;
+        this.readinessGates = readinessGates;
+        this.restartPolicy = restartPolicy;
+        this.runtimeClassName = runtimeClassName;
+        this.schedulerName = schedulerName;
+        this.securityContext = securityContext;
+        this.serviceAccount = serviceAccount;
+        this.serviceAccountName = serviceAccountName;
+        this.shareProcessNamespace = shareProcessNamespace;
+        this.subdomain = subdomain;
+        this.terminationGracePeriodSeconds = terminationGracePeriodSeconds;
+        this.tolerations = tolerations;
+        this.volumes = volumes;
     }
 
     public Integer getActiveDeadlineSeconds() {

@@ -18,10 +18,7 @@ package io.yupiik.kubernetes.bindings.v1_16_10.v1beta2;
 import io.yupiik.kubernetes.bindings.v1_16_10.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_10.Validable;
-import io.yupiik.kubernetes.bindings.v1_16_10.ValidationException;
 import jakarta.json.JsonObject;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -44,7 +41,12 @@ public class ManagedFieldsEntry implements Validable<ManagedFieldsEntry>, Export
                               final String manager,
                               final String operation,
                               final String time) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.fieldsType = fieldsType;
+        this.fieldsV1 = fieldsV1;
+        this.manager = manager;
+        this.operation = operation;
+        this.time = time;
     }
 
     public String getApiVersion() {

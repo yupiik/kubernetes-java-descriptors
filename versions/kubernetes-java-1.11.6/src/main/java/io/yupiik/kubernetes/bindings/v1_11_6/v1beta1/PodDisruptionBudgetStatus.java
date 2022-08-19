@@ -43,7 +43,12 @@ public class PodDisruptionBudgetStatus implements Validable<PodDisruptionBudgetS
                                      final int disruptionsAllowed,
                                      final int expectedPods,
                                      final Integer observedGeneration) {
-        // no-op
+        this.currentHealthy = currentHealthy;
+        this.desiredHealthy = desiredHealthy;
+        this.disruptedPods = disruptedPods;
+        this.disruptionsAllowed = disruptionsAllowed;
+        this.expectedPods = expectedPods;
+        this.observedGeneration = observedGeneration;
     }
 
     public int getCurrentHealthy() {

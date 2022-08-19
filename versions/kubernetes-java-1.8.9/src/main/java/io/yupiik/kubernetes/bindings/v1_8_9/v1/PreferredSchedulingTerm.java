@@ -34,7 +34,8 @@ public class PreferredSchedulingTerm implements Validable<PreferredSchedulingTer
 
     public PreferredSchedulingTerm(final NodeSelectorTerm preference,
                                    final int weight) {
-        // no-op
+        this.preference = preference;
+        this.weight = weight;
     }
 
     public NodeSelectorTerm getPreference() {

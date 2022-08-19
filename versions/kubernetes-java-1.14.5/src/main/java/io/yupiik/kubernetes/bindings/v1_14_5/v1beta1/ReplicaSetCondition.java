@@ -41,7 +41,11 @@ public class ReplicaSetCondition implements Validable<ReplicaSetCondition>, Expo
                                final String reason,
                                final String status,
                                final String type) {
-        // no-op
+        this.lastTransitionTime = lastTransitionTime;
+        this.message = message;
+        this.reason = reason;
+        this.status = status;
+        this.type = type;
     }
 
     public String getLastTransitionTime() {

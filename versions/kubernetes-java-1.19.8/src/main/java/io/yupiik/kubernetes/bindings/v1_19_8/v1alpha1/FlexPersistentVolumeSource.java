@@ -42,7 +42,11 @@ public class FlexPersistentVolumeSource implements Validable<FlexPersistentVolum
                                       final Map<String, String> options,
                                       final Boolean readOnly,
                                       final SecretReference secretRef) {
-        // no-op
+        this.driver = driver;
+        this.fsType = fsType;
+        this.options = options;
+        this.readOnly = readOnly;
+        this.secretRef = secretRef;
     }
 
     public String getDriver() {

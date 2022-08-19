@@ -34,7 +34,8 @@ public class PodsMetricStatus implements Validable<PodsMetricStatus>, Exportable
 
     public PodsMetricStatus(final MetricValueStatus current,
                             final MetricIdentifier metric) {
-        // no-op
+        this.current = current;
+        this.metric = metric;
     }
 
     public MetricValueStatus getCurrent() {

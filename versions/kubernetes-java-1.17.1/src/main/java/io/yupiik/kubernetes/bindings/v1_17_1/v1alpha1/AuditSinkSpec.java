@@ -34,7 +34,8 @@ public class AuditSinkSpec implements Validable<AuditSinkSpec>, Exportable {
 
     public AuditSinkSpec(final Policy policy,
                          final Webhook webhook) {
-        // no-op
+        this.policy = policy;
+        this.webhook = webhook;
     }
 
     public Policy getPolicy() {

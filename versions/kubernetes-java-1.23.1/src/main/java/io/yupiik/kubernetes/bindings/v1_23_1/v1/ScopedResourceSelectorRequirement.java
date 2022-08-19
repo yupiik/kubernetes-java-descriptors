@@ -37,7 +37,9 @@ public class ScopedResourceSelectorRequirement implements Validable<ScopedResour
     public ScopedResourceSelectorRequirement(final ScopedResourceSelectorRequirementOperator operator,
                                              final ScopedResourceSelectorRequirementScopeName scopeName,
                                              final List<String> values) {
-        // no-op
+        this.operator = operator;
+        this.scopeName = scopeName;
+        this.values = values;
     }
 
     public ScopedResourceSelectorRequirementOperator getOperator() {

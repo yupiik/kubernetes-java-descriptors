@@ -37,7 +37,9 @@ public class PortStatus implements Validable<PortStatus>, Exportable {
     public PortStatus(final String error,
                       final int port,
                       final String protocol) {
-        // no-op
+        this.error = error;
+        this.port = port;
+        this.protocol = protocol;
     }
 
     public String getError() {

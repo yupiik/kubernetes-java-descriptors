@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_7_3.v2alpha1;
 import io.yupiik.kubernetes.bindings.v1_7_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_7_3.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -36,7 +34,8 @@ public class LabelSelector implements Validable<LabelSelector>, Exportable {
 
     public LabelSelector(final List<LabelSelectorRequirement> matchExpressions,
                          final Map<String, String> matchLabels) {
-        // no-op
+        this.matchExpressions = matchExpressions;
+        this.matchLabels = matchLabels;
     }
 
     public List<LabelSelectorRequirement> getMatchExpressions() {

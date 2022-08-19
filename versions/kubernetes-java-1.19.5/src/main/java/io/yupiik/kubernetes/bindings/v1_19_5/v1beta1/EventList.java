@@ -39,7 +39,10 @@ public class EventList implements Validable<EventList>, Exportable {
                      final List<Event> items,
                      final String kind,
                      final ListMeta metadata) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.items = items;
+        this.kind = kind;
+        this.metadata = metadata;
     }
 
     public String getApiVersion() {

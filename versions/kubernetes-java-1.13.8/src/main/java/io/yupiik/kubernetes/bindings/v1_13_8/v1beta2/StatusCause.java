@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_13_8.v1beta2;
 import io.yupiik.kubernetes.bindings.v1_13_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_13_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_8.Validable;
-import io.yupiik.kubernetes.bindings.v1_13_8.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -37,7 +34,9 @@ public class StatusCause implements Validable<StatusCause>, Exportable {
     public StatusCause(final String field,
                        final String message,
                        final String reason) {
-        // no-op
+        this.field = field;
+        this.message = message;
+        this.reason = reason;
     }
 
     public String getField() {

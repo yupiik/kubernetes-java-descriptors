@@ -51,7 +51,16 @@ public class ScaleIOPersistentVolumeSource implements Validable<ScaleIOPersisten
                                          final String storagePool,
                                          final String system,
                                          final String volumeName) {
-        // no-op
+        this.fsType = fsType;
+        this.gateway = gateway;
+        this.protectionDomain = protectionDomain;
+        this.readOnly = readOnly;
+        this.secretRef = secretRef;
+        this.sslEnabled = sslEnabled;
+        this.storageMode = storageMode;
+        this.storagePool = storagePool;
+        this.system = system;
+        this.volumeName = volumeName;
     }
 
     public String getFsType() {

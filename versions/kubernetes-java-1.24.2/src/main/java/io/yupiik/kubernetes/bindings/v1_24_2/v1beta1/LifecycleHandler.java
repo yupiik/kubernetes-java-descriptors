@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_24_2.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_24_2.Exportable;
 import io.yupiik.kubernetes.bindings.v1_24_2.Validable;
-import io.yupiik.kubernetes.bindings.v1_24_2.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -36,7 +33,9 @@ public class LifecycleHandler implements Validable<LifecycleHandler>, Exportable
     public LifecycleHandler(final ExecAction exec,
                             final HTTPGetAction httpGet,
                             final TCPSocketAction tcpSocket) {
-        // no-op
+        this.exec = exec;
+        this.httpGet = httpGet;
+        this.tcpSocket = tcpSocket;
     }
 
     public ExecAction getExec() {

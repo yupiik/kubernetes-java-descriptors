@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_21_8.v1;
 
 import io.yupiik.kubernetes.bindings.v1_21_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_8.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_8.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -34,7 +31,8 @@ public class IngressBackend implements Validable<IngressBackend>, Exportable {
 
     public IngressBackend(final TypedLocalObjectReference resource,
                           final IngressServiceBackend service) {
-        // no-op
+        this.resource = resource;
+        this.service = service;
     }
 
     public TypedLocalObjectReference getResource() {

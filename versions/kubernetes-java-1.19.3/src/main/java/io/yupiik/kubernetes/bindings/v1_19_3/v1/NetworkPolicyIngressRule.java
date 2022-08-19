@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_19_3.v1;
 
 import io.yupiik.kubernetes.bindings.v1_19_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_19_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_19_3.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -34,7 +32,8 @@ public class NetworkPolicyIngressRule implements Validable<NetworkPolicyIngressR
 
     public NetworkPolicyIngressRule(final List<NetworkPolicyPeer> from,
                                     final List<NetworkPolicyPort> ports) {
-        // no-op
+        this.from = from;
+        this.ports = ports;
     }
 
     public List<NetworkPolicyPeer> getFrom() {

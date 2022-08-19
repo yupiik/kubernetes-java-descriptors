@@ -35,7 +35,8 @@ public class ServerAddressByClientCIDR implements Validable<ServerAddressByClien
 
     public ServerAddressByClientCIDR(final String clientCIDR,
                                      final String serverAddress) {
-        // no-op
+        this.clientCIDR = clientCIDR;
+        this.serverAddress = serverAddress;
     }
 
     public String getClientCIDR() {

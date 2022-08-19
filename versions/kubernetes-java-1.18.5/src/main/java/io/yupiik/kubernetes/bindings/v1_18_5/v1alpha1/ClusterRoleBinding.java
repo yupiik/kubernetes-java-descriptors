@@ -41,7 +41,11 @@ public class ClusterRoleBinding implements Validable<ClusterRoleBinding>, Export
                               final ObjectMeta metadata,
                               final RoleRef roleRef,
                               final List<Subject> subjects) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.roleRef = roleRef;
+        this.subjects = subjects;
     }
 
     public String getApiVersion() {

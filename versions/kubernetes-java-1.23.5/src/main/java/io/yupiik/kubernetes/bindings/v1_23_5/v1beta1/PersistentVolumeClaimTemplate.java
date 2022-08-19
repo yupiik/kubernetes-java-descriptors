@@ -34,7 +34,8 @@ public class PersistentVolumeClaimTemplate implements Validable<PersistentVolume
 
     public PersistentVolumeClaimTemplate(final ObjectMeta metadata,
                                          final PersistentVolumeClaimSpec spec) {
-        // no-op
+        this.metadata = metadata;
+        this.spec = spec;
     }
 
     public ObjectMeta getMetadata() {

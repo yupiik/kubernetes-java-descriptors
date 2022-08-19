@@ -37,7 +37,9 @@ public class GlusterfsVolumeSource implements Validable<GlusterfsVolumeSource>, 
     public GlusterfsVolumeSource(final String endpoints,
                                  final String path,
                                  final Boolean readOnly) {
-        // no-op
+        this.endpoints = endpoints;
+        this.path = path;
+        this.readOnly = readOnly;
     }
 
     public String getEndpoints() {

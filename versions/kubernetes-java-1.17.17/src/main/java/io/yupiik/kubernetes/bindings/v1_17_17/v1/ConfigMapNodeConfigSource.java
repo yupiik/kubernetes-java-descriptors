@@ -41,7 +41,11 @@ public class ConfigMapNodeConfigSource implements Validable<ConfigMapNodeConfigS
                                      final String namespace,
                                      final String resourceVersion,
                                      final String uid) {
-        // no-op
+        this.kubeletConfigKey = kubeletConfigKey;
+        this.name = name;
+        this.namespace = namespace;
+        this.resourceVersion = resourceVersion;
+        this.uid = uid;
     }
 
     public String getKubeletConfigKey() {

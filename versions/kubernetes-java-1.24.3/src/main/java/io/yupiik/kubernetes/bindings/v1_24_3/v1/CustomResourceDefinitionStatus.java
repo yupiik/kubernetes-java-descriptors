@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_24_3.v1;
 import io.yupiik.kubernetes.bindings.v1_24_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_24_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_24_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_24_3.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -37,7 +35,9 @@ public class CustomResourceDefinitionStatus implements Validable<CustomResourceD
     public CustomResourceDefinitionStatus(final CustomResourceDefinitionNames acceptedNames,
                                           final List<CustomResourceDefinitionCondition> conditions,
                                           final List<String> storedVersions) {
-        // no-op
+        this.acceptedNames = acceptedNames;
+        this.conditions = conditions;
+        this.storedVersions = storedVersions;
     }
 
     public CustomResourceDefinitionNames getAcceptedNames() {

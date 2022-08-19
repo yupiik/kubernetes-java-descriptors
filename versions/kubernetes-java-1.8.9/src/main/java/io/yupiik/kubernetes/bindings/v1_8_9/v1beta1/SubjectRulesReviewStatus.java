@@ -39,7 +39,10 @@ public class SubjectRulesReviewStatus implements Validable<SubjectRulesReviewSta
                                     final boolean incomplete,
                                     final List<NonResourceRule> nonResourceRules,
                                     final List<ResourceRule> resourceRules) {
-        // no-op
+        this.evaluationError = evaluationError;
+        this.incomplete = incomplete;
+        this.nonResourceRules = nonResourceRules;
+        this.resourceRules = resourceRules;
     }
 
     public String getEvaluationError() {

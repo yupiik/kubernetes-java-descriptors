@@ -51,7 +51,16 @@ public class ValidatingWebhook implements Validable<ValidatingWebhook>, Exportab
                              final List<RuleWithOperations> rules,
                              final String sideEffects,
                              final Integer timeoutSeconds) {
-        // no-op
+        this.admissionReviewVersions = admissionReviewVersions;
+        this.clientConfig = clientConfig;
+        this.failurePolicy = failurePolicy;
+        this.matchPolicy = matchPolicy;
+        this.name = name;
+        this.namespaceSelector = namespaceSelector;
+        this.objectSelector = objectSelector;
+        this.rules = rules;
+        this.sideEffects = sideEffects;
+        this.timeoutSeconds = timeoutSeconds;
     }
 
     public List<String> getAdmissionReviewVersions() {

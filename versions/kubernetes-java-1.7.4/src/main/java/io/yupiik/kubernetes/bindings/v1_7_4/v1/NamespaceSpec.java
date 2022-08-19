@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_7_4.v1;
 import io.yupiik.kubernetes.bindings.v1_7_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_4.Validable;
-import io.yupiik.kubernetes.bindings.v1_7_4.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -33,7 +31,7 @@ public class NamespaceSpec implements Validable<NamespaceSpec>, Exportable {
     }
 
     public NamespaceSpec(final List<String> finalizers) {
-        // no-op
+        this.finalizers = finalizers;
     }
 
     public List<String> getFinalizers() {

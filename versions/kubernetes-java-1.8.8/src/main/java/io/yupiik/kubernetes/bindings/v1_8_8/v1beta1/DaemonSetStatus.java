@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_8_8.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_8_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_8_8.Validable;
-import io.yupiik.kubernetes.bindings.v1_8_8.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -48,7 +45,15 @@ public class DaemonSetStatus implements Validable<DaemonSetStatus>, Exportable {
                            final Integer numberUnavailable,
                            final Integer observedGeneration,
                            final Integer updatedNumberScheduled) {
-        // no-op
+        this.collisionCount = collisionCount;
+        this.currentNumberScheduled = currentNumberScheduled;
+        this.desiredNumberScheduled = desiredNumberScheduled;
+        this.numberAvailable = numberAvailable;
+        this.numberMisscheduled = numberMisscheduled;
+        this.numberReady = numberReady;
+        this.numberUnavailable = numberUnavailable;
+        this.observedGeneration = observedGeneration;
+        this.updatedNumberScheduled = updatedNumberScheduled;
     }
 
     public Integer getCollisionCount() {

@@ -35,7 +35,8 @@ public class GroupVersionForDiscovery implements Validable<GroupVersionForDiscov
 
     public GroupVersionForDiscovery(final String groupVersion,
                                     final String version) {
-        // no-op
+        this.groupVersion = groupVersion;
+        this.version = version;
     }
 
     public String getGroupVersion() {

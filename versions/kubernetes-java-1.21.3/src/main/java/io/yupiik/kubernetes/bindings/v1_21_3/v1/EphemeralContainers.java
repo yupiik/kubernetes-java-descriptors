@@ -39,7 +39,10 @@ public class EphemeralContainers implements Validable<EphemeralContainers>, Expo
                                final List<EphemeralContainer> ephemeralContainers,
                                final String kind,
                                final ObjectMeta metadata) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.ephemeralContainers = ephemeralContainers;
+        this.kind = kind;
+        this.metadata = metadata;
     }
 
     public String getApiVersion() {

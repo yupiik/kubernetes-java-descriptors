@@ -71,7 +71,26 @@ public class PodSecurityPolicySpec implements Validable<PodSecurityPolicySpec>, 
                                  final SELinuxStrategyOptions seLinux,
                                  final SupplementalGroupsStrategyOptions supplementalGroups,
                                  final List<String> volumes) {
-        // no-op
+        this.allowPrivilegeEscalation = allowPrivilegeEscalation;
+        this.allowedCapabilities = allowedCapabilities;
+        this.allowedFlexVolumes = allowedFlexVolumes;
+        this.allowedHostPaths = allowedHostPaths;
+        this.allowedUnsafeSysctls = allowedUnsafeSysctls;
+        this.defaultAddCapabilities = defaultAddCapabilities;
+        this.defaultAllowPrivilegeEscalation = defaultAllowPrivilegeEscalation;
+        this.forbiddenSysctls = forbiddenSysctls;
+        this.fsGroup = fsGroup;
+        this.hostIPC = hostIPC;
+        this.hostNetwork = hostNetwork;
+        this.hostPID = hostPID;
+        this.hostPorts = hostPorts;
+        this.privileged = privileged;
+        this.readOnlyRootFilesystem = readOnlyRootFilesystem;
+        this.requiredDropCapabilities = requiredDropCapabilities;
+        this.runAsUser = runAsUser;
+        this.seLinux = seLinux;
+        this.supplementalGroups = supplementalGroups;
+        this.volumes = volumes;
     }
 
     public Boolean getAllowPrivilegeEscalation() {

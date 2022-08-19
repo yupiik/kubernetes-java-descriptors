@@ -39,7 +39,10 @@ public class EndpointAddress implements Validable<EndpointAddress>, Exportable {
                            final String ip,
                            final String nodeName,
                            final ObjectReference targetRef) {
-        // no-op
+        this.hostname = hostname;
+        this.ip = ip;
+        this.nodeName = nodeName;
+        this.targetRef = targetRef;
     }
 
     public String getHostname() {

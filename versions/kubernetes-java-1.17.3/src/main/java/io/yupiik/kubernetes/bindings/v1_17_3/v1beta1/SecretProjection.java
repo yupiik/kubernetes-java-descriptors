@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_17_3.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_17_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_17_3.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -37,7 +35,9 @@ public class SecretProjection implements Validable<SecretProjection>, Exportable
     public SecretProjection(final List<KeyToPath> items,
                             final String name,
                             final Boolean optional) {
-        // no-op
+        this.items = items;
+        this.name = name;
+        this.optional = optional;
     }
 
     public List<KeyToPath> getItems() {

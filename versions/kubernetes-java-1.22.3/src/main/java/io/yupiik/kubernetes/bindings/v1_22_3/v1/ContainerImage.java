@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_22_3.v1;
 import io.yupiik.kubernetes.bindings.v1_22_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_22_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_22_3.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -35,7 +33,8 @@ public class ContainerImage implements Validable<ContainerImage>, Exportable {
 
     public ContainerImage(final List<String> names,
                           final Integer sizeBytes) {
-        // no-op
+        this.names = names;
+        this.sizeBytes = sizeBytes;
     }
 
     public List<String> getNames() {

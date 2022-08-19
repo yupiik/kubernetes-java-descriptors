@@ -37,7 +37,9 @@ public class KeyToPath implements Validable<KeyToPath>, Exportable {
     public KeyToPath(final String key,
                      final Integer mode,
                      final String path) {
-        // no-op
+        this.key = key;
+        this.mode = mode;
+        this.path = path;
     }
 
     public String getKey() {

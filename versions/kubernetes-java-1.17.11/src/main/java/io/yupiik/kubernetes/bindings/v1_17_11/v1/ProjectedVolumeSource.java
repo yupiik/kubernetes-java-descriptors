@@ -34,7 +34,8 @@ public class ProjectedVolumeSource implements Validable<ProjectedVolumeSource>, 
 
     public ProjectedVolumeSource(final Integer defaultMode,
                                  final List<VolumeProjection> sources) {
-        // no-op
+        this.defaultMode = defaultMode;
+        this.sources = sources;
     }
 
     public Integer getDefaultMode() {

@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_18_18.v1;
 
 import io.yupiik.kubernetes.bindings.v1_18_18.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_18.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_18.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -34,7 +32,8 @@ public class NodeAffinity implements Validable<NodeAffinity>, Exportable {
 
     public NodeAffinity(final List<PreferredSchedulingTerm> preferredDuringSchedulingIgnoredDuringExecution,
                         final NodeSelector requiredDuringSchedulingIgnoredDuringExecution) {
-        // no-op
+        this.preferredDuringSchedulingIgnoredDuringExecution = preferredDuringSchedulingIgnoredDuringExecution;
+        this.requiredDuringSchedulingIgnoredDuringExecution = requiredDuringSchedulingIgnoredDuringExecution;
     }
 
     public List<PreferredSchedulingTerm> getPreferredDuringSchedulingIgnoredDuringExecution() {

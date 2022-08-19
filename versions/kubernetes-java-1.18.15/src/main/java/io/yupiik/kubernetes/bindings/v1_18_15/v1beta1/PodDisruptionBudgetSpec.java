@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_18_15.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_18_15.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_15.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_15.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_15.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -37,7 +34,9 @@ public class PodDisruptionBudgetSpec implements Validable<PodDisruptionBudgetSpe
     public PodDisruptionBudgetSpec(final String maxUnavailable,
                                    final String minAvailable,
                                    final LabelSelector selector) {
-        // no-op
+        this.maxUnavailable = maxUnavailable;
+        this.minAvailable = minAvailable;
+        this.selector = selector;
     }
 
     public String getMaxUnavailable() {

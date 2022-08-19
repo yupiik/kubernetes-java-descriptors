@@ -41,7 +41,11 @@ public class HTTPGetAction implements Validable<HTTPGetAction>, Exportable {
                          final String path,
                          final String port,
                          final HTTPGetActionScheme scheme) {
-        // no-op
+        this.host = host;
+        this.httpHeaders = httpHeaders;
+        this.path = path;
+        this.port = port;
+        this.scheme = scheme;
     }
 
     public String getHost() {

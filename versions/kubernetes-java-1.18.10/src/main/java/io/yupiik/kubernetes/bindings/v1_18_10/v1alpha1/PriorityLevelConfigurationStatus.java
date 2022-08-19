@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_18_10.v1alpha1;
 
 import io.yupiik.kubernetes.bindings.v1_18_10.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_10.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_10.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -32,7 +30,7 @@ public class PriorityLevelConfigurationStatus implements Validable<PriorityLevel
     }
 
     public PriorityLevelConfigurationStatus(final List<PriorityLevelConfigurationCondition> conditions) {
-        // no-op
+        this.conditions = conditions;
     }
 
     public List<PriorityLevelConfigurationCondition> getConditions() {

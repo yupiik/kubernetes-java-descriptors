@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_9_4.v1;
 
 import io.yupiik.kubernetes.bindings.v1_9_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_9_4.Validable;
-import io.yupiik.kubernetes.bindings.v1_9_4.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -36,7 +33,9 @@ public class ContainerState implements Validable<ContainerState>, Exportable {
     public ContainerState(final ContainerStateRunning running,
                           final ContainerStateTerminated terminated,
                           final ContainerStateWaiting waiting) {
-        // no-op
+        this.running = running;
+        this.terminated = terminated;
+        this.waiting = waiting;
     }
 
     public ContainerStateRunning getRunning() {

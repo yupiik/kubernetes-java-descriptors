@@ -37,7 +37,9 @@ public class ResourceFieldSelector implements Validable<ResourceFieldSelector>, 
     public ResourceFieldSelector(final String containerName,
                                  final String divisor,
                                  final String resource) {
-        // no-op
+        this.containerName = containerName;
+        this.divisor = divisor;
+        this.resource = resource;
     }
 
     public String getContainerName() {

@@ -39,7 +39,10 @@ public class APIResourceList implements Validable<APIResourceList>, Exportable {
                            final String groupVersion,
                            final String kind,
                            final List<APIResource> resources) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.groupVersion = groupVersion;
+        this.kind = kind;
+        this.resources = resources;
     }
 
     public String getApiVersion() {

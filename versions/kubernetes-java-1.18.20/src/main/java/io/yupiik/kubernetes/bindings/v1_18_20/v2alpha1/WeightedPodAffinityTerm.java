@@ -34,7 +34,8 @@ public class WeightedPodAffinityTerm implements Validable<WeightedPodAffinityTer
 
     public WeightedPodAffinityTerm(final PodAffinityTerm podAffinityTerm,
                                    final int weight) {
-        // no-op
+        this.podAffinityTerm = podAffinityTerm;
+        this.weight = weight;
     }
 
     public PodAffinityTerm getPodAffinityTerm() {

@@ -37,7 +37,9 @@ public class EventSeries implements Validable<EventSeries>, Exportable {
     public EventSeries(final int count,
                        final String lastObservedTime,
                        final String state) {
-        // no-op
+        this.count = count;
+        this.lastObservedTime = lastObservedTime;
+        this.state = state;
     }
 
     public int getCount() {

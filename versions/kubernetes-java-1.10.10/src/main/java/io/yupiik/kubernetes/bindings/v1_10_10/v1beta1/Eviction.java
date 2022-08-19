@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_10_10.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_10_10.Exportable;
 import io.yupiik.kubernetes.bindings.v1_10_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_10_10.Validable;
-import io.yupiik.kubernetes.bindings.v1_10_10.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -39,7 +36,10 @@ public class Eviction implements Validable<Eviction>, Exportable {
                     final DeleteOptions deleteOptions,
                     final String kind,
                     final ObjectMeta metadata) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.deleteOptions = deleteOptions;
+        this.kind = kind;
+        this.metadata = metadata;
     }
 
     public String getApiVersion() {

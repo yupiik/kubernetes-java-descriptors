@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_17_5.v2alpha1;
 import io.yupiik.kubernetes.bindings.v1_17_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_17_5.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -35,7 +32,8 @@ public class PodDNSConfigOption implements Validable<PodDNSConfigOption>, Export
 
     public PodDNSConfigOption(final String name,
                               final String value) {
-        // no-op
+        this.name = name;
+        this.value = value;
     }
 
     public String getName() {

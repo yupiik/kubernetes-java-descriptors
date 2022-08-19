@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_8_4.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_8_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_8_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_4.Validable;
-import io.yupiik.kubernetes.bindings.v1_8_4.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -47,7 +44,14 @@ public class Status implements Validable<Status>, Exportable {
                   final ListMeta metadata,
                   final String reason,
                   final String status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.code = code;
+        this.details = details;
+        this.kind = kind;
+        this.message = message;
+        this.metadata = metadata;
+        this.reason = reason;
+        this.status = status;
     }
 
     public String getApiVersion() {

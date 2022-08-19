@@ -43,7 +43,12 @@ public class HorizontalPodAutoscalerStatus implements Validable<HorizontalPodAut
                                          final int desiredReplicas,
                                          final String lastScaleTime,
                                          final Integer observedGeneration) {
-        // no-op
+        this.conditions = conditions;
+        this.currentMetrics = currentMetrics;
+        this.currentReplicas = currentReplicas;
+        this.desiredReplicas = desiredReplicas;
+        this.lastScaleTime = lastScaleTime;
+        this.observedGeneration = observedGeneration;
     }
 
     public List<HorizontalPodAutoscalerCondition> getConditions() {

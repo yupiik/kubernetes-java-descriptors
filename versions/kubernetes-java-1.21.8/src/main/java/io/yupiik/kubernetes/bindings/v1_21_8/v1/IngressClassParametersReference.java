@@ -41,7 +41,11 @@ public class IngressClassParametersReference implements Validable<IngressClassPa
                                            final String name,
                                            final String namespace,
                                            final String scope) {
-        // no-op
+        this.apiGroup = apiGroup;
+        this.kind = kind;
+        this.name = name;
+        this.namespace = namespace;
+        this.scope = scope;
     }
 
     public String getApiGroup() {

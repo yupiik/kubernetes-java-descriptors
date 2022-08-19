@@ -33,7 +33,7 @@ public class RuntimeClassSpec implements Validable<RuntimeClassSpec>, Exportable
     }
 
     public RuntimeClassSpec(final String runtimeHandler) {
-        // no-op
+        this.runtimeHandler = runtimeHandler;
     }
 
     public String getRuntimeHandler() {

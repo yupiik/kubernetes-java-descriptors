@@ -35,7 +35,8 @@ public class AttachedVolume implements Validable<AttachedVolume>, Exportable {
 
     public AttachedVolume(final String devicePath,
                           final String name) {
-        // no-op
+        this.devicePath = devicePath;
+        this.name = name;
     }
 
     public String getDevicePath() {

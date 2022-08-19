@@ -39,7 +39,10 @@ public class Subject implements Validable<Subject>, Exportable {
                    final String kind,
                    final ServiceAccountSubject serviceAccount,
                    final UserSubject user) {
-        // no-op
+        this.group = group;
+        this.kind = kind;
+        this.serviceAccount = serviceAccount;
+        this.user = user;
     }
 
     public GroupSubject getGroup() {

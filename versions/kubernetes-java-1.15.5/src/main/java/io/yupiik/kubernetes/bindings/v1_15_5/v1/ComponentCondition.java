@@ -39,7 +39,10 @@ public class ComponentCondition implements Validable<ComponentCondition>, Export
                               final String message,
                               final String status,
                               final String type) {
-        // no-op
+        this.error = error;
+        this.message = message;
+        this.status = status;
+        this.type = type;
     }
 
     public String getError() {

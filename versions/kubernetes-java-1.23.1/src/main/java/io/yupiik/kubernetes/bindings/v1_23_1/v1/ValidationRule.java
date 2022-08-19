@@ -35,7 +35,8 @@ public class ValidationRule implements Validable<ValidationRule>, Exportable {
 
     public ValidationRule(final String message,
                           final String rule) {
-        // no-op
+        this.message = message;
+        this.rule = rule;
     }
 
     public String getMessage() {

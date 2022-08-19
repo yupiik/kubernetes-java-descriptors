@@ -35,7 +35,8 @@ public class IPBlock implements Validable<IPBlock>, Exportable {
 
     public IPBlock(final String cidr,
                    final List<String> except) {
-        // no-op
+        this.cidr = cidr;
+        this.except = except;
     }
 
     public String getCidr() {

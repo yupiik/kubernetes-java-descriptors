@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_21_6.v1;
 import io.yupiik.kubernetes.bindings.v1_21_6.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_6.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_6.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -57,7 +55,19 @@ public class PodStatus implements Validable<PodStatus>, Exportable {
                      final String qosClass,
                      final String reason,
                      final String startTime) {
-        // no-op
+        this.conditions = conditions;
+        this.containerStatuses = containerStatuses;
+        this.ephemeralContainerStatuses = ephemeralContainerStatuses;
+        this.hostIP = hostIP;
+        this.initContainerStatuses = initContainerStatuses;
+        this.message = message;
+        this.nominatedNodeName = nominatedNodeName;
+        this.phase = phase;
+        this.podIP = podIP;
+        this.podIPs = podIPs;
+        this.qosClass = qosClass;
+        this.reason = reason;
+        this.startTime = startTime;
     }
 
     public List<PodCondition> getConditions() {

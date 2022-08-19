@@ -43,7 +43,12 @@ public class APIGroup implements Validable<APIGroup>, Exportable {
                     final GroupVersionForDiscovery preferredVersion,
                     final List<ServerAddressByClientCIDR> serverAddressByClientCIDRs,
                     final List<GroupVersionForDiscovery> versions) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.name = name;
+        this.preferredVersion = preferredVersion;
+        this.serverAddressByClientCIDRs = serverAddressByClientCIDRs;
+        this.versions = versions;
     }
 
     public String getApiVersion() {

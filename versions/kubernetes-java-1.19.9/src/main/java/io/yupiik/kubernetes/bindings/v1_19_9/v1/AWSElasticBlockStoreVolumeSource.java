@@ -39,7 +39,10 @@ public class AWSElasticBlockStoreVolumeSource implements Validable<AWSElasticBlo
                                             final Integer partition,
                                             final Boolean readOnly,
                                             final String volumeID) {
-        // no-op
+        this.fsType = fsType;
+        this.partition = partition;
+        this.readOnly = readOnly;
+        this.volumeID = volumeID;
     }
 
     public String getFsType() {

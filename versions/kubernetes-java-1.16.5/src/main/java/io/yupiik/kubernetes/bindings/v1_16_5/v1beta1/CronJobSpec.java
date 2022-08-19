@@ -45,7 +45,13 @@ public class CronJobSpec implements Validable<CronJobSpec>, Exportable {
                        final Integer startingDeadlineSeconds,
                        final Integer successfulJobsHistoryLimit,
                        final Boolean suspend) {
-        // no-op
+        this.concurrencyPolicy = concurrencyPolicy;
+        this.failedJobsHistoryLimit = failedJobsHistoryLimit;
+        this.jobTemplate = jobTemplate;
+        this.schedule = schedule;
+        this.startingDeadlineSeconds = startingDeadlineSeconds;
+        this.successfulJobsHistoryLimit = successfulJobsHistoryLimit;
+        this.suspend = suspend;
     }
 
     public String getConcurrencyPolicy() {

@@ -43,7 +43,12 @@ public class Condition implements Validable<Condition>, Exportable {
                      final String reason,
                      final String status,
                      final String type) {
-        // no-op
+        this.lastTransitionTime = lastTransitionTime;
+        this.message = message;
+        this.observedGeneration = observedGeneration;
+        this.reason = reason;
+        this.status = status;
+        this.type = type;
     }
 
     public String getLastTransitionTime() {

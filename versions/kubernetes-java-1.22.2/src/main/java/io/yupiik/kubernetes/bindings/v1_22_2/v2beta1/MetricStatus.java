@@ -43,7 +43,12 @@ public class MetricStatus implements Validable<MetricStatus>, Exportable {
                         final PodsMetricStatus pods,
                         final ResourceMetricStatus resource,
                         final String type) {
-        // no-op
+        this.containerResource = containerResource;
+        this.external = external;
+        this.object = object;
+        this.pods = pods;
+        this.resource = resource;
+        this.type = type;
     }
 
     public ContainerResourceMetricStatus getContainerResource() {

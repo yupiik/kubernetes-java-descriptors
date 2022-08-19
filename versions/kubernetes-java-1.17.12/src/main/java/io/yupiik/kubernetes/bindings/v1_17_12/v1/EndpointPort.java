@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_17_12.v1;
 import io.yupiik.kubernetes.bindings.v1_17_12.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_12.Validable;
-import io.yupiik.kubernetes.bindings.v1_17_12.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -37,7 +34,9 @@ public class EndpointPort implements Validable<EndpointPort>, Exportable {
     public EndpointPort(final String name,
                         final int port,
                         final String protocol) {
-        // no-op
+        this.name = name;
+        this.port = port;
+        this.protocol = protocol;
     }
 
     public String getName() {

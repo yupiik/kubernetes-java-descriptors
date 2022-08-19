@@ -35,7 +35,8 @@ public class NonResourceRule implements Validable<NonResourceRule>, Exportable {
 
     public NonResourceRule(final List<String> nonResourceURLs,
                            final List<String> verbs) {
-        // no-op
+        this.nonResourceURLs = nonResourceURLs;
+        this.verbs = verbs;
     }
 
     public List<String> getNonResourceURLs() {

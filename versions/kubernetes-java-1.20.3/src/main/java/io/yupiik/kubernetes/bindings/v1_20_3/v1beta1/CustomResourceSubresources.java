@@ -17,10 +17,7 @@ package io.yupiik.kubernetes.bindings.v1_20_3.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_20_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_20_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_20_3.ValidationException;
 import jakarta.json.JsonObject;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -35,7 +32,8 @@ public class CustomResourceSubresources implements Validable<CustomResourceSubre
 
     public CustomResourceSubresources(final CustomResourceSubresourceScale scale,
                                       final JsonObject status) {
-        // no-op
+        this.scale = scale;
+        this.status = status;
     }
 
     public CustomResourceSubresourceScale getScale() {

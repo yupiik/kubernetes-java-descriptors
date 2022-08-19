@@ -43,7 +43,12 @@ public class JobCondition implements Validable<JobCondition>, Exportable {
                         final String reason,
                         final String status,
                         final JobConditionType type) {
-        // no-op
+        this.lastProbeTime = lastProbeTime;
+        this.lastTransitionTime = lastTransitionTime;
+        this.message = message;
+        this.reason = reason;
+        this.status = status;
+        this.type = type;
     }
 
     public String getLastProbeTime() {

@@ -37,7 +37,9 @@ public class CSIPersistentVolumeSource implements Validable<CSIPersistentVolumeS
     public CSIPersistentVolumeSource(final String driver,
                                      final Boolean readOnly,
                                      final String volumeHandle) {
-        // no-op
+        this.driver = driver;
+        this.readOnly = readOnly;
+        this.volumeHandle = volumeHandle;
     }
 
     public String getDriver() {

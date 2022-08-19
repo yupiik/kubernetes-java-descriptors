@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_19_1.v1;
 
 import io.yupiik.kubernetes.bindings.v1_19_1.Exportable;
 import io.yupiik.kubernetes.bindings.v1_19_1.Validable;
-import io.yupiik.kubernetes.bindings.v1_19_1.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -38,7 +35,10 @@ public class EnvVarSource implements Validable<EnvVarSource>, Exportable {
                         final ObjectFieldSelector fieldRef,
                         final ResourceFieldSelector resourceFieldRef,
                         final SecretKeySelector secretKeyRef) {
-        // no-op
+        this.configMapKeyRef = configMapKeyRef;
+        this.fieldRef = fieldRef;
+        this.resourceFieldRef = resourceFieldRef;
+        this.secretKeyRef = secretKeyRef;
     }
 
     public ConfigMapKeySelector getConfigMapKeyRef() {

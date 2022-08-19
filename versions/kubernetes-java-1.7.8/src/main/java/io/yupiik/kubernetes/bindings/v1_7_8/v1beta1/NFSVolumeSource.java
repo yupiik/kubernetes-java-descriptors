@@ -37,7 +37,9 @@ public class NFSVolumeSource implements Validable<NFSVolumeSource>, Exportable {
     public NFSVolumeSource(final String path,
                            final Boolean readOnly,
                            final String server) {
-        // no-op
+        this.path = path;
+        this.readOnly = readOnly;
+        this.server = server;
     }
 
     public String getPath() {

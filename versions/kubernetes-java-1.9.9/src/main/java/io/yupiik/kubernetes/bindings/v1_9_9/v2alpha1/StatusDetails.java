@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_9_9.v2alpha1;
 import io.yupiik.kubernetes.bindings.v1_9_9.Exportable;
 import io.yupiik.kubernetes.bindings.v1_9_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_9_9.Validable;
-import io.yupiik.kubernetes.bindings.v1_9_9.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -43,7 +41,12 @@ public class StatusDetails implements Validable<StatusDetails>, Exportable {
                          final String name,
                          final Integer retryAfterSeconds,
                          final String uid) {
-        // no-op
+        this.causes = causes;
+        this.group = group;
+        this.kind = kind;
+        this.name = name;
+        this.retryAfterSeconds = retryAfterSeconds;
+        this.uid = uid;
     }
 
     public List<StatusCause> getCauses() {

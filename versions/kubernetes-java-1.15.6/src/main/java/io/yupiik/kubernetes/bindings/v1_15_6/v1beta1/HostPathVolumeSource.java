@@ -35,7 +35,8 @@ public class HostPathVolumeSource implements Validable<HostPathVolumeSource>, Ex
 
     public HostPathVolumeSource(final String path,
                                 final String type) {
-        // no-op
+        this.path = path;
+        this.type = type;
     }
 
     public String getPath() {

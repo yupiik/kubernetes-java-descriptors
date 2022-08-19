@@ -37,7 +37,9 @@ public class HPAScalingPolicy implements Validable<HPAScalingPolicy>, Exportable
     public HPAScalingPolicy(final int periodSeconds,
                             final String type,
                             final int value) {
-        // no-op
+        this.periodSeconds = periodSeconds;
+        this.type = type;
+        this.value = value;
     }
 
     public int getPeriodSeconds() {

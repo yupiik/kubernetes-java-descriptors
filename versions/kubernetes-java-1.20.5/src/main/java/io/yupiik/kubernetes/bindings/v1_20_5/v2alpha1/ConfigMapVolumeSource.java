@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_20_5.v2alpha1;
 import io.yupiik.kubernetes.bindings.v1_20_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_20_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_20_5.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -39,7 +37,10 @@ public class ConfigMapVolumeSource implements Validable<ConfigMapVolumeSource>, 
                                  final List<KeyToPath> items,
                                  final String name,
                                  final Boolean optional) {
-        // no-op
+        this.defaultMode = defaultMode;
+        this.items = items;
+        this.name = name;
+        this.optional = optional;
     }
 
     public Integer getDefaultMode() {

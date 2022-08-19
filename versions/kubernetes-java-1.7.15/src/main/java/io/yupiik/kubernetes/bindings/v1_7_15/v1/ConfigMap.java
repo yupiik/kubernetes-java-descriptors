@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_7_15.v1;
 import io.yupiik.kubernetes.bindings.v1_7_15.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_15.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_15.Validable;
-import io.yupiik.kubernetes.bindings.v1_7_15.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -40,7 +37,10 @@ public class ConfigMap implements Validable<ConfigMap>, Exportable {
                      final Map<String, String> data,
                      final String kind,
                      final ObjectMeta metadata) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.data = data;
+        this.kind = kind;
+        this.metadata = metadata;
     }
 
     public String getApiVersion() {

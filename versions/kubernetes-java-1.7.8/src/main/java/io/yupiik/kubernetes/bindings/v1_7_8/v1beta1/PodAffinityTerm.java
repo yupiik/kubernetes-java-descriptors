@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_7_8.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_7_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_8.Validable;
-import io.yupiik.kubernetes.bindings.v1_7_8.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -37,7 +35,9 @@ public class PodAffinityTerm implements Validable<PodAffinityTerm>, Exportable {
     public PodAffinityTerm(final LabelSelector labelSelector,
                            final List<String> namespaces,
                            final String topologyKey) {
-        // no-op
+        this.labelSelector = labelSelector;
+        this.namespaces = namespaces;
+        this.topologyKey = topologyKey;
     }
 
     public LabelSelector getLabelSelector() {

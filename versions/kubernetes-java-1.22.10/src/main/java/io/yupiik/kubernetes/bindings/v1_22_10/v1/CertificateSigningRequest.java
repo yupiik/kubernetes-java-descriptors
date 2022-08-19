@@ -41,7 +41,11 @@ public class CertificateSigningRequest implements Validable<CertificateSigningRe
                                      final ObjectMeta metadata,
                                      final CertificateSigningRequestSpec spec,
                                      final CertificateSigningRequestStatus status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
     public String getApiVersion() {

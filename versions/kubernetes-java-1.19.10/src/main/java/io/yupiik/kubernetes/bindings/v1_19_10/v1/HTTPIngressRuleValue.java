@@ -32,7 +32,7 @@ public class HTTPIngressRuleValue implements Validable<HTTPIngressRuleValue>, Ex
     }
 
     public HTTPIngressRuleValue(final List<HTTPIngressPath> paths) {
-        // no-op
+        this.paths = paths;
     }
 
     public List<HTTPIngressPath> getPaths() {

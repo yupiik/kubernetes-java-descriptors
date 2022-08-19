@@ -39,7 +39,10 @@ public class MetricTarget implements Validable<MetricTarget>, Exportable {
                         final String averageValue,
                         final String type,
                         final String value) {
-        // no-op
+        this.averageUtilization = averageUtilization;
+        this.averageValue = averageValue;
+        this.type = type;
+        this.value = value;
     }
 
     public Integer getAverageUtilization() {

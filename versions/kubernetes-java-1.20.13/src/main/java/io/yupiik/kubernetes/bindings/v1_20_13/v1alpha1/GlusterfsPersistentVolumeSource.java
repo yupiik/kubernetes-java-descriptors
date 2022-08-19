@@ -39,7 +39,10 @@ public class GlusterfsPersistentVolumeSource implements Validable<GlusterfsPersi
                                            final String endpointsNamespace,
                                            final String path,
                                            final Boolean readOnly) {
-        // no-op
+        this.endpoints = endpoints;
+        this.endpointsNamespace = endpointsNamespace;
+        this.path = path;
+        this.readOnly = readOnly;
     }
 
     public String getEndpoints() {

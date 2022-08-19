@@ -33,7 +33,7 @@ public class PriorityLevelConfigurationReference implements Validable<PriorityLe
     }
 
     public PriorityLevelConfigurationReference(final String name) {
-        // no-op
+        this.name = name;
     }
 
     public String getName() {

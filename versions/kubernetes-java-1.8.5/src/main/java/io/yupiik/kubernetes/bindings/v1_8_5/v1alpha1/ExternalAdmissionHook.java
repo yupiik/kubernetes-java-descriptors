@@ -39,7 +39,10 @@ public class ExternalAdmissionHook implements Validable<ExternalAdmissionHook>, 
                                  final String failurePolicy,
                                  final String name,
                                  final List<RuleWithOperations> rules) {
-        // no-op
+        this.clientConfig = clientConfig;
+        this.failurePolicy = failurePolicy;
+        this.name = name;
+        this.rules = rules;
     }
 
     public AdmissionHookClientConfig getClientConfig() {

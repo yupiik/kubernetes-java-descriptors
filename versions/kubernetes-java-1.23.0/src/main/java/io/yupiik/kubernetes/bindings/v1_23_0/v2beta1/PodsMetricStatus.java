@@ -37,7 +37,9 @@ public class PodsMetricStatus implements Validable<PodsMetricStatus>, Exportable
     public PodsMetricStatus(final String currentAverageValue,
                             final String metricName,
                             final LabelSelector selector) {
-        // no-op
+        this.currentAverageValue = currentAverageValue;
+        this.metricName = metricName;
+        this.selector = selector;
     }
 
     public String getCurrentAverageValue() {

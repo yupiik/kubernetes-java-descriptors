@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_22_10.v1;
 
 import io.yupiik.kubernetes.bindings.v1_22_10.Exportable;
 import io.yupiik.kubernetes.bindings.v1_22_10.Validable;
-import io.yupiik.kubernetes.bindings.v1_22_10.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -32,7 +30,7 @@ public class ScopeSelector implements Validable<ScopeSelector>, Exportable {
     }
 
     public ScopeSelector(final List<ScopedResourceSelectorRequirement> matchExpressions) {
-        // no-op
+        this.matchExpressions = matchExpressions;
     }
 
     public List<ScopedResourceSelectorRequirement> getMatchExpressions() {

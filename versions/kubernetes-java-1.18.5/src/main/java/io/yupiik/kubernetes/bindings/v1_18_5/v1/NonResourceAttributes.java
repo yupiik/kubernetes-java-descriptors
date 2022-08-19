@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_18_5.v1;
 import io.yupiik.kubernetes.bindings.v1_18_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_5.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -35,7 +32,8 @@ public class NonResourceAttributes implements Validable<NonResourceAttributes>, 
 
     public NonResourceAttributes(final String path,
                                  final String verb) {
-        // no-op
+        this.path = path;
+        this.verb = verb;
     }
 
     public String getPath() {

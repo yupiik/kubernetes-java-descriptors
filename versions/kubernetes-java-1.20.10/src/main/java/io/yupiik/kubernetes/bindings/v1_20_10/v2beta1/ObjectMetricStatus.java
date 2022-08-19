@@ -41,7 +41,11 @@ public class ObjectMetricStatus implements Validable<ObjectMetricStatus>, Export
                               final String metricName,
                               final LabelSelector selector,
                               final CrossVersionObjectReference target) {
-        // no-op
+        this.averageValue = averageValue;
+        this.currentValue = currentValue;
+        this.metricName = metricName;
+        this.selector = selector;
+        this.target = target;
     }
 
     public String getAverageValue() {

@@ -35,7 +35,8 @@ public class PhotonPersistentDiskVolumeSource implements Validable<PhotonPersist
 
     public PhotonPersistentDiskVolumeSource(final String fsType,
                                             final String pdID) {
-        // no-op
+        this.fsType = fsType;
+        this.pdID = pdID;
     }
 
     public String getFsType() {

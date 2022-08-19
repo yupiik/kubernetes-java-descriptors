@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_20_3.v1;
 import io.yupiik.kubernetes.bindings.v1_20_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_20_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_20_3.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -39,7 +36,10 @@ public class SubjectAccessReviewStatus implements Validable<SubjectAccessReviewS
                                      final Boolean denied,
                                      final String evaluationError,
                                      final String reason) {
-        // no-op
+        this.allowed = allowed;
+        this.denied = denied;
+        this.evaluationError = evaluationError;
+        this.reason = reason;
     }
 
     public boolean getAllowed() {

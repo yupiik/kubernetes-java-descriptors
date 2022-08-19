@@ -37,7 +37,9 @@ public class APIGroupList implements Validable<APIGroupList>, Exportable {
     public APIGroupList(final String apiVersion,
                         final List<APIGroup> groups,
                         final String kind) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.groups = groups;
+        this.kind = kind;
     }
 
     public String getApiVersion() {

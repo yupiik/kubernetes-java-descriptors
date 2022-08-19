@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_13_10.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_13_10.Exportable;
 import io.yupiik.kubernetes.bindings.v1_13_10.Validable;
-import io.yupiik.kubernetes.bindings.v1_13_10.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -38,7 +35,10 @@ public class ReplicaSetSpec implements Validable<ReplicaSetSpec>, Exportable {
                           final Integer replicas,
                           final LabelSelector selector,
                           final PodTemplateSpec template) {
-        // no-op
+        this.minReadySeconds = minReadySeconds;
+        this.replicas = replicas;
+        this.selector = selector;
+        this.template = template;
     }
 
     public Integer getMinReadySeconds() {

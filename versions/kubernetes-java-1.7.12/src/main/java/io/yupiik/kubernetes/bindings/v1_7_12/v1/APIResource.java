@@ -45,7 +45,13 @@ public class APIResource implements Validable<APIResource>, Exportable {
                        final List<String> shortNames,
                        final String singularName,
                        final List<String> verbs) {
-        // no-op
+        this.categories = categories;
+        this.kind = kind;
+        this.name = name;
+        this.namespaced = namespaced;
+        this.shortNames = shortNames;
+        this.singularName = singularName;
+        this.verbs = verbs;
     }
 
     public List<String> getCategories() {

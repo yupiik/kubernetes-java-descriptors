@@ -43,7 +43,12 @@ public class CustomResourceDefinitionSpec implements Validable<CustomResourceDef
                                         final Boolean preserveUnknownFields,
                                         final String scope,
                                         final List<CustomResourceDefinitionVersion> versions) {
-        // no-op
+        this.conversion = conversion;
+        this.group = group;
+        this.names = names;
+        this.preserveUnknownFields = preserveUnknownFields;
+        this.scope = scope;
+        this.versions = versions;
     }
 
     public CustomResourceConversion getConversion() {

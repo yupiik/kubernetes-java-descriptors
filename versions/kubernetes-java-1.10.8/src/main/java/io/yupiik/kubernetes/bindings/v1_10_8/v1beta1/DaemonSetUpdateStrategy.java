@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_10_8.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_10_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_10_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_10_8.Validable;
-import io.yupiik.kubernetes.bindings.v1_10_8.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -35,7 +32,8 @@ public class DaemonSetUpdateStrategy implements Validable<DaemonSetUpdateStrateg
 
     public DaemonSetUpdateStrategy(final RollingUpdateDaemonSet rollingUpdate,
                                    final String type) {
-        // no-op
+        this.rollingUpdate = rollingUpdate;
+        this.type = type;
     }
 
     public RollingUpdateDaemonSet getRollingUpdate() {

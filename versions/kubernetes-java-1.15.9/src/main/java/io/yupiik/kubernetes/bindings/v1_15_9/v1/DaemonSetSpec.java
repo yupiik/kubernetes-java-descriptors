@@ -40,7 +40,11 @@ public class DaemonSetSpec implements Validable<DaemonSetSpec>, Exportable {
                          final LabelSelector selector,
                          final PodTemplateSpec template,
                          final DaemonSetUpdateStrategy updateStrategy) {
-        // no-op
+        this.minReadySeconds = minReadySeconds;
+        this.revisionHistoryLimit = revisionHistoryLimit;
+        this.selector = selector;
+        this.template = template;
+        this.updateStrategy = updateStrategy;
     }
 
     public Integer getMinReadySeconds() {

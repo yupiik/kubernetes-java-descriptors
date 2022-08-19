@@ -33,7 +33,7 @@ public class ForZone implements Validable<ForZone>, Exportable {
     }
 
     public ForZone(final String name) {
-        // no-op
+        this.name = name;
     }
 
     public String getName() {

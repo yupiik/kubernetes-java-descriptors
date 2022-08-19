@@ -18,9 +18,7 @@ package io.yupiik.kubernetes.bindings.v1_7_8.v1;
 import io.yupiik.kubernetes.bindings.v1_7_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_8.Validable;
-import io.yupiik.kubernetes.bindings.v1_7_8.ValidationException;
 import jakarta.json.JsonObject;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -42,7 +40,11 @@ public class SubjectAccessReviewSpec implements Validable<SubjectAccessReviewSpe
                                    final NonResourceAttributes nonResourceAttributes,
                                    final ResourceAttributes resourceAttributes,
                                    final String user) {
-        // no-op
+        this.extra = extra;
+        this.groups = groups;
+        this.nonResourceAttributes = nonResourceAttributes;
+        this.resourceAttributes = resourceAttributes;
+        this.user = user;
     }
 
     public JsonObject getExtra() {

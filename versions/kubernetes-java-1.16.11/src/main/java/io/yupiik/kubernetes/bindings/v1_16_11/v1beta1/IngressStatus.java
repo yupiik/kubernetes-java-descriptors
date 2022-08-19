@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_16_11.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_16_11.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_11.Validable;
-import io.yupiik.kubernetes.bindings.v1_16_11.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -32,7 +29,7 @@ public class IngressStatus implements Validable<IngressStatus>, Exportable {
     }
 
     public IngressStatus(final LoadBalancerStatus loadBalancer) {
-        // no-op
+        this.loadBalancer = loadBalancer;
     }
 
     public LoadBalancerStatus getLoadBalancer() {

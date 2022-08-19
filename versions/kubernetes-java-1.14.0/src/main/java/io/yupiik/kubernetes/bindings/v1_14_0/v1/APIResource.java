@@ -51,7 +51,16 @@ public class APIResource implements Validable<APIResource>, Exportable {
                        final String storageVersionHash,
                        final List<String> verbs,
                        final String version) {
-        // no-op
+        this.categories = categories;
+        this.group = group;
+        this.kind = kind;
+        this.name = name;
+        this.namespaced = namespaced;
+        this.shortNames = shortNames;
+        this.singularName = singularName;
+        this.storageVersionHash = storageVersionHash;
+        this.verbs = verbs;
+        this.version = version;
     }
 
     public List<String> getCategories() {

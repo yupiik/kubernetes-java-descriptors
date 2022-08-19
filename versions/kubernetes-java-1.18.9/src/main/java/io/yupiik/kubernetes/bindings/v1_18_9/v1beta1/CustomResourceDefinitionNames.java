@@ -43,7 +43,12 @@ public class CustomResourceDefinitionNames implements Validable<CustomResourceDe
                                          final String plural,
                                          final List<String> shortNames,
                                          final String singular) {
-        // no-op
+        this.categories = categories;
+        this.kind = kind;
+        this.listKind = listKind;
+        this.plural = plural;
+        this.shortNames = shortNames;
+        this.singular = singular;
     }
 
     public List<String> getCategories() {

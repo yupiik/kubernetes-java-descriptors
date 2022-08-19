@@ -35,7 +35,8 @@ public class LimitResponse implements Validable<LimitResponse>, Exportable {
 
     public LimitResponse(final QueuingConfiguration queuing,
                          final String type) {
-        // no-op
+        this.queuing = queuing;
+        this.type = type;
     }
 
     public QueuingConfiguration getQueuing() {

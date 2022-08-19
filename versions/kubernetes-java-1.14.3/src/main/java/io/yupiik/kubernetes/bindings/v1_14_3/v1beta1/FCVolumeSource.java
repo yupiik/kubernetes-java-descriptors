@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_14_3.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_14_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_14_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_14_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_14_3.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -41,7 +39,11 @@ public class FCVolumeSource implements Validable<FCVolumeSource>, Exportable {
                           final Boolean readOnly,
                           final List<String> targetWWNs,
                           final List<String> wwids) {
-        // no-op
+        this.fsType = fsType;
+        this.lun = lun;
+        this.readOnly = readOnly;
+        this.targetWWNs = targetWWNs;
+        this.wwids = wwids;
     }
 
     public String getFsType() {

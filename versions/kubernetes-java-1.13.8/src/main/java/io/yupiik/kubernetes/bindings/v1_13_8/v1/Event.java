@@ -65,7 +65,23 @@ public class Event implements Validable<Event>, Exportable {
                  final EventSeries series,
                  final EventSource source,
                  final String type) {
-        // no-op
+        this.action = action;
+        this.apiVersion = apiVersion;
+        this.count = count;
+        this.eventTime = eventTime;
+        this.firstTimestamp = firstTimestamp;
+        this.involvedObject = involvedObject;
+        this.kind = kind;
+        this.lastTimestamp = lastTimestamp;
+        this.message = message;
+        this.metadata = metadata;
+        this.reason = reason;
+        this.related = related;
+        this.reportingComponent = reportingComponent;
+        this.reportingInstance = reportingInstance;
+        this.series = series;
+        this.source = source;
+        this.type = type;
     }
 
     public String getAction() {

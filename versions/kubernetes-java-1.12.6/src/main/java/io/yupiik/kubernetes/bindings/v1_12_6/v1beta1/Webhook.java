@@ -43,7 +43,12 @@ public class Webhook implements Validable<Webhook>, Exportable {
                    final LabelSelector namespaceSelector,
                    final List<RuleWithOperations> rules,
                    final String sideEffects) {
-        // no-op
+        this.clientConfig = clientConfig;
+        this.failurePolicy = failurePolicy;
+        this.name = name;
+        this.namespaceSelector = namespaceSelector;
+        this.rules = rules;
+        this.sideEffects = sideEffects;
     }
 
     public WebhookClientConfig getClientConfig() {

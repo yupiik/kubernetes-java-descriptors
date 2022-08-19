@@ -41,7 +41,11 @@ public class TokenRequest implements Validable<TokenRequest>, Exportable {
                         final ObjectMeta metadata,
                         final TokenRequestSpec spec,
                         final TokenRequestStatus status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
     public String getApiVersion() {

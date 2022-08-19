@@ -37,7 +37,9 @@ public class CustomResourceDefinitionStatus implements Validable<CustomResourceD
     public CustomResourceDefinitionStatus(final CustomResourceDefinitionNames acceptedNames,
                                           final List<CustomResourceDefinitionCondition> conditions,
                                           final List<String> storedVersions) {
-        // no-op
+        this.acceptedNames = acceptedNames;
+        this.conditions = conditions;
+        this.storedVersions = storedVersions;
     }
 
     public CustomResourceDefinitionNames getAcceptedNames() {

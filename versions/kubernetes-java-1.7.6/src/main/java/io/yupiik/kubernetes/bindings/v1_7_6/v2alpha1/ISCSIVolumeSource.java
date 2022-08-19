@@ -51,7 +51,16 @@ public class ISCSIVolumeSource implements Validable<ISCSIVolumeSource>, Exportab
                              final Boolean readOnly,
                              final LocalObjectReference secretRef,
                              final String targetPortal) {
-        // no-op
+        this.chapAuthDiscovery = chapAuthDiscovery;
+        this.chapAuthSession = chapAuthSession;
+        this.fsType = fsType;
+        this.iqn = iqn;
+        this.iscsiInterface = iscsiInterface;
+        this.lun = lun;
+        this.portals = portals;
+        this.readOnly = readOnly;
+        this.secretRef = secretRef;
+        this.targetPortal = targetPortal;
     }
 
     public Boolean getChapAuthDiscovery() {

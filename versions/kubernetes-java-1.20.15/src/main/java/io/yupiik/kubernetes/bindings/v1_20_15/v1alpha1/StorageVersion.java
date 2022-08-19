@@ -42,7 +42,11 @@ public class StorageVersion implements Validable<StorageVersion>, Exportable {
                           final ObjectMeta metadata,
                           final JsonObject spec,
                           final StorageVersionStatus status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
     public String getApiVersion() {

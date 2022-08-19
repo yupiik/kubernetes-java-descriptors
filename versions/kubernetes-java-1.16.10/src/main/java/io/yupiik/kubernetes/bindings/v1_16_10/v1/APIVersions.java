@@ -39,7 +39,10 @@ public class APIVersions implements Validable<APIVersions>, Exportable {
                        final String kind,
                        final List<ServerAddressByClientCIDR> serverAddressByClientCIDRs,
                        final List<String> versions) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.serverAddressByClientCIDRs = serverAddressByClientCIDRs;
+        this.versions = versions;
     }
 
     public String getApiVersion() {

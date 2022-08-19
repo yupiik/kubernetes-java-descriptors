@@ -17,9 +17,7 @@ package io.yupiik.kubernetes.bindings.v1_21_6.v1;
 
 import io.yupiik.kubernetes.bindings.v1_21_6.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_6.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_6.ValidationException;
 import jakarta.json.JsonObject;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -45,7 +43,13 @@ public class PodDisruptionBudgetStatus implements Validable<PodDisruptionBudgetS
                                      final int disruptionsAllowed,
                                      final int expectedPods,
                                      final Integer observedGeneration) {
-        // no-op
+        this.conditions = conditions;
+        this.currentHealthy = currentHealthy;
+        this.desiredHealthy = desiredHealthy;
+        this.disruptedPods = disruptedPods;
+        this.disruptionsAllowed = disruptionsAllowed;
+        this.expectedPods = expectedPods;
+        this.observedGeneration = observedGeneration;
     }
 
     public List<Condition> getConditions() {

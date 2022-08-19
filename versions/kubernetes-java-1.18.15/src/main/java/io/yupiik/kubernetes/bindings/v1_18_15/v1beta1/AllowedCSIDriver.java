@@ -33,7 +33,7 @@ public class AllowedCSIDriver implements Validable<AllowedCSIDriver>, Exportable
     }
 
     public AllowedCSIDriver(final String name) {
-        // no-op
+        this.name = name;
     }
 
     public String getName() {

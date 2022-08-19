@@ -41,7 +41,11 @@ public class NamespaceCondition implements Validable<NamespaceCondition>, Export
                               final String reason,
                               final String status,
                               final NamespaceConditionType type) {
-        // no-op
+        this.lastTransitionTime = lastTransitionTime;
+        this.message = message;
+        this.reason = reason;
+        this.status = status;
+        this.type = type;
     }
 
     public String getLastTransitionTime() {

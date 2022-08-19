@@ -37,7 +37,9 @@ public class RoleRef implements Validable<RoleRef>, Exportable {
     public RoleRef(final String apiGroup,
                    final String kind,
                    final String name) {
-        // no-op
+        this.apiGroup = apiGroup;
+        this.kind = kind;
+        this.name = name;
     }
 
     public String getApiGroup() {

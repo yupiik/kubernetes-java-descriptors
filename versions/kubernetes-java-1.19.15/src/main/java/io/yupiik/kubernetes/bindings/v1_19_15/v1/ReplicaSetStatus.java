@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_19_15.v1;
 
 import io.yupiik.kubernetes.bindings.v1_19_15.Exportable;
 import io.yupiik.kubernetes.bindings.v1_19_15.Validable;
-import io.yupiik.kubernetes.bindings.v1_19_15.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -42,7 +40,12 @@ public class ReplicaSetStatus implements Validable<ReplicaSetStatus>, Exportable
                             final Integer observedGeneration,
                             final Integer readyReplicas,
                             final int replicas) {
-        // no-op
+        this.availableReplicas = availableReplicas;
+        this.conditions = conditions;
+        this.fullyLabeledReplicas = fullyLabeledReplicas;
+        this.observedGeneration = observedGeneration;
+        this.readyReplicas = readyReplicas;
+        this.replicas = replicas;
     }
 
     public Integer getAvailableReplicas() {

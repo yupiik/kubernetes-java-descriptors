@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_23_9.v1;
 import io.yupiik.kubernetes.bindings.v1_23_9.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_9.Validable;
-import io.yupiik.kubernetes.bindings.v1_23_9.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -70,7 +68,25 @@ public class ServiceSpec implements Validable<ServiceSpec>, Exportable {
                        final String sessionAffinity,
                        final SessionAffinityConfig sessionAffinityConfig,
                        final String type) {
-        // no-op
+        this.allocateLoadBalancerNodePorts = allocateLoadBalancerNodePorts;
+        this.clusterIP = clusterIP;
+        this.clusterIPs = clusterIPs;
+        this.externalIPs = externalIPs;
+        this.externalName = externalName;
+        this.externalTrafficPolicy = externalTrafficPolicy;
+        this.healthCheckNodePort = healthCheckNodePort;
+        this.internalTrafficPolicy = internalTrafficPolicy;
+        this.ipFamilies = ipFamilies;
+        this.ipFamilyPolicy = ipFamilyPolicy;
+        this.loadBalancerClass = loadBalancerClass;
+        this.loadBalancerIP = loadBalancerIP;
+        this.loadBalancerSourceRanges = loadBalancerSourceRanges;
+        this.ports = ports;
+        this.publishNotReadyAddresses = publishNotReadyAddresses;
+        this.selector = selector;
+        this.sessionAffinity = sessionAffinity;
+        this.sessionAffinityConfig = sessionAffinityConfig;
+        this.type = type;
     }
 
     public Boolean getAllocateLoadBalancerNodePorts() {

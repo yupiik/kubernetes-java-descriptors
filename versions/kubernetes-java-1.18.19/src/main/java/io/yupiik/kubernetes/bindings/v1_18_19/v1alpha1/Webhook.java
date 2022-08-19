@@ -34,7 +34,8 @@ public class Webhook implements Validable<Webhook>, Exportable {
 
     public Webhook(final WebhookClientConfig clientConfig,
                    final WebhookThrottleConfig throttle) {
-        // no-op
+        this.clientConfig = clientConfig;
+        this.throttle = throttle;
     }
 
     public WebhookClientConfig getClientConfig() {

@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_7_4.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_7_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_4.Validable;
-import io.yupiik.kubernetes.bindings.v1_7_4.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -41,7 +39,11 @@ public class ThirdPartyResource implements Validable<ThirdPartyResource>, Export
                               final String kind,
                               final ObjectMeta metadata,
                               final List<APIVersion> versions) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.description = description;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.versions = versions;
     }
 
     public String getApiVersion() {

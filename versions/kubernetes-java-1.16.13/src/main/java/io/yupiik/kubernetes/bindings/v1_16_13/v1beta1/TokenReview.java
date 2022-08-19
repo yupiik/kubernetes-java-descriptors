@@ -41,7 +41,11 @@ public class TokenReview implements Validable<TokenReview>, Exportable {
                        final ObjectMeta metadata,
                        final TokenReviewSpec spec,
                        final TokenReviewStatus status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
     public String getApiVersion() {

@@ -48,7 +48,14 @@ public class CertificateSigningRequestSpec implements Validable<CertificateSigni
                                          final String uid,
                                          final List<String> usages,
                                          final String username) {
-        // no-op
+        this.expirationSeconds = expirationSeconds;
+        this.extra = extra;
+        this.groups = groups;
+        this.request = request;
+        this.signerName = signerName;
+        this.uid = uid;
+        this.usages = usages;
+        this.username = username;
     }
 
     public Integer getExpirationSeconds() {

@@ -39,7 +39,10 @@ public class PodAffinityTerm implements Validable<PodAffinityTerm>, Exportable {
                            final LabelSelector namespaceSelector,
                            final List<String> namespaces,
                            final String topologyKey) {
-        // no-op
+        this.labelSelector = labelSelector;
+        this.namespaceSelector = namespaceSelector;
+        this.namespaces = namespaces;
+        this.topologyKey = topologyKey;
     }
 
     public LabelSelector getLabelSelector() {

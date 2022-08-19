@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_18_15.v1;
 
 import io.yupiik.kubernetes.bindings.v1_18_15.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_15.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_15.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -32,7 +29,7 @@ public class RollingUpdateStatefulSetStrategy implements Validable<RollingUpdate
     }
 
     public RollingUpdateStatefulSetStrategy(final Integer partition) {
-        // no-op
+        this.partition = partition;
     }
 
     public Integer getPartition() {

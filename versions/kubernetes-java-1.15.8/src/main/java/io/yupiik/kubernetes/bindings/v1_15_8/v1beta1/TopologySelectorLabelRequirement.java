@@ -35,7 +35,8 @@ public class TopologySelectorLabelRequirement implements Validable<TopologySelec
 
     public TopologySelectorLabelRequirement(final String key,
                                             final List<String> values) {
-        // no-op
+        this.key = key;
+        this.values = values;
     }
 
     public String getKey() {

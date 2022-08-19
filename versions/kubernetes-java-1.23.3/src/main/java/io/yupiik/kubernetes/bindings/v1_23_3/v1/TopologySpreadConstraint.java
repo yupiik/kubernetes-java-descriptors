@@ -39,7 +39,10 @@ public class TopologySpreadConstraint implements Validable<TopologySpreadConstra
                                     final int maxSkew,
                                     final String topologyKey,
                                     final TopologySpreadConstraintWhenUnsatisfiable whenUnsatisfiable) {
-        // no-op
+        this.labelSelector = labelSelector;
+        this.maxSkew = maxSkew;
+        this.topologyKey = topologyKey;
+        this.whenUnsatisfiable = whenUnsatisfiable;
     }
 
     public LabelSelector getLabelSelector() {

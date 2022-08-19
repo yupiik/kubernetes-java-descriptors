@@ -18,10 +18,7 @@ package io.yupiik.kubernetes.bindings.v1_16_15.v2beta2;
 import io.yupiik.kubernetes.bindings.v1_16_15.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_15.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_15.Validable;
-import io.yupiik.kubernetes.bindings.v1_16_15.ValidationException;
 import jakarta.json.bind.annotation.JsonbProperty;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -41,7 +38,10 @@ public class ListMeta implements Validable<ListMeta>, Exportable {
                     final Integer remainingItemCount,
                     final String resourceVersion,
                     final String selfLink) {
-        // no-op
+        this.continueValue = continueValue;
+        this.remainingItemCount = remainingItemCount;
+        this.resourceVersion = resourceVersion;
+        this.selfLink = selfLink;
     }
 
     public String getContinueValue() {

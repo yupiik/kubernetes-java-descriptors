@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_20_11.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_20_11.Exportable;
 import io.yupiik.kubernetes.bindings.v1_20_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_11.Validable;
-import io.yupiik.kubernetes.bindings.v1_20_11.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -41,7 +38,11 @@ public class FlowSchema implements Validable<FlowSchema>, Exportable {
                       final ObjectMeta metadata,
                       final FlowSchemaSpec spec,
                       final FlowSchemaStatus status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
     public String getApiVersion() {

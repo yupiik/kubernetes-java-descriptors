@@ -37,7 +37,9 @@ public class ObjectMetricStatus implements Validable<ObjectMetricStatus>, Export
     public ObjectMetricStatus(final String currentValue,
                               final String metricName,
                               final CrossVersionObjectReference target) {
-        // no-op
+        this.currentValue = currentValue;
+        this.metricName = metricName;
+        this.target = target;
     }
 
     public String getCurrentValue() {

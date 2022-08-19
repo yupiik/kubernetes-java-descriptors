@@ -44,7 +44,12 @@ public class Endpoint implements Validable<Endpoint>, Exportable {
                     final String nodeName,
                     final ObjectReference targetRef,
                     final Map<String, String> topology) {
-        // no-op
+        this.addresses = addresses;
+        this.conditions = conditions;
+        this.hostname = hostname;
+        this.nodeName = nodeName;
+        this.targetRef = targetRef;
+        this.topology = topology;
     }
 
     public List<String> getAddresses() {

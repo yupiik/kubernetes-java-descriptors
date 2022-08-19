@@ -35,7 +35,8 @@ public class Sysctl implements Validable<Sysctl>, Exportable {
 
     public Sysctl(final String name,
                   final String value) {
-        // no-op
+        this.name = name;
+        this.value = value;
     }
 
     public String getName() {

@@ -89,7 +89,35 @@ public class Volume implements Validable<Volume>, Exportable {
                   final SecretVolumeSource secret,
                   final StorageOSVolumeSource storageos,
                   final VsphereVirtualDiskVolumeSource vsphereVolume) {
-        // no-op
+        this.awsElasticBlockStore = awsElasticBlockStore;
+        this.azureDisk = azureDisk;
+        this.azureFile = azureFile;
+        this.cephfs = cephfs;
+        this.cinder = cinder;
+        this.configMap = configMap;
+        this.csi = csi;
+        this.downwardAPI = downwardAPI;
+        this.emptyDir = emptyDir;
+        this.fc = fc;
+        this.flexVolume = flexVolume;
+        this.flocker = flocker;
+        this.gcePersistentDisk = gcePersistentDisk;
+        this.gitRepo = gitRepo;
+        this.glusterfs = glusterfs;
+        this.hostPath = hostPath;
+        this.iscsi = iscsi;
+        this.name = name;
+        this.nfs = nfs;
+        this.persistentVolumeClaim = persistentVolumeClaim;
+        this.photonPersistentDisk = photonPersistentDisk;
+        this.portworxVolume = portworxVolume;
+        this.projected = projected;
+        this.quobyte = quobyte;
+        this.rbd = rbd;
+        this.scaleIO = scaleIO;
+        this.secret = secret;
+        this.storageos = storageos;
+        this.vsphereVolume = vsphereVolume;
     }
 
     public AWSElasticBlockStoreVolumeSource getAwsElasticBlockStore() {

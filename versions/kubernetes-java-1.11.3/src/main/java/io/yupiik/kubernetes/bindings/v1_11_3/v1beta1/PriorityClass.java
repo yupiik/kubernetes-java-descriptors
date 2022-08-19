@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_11_3.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_11_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_11_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_11_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_11_3.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -43,7 +40,12 @@ public class PriorityClass implements Validable<PriorityClass>, Exportable {
                          final String kind,
                          final ObjectMeta metadata,
                          final int value) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.description = description;
+        this.globalDefault = globalDefault;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.value = value;
     }
 
     public String getApiVersion() {

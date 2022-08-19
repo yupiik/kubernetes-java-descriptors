@@ -35,7 +35,8 @@ public class ResourceMetricStatus implements Validable<ResourceMetricStatus>, Ex
 
     public ResourceMetricStatus(final MetricValueStatus current,
                                 final String name) {
-        // no-op
+        this.current = current;
+        this.name = name;
     }
 
     public MetricValueStatus getCurrent() {

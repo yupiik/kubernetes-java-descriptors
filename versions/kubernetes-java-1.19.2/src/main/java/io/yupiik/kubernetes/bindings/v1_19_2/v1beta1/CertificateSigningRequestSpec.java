@@ -46,7 +46,13 @@ public class CertificateSigningRequestSpec implements Validable<CertificateSigni
                                          final String uid,
                                          final List<String> usages,
                                          final String username) {
-        // no-op
+        this.extra = extra;
+        this.groups = groups;
+        this.request = request;
+        this.signerName = signerName;
+        this.uid = uid;
+        this.usages = usages;
+        this.username = username;
     }
 
     public JsonObject getExtra() {

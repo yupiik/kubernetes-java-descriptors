@@ -35,7 +35,8 @@ public class SELinuxStrategyOptions implements Validable<SELinuxStrategyOptions>
 
     public SELinuxStrategyOptions(final String rule,
                                   final SELinuxOptions seLinuxOptions) {
-        // no-op
+        this.rule = rule;
+        this.seLinuxOptions = seLinuxOptions;
     }
 
     public String getRule() {

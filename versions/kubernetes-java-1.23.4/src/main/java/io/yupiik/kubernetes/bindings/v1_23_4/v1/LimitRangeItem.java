@@ -45,7 +45,12 @@ public class LimitRangeItem implements Validable<LimitRangeItem>, Exportable {
                           final JsonObject maxLimitRequestRatio,
                           final JsonObject min,
                           final LimitRangeItemType type) {
-        // no-op
+        this.defaultRequest = defaultRequest;
+        this.defaultValue = defaultValue;
+        this.max = max;
+        this.maxLimitRequestRatio = maxLimitRequestRatio;
+        this.min = min;
+        this.type = type;
     }
 
     public JsonObject getDefaultRequest() {

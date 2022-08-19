@@ -43,7 +43,12 @@ public class CephFSVolumeSource implements Validable<CephFSVolumeSource>, Export
                               final String secretFile,
                               final LocalObjectReference secretRef,
                               final String user) {
-        // no-op
+        this.monitors = monitors;
+        this.path = path;
+        this.readOnly = readOnly;
+        this.secretFile = secretFile;
+        this.secretRef = secretRef;
+        this.user = user;
     }
 
     public List<String> getMonitors() {

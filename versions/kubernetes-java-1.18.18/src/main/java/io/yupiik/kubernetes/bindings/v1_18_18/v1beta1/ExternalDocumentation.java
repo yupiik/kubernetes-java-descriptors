@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_18_18.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_18_18.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_18.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_18.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_18.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -35,7 +32,8 @@ public class ExternalDocumentation implements Validable<ExternalDocumentation>, 
 
     public ExternalDocumentation(final String description,
                                  final String url) {
-        // no-op
+        this.description = description;
+        this.url = url;
     }
 
     public String getDescription() {

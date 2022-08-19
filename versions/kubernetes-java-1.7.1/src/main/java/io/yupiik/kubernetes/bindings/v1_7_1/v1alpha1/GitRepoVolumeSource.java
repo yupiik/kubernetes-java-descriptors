@@ -37,7 +37,9 @@ public class GitRepoVolumeSource implements Validable<GitRepoVolumeSource>, Expo
     public GitRepoVolumeSource(final String directory,
                                final String repository,
                                final String revision) {
-        // no-op
+        this.directory = directory;
+        this.repository = repository;
+        this.revision = revision;
     }
 
     public String getDirectory() {

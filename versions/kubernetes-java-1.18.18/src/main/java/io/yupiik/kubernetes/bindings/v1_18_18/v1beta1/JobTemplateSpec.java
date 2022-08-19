@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_18_18.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_18_18.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_18.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_18.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -34,7 +31,8 @@ public class JobTemplateSpec implements Validable<JobTemplateSpec>, Exportable {
 
     public JobTemplateSpec(final ObjectMeta metadata,
                            final JobSpec spec) {
-        // no-op
+        this.metadata = metadata;
+        this.spec = spec;
     }
 
     public ObjectMeta getMetadata() {

@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_11_5.v1;
 
 import io.yupiik.kubernetes.bindings.v1_11_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_11_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_11_5.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -32,7 +30,7 @@ public class TopologySelectorTerm implements Validable<TopologySelectorTerm>, Ex
     }
 
     public TopologySelectorTerm(final List<TopologySelectorLabelRequirement> matchLabelExpressions) {
-        // no-op
+        this.matchLabelExpressions = matchLabelExpressions;
     }
 
     public List<TopologySelectorLabelRequirement> getMatchLabelExpressions() {

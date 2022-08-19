@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_20_12.v1;
 
 import io.yupiik.kubernetes.bindings.v1_20_12.Exportable;
 import io.yupiik.kubernetes.bindings.v1_20_12.Validable;
-import io.yupiik.kubernetes.bindings.v1_20_12.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -32,7 +29,7 @@ public class NodeDaemonEndpoints implements Validable<NodeDaemonEndpoints>, Expo
     }
 
     public NodeDaemonEndpoints(final DaemonEndpoint kubeletEndpoint) {
-        // no-op
+        this.kubeletEndpoint = kubeletEndpoint;
     }
 
     public DaemonEndpoint getKubeletEndpoint() {

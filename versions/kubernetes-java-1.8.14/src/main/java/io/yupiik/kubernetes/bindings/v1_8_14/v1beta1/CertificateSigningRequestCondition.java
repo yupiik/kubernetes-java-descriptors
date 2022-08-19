@@ -39,7 +39,10 @@ public class CertificateSigningRequestCondition implements Validable<Certificate
                                               final String message,
                                               final String reason,
                                               final String type) {
-        // no-op
+        this.lastUpdateTime = lastUpdateTime;
+        this.message = message;
+        this.reason = reason;
+        this.type = type;
     }
 
     public String getLastUpdateTime() {

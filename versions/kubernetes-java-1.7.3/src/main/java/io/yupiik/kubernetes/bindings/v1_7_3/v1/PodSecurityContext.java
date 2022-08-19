@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_7_3.v1;
 
 import io.yupiik.kubernetes.bindings.v1_7_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_7_3.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -40,7 +38,11 @@ public class PodSecurityContext implements Validable<PodSecurityContext>, Export
                               final Integer runAsUser,
                               final SELinuxOptions seLinuxOptions,
                               final List<Integer> supplementalGroups) {
-        // no-op
+        this.fsGroup = fsGroup;
+        this.runAsNonRoot = runAsNonRoot;
+        this.runAsUser = runAsUser;
+        this.seLinuxOptions = seLinuxOptions;
+        this.supplementalGroups = supplementalGroups;
     }
 
     public Integer getFsGroup() {

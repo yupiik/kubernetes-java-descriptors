@@ -48,7 +48,14 @@ public class Endpoint implements Validable<Endpoint>, Exportable {
                     final String nodeName,
                     final ObjectReference targetRef,
                     final String zone) {
-        // no-op
+        this.addresses = addresses;
+        this.conditions = conditions;
+        this.deprecatedTopology = deprecatedTopology;
+        this.hints = hints;
+        this.hostname = hostname;
+        this.nodeName = nodeName;
+        this.targetRef = targetRef;
+        this.zone = zone;
     }
 
     public List<String> getAddresses() {

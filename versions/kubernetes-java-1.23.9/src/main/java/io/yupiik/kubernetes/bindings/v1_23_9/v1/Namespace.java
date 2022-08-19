@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_23_9.v1;
 import io.yupiik.kubernetes.bindings.v1_23_9.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_9.Validable;
-import io.yupiik.kubernetes.bindings.v1_23_9.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -41,7 +38,11 @@ public class Namespace implements Validable<Namespace>, Exportable {
                      final ObjectMeta metadata,
                      final NamespaceSpec spec,
                      final NamespaceStatus status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
     public String getApiVersion() {

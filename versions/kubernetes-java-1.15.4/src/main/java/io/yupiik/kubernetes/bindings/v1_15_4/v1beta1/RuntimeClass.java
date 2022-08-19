@@ -39,7 +39,10 @@ public class RuntimeClass implements Validable<RuntimeClass>, Exportable {
                         final String handler,
                         final String kind,
                         final ObjectMeta metadata) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.handler = handler;
+        this.kind = kind;
+        this.metadata = metadata;
     }
 
     public String getApiVersion() {

@@ -39,7 +39,10 @@ public class DownwardAPIVolumeFile implements Validable<DownwardAPIVolumeFile>, 
                                  final Integer mode,
                                  final String path,
                                  final ResourceFieldSelector resourceFieldRef) {
-        // no-op
+        this.fieldRef = fieldRef;
+        this.mode = mode;
+        this.path = path;
+        this.resourceFieldRef = resourceFieldRef;
     }
 
     public ObjectFieldSelector getFieldRef() {

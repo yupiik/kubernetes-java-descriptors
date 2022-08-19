@@ -18,9 +18,7 @@ package io.yupiik.kubernetes.bindings.v1_9_5.v1;
 import io.yupiik.kubernetes.bindings.v1_9_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_9_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_9_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_9_5.ValidationException;
 import jakarta.json.JsonObject;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -40,7 +38,10 @@ public class PersistentVolumeClaimStatus implements Validable<PersistentVolumeCl
                                        final JsonObject capacity,
                                        final List<PersistentVolumeClaimCondition> conditions,
                                        final String phase) {
-        // no-op
+        this.accessModes = accessModes;
+        this.capacity = capacity;
+        this.conditions = conditions;
+        this.phase = phase;
     }
 
     public List<String> getAccessModes() {

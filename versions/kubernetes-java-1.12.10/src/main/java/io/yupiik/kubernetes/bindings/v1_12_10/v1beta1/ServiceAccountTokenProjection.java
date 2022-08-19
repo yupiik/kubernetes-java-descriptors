@@ -37,7 +37,9 @@ public class ServiceAccountTokenProjection implements Validable<ServiceAccountTo
     public ServiceAccountTokenProjection(final String audience,
                                          final Integer expirationSeconds,
                                          final String path) {
-        // no-op
+        this.audience = audience;
+        this.expirationSeconds = expirationSeconds;
+        this.path = path;
     }
 
     public String getAudience() {

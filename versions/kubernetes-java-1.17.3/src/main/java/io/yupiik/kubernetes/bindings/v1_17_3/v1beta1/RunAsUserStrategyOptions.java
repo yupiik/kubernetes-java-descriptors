@@ -35,7 +35,8 @@ public class RunAsUserStrategyOptions implements Validable<RunAsUserStrategyOpti
 
     public RunAsUserStrategyOptions(final List<IDRange> ranges,
                                     final String rule) {
-        // no-op
+        this.ranges = ranges;
+        this.rule = rule;
     }
 
     public List<IDRange> getRanges() {

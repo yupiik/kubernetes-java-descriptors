@@ -46,7 +46,14 @@ public class DeploymentSpec implements Validable<DeploymentSpec>, Exportable {
                           final LabelSelector selector,
                           final DeploymentStrategy strategy,
                           final PodTemplateSpec template) {
-        // no-op
+        this.minReadySeconds = minReadySeconds;
+        this.paused = paused;
+        this.progressDeadlineSeconds = progressDeadlineSeconds;
+        this.replicas = replicas;
+        this.revisionHistoryLimit = revisionHistoryLimit;
+        this.selector = selector;
+        this.strategy = strategy;
+        this.template = template;
     }
 
     public Integer getMinReadySeconds() {

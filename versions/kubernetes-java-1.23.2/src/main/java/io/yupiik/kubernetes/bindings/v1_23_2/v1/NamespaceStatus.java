@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_23_2.v1;
 
 import io.yupiik.kubernetes.bindings.v1_23_2.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_2.Validable;
-import io.yupiik.kubernetes.bindings.v1_23_2.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -34,7 +32,8 @@ public class NamespaceStatus implements Validable<NamespaceStatus>, Exportable {
 
     public NamespaceStatus(final List<NamespaceCondition> conditions,
                            final NamespaceStatusPhase phase) {
-        // no-op
+        this.conditions = conditions;
+        this.phase = phase;
     }
 
     public List<NamespaceCondition> getConditions() {

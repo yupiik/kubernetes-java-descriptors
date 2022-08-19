@@ -43,7 +43,12 @@ public class NodeCondition implements Validable<NodeCondition>, Exportable {
                          final String reason,
                          final String status,
                          final String type) {
-        // no-op
+        this.lastHeartbeatTime = lastHeartbeatTime;
+        this.lastTransitionTime = lastTransitionTime;
+        this.message = message;
+        this.reason = reason;
+        this.status = status;
+        this.type = type;
     }
 
     public String getLastHeartbeatTime() {

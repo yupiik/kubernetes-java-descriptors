@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_19_8.v1;
 import io.yupiik.kubernetes.bindings.v1_19_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_19_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_8.Validable;
-import io.yupiik.kubernetes.bindings.v1_19_8.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -45,7 +42,13 @@ public class ObjectReference implements Validable<ObjectReference>, Exportable {
                            final String namespace,
                            final String resourceVersion,
                            final String uid) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.fieldPath = fieldPath;
+        this.kind = kind;
+        this.name = name;
+        this.namespace = namespace;
+        this.resourceVersion = resourceVersion;
+        this.uid = uid;
     }
 
     public String getApiVersion() {

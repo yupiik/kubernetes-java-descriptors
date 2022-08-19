@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_21_13.v1;
 import io.yupiik.kubernetes.bindings.v1_21_13.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_13.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_13.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_13.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -39,7 +37,10 @@ public class Endpoints implements Validable<Endpoints>, Exportable {
                      final String kind,
                      final ObjectMeta metadata,
                      final List<EndpointSubset> subsets) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.subsets = subsets;
     }
 
     public String getApiVersion() {

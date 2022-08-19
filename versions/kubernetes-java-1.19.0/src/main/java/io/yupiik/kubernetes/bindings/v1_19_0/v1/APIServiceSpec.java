@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_19_0.v1;
 import io.yupiik.kubernetes.bindings.v1_19_0.Exportable;
 import io.yupiik.kubernetes.bindings.v1_19_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_0.Validable;
-import io.yupiik.kubernetes.bindings.v1_19_0.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -45,7 +42,13 @@ public class APIServiceSpec implements Validable<APIServiceSpec>, Exportable {
                           final ServiceReference service,
                           final String version,
                           final int versionPriority) {
-        // no-op
+        this.caBundle = caBundle;
+        this.group = group;
+        this.groupPriorityMinimum = groupPriorityMinimum;
+        this.insecureSkipTLSVerify = insecureSkipTLSVerify;
+        this.service = service;
+        this.version = version;
+        this.versionPriority = versionPriority;
     }
 
     public String getCaBundle() {

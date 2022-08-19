@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_16_11.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_16_11.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_11.Validable;
-import io.yupiik.kubernetes.bindings.v1_16_11.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -35,7 +32,8 @@ public class DeploymentStrategy implements Validable<DeploymentStrategy>, Export
 
     public DeploymentStrategy(final RollingUpdateDeployment rollingUpdate,
                               final String type) {
-        // no-op
+        this.rollingUpdate = rollingUpdate;
+        this.type = type;
     }
 
     public RollingUpdateDeployment getRollingUpdate() {

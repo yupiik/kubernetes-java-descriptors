@@ -48,7 +48,14 @@ public class CSIPersistentVolumeSource implements Validable<CSIPersistentVolumeS
                                      final Boolean readOnly,
                                      final Map<String, String> volumeAttributes,
                                      final String volumeHandle) {
-        // no-op
+        this.controllerPublishSecretRef = controllerPublishSecretRef;
+        this.driver = driver;
+        this.fsType = fsType;
+        this.nodePublishSecretRef = nodePublishSecretRef;
+        this.nodeStageSecretRef = nodeStageSecretRef;
+        this.readOnly = readOnly;
+        this.volumeAttributes = volumeAttributes;
+        this.volumeHandle = volumeHandle;
     }
 
     public SecretReference getControllerPublishSecretRef() {

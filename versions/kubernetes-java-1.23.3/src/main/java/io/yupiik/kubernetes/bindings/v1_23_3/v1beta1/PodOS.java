@@ -33,7 +33,7 @@ public class PodOS implements Validable<PodOS>, Exportable {
     }
 
     public PodOS(final String name) {
-        // no-op
+        this.name = name;
     }
 
     public String getName() {

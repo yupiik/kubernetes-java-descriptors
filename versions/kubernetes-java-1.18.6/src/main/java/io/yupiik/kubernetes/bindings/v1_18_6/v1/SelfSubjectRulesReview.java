@@ -41,7 +41,11 @@ public class SelfSubjectRulesReview implements Validable<SelfSubjectRulesReview>
                                   final ObjectMeta metadata,
                                   final SelfSubjectRulesReviewSpec spec,
                                   final SubjectRulesReviewStatus status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
     public String getApiVersion() {

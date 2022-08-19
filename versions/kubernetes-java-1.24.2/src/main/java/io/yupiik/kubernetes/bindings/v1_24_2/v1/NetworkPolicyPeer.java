@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_24_2.v1;
 
 import io.yupiik.kubernetes.bindings.v1_24_2.Exportable;
 import io.yupiik.kubernetes.bindings.v1_24_2.Validable;
-import io.yupiik.kubernetes.bindings.v1_24_2.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -36,7 +33,9 @@ public class NetworkPolicyPeer implements Validable<NetworkPolicyPeer>, Exportab
     public NetworkPolicyPeer(final IPBlock ipBlock,
                              final LabelSelector namespaceSelector,
                              final LabelSelector podSelector) {
-        // no-op
+        this.ipBlock = ipBlock;
+        this.namespaceSelector = namespaceSelector;
+        this.podSelector = podSelector;
     }
 
     public IPBlock getIpBlock() {

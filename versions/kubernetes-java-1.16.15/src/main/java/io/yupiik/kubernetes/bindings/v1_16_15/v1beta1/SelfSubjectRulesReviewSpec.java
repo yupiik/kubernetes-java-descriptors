@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_16_15.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_16_15.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_15.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_15.Validable;
-import io.yupiik.kubernetes.bindings.v1_16_15.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -33,7 +30,7 @@ public class SelfSubjectRulesReviewSpec implements Validable<SelfSubjectRulesRev
     }
 
     public SelfSubjectRulesReviewSpec(final String namespace) {
-        // no-op
+        this.namespace = namespace;
     }
 
     public String getNamespace() {

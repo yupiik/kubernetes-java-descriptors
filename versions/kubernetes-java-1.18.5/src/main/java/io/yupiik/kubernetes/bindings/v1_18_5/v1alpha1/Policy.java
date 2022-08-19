@@ -35,7 +35,8 @@ public class Policy implements Validable<Policy>, Exportable {
 
     public Policy(final String level,
                   final List<String> stages) {
-        // no-op
+        this.level = level;
+        this.stages = stages;
     }
 
     public String getLevel() {

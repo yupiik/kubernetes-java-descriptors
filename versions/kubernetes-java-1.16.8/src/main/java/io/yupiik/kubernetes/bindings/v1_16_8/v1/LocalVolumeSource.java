@@ -35,7 +35,8 @@ public class LocalVolumeSource implements Validable<LocalVolumeSource>, Exportab
 
     public LocalVolumeSource(final String fsType,
                              final String path) {
-        // no-op
+        this.fsType = fsType;
+        this.path = path;
     }
 
     public String getFsType() {

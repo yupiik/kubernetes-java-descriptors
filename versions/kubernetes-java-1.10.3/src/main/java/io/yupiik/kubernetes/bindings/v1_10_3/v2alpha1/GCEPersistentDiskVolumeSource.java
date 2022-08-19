@@ -39,7 +39,10 @@ public class GCEPersistentDiskVolumeSource implements Validable<GCEPersistentDis
                                          final Integer partition,
                                          final String pdName,
                                          final Boolean readOnly) {
-        // no-op
+        this.fsType = fsType;
+        this.partition = partition;
+        this.pdName = pdName;
+        this.readOnly = readOnly;
     }
 
     public String getFsType() {

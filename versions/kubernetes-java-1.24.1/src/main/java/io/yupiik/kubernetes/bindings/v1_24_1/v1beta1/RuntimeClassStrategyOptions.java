@@ -35,7 +35,8 @@ public class RuntimeClassStrategyOptions implements Validable<RuntimeClassStrate
 
     public RuntimeClassStrategyOptions(final List<String> allowedRuntimeClassNames,
                                        final String defaultRuntimeClassName) {
-        // no-op
+        this.allowedRuntimeClassNames = allowedRuntimeClassNames;
+        this.defaultRuntimeClassName = defaultRuntimeClassName;
     }
 
     public List<String> getAllowedRuntimeClassNames() {

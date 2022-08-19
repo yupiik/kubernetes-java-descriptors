@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_9_7.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_9_7.Exportable;
 import io.yupiik.kubernetes.bindings.v1_9_7.Validable;
-import io.yupiik.kubernetes.bindings.v1_9_7.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -46,7 +43,14 @@ public class Probe implements Validable<Probe>, Exportable {
                  final Integer successThreshold,
                  final TCPSocketAction tcpSocket,
                  final Integer timeoutSeconds) {
-        // no-op
+        this.exec = exec;
+        this.failureThreshold = failureThreshold;
+        this.httpGet = httpGet;
+        this.initialDelaySeconds = initialDelaySeconds;
+        this.periodSeconds = periodSeconds;
+        this.successThreshold = successThreshold;
+        this.tcpSocket = tcpSocket;
+        this.timeoutSeconds = timeoutSeconds;
     }
 
     public ExecAction getExec() {

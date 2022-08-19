@@ -41,7 +41,11 @@ public class SelfSubjectAccessReview implements Validable<SelfSubjectAccessRevie
                                    final ObjectMeta metadata,
                                    final SelfSubjectAccessReviewSpec spec,
                                    final SubjectAccessReviewStatus status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
     public String getApiVersion() {

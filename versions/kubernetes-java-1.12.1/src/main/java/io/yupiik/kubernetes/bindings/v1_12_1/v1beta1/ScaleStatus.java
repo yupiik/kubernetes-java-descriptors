@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_12_1.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_12_1.Exportable;
 import io.yupiik.kubernetes.bindings.v1_12_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_12_1.Validable;
-import io.yupiik.kubernetes.bindings.v1_12_1.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -38,7 +35,9 @@ public class ScaleStatus implements Validable<ScaleStatus>, Exportable {
     public ScaleStatus(final int replicas,
                        final Map<String, String> selector,
                        final String targetSelector) {
-        // no-op
+        this.replicas = replicas;
+        this.selector = selector;
+        this.targetSelector = targetSelector;
     }
 
     public int getReplicas() {

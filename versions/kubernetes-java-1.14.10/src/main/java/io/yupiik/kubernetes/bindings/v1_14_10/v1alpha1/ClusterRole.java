@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_14_10.v1alpha1;
 import io.yupiik.kubernetes.bindings.v1_14_10.Exportable;
 import io.yupiik.kubernetes.bindings.v1_14_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_14_10.Validable;
-import io.yupiik.kubernetes.bindings.v1_14_10.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -41,7 +39,11 @@ public class ClusterRole implements Validable<ClusterRole>, Exportable {
                        final String kind,
                        final ObjectMeta metadata,
                        final List<PolicyRule> rules) {
-        // no-op
+        this.aggregationRule = aggregationRule;
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.rules = rules;
     }
 
     public AggregationRule getAggregationRule() {

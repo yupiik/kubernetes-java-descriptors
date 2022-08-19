@@ -38,7 +38,10 @@ public class FlowSchemaSpec implements Validable<FlowSchemaSpec>, Exportable {
                           final Integer matchingPrecedence,
                           final PriorityLevelConfigurationReference priorityLevelConfiguration,
                           final List<PolicyRulesWithSubjects> rules) {
-        // no-op
+        this.distinguisherMethod = distinguisherMethod;
+        this.matchingPrecedence = matchingPrecedence;
+        this.priorityLevelConfiguration = priorityLevelConfiguration;
+        this.rules = rules;
     }
 
     public FlowDistinguisherMethod getDistinguisherMethod() {

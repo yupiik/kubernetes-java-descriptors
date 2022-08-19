@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_20_2.v1;
 import io.yupiik.kubernetes.bindings.v1_20_2.Exportable;
 import io.yupiik.kubernetes.bindings.v1_20_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_2.Validable;
-import io.yupiik.kubernetes.bindings.v1_20_2.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -37,7 +35,9 @@ public class LoadBalancerIngress implements Validable<LoadBalancerIngress>, Expo
     public LoadBalancerIngress(final String hostname,
                                final String ip,
                                final List<PortStatus> ports) {
-        // no-op
+        this.hostname = hostname;
+        this.ip = ip;
+        this.ports = ports;
     }
 
     public String getHostname() {

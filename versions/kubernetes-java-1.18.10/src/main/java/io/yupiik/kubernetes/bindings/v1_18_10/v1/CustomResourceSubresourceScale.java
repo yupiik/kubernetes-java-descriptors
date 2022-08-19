@@ -37,7 +37,9 @@ public class CustomResourceSubresourceScale implements Validable<CustomResourceS
     public CustomResourceSubresourceScale(final String labelSelectorPath,
                                           final String specReplicasPath,
                                           final String statusReplicasPath) {
-        // no-op
+        this.labelSelectorPath = labelSelectorPath;
+        this.specReplicasPath = specReplicasPath;
+        this.statusReplicasPath = statusReplicasPath;
     }
 
     public String getLabelSelectorPath() {

@@ -39,7 +39,10 @@ public class VsphereVirtualDiskVolumeSource implements Validable<VsphereVirtualD
                                           final String storagePolicyID,
                                           final String storagePolicyName,
                                           final String volumePath) {
-        // no-op
+        this.fsType = fsType;
+        this.storagePolicyID = storagePolicyID;
+        this.storagePolicyName = storagePolicyName;
+        this.volumePath = volumePath;
     }
 
     public String getFsType() {

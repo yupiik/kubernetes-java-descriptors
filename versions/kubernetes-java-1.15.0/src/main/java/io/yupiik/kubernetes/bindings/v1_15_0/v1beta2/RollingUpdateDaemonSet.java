@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_15_0.v1beta2;
 import io.yupiik.kubernetes.bindings.v1_15_0.Exportable;
 import io.yupiik.kubernetes.bindings.v1_15_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_0.Validable;
-import io.yupiik.kubernetes.bindings.v1_15_0.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -33,7 +30,7 @@ public class RollingUpdateDaemonSet implements Validable<RollingUpdateDaemonSet>
     }
 
     public RollingUpdateDaemonSet(final String maxUnavailable) {
-        // no-op
+        this.maxUnavailable = maxUnavailable;
     }
 
     public String getMaxUnavailable() {

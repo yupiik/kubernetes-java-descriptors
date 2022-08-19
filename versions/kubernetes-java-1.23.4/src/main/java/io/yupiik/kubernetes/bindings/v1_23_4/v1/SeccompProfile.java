@@ -35,7 +35,8 @@ public class SeccompProfile implements Validable<SeccompProfile>, Exportable {
 
     public SeccompProfile(final String localhostProfile,
                           final SeccompProfileType type) {
-        // no-op
+        this.localhostProfile = localhostProfile;
+        this.type = type;
     }
 
     public String getLocalhostProfile() {

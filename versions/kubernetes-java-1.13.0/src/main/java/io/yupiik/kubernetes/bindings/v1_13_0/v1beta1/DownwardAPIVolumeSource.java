@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_13_0.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_13_0.Exportable;
 import io.yupiik.kubernetes.bindings.v1_13_0.Validable;
-import io.yupiik.kubernetes.bindings.v1_13_0.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -34,7 +32,8 @@ public class DownwardAPIVolumeSource implements Validable<DownwardAPIVolumeSourc
 
     public DownwardAPIVolumeSource(final Integer defaultMode,
                                    final List<DownwardAPIVolumeFile> items) {
-        // no-op
+        this.defaultMode = defaultMode;
+        this.items = items;
     }
 
     public Integer getDefaultMode() {

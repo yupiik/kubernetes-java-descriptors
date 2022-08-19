@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_13_0.v1beta2;
 
 import io.yupiik.kubernetes.bindings.v1_13_0.Exportable;
 import io.yupiik.kubernetes.bindings.v1_13_0.Validable;
-import io.yupiik.kubernetes.bindings.v1_13_0.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -34,7 +31,8 @@ public class Lifecycle implements Validable<Lifecycle>, Exportable {
 
     public Lifecycle(final Handler postStart,
                      final Handler preStop) {
-        // no-op
+        this.postStart = postStart;
+        this.preStop = preStop;
     }
 
     public Handler getPostStart() {

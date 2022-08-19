@@ -18,11 +18,9 @@ package io.yupiik.kubernetes.bindings.v1_19_4.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_19_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_19_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_4.Validable;
-import io.yupiik.kubernetes.bindings.v1_19_4.ValidationException;
 import jakarta.json.JsonObject;
 import jakarta.json.JsonValue;
 import jakarta.json.bind.annotation.JsonbProperty;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -130,7 +128,49 @@ public class JSONSchemaProps implements Validable<JSONSchemaProps>, Exportable {
                            final String xKubernetesListType,
                            final String xKubernetesMapType,
                            final Boolean xKubernetesPreserveUnknownFields) {
-        // no-op
+        this.additionalItems = additionalItems;
+        this.additionalProperties = additionalProperties;
+        this.allOf = allOf;
+        this.anyOf = anyOf;
+        this.defaultValue = defaultValue;
+        this.definitions = definitions;
+        this.dependencies = dependencies;
+        this.description = description;
+        this.enumValue = enumValue;
+        this.example = example;
+        this.exclusiveMaximum = exclusiveMaximum;
+        this.exclusiveMinimum = exclusiveMinimum;
+        this.externalDocs = externalDocs;
+        this.format = format;
+        this.id = id;
+        this.items = items;
+        this.maxItems = maxItems;
+        this.maxLength = maxLength;
+        this.maxProperties = maxProperties;
+        this.maximum = maximum;
+        this.minItems = minItems;
+        this.minLength = minLength;
+        this.minProperties = minProperties;
+        this.minimum = minimum;
+        this.multipleOf = multipleOf;
+        this.not = not;
+        this.nullable = nullable;
+        this.oneOf = oneOf;
+        this.pattern = pattern;
+        this.patternProperties = patternProperties;
+        this.properties = properties;
+        this.ref = ref;
+        this.required = required;
+        this.schema = schema;
+        this.title = title;
+        this.type = type;
+        this.uniqueItems = uniqueItems;
+        this.xKubernetesEmbeddedResource = xKubernetesEmbeddedResource;
+        this.xKubernetesIntOrString = xKubernetesIntOrString;
+        this.xKubernetesListMapKeys = xKubernetesListMapKeys;
+        this.xKubernetesListType = xKubernetesListType;
+        this.xKubernetesMapType = xKubernetesMapType;
+        this.xKubernetesPreserveUnknownFields = xKubernetesPreserveUnknownFields;
     }
 
     public JsonValue getAdditionalItems() {

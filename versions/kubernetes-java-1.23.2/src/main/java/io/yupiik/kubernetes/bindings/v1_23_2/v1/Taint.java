@@ -39,7 +39,10 @@ public class Taint implements Validable<Taint>, Exportable {
                  final String key,
                  final String timeAdded,
                  final String value) {
-        // no-op
+        this.effect = effect;
+        this.key = key;
+        this.timeAdded = timeAdded;
+        this.value = value;
     }
 
     public TaintEffect getEffect() {

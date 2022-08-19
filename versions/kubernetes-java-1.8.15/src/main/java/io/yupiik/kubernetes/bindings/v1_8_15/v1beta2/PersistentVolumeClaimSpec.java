@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_8_15.v1beta2;
 import io.yupiik.kubernetes.bindings.v1_8_15.Exportable;
 import io.yupiik.kubernetes.bindings.v1_8_15.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_15.Validable;
-import io.yupiik.kubernetes.bindings.v1_8_15.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -41,7 +39,11 @@ public class PersistentVolumeClaimSpec implements Validable<PersistentVolumeClai
                                      final LabelSelector selector,
                                      final String storageClassName,
                                      final String volumeName) {
-        // no-op
+        this.accessModes = accessModes;
+        this.resources = resources;
+        this.selector = selector;
+        this.storageClassName = storageClassName;
+        this.volumeName = volumeName;
     }
 
     public List<String> getAccessModes() {

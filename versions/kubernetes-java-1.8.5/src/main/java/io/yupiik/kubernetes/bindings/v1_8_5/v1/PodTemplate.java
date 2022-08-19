@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_8_5.v1;
 import io.yupiik.kubernetes.bindings.v1_8_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_8_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_8_5.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -39,7 +36,10 @@ public class PodTemplate implements Validable<PodTemplate>, Exportable {
                        final String kind,
                        final ObjectMeta metadata,
                        final PodTemplateSpec template) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.template = template;
     }
 
     public String getApiVersion() {

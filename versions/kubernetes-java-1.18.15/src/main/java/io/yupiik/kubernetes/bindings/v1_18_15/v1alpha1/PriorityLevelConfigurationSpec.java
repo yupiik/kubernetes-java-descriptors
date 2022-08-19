@@ -35,7 +35,8 @@ public class PriorityLevelConfigurationSpec implements Validable<PriorityLevelCo
 
     public PriorityLevelConfigurationSpec(final LimitedPriorityLevelConfiguration limited,
                                           final String type) {
-        // no-op
+        this.limited = limited;
+        this.type = type;
     }
 
     public LimitedPriorityLevelConfiguration getLimited() {

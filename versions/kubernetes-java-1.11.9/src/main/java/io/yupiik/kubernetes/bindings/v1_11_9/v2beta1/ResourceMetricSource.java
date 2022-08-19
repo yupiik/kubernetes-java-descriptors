@@ -37,7 +37,9 @@ public class ResourceMetricSource implements Validable<ResourceMetricSource>, Ex
     public ResourceMetricSource(final String name,
                                 final Integer targetAverageUtilization,
                                 final String targetAverageValue) {
-        // no-op
+        this.name = name;
+        this.targetAverageUtilization = targetAverageUtilization;
+        this.targetAverageValue = targetAverageValue;
     }
 
     public String getName() {

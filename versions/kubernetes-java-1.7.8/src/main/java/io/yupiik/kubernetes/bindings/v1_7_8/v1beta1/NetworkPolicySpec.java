@@ -34,7 +34,8 @@ public class NetworkPolicySpec implements Validable<NetworkPolicySpec>, Exportab
 
     public NetworkPolicySpec(final List<NetworkPolicyIngressRule> ingress,
                              final LabelSelector podSelector) {
-        // no-op
+        this.ingress = ingress;
+        this.podSelector = podSelector;
     }
 
     public List<NetworkPolicyIngressRule> getIngress() {

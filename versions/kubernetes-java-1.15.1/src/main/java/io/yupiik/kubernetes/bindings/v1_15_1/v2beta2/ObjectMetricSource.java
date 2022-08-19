@@ -36,7 +36,9 @@ public class ObjectMetricSource implements Validable<ObjectMetricSource>, Export
     public ObjectMetricSource(final CrossVersionObjectReference describedObject,
                               final MetricIdentifier metric,
                               final MetricTarget target) {
-        // no-op
+        this.describedObject = describedObject;
+        this.metric = metric;
+        this.target = target;
     }
 
     public CrossVersionObjectReference getDescribedObject() {

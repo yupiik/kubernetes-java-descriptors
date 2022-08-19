@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_7_1.v1;
 
 import io.yupiik.kubernetes.bindings.v1_7_1.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_1.Validable;
-import io.yupiik.kubernetes.bindings.v1_7_1.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -32,7 +29,7 @@ public class DaemonEndpoint implements Validable<DaemonEndpoint>, Exportable {
     }
 
     public DaemonEndpoint(final int Port) {
-        // no-op
+        this.Port = Port;
     }
 
     public int getPort() {

@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_22_12.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_22_12.Exportable;
 import io.yupiik.kubernetes.bindings.v1_22_12.Validable;
-import io.yupiik.kubernetes.bindings.v1_22_12.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -36,7 +33,9 @@ public class EndpointConditions implements Validable<EndpointConditions>, Export
     public EndpointConditions(final Boolean ready,
                               final Boolean serving,
                               final Boolean terminating) {
-        // no-op
+        this.ready = ready;
+        this.serving = serving;
+        this.terminating = terminating;
     }
 
     public Boolean getReady() {

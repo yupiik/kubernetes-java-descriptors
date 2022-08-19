@@ -38,7 +38,10 @@ public class ReplicaSetSpec implements Validable<ReplicaSetSpec>, Exportable {
                           final Integer replicas,
                           final LabelSelector selector,
                           final PodTemplateSpec template) {
-        // no-op
+        this.minReadySeconds = minReadySeconds;
+        this.replicas = replicas;
+        this.selector = selector;
+        this.template = template;
     }
 
     public Integer getMinReadySeconds() {

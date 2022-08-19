@@ -35,7 +35,8 @@ public class IngressBackend implements Validable<IngressBackend>, Exportable {
 
     public IngressBackend(final String serviceName,
                           final String servicePort) {
-        // no-op
+        this.serviceName = serviceName;
+        this.servicePort = servicePort;
     }
 
     public String getServiceName() {

@@ -33,7 +33,7 @@ public class LocalVolumeSource implements Validable<LocalVolumeSource>, Exportab
     }
 
     public LocalVolumeSource(final String path) {
-        // no-op
+        this.path = path;
     }
 
     public String getPath() {

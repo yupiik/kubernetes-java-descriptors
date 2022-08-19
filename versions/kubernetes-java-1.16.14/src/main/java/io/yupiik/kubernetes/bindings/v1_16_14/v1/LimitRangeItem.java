@@ -18,11 +18,8 @@ package io.yupiik.kubernetes.bindings.v1_16_14.v1;
 import io.yupiik.kubernetes.bindings.v1_16_14.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_14.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_14.Validable;
-import io.yupiik.kubernetes.bindings.v1_16_14.ValidationException;
 import jakarta.json.JsonObject;
 import jakarta.json.bind.annotation.JsonbProperty;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -46,7 +43,12 @@ public class LimitRangeItem implements Validable<LimitRangeItem>, Exportable {
                           final JsonObject maxLimitRequestRatio,
                           final JsonObject min,
                           final String type) {
-        // no-op
+        this.defaultRequest = defaultRequest;
+        this.defaultValue = defaultValue;
+        this.max = max;
+        this.maxLimitRequestRatio = maxLimitRequestRatio;
+        this.min = min;
+        this.type = type;
     }
 
     public JsonObject getDefaultRequest() {

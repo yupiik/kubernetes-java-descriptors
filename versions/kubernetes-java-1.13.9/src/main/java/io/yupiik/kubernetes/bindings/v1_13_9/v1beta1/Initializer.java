@@ -33,7 +33,7 @@ public class Initializer implements Validable<Initializer>, Exportable {
     }
 
     public Initializer(final String name) {
-        // no-op
+        this.name = name;
     }
 
     public String getName() {

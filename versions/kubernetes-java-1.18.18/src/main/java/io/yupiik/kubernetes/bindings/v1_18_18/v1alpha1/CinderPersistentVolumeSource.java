@@ -39,7 +39,10 @@ public class CinderPersistentVolumeSource implements Validable<CinderPersistentV
                                         final Boolean readOnly,
                                         final SecretReference secretRef,
                                         final String volumeID) {
-        // no-op
+        this.fsType = fsType;
+        this.readOnly = readOnly;
+        this.secretRef = secretRef;
+        this.volumeID = volumeID;
     }
 
     public String getFsType() {

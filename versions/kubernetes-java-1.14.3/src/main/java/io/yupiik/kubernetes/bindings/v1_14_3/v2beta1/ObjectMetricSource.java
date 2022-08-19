@@ -41,7 +41,11 @@ public class ObjectMetricSource implements Validable<ObjectMetricSource>, Export
                               final LabelSelector selector,
                               final CrossVersionObjectReference target,
                               final String targetValue) {
-        // no-op
+        this.averageValue = averageValue;
+        this.metricName = metricName;
+        this.selector = selector;
+        this.target = target;
+        this.targetValue = targetValue;
     }
 
     public String getAverageValue() {

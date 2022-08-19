@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_17_10.v1;
 import io.yupiik.kubernetes.bindings.v1_17_10.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_10.Validable;
-import io.yupiik.kubernetes.bindings.v1_17_10.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -44,7 +41,12 @@ public class Secret implements Validable<Secret>, Exportable {
                   final ObjectMeta metadata,
                   final Map<String, String> stringData,
                   final String type) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.data = data;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.stringData = stringData;
+        this.type = type;
     }
 
     public String getApiVersion() {

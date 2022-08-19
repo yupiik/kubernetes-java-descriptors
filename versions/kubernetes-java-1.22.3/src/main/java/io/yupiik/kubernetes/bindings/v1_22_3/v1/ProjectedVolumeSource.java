@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_22_3.v1;
 
 import io.yupiik.kubernetes.bindings.v1_22_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_22_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_22_3.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -34,7 +32,8 @@ public class ProjectedVolumeSource implements Validable<ProjectedVolumeSource>, 
 
     public ProjectedVolumeSource(final Integer defaultMode,
                                  final List<VolumeProjection> sources) {
-        // no-op
+        this.defaultMode = defaultMode;
+        this.sources = sources;
     }
 
     public Integer getDefaultMode() {

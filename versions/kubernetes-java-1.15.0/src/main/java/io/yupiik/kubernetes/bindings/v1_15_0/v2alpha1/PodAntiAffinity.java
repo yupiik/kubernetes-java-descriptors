@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_15_0.v2alpha1;
 
 import io.yupiik.kubernetes.bindings.v1_15_0.Exportable;
 import io.yupiik.kubernetes.bindings.v1_15_0.Validable;
-import io.yupiik.kubernetes.bindings.v1_15_0.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -34,7 +32,8 @@ public class PodAntiAffinity implements Validable<PodAntiAffinity>, Exportable {
 
     public PodAntiAffinity(final List<WeightedPodAffinityTerm> preferredDuringSchedulingIgnoredDuringExecution,
                            final List<PodAffinityTerm> requiredDuringSchedulingIgnoredDuringExecution) {
-        // no-op
+        this.preferredDuringSchedulingIgnoredDuringExecution = preferredDuringSchedulingIgnoredDuringExecution;
+        this.requiredDuringSchedulingIgnoredDuringExecution = requiredDuringSchedulingIgnoredDuringExecution;
     }
 
     public List<WeightedPodAffinityTerm> getPreferredDuringSchedulingIgnoredDuringExecution() {

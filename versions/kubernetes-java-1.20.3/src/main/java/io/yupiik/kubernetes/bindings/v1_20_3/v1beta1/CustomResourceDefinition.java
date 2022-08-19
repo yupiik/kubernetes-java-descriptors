@@ -41,7 +41,11 @@ public class CustomResourceDefinition implements Validable<CustomResourceDefinit
                                     final ObjectMeta metadata,
                                     final CustomResourceDefinitionSpec spec,
                                     final CustomResourceDefinitionStatus status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
     public String getApiVersion() {

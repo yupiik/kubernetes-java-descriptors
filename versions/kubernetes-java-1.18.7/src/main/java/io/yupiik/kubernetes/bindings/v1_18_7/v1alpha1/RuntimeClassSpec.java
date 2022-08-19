@@ -37,7 +37,9 @@ public class RuntimeClassSpec implements Validable<RuntimeClassSpec>, Exportable
     public RuntimeClassSpec(final Overhead overhead,
                             final String runtimeHandler,
                             final Scheduling scheduling) {
-        // no-op
+        this.overhead = overhead;
+        this.runtimeHandler = runtimeHandler;
+        this.scheduling = scheduling;
     }
 
     public Overhead getOverhead() {

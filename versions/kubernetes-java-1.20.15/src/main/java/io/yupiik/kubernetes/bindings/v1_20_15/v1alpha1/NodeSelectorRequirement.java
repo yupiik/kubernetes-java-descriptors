@@ -37,7 +37,9 @@ public class NodeSelectorRequirement implements Validable<NodeSelectorRequiremen
     public NodeSelectorRequirement(final String key,
                                    final String operator,
                                    final List<String> values) {
-        // no-op
+        this.key = key;
+        this.operator = operator;
+        this.values = values;
     }
 
     public String getKey() {

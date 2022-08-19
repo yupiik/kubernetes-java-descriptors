@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_22_4.v1alpha1;
 import io.yupiik.kubernetes.bindings.v1_22_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_22_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_4.Validable;
-import io.yupiik.kubernetes.bindings.v1_22_4.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -40,7 +37,10 @@ public class VolumeAttachmentStatus implements Validable<VolumeAttachmentStatus>
                                   final boolean attached,
                                   final Map<String, String> attachmentMetadata,
                                   final VolumeError detachError) {
-        // no-op
+        this.attachError = attachError;
+        this.attached = attached;
+        this.attachmentMetadata = attachmentMetadata;
+        this.detachError = detachError;
     }
 
     public VolumeError getAttachError() {

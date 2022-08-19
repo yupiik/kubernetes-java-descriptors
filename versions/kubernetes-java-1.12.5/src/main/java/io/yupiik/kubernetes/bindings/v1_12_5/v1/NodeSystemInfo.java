@@ -51,7 +51,16 @@ public class NodeSystemInfo implements Validable<NodeSystemInfo>, Exportable {
                           final String operatingSystem,
                           final String osImage,
                           final String systemUUID) {
-        // no-op
+        this.architecture = architecture;
+        this.bootID = bootID;
+        this.containerRuntimeVersion = containerRuntimeVersion;
+        this.kernelVersion = kernelVersion;
+        this.kubeProxyVersion = kubeProxyVersion;
+        this.kubeletVersion = kubeletVersion;
+        this.machineID = machineID;
+        this.operatingSystem = operatingSystem;
+        this.osImage = osImage;
+        this.systemUUID = systemUUID;
     }
 
     public String getArchitecture() {

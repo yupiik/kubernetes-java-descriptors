@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_17_1.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_17_1.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_1.Validable;
-import io.yupiik.kubernetes.bindings.v1_17_1.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -41,7 +38,11 @@ public class StorageOSPersistentVolumeSource implements Validable<StorageOSPersi
                                            final ObjectReference secretRef,
                                            final String volumeName,
                                            final String volumeNamespace) {
-        // no-op
+        this.fsType = fsType;
+        this.readOnly = readOnly;
+        this.secretRef = secretRef;
+        this.volumeName = volumeName;
+        this.volumeNamespace = volumeNamespace;
     }
 
     public String getFsType() {

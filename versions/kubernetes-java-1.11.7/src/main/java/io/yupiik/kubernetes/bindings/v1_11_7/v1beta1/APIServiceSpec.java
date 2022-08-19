@@ -45,7 +45,13 @@ public class APIServiceSpec implements Validable<APIServiceSpec>, Exportable {
                           final ServiceReference service,
                           final String version,
                           final int versionPriority) {
-        // no-op
+        this.caBundle = caBundle;
+        this.group = group;
+        this.groupPriorityMinimum = groupPriorityMinimum;
+        this.insecureSkipTLSVerify = insecureSkipTLSVerify;
+        this.service = service;
+        this.version = version;
+        this.versionPriority = versionPriority;
     }
 
     public String getCaBundle() {

@@ -36,7 +36,8 @@ public class WatchEvent implements Validable<WatchEvent>, Exportable {
 
     public WatchEvent(final JsonObject object,
                       final String type) {
-        // no-op
+        this.object = object;
+        this.type = type;
     }
 
     public JsonObject getObject() {

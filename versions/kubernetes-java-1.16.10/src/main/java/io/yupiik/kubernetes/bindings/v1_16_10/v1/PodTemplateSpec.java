@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_16_10.v1;
 
 import io.yupiik.kubernetes.bindings.v1_16_10.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_10.Validable;
-import io.yupiik.kubernetes.bindings.v1_16_10.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -34,7 +31,8 @@ public class PodTemplateSpec implements Validable<PodTemplateSpec>, Exportable {
 
     public PodTemplateSpec(final ObjectMeta metadata,
                            final PodSpec spec) {
-        // no-op
+        this.metadata = metadata;
+        this.spec = spec;
     }
 
     public ObjectMeta getMetadata() {

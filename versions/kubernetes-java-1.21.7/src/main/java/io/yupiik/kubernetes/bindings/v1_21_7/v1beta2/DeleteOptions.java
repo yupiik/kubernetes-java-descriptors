@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_21_7.v1beta2;
 import io.yupiik.kubernetes.bindings.v1_21_7.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_7.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_7.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_7.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -45,7 +43,13 @@ public class DeleteOptions implements Validable<DeleteOptions>, Exportable {
                          final Boolean orphanDependents,
                          final Preconditions preconditions,
                          final String propagationPolicy) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.dryRun = dryRun;
+        this.gracePeriodSeconds = gracePeriodSeconds;
+        this.kind = kind;
+        this.orphanDependents = orphanDependents;
+        this.preconditions = preconditions;
+        this.propagationPolicy = propagationPolicy;
     }
 
     public String getApiVersion() {

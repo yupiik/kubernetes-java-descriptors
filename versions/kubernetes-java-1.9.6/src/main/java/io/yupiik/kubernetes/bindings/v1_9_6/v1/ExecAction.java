@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_9_6.v1;
 import io.yupiik.kubernetes.bindings.v1_9_6.Exportable;
 import io.yupiik.kubernetes.bindings.v1_9_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_9_6.Validable;
-import io.yupiik.kubernetes.bindings.v1_9_6.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -33,7 +31,7 @@ public class ExecAction implements Validable<ExecAction>, Exportable {
     }
 
     public ExecAction(final List<String> command) {
-        // no-op
+        this.command = command;
     }
 
     public List<String> getCommand() {

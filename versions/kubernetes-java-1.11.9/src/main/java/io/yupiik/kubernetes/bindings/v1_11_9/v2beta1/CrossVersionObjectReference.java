@@ -37,7 +37,9 @@ public class CrossVersionObjectReference implements Validable<CrossVersionObject
     public CrossVersionObjectReference(final String apiVersion,
                                        final String kind,
                                        final String name) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.name = name;
     }
 
     public String getApiVersion() {

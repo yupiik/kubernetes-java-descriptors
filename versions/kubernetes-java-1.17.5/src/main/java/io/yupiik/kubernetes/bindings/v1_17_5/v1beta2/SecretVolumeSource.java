@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_17_5.v1beta2;
 import io.yupiik.kubernetes.bindings.v1_17_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_17_5.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -39,7 +37,10 @@ public class SecretVolumeSource implements Validable<SecretVolumeSource>, Export
                               final List<KeyToPath> items,
                               final Boolean optional,
                               final String secretName) {
-        // no-op
+        this.defaultMode = defaultMode;
+        this.items = items;
+        this.optional = optional;
+        this.secretName = secretName;
     }
 
     public Integer getDefaultMode() {

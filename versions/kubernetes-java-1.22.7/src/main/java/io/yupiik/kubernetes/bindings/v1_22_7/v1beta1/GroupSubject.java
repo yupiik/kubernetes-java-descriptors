@@ -33,7 +33,7 @@ public class GroupSubject implements Validable<GroupSubject>, Exportable {
     }
 
     public GroupSubject(final String name) {
-        // no-op
+        this.name = name;
     }
 
     public String getName() {

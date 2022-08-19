@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_17_5.v1;
 import io.yupiik.kubernetes.bindings.v1_17_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_17_5.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -41,7 +38,11 @@ public class ServicePort implements Validable<ServicePort>, Exportable {
                        final int port,
                        final String protocol,
                        final String targetPort) {
-        // no-op
+        this.name = name;
+        this.nodePort = nodePort;
+        this.port = port;
+        this.protocol = protocol;
+        this.targetPort = targetPort;
     }
 
     public String getName() {

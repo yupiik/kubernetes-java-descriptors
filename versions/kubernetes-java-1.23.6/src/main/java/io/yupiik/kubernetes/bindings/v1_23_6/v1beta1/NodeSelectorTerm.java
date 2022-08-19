@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_23_6.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_23_6.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_6.Validable;
-import io.yupiik.kubernetes.bindings.v1_23_6.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -34,7 +32,8 @@ public class NodeSelectorTerm implements Validable<NodeSelectorTerm>, Exportable
 
     public NodeSelectorTerm(final List<NodeSelectorRequirement> matchExpressions,
                             final List<NodeSelectorRequirement> matchFields) {
-        // no-op
+        this.matchExpressions = matchExpressions;
+        this.matchFields = matchFields;
     }
 
     public List<NodeSelectorRequirement> getMatchExpressions() {

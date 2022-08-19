@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_17_17.v2beta2;
 import io.yupiik.kubernetes.bindings.v1_17_17.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_17.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_17.Validable;
-import io.yupiik.kubernetes.bindings.v1_17_17.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -37,7 +34,9 @@ public class MetricValueStatus implements Validable<MetricValueStatus>, Exportab
     public MetricValueStatus(final Integer averageUtilization,
                              final String averageValue,
                              final String value) {
-        // no-op
+        this.averageUtilization = averageUtilization;
+        this.averageValue = averageValue;
+        this.value = value;
     }
 
     public Integer getAverageUtilization() {

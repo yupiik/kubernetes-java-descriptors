@@ -39,7 +39,10 @@ public class CSINode implements Validable<CSINode>, Exportable {
                    final String kind,
                    final ObjectMeta metadata,
                    final CSINodeSpec spec) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
     }
 
     public String getApiVersion() {

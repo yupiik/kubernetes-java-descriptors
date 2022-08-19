@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_8_11.v1;
 import io.yupiik.kubernetes.bindings.v1_8_11.Exportable;
 import io.yupiik.kubernetes.bindings.v1_8_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_11.Validable;
-import io.yupiik.kubernetes.bindings.v1_8_11.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -39,7 +36,10 @@ public class LimitRange implements Validable<LimitRange>, Exportable {
                       final String kind,
                       final ObjectMeta metadata,
                       final LimitRangeSpec spec) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
     }
 
     public String getApiVersion() {

@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_22_7.v1;
 
 import io.yupiik.kubernetes.bindings.v1_22_7.Exportable;
 import io.yupiik.kubernetes.bindings.v1_22_7.Validable;
-import io.yupiik.kubernetes.bindings.v1_22_7.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -42,7 +40,12 @@ public class ReplicationControllerStatus implements Validable<ReplicationControl
                                        final Integer observedGeneration,
                                        final Integer readyReplicas,
                                        final int replicas) {
-        // no-op
+        this.availableReplicas = availableReplicas;
+        this.conditions = conditions;
+        this.fullyLabeledReplicas = fullyLabeledReplicas;
+        this.observedGeneration = observedGeneration;
+        this.readyReplicas = readyReplicas;
+        this.replicas = replicas;
     }
 
     public Integer getAvailableReplicas() {

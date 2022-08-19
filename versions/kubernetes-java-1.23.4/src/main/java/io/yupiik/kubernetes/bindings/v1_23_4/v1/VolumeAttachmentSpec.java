@@ -37,7 +37,9 @@ public class VolumeAttachmentSpec implements Validable<VolumeAttachmentSpec>, Ex
     public VolumeAttachmentSpec(final String attacher,
                                 final String nodeName,
                                 final VolumeAttachmentSource source) {
-        // no-op
+        this.attacher = attacher;
+        this.nodeName = nodeName;
+        this.source = source;
     }
 
     public String getAttacher() {

@@ -35,7 +35,8 @@ public class HTTPHeader implements Validable<HTTPHeader>, Exportable {
 
     public HTTPHeader(final String name,
                       final String value) {
-        // no-op
+        this.name = name;
+        this.value = value;
     }
 
     public String getName() {

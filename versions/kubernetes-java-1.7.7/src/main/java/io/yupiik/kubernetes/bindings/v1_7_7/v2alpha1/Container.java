@@ -71,7 +71,26 @@ public class Container implements Validable<Container>, Exportable {
                      final Boolean tty,
                      final List<VolumeMount> volumeMounts,
                      final String workingDir) {
-        // no-op
+        this.args = args;
+        this.command = command;
+        this.env = env;
+        this.envFrom = envFrom;
+        this.image = image;
+        this.imagePullPolicy = imagePullPolicy;
+        this.lifecycle = lifecycle;
+        this.livenessProbe = livenessProbe;
+        this.name = name;
+        this.ports = ports;
+        this.readinessProbe = readinessProbe;
+        this.resources = resources;
+        this.securityContext = securityContext;
+        this.stdin = stdin;
+        this.stdinOnce = stdinOnce;
+        this.terminationMessagePath = terminationMessagePath;
+        this.terminationMessagePolicy = terminationMessagePolicy;
+        this.tty = tty;
+        this.volumeMounts = volumeMounts;
+        this.workingDir = workingDir;
     }
 
     public List<String> getArgs() {

@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_18_3.v2beta2;
 
 import io.yupiik.kubernetes.bindings.v1_18_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_3.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -34,7 +31,8 @@ public class HorizontalPodAutoscalerBehavior implements Validable<HorizontalPodA
 
     public HorizontalPodAutoscalerBehavior(final HPAScalingRules scaleDown,
                                            final HPAScalingRules scaleUp) {
-        // no-op
+        this.scaleDown = scaleDown;
+        this.scaleUp = scaleUp;
     }
 
     public HPAScalingRules getScaleDown() {

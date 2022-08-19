@@ -39,7 +39,10 @@ public class ExternalMetricStatus implements Validable<ExternalMetricStatus>, Ex
                                 final String currentValue,
                                 final String metricName,
                                 final LabelSelector metricSelector) {
-        // no-op
+        this.currentAverageValue = currentAverageValue;
+        this.currentValue = currentValue;
+        this.metricName = metricName;
+        this.metricSelector = metricSelector;
     }
 
     public String getCurrentAverageValue() {

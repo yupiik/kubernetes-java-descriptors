@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_17_17.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_17_17.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_17.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_17.Validable;
-import io.yupiik.kubernetes.bindings.v1_17_17.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -37,7 +35,9 @@ public class CSIDriverSpec implements Validable<CSIDriverSpec>, Exportable {
     public CSIDriverSpec(final Boolean attachRequired,
                          final Boolean podInfoOnMount,
                          final List<String> volumeLifecycleModes) {
-        // no-op
+        this.attachRequired = attachRequired;
+        this.podInfoOnMount = podInfoOnMount;
+        this.volumeLifecycleModes = volumeLifecycleModes;
     }
 
     public Boolean getAttachRequired() {

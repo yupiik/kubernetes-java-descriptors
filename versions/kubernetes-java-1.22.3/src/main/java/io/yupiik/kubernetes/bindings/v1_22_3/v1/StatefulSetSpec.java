@@ -49,7 +49,15 @@ public class StatefulSetSpec implements Validable<StatefulSetSpec>, Exportable {
                            final PodTemplateSpec template,
                            final StatefulSetUpdateStrategy updateStrategy,
                            final List<PersistentVolumeClaim> volumeClaimTemplates) {
-        // no-op
+        this.minReadySeconds = minReadySeconds;
+        this.podManagementPolicy = podManagementPolicy;
+        this.replicas = replicas;
+        this.revisionHistoryLimit = revisionHistoryLimit;
+        this.selector = selector;
+        this.serviceName = serviceName;
+        this.template = template;
+        this.updateStrategy = updateStrategy;
+        this.volumeClaimTemplates = volumeClaimTemplates;
     }
 
     public Integer getMinReadySeconds() {

@@ -42,7 +42,11 @@ public class FlexVolumeSource implements Validable<FlexVolumeSource>, Exportable
                             final Map<String, String> options,
                             final Boolean readOnly,
                             final LocalObjectReference secretRef) {
-        // no-op
+        this.driver = driver;
+        this.fsType = fsType;
+        this.options = options;
+        this.readOnly = readOnly;
+        this.secretRef = secretRef;
     }
 
     public String getDriver() {

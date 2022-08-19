@@ -37,7 +37,9 @@ public class SecretKeySelector implements Validable<SecretKeySelector>, Exportab
     public SecretKeySelector(final String key,
                              final String name,
                              final Boolean optional) {
-        // no-op
+        this.key = key;
+        this.name = name;
+        this.optional = optional;
     }
 
     public String getKey() {

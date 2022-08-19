@@ -39,7 +39,10 @@ public class DeploymentList implements Validable<DeploymentList>, Exportable {
                           final List<Deployment> items,
                           final String kind,
                           final ListMeta metadata) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.items = items;
+        this.kind = kind;
+        this.metadata = metadata;
     }
 
     public String getApiVersion() {

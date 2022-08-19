@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_21_14.v1;
 import io.yupiik.kubernetes.bindings.v1_21_14.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_14.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_14.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_14.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -45,7 +43,13 @@ public class JobStatus implements Validable<JobStatus>, Exportable {
                      final Integer failed,
                      final String startTime,
                      final Integer succeeded) {
-        // no-op
+        this.active = active;
+        this.completedIndexes = completedIndexes;
+        this.completionTime = completionTime;
+        this.conditions = conditions;
+        this.failed = failed;
+        this.startTime = startTime;
+        this.succeeded = succeeded;
     }
 
     public Integer getActive() {

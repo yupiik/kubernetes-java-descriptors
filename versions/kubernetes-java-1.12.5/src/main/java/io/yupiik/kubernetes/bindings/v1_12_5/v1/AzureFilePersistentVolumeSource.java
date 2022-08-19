@@ -39,7 +39,10 @@ public class AzureFilePersistentVolumeSource implements Validable<AzureFilePersi
                                            final String secretName,
                                            final String secretNamespace,
                                            final String shareName) {
-        // no-op
+        this.readOnly = readOnly;
+        this.secretName = secretName;
+        this.secretNamespace = secretNamespace;
+        this.shareName = shareName;
     }
 
     public Boolean getReadOnly() {

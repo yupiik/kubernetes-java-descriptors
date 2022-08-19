@@ -39,7 +39,10 @@ public class ContainerResourceMetricSource implements Validable<ContainerResourc
                                          final String name,
                                          final Integer targetAverageUtilization,
                                          final String targetAverageValue) {
-        // no-op
+        this.container = container;
+        this.name = name;
+        this.targetAverageUtilization = targetAverageUtilization;
+        this.targetAverageValue = targetAverageValue;
     }
 
     public String getContainer() {

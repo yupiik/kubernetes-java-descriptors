@@ -35,7 +35,8 @@ public class AdmissionHookClientConfig implements Validable<AdmissionHookClientC
 
     public AdmissionHookClientConfig(final String caBundle,
                                      final ServiceReference service) {
-        // no-op
+        this.caBundle = caBundle;
+        this.service = service;
     }
 
     public String getCaBundle() {

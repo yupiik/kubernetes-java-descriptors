@@ -39,7 +39,10 @@ public class ExternalMetricSource implements Validable<ExternalMetricSource>, Ex
                                 final LabelSelector metricSelector,
                                 final String targetAverageValue,
                                 final String targetValue) {
-        // no-op
+        this.metricName = metricName;
+        this.metricSelector = metricSelector;
+        this.targetAverageValue = targetAverageValue;
+        this.targetValue = targetValue;
     }
 
     public String getMetricName() {

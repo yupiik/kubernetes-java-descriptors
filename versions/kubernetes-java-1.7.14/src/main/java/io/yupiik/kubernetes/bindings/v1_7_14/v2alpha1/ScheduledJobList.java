@@ -39,7 +39,10 @@ public class ScheduledJobList implements Validable<ScheduledJobList>, Exportable
                             final List<CronJob> items,
                             final String kind,
                             final ListMeta metadata) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.items = items;
+        this.kind = kind;
+        this.metadata = metadata;
     }
 
     public String getApiVersion() {

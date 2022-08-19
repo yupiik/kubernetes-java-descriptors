@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_9_9.v1;
 import io.yupiik.kubernetes.bindings.v1_9_9.Exportable;
 import io.yupiik.kubernetes.bindings.v1_9_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_9_9.Validable;
-import io.yupiik.kubernetes.bindings.v1_9_9.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -37,7 +34,9 @@ public class NodeConfigSource implements Validable<NodeConfigSource>, Exportable
     public NodeConfigSource(final String apiVersion,
                             final ObjectReference configMapRef,
                             final String kind) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.configMapRef = configMapRef;
+        this.kind = kind;
     }
 
     public String getApiVersion() {

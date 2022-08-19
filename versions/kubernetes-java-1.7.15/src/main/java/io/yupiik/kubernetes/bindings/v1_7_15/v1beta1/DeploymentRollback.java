@@ -42,7 +42,11 @@ public class DeploymentRollback implements Validable<DeploymentRollback>, Export
                               final String name,
                               final RollbackConfig rollbackTo,
                               final Map<String, String> updatedAnnotations) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.name = name;
+        this.rollbackTo = rollbackTo;
+        this.updatedAnnotations = updatedAnnotations;
     }
 
     public String getApiVersion() {

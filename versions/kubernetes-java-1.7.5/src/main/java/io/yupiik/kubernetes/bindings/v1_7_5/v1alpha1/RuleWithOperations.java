@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_7_5.v1alpha1;
 import io.yupiik.kubernetes.bindings.v1_7_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_7_5.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -39,7 +37,10 @@ public class RuleWithOperations implements Validable<RuleWithOperations>, Export
                               final List<String> apiVersions,
                               final List<String> operations,
                               final List<String> resources) {
-        // no-op
+        this.apiGroups = apiGroups;
+        this.apiVersions = apiVersions;
+        this.operations = operations;
+        this.resources = resources;
     }
 
     public List<String> getApiGroups() {

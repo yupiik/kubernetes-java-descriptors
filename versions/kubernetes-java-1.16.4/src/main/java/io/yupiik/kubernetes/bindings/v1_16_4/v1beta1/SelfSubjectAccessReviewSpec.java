@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_16_4.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_16_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_4.Validable;
-import io.yupiik.kubernetes.bindings.v1_16_4.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -34,7 +31,8 @@ public class SelfSubjectAccessReviewSpec implements Validable<SelfSubjectAccessR
 
     public SelfSubjectAccessReviewSpec(final NonResourceAttributes nonResourceAttributes,
                                        final ResourceAttributes resourceAttributes) {
-        // no-op
+        this.nonResourceAttributes = nonResourceAttributes;
+        this.resourceAttributes = resourceAttributes;
     }
 
     public NonResourceAttributes getNonResourceAttributes() {

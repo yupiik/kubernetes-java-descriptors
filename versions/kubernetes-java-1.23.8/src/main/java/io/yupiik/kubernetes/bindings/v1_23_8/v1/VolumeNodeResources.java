@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_23_8.v1;
 
 import io.yupiik.kubernetes.bindings.v1_23_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_8.Validable;
-import io.yupiik.kubernetes.bindings.v1_23_8.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -32,7 +29,7 @@ public class VolumeNodeResources implements Validable<VolumeNodeResources>, Expo
     }
 
     public VolumeNodeResources(final Integer count) {
-        // no-op
+        this.count = count;
     }
 
     public Integer getCount() {

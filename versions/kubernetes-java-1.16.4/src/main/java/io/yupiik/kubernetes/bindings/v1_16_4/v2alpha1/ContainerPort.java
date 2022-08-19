@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_16_4.v2alpha1;
 import io.yupiik.kubernetes.bindings.v1_16_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_4.Validable;
-import io.yupiik.kubernetes.bindings.v1_16_4.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -41,7 +38,11 @@ public class ContainerPort implements Validable<ContainerPort>, Exportable {
                          final Integer hostPort,
                          final String name,
                          final String protocol) {
-        // no-op
+        this.containerPort = containerPort;
+        this.hostIP = hostIP;
+        this.hostPort = hostPort;
+        this.name = name;
+        this.protocol = protocol;
     }
 
     public int getContainerPort() {

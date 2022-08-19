@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_11_1.v1;
 import io.yupiik.kubernetes.bindings.v1_11_1.Exportable;
 import io.yupiik.kubernetes.bindings.v1_11_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_11_1.Validable;
-import io.yupiik.kubernetes.bindings.v1_11_1.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -41,7 +38,11 @@ public class ControllerRevision implements Validable<ControllerRevision>, Export
                               final String kind,
                               final ObjectMeta metadata,
                               final int revision) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.data = data;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.revision = revision;
     }
 
     public String getApiVersion() {

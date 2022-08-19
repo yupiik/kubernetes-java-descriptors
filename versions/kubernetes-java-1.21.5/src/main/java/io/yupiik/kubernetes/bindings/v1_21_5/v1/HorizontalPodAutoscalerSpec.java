@@ -38,7 +38,10 @@ public class HorizontalPodAutoscalerSpec implements Validable<HorizontalPodAutos
                                        final Integer minReplicas,
                                        final CrossVersionObjectReference scaleTargetRef,
                                        final Integer targetCPUUtilizationPercentage) {
-        // no-op
+        this.maxReplicas = maxReplicas;
+        this.minReplicas = minReplicas;
+        this.scaleTargetRef = scaleTargetRef;
+        this.targetCPUUtilizationPercentage = targetCPUUtilizationPercentage;
     }
 
     public int getMaxReplicas() {

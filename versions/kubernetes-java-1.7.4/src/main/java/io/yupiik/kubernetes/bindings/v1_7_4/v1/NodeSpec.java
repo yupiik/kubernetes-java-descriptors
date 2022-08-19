@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_7_4.v1;
 import io.yupiik.kubernetes.bindings.v1_7_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_7_4.Validable;
-import io.yupiik.kubernetes.bindings.v1_7_4.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -41,7 +39,11 @@ public class NodeSpec implements Validable<NodeSpec>, Exportable {
                     final String providerID,
                     final List<Taint> taints,
                     final Boolean unschedulable) {
-        // no-op
+        this.externalID = externalID;
+        this.podCIDR = podCIDR;
+        this.providerID = providerID;
+        this.taints = taints;
+        this.unschedulable = unschedulable;
     }
 
     public String getExternalID() {

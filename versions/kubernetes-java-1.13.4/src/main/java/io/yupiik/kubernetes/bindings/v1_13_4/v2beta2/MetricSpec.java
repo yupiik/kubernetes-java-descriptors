@@ -41,7 +41,11 @@ public class MetricSpec implements Validable<MetricSpec>, Exportable {
                       final PodsMetricSource pods,
                       final ResourceMetricSource resource,
                       final String type) {
-        // no-op
+        this.external = external;
+        this.object = object;
+        this.pods = pods;
+        this.resource = resource;
+        this.type = type;
     }
 
     public ExternalMetricSource getExternal() {

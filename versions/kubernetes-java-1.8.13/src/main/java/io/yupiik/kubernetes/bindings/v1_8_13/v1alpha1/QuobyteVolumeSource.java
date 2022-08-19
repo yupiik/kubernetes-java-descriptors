@@ -41,7 +41,11 @@ public class QuobyteVolumeSource implements Validable<QuobyteVolumeSource>, Expo
                                final String registry,
                                final String user,
                                final String volume) {
-        // no-op
+        this.group = group;
+        this.readOnly = readOnly;
+        this.registry = registry;
+        this.user = user;
+        this.volume = volume;
     }
 
     public String getGroup() {

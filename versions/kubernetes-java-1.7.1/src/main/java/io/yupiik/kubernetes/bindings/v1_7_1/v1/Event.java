@@ -53,7 +53,17 @@ public class Event implements Validable<Event>, Exportable {
                  final String reason,
                  final EventSource source,
                  final String type) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.count = count;
+        this.firstTimestamp = firstTimestamp;
+        this.involvedObject = involvedObject;
+        this.kind = kind;
+        this.lastTimestamp = lastTimestamp;
+        this.message = message;
+        this.metadata = metadata;
+        this.reason = reason;
+        this.source = source;
+        this.type = type;
     }
 
     public String getApiVersion() {

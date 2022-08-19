@@ -35,7 +35,8 @@ public class NodeAddress implements Validable<NodeAddress>, Exportable {
 
     public NodeAddress(final String address,
                        final String type) {
-        // no-op
+        this.address = address;
+        this.type = type;
     }
 
     public String getAddress() {

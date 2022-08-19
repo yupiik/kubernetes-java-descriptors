@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_18_6.v2alpha1;
 import io.yupiik.kubernetes.bindings.v1_18_6.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_6.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_6.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_6.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -41,7 +38,11 @@ public class Toleration implements Validable<Toleration>, Exportable {
                       final String operator,
                       final Integer tolerationSeconds,
                       final String value) {
-        // no-op
+        this.effect = effect;
+        this.key = key;
+        this.operator = operator;
+        this.tolerationSeconds = tolerationSeconds;
+        this.value = value;
     }
 
     public String getEffect() {

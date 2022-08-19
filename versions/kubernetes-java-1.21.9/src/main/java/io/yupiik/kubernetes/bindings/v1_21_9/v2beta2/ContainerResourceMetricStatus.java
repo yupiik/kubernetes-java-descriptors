@@ -37,7 +37,9 @@ public class ContainerResourceMetricStatus implements Validable<ContainerResourc
     public ContainerResourceMetricStatus(final String container,
                                          final MetricValueStatus current,
                                          final String name) {
-        // no-op
+        this.container = container;
+        this.current = current;
+        this.name = name;
     }
 
     public String getContainer() {

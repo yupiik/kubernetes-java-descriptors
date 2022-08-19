@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_7_12.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_7_12.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_12.Validable;
-import io.yupiik.kubernetes.bindings.v1_7_12.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -36,7 +33,9 @@ public class Affinity implements Validable<Affinity>, Exportable {
     public Affinity(final NodeAffinity nodeAffinity,
                     final PodAffinity podAffinity,
                     final PodAntiAffinity podAntiAffinity) {
-        // no-op
+        this.nodeAffinity = nodeAffinity;
+        this.podAffinity = podAffinity;
+        this.podAntiAffinity = podAntiAffinity;
     }
 
     public NodeAffinity getNodeAffinity() {

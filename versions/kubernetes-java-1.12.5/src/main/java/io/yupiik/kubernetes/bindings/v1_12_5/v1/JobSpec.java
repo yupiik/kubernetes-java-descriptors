@@ -46,7 +46,14 @@ public class JobSpec implements Validable<JobSpec>, Exportable {
                    final LabelSelector selector,
                    final PodTemplateSpec template,
                    final Integer ttlSecondsAfterFinished) {
-        // no-op
+        this.activeDeadlineSeconds = activeDeadlineSeconds;
+        this.backoffLimit = backoffLimit;
+        this.completions = completions;
+        this.manualSelector = manualSelector;
+        this.parallelism = parallelism;
+        this.selector = selector;
+        this.template = template;
+        this.ttlSecondsAfterFinished = ttlSecondsAfterFinished;
     }
 
     public Integer getActiveDeadlineSeconds() {

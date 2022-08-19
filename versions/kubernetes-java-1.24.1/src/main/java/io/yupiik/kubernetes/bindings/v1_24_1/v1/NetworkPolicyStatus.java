@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_24_1.v1;
 
 import io.yupiik.kubernetes.bindings.v1_24_1.Exportable;
 import io.yupiik.kubernetes.bindings.v1_24_1.Validable;
-import io.yupiik.kubernetes.bindings.v1_24_1.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -32,7 +30,7 @@ public class NetworkPolicyStatus implements Validable<NetworkPolicyStatus>, Expo
     }
 
     public NetworkPolicyStatus(final List<Condition> conditions) {
-        // no-op
+        this.conditions = conditions;
     }
 
     public List<Condition> getConditions() {

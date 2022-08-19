@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_10_13.v1;
 import io.yupiik.kubernetes.bindings.v1_10_13.Exportable;
 import io.yupiik.kubernetes.bindings.v1_10_13.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_10_13.Validable;
-import io.yupiik.kubernetes.bindings.v1_10_13.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -33,7 +30,7 @@ public class Preconditions implements Validable<Preconditions>, Exportable {
     }
 
     public Preconditions(final String uid) {
-        // no-op
+        this.uid = uid;
     }
 
     public String getUid() {

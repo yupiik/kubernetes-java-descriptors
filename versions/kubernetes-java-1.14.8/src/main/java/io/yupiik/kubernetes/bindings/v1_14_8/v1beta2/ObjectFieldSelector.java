@@ -35,7 +35,8 @@ public class ObjectFieldSelector implements Validable<ObjectFieldSelector>, Expo
 
     public ObjectFieldSelector(final String apiVersion,
                                final String fieldPath) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.fieldPath = fieldPath;
     }
 
     public String getApiVersion() {

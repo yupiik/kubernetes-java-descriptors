@@ -37,7 +37,9 @@ public class ResourceMetricStatus implements Validable<ResourceMetricStatus>, Ex
     public ResourceMetricStatus(final Integer currentAverageUtilization,
                                 final String currentAverageValue,
                                 final String name) {
-        // no-op
+        this.currentAverageUtilization = currentAverageUtilization;
+        this.currentAverageValue = currentAverageValue;
+        this.name = name;
     }
 
     public Integer getCurrentAverageUtilization() {

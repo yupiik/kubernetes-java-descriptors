@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_14_7.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_14_7.Exportable;
 import io.yupiik.kubernetes.bindings.v1_14_7.Validable;
-import io.yupiik.kubernetes.bindings.v1_14_7.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -32,7 +29,7 @@ public class ScaleSpec implements Validable<ScaleSpec>, Exportable {
     }
 
     public ScaleSpec(final Integer replicas) {
-        // no-op
+        this.replicas = replicas;
     }
 
     public Integer getReplicas() {

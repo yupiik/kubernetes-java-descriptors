@@ -51,7 +51,16 @@ public class CustomResourceDefinitionSpec implements Validable<CustomResourceDef
                                         final CustomResourceValidation validation,
                                         final String version,
                                         final List<CustomResourceDefinitionVersion> versions) {
-        // no-op
+        this.additionalPrinterColumns = additionalPrinterColumns;
+        this.conversion = conversion;
+        this.group = group;
+        this.names = names;
+        this.preserveUnknownFields = preserveUnknownFields;
+        this.scope = scope;
+        this.subresources = subresources;
+        this.validation = validation;
+        this.version = version;
+        this.versions = versions;
     }
 
     public List<CustomResourceColumnDefinition> getAdditionalPrinterColumns() {

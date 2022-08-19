@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_21_4.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_21_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_4.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_4.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -39,7 +37,10 @@ public class Role implements Validable<Role>, Exportable {
                 final String kind,
                 final ObjectMeta metadata,
                 final List<PolicyRule> rules) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.rules = rules;
     }
 
     public String getApiVersion() {

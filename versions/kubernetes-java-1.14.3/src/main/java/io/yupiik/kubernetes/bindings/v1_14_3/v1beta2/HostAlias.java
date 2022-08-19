@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_14_3.v1beta2;
 import io.yupiik.kubernetes.bindings.v1_14_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_14_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_14_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_14_3.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -35,7 +33,8 @@ public class HostAlias implements Validable<HostAlias>, Exportable {
 
     public HostAlias(final List<String> hostnames,
                      final String ip) {
-        // no-op
+        this.hostnames = hostnames;
+        this.ip = ip;
     }
 
     public List<String> getHostnames() {

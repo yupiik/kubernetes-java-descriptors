@@ -32,7 +32,7 @@ public class NodeSelector implements Validable<NodeSelector>, Exportable {
     }
 
     public NodeSelector(final List<NodeSelectorTerm> nodeSelectorTerms) {
-        // no-op
+        this.nodeSelectorTerms = nodeSelectorTerms;
     }
 
     public List<NodeSelectorTerm> getNodeSelectorTerms() {

@@ -37,7 +37,9 @@ public class PortworxVolumeSource implements Validable<PortworxVolumeSource>, Ex
     public PortworxVolumeSource(final String fsType,
                                 final Boolean readOnly,
                                 final String volumeID) {
-        // no-op
+        this.fsType = fsType;
+        this.readOnly = readOnly;
+        this.volumeID = volumeID;
     }
 
     public String getFsType() {

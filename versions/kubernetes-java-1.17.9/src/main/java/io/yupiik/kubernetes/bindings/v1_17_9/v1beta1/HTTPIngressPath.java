@@ -35,7 +35,8 @@ public class HTTPIngressPath implements Validable<HTTPIngressPath>, Exportable {
 
     public HTTPIngressPath(final IngressBackend backend,
                            final String path) {
-        // no-op
+        this.backend = backend;
+        this.path = path;
     }
 
     public IngressBackend getBackend() {

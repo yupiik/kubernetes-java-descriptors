@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_22_9.v1;
 import io.yupiik.kubernetes.bindings.v1_22_9.Exportable;
 import io.yupiik.kubernetes.bindings.v1_22_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_22_9.Validable;
-import io.yupiik.kubernetes.bindings.v1_22_9.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -40,7 +37,10 @@ public class ReplicationControllerSpec implements Validable<ReplicationControlle
                                      final Integer replicas,
                                      final Map<String, String> selector,
                                      final PodTemplateSpec template) {
-        // no-op
+        this.minReadySeconds = minReadySeconds;
+        this.replicas = replicas;
+        this.selector = selector;
+        this.template = template;
     }
 
     public Integer getMinReadySeconds() {

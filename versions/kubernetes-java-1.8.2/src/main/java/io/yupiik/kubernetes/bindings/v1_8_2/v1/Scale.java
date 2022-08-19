@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_8_2.v1;
 import io.yupiik.kubernetes.bindings.v1_8_2.Exportable;
 import io.yupiik.kubernetes.bindings.v1_8_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_2.Validable;
-import io.yupiik.kubernetes.bindings.v1_8_2.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -41,7 +38,11 @@ public class Scale implements Validable<Scale>, Exportable {
                  final ObjectMeta metadata,
                  final ScaleSpec spec,
                  final ScaleStatus status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
     public String getApiVersion() {

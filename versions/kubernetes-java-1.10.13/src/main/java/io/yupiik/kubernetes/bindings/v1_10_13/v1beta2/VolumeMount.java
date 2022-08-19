@@ -41,7 +41,11 @@ public class VolumeMount implements Validable<VolumeMount>, Exportable {
                        final String name,
                        final Boolean readOnly,
                        final String subPath) {
-        // no-op
+        this.mountPath = mountPath;
+        this.mountPropagation = mountPropagation;
+        this.name = name;
+        this.readOnly = readOnly;
+        this.subPath = subPath;
     }
 
     public String getMountPath() {

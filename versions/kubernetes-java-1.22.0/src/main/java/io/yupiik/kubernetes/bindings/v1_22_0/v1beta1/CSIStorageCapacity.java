@@ -45,7 +45,13 @@ public class CSIStorageCapacity implements Validable<CSIStorageCapacity>, Export
                               final ObjectMeta metadata,
                               final LabelSelector nodeTopology,
                               final String storageClassName) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.capacity = capacity;
+        this.kind = kind;
+        this.maximumVolumeSize = maximumVolumeSize;
+        this.metadata = metadata;
+        this.nodeTopology = nodeTopology;
+        this.storageClassName = storageClassName;
     }
 
     public String getApiVersion() {

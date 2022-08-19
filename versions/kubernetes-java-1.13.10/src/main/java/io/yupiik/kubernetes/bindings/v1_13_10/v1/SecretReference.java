@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_13_10.v1;
 import io.yupiik.kubernetes.bindings.v1_13_10.Exportable;
 import io.yupiik.kubernetes.bindings.v1_13_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_10.Validable;
-import io.yupiik.kubernetes.bindings.v1_13_10.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -35,7 +32,8 @@ public class SecretReference implements Validable<SecretReference>, Exportable {
 
     public SecretReference(final String name,
                            final String namespace) {
-        // no-op
+        this.name = name;
+        this.namespace = namespace;
     }
 
     public String getName() {

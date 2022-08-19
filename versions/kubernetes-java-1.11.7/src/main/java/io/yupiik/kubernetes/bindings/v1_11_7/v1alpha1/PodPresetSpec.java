@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_11_7.v1alpha1;
 
 import io.yupiik.kubernetes.bindings.v1_11_7.Exportable;
 import io.yupiik.kubernetes.bindings.v1_11_7.Validable;
-import io.yupiik.kubernetes.bindings.v1_11_7.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -40,7 +38,11 @@ public class PodPresetSpec implements Validable<PodPresetSpec>, Exportable {
                          final LabelSelector selector,
                          final List<VolumeMount> volumeMounts,
                          final List<Volume> volumes) {
-        // no-op
+        this.env = env;
+        this.envFrom = envFrom;
+        this.selector = selector;
+        this.volumeMounts = volumeMounts;
+        this.volumes = volumes;
     }
 
     public List<EnvVar> getEnv() {

@@ -41,7 +41,11 @@ public class TopologySpreadConstraint implements Validable<TopologySpreadConstra
                                     final Integer minDomains,
                                     final String topologyKey,
                                     final String whenUnsatisfiable) {
-        // no-op
+        this.labelSelector = labelSelector;
+        this.maxSkew = maxSkew;
+        this.minDomains = minDomains;
+        this.topologyKey = topologyKey;
+        this.whenUnsatisfiable = whenUnsatisfiable;
     }
 
     public LabelSelector getLabelSelector() {

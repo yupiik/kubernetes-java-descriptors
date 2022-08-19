@@ -37,7 +37,9 @@ public class WebhookClientConfig implements Validable<WebhookClientConfig>, Expo
     public WebhookClientConfig(final String caBundle,
                                final ServiceReference service,
                                final String url) {
-        // no-op
+        this.caBundle = caBundle;
+        this.service = service;
+        this.url = url;
     }
 
     public String getCaBundle() {

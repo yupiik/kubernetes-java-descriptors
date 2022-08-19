@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_17_0.v1;
 import io.yupiik.kubernetes.bindings.v1_17_0.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_0.Validable;
-import io.yupiik.kubernetes.bindings.v1_17_0.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -35,7 +33,8 @@ public class Capabilities implements Validable<Capabilities>, Exportable {
 
     public Capabilities(final List<String> add,
                         final List<String> drop) {
-        // no-op
+        this.add = add;
+        this.drop = drop;
     }
 
     public List<String> getAdd() {

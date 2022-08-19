@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_18_17.v1;
 import io.yupiik.kubernetes.bindings.v1_18_17.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_17.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_17.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_17.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -41,7 +38,11 @@ public class LeaseSpec implements Validable<LeaseSpec>, Exportable {
                      final Integer leaseDurationSeconds,
                      final Integer leaseTransitions,
                      final String renewTime) {
-        // no-op
+        this.acquireTime = acquireTime;
+        this.holderIdentity = holderIdentity;
+        this.leaseDurationSeconds = leaseDurationSeconds;
+        this.leaseTransitions = leaseTransitions;
+        this.renewTime = renewTime;
     }
 
     public String getAcquireTime() {

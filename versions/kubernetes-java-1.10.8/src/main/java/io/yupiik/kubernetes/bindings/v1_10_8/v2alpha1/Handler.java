@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_10_8.v2alpha1;
 
 import io.yupiik.kubernetes.bindings.v1_10_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_10_8.Validable;
-import io.yupiik.kubernetes.bindings.v1_10_8.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -36,7 +33,9 @@ public class Handler implements Validable<Handler>, Exportable {
     public Handler(final ExecAction exec,
                    final HTTPGetAction httpGet,
                    final TCPSocketAction tcpSocket) {
-        // no-op
+        this.exec = exec;
+        this.httpGet = httpGet;
+        this.tcpSocket = tcpSocket;
     }
 
     public ExecAction getExec() {

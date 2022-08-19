@@ -35,7 +35,8 @@ public class TokenRequest implements Validable<TokenRequest>, Exportable {
 
     public TokenRequest(final String audience,
                         final Integer expirationSeconds) {
-        // no-op
+        this.audience = audience;
+        this.expirationSeconds = expirationSeconds;
     }
 
     public String getAudience() {

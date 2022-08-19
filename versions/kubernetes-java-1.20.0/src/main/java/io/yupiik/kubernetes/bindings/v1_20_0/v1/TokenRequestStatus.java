@@ -35,7 +35,8 @@ public class TokenRequestStatus implements Validable<TokenRequestStatus>, Export
 
     public TokenRequestStatus(final String expirationTimestamp,
                               final String token) {
-        // no-op
+        this.expirationTimestamp = expirationTimestamp;
+        this.token = token;
     }
 
     public String getExpirationTimestamp() {

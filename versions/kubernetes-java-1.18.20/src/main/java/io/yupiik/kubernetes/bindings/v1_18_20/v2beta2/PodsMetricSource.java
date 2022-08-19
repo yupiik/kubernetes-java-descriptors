@@ -34,7 +34,8 @@ public class PodsMetricSource implements Validable<PodsMetricSource>, Exportable
 
     public PodsMetricSource(final MetricIdentifier metric,
                             final MetricTarget target) {
-        // no-op
+        this.metric = metric;
+        this.target = target;
     }
 
     public MetricIdentifier getMetric() {

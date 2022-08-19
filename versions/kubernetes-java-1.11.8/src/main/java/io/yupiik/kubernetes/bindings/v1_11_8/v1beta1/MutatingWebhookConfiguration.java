@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_11_8.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_11_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_11_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_11_8.Validable;
-import io.yupiik.kubernetes.bindings.v1_11_8.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -39,7 +37,10 @@ public class MutatingWebhookConfiguration implements Validable<MutatingWebhookCo
                                         final String kind,
                                         final ObjectMeta metadata,
                                         final List<Webhook> webhooks) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.webhooks = webhooks;
     }
 
     public String getApiVersion() {

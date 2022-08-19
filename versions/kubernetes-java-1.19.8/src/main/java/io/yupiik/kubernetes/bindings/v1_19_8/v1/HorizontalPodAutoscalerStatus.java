@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_19_8.v1;
 import io.yupiik.kubernetes.bindings.v1_19_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_19_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_8.Validable;
-import io.yupiik.kubernetes.bindings.v1_19_8.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -41,7 +38,11 @@ public class HorizontalPodAutoscalerStatus implements Validable<HorizontalPodAut
                                          final int desiredReplicas,
                                          final String lastScaleTime,
                                          final Integer observedGeneration) {
-        // no-op
+        this.currentCPUUtilizationPercentage = currentCPUUtilizationPercentage;
+        this.currentReplicas = currentReplicas;
+        this.desiredReplicas = desiredReplicas;
+        this.lastScaleTime = lastScaleTime;
+        this.observedGeneration = observedGeneration;
     }
 
     public Integer getCurrentCPUUtilizationPercentage() {

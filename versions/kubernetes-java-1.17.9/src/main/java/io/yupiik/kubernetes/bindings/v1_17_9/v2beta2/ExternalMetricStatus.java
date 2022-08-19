@@ -34,7 +34,8 @@ public class ExternalMetricStatus implements Validable<ExternalMetricStatus>, Ex
 
     public ExternalMetricStatus(final MetricValueStatus current,
                                 final MetricIdentifier metric) {
-        // no-op
+        this.current = current;
+        this.metric = metric;
     }
 
     public MetricValueStatus getCurrent() {

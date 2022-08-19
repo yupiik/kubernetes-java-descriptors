@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_10_9.v2alpha1;
 import io.yupiik.kubernetes.bindings.v1_10_9.Exportable;
 import io.yupiik.kubernetes.bindings.v1_10_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_10_9.Validable;
-import io.yupiik.kubernetes.bindings.v1_10_9.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -64,7 +62,22 @@ public class ObjectMeta implements Validable<ObjectMeta>, Exportable {
                       final String resourceVersion,
                       final String selfLink,
                       final String uid) {
-        // no-op
+        this.annotations = annotations;
+        this.clusterName = clusterName;
+        this.creationTimestamp = creationTimestamp;
+        this.deletionGracePeriodSeconds = deletionGracePeriodSeconds;
+        this.deletionTimestamp = deletionTimestamp;
+        this.finalizers = finalizers;
+        this.generateName = generateName;
+        this.generation = generation;
+        this.initializers = initializers;
+        this.labels = labels;
+        this.name = name;
+        this.namespace = namespace;
+        this.ownerReferences = ownerReferences;
+        this.resourceVersion = resourceVersion;
+        this.selfLink = selfLink;
+        this.uid = uid;
     }
 
     public Map<String, String> getAnnotations() {

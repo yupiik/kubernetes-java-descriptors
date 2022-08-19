@@ -37,7 +37,9 @@ public class CSINodeDriver implements Validable<CSINodeDriver>, Exportable {
     public CSINodeDriver(final String name,
                          final String nodeID,
                          final List<String> topologyKeys) {
-        // no-op
+        this.name = name;
+        this.nodeID = nodeID;
+        this.topologyKeys = topologyKeys;
     }
 
     public String getName() {

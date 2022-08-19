@@ -47,7 +47,14 @@ public class RBDVolumeSource implements Validable<RBDVolumeSource>, Exportable {
                            final Boolean readOnly,
                            final LocalObjectReference secretRef,
                            final String user) {
-        // no-op
+        this.fsType = fsType;
+        this.image = image;
+        this.keyring = keyring;
+        this.monitors = monitors;
+        this.pool = pool;
+        this.readOnly = readOnly;
+        this.secretRef = secretRef;
+        this.user = user;
     }
 
     public String getFsType() {

@@ -39,7 +39,10 @@ public class Endpoints implements Validable<Endpoints>, Exportable {
                      final String kind,
                      final ObjectMeta metadata,
                      final List<EndpointSubset> subsets) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.subsets = subsets;
     }
 
     public String getApiVersion() {

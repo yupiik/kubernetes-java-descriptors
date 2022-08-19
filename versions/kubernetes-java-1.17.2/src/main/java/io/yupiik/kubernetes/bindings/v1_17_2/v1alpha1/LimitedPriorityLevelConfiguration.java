@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_17_2.v1alpha1;
 
 import io.yupiik.kubernetes.bindings.v1_17_2.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_2.Validable;
-import io.yupiik.kubernetes.bindings.v1_17_2.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -34,7 +31,8 @@ public class LimitedPriorityLevelConfiguration implements Validable<LimitedPrior
 
     public LimitedPriorityLevelConfiguration(final Integer assuredConcurrencyShares,
                                              final LimitResponse limitResponse) {
-        // no-op
+        this.assuredConcurrencyShares = assuredConcurrencyShares;
+        this.limitResponse = limitResponse;
     }
 
     public Integer getAssuredConcurrencyShares() {

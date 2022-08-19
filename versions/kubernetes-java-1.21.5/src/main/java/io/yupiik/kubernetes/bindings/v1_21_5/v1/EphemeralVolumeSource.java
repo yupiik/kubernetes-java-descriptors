@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_21_5.v1;
 
 import io.yupiik.kubernetes.bindings.v1_21_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_5.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -32,7 +29,7 @@ public class EphemeralVolumeSource implements Validable<EphemeralVolumeSource>, 
     }
 
     public EphemeralVolumeSource(final PersistentVolumeClaimTemplate volumeClaimTemplate) {
-        // no-op
+        this.volumeClaimTemplate = volumeClaimTemplate;
     }
 
     public PersistentVolumeClaimTemplate getVolumeClaimTemplate() {

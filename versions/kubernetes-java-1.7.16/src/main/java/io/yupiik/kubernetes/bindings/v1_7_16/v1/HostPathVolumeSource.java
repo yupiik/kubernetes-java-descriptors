@@ -33,7 +33,7 @@ public class HostPathVolumeSource implements Validable<HostPathVolumeSource>, Ex
     }
 
     public HostPathVolumeSource(final String path) {
-        // no-op
+        this.path = path;
     }
 
     public String getPath() {

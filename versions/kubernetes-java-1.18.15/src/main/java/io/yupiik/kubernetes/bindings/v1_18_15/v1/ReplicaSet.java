@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_18_15.v1;
 import io.yupiik.kubernetes.bindings.v1_18_15.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_15.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_15.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_15.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -41,7 +38,11 @@ public class ReplicaSet implements Validable<ReplicaSet>, Exportable {
                       final ObjectMeta metadata,
                       final ReplicaSetSpec spec,
                       final ReplicaSetStatus status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
     public String getApiVersion() {

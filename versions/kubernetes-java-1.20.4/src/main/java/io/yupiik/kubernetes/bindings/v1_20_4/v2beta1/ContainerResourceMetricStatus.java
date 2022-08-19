@@ -39,7 +39,10 @@ public class ContainerResourceMetricStatus implements Validable<ContainerResourc
                                          final Integer currentAverageUtilization,
                                          final String currentAverageValue,
                                          final String name) {
-        // no-op
+        this.container = container;
+        this.currentAverageUtilization = currentAverageUtilization;
+        this.currentAverageValue = currentAverageValue;
+        this.name = name;
     }
 
     public String getContainer() {

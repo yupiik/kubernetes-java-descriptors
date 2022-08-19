@@ -18,9 +18,7 @@ package io.yupiik.kubernetes.bindings.v1_8_9.v1;
 import io.yupiik.kubernetes.bindings.v1_8_9.Exportable;
 import io.yupiik.kubernetes.bindings.v1_8_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_8_9.Validable;
-import io.yupiik.kubernetes.bindings.v1_8_9.ValidationException;
 import jakarta.json.JsonObject;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -40,7 +38,10 @@ public class UserInfo implements Validable<UserInfo>, Exportable {
                     final List<String> groups,
                     final String uid,
                     final String username) {
-        // no-op
+        this.extra = extra;
+        this.groups = groups;
+        this.uid = uid;
+        this.username = username;
     }
 
     public JsonObject getExtra() {

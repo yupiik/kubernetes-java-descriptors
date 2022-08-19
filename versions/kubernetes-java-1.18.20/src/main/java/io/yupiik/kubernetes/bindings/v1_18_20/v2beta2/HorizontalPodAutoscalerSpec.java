@@ -40,7 +40,11 @@ public class HorizontalPodAutoscalerSpec implements Validable<HorizontalPodAutos
                                        final List<MetricSpec> metrics,
                                        final Integer minReplicas,
                                        final CrossVersionObjectReference scaleTargetRef) {
-        // no-op
+        this.behavior = behavior;
+        this.maxReplicas = maxReplicas;
+        this.metrics = metrics;
+        this.minReplicas = minReplicas;
+        this.scaleTargetRef = scaleTargetRef;
     }
 
     public HorizontalPodAutoscalerBehavior getBehavior() {

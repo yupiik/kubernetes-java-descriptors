@@ -35,7 +35,8 @@ public class CustomResourceConversion implements Validable<CustomResourceConvers
 
     public CustomResourceConversion(final String strategy,
                                     final WebhookClientConfig webhookClientConfig) {
-        // no-op
+        this.strategy = strategy;
+        this.webhookClientConfig = webhookClientConfig;
     }
 
     public String getStrategy() {

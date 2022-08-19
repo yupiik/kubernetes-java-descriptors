@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_9_4.v2alpha1;
 import io.yupiik.kubernetes.bindings.v1_9_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_9_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_9_4.Validable;
-import io.yupiik.kubernetes.bindings.v1_9_4.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -33,7 +30,7 @@ public class LocalObjectReference implements Validable<LocalObjectReference>, Ex
     }
 
     public LocalObjectReference(final String name) {
-        // no-op
+        this.name = name;
     }
 
     public String getName() {

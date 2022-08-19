@@ -36,7 +36,9 @@ public class PolicyRulesWithSubjects implements Validable<PolicyRulesWithSubject
     public PolicyRulesWithSubjects(final List<NonResourcePolicyRule> nonResourceRules,
                                    final List<ResourcePolicyRule> resourceRules,
                                    final List<Subject> subjects) {
-        // no-op
+        this.nonResourceRules = nonResourceRules;
+        this.resourceRules = resourceRules;
+        this.subjects = subjects;
     }
 
     public List<NonResourcePolicyRule> getNonResourceRules() {

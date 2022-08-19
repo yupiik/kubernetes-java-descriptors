@@ -39,7 +39,10 @@ public class CSINodeDriver implements Validable<CSINodeDriver>, Exportable {
                          final String name,
                          final String nodeID,
                          final List<String> topologyKeys) {
-        // no-op
+        this.allocatable = allocatable;
+        this.name = name;
+        this.nodeID = nodeID;
+        this.topologyKeys = topologyKeys;
     }
 
     public VolumeNodeResources getAllocatable() {

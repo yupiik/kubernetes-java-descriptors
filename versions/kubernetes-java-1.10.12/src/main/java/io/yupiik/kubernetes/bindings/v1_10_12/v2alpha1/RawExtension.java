@@ -33,7 +33,7 @@ public class RawExtension implements Validable<RawExtension>, Exportable {
     }
 
     public RawExtension(final String Raw) {
-        // no-op
+        this.Raw = Raw;
     }
 
     public String getRaw() {

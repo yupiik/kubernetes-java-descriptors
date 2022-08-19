@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_21_10.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_21_10.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_10.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_10.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -35,7 +32,8 @@ public class VolumeError implements Validable<VolumeError>, Exportable {
 
     public VolumeError(final String message,
                        final String time) {
-        // no-op
+        this.message = message;
+        this.time = time;
     }
 
     public String getMessage() {

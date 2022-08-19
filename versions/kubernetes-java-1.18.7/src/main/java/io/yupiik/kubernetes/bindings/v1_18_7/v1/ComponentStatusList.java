@@ -39,7 +39,10 @@ public class ComponentStatusList implements Validable<ComponentStatusList>, Expo
                                final List<ComponentStatus> items,
                                final String kind,
                                final ListMeta metadata) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.items = items;
+        this.kind = kind;
+        this.metadata = metadata;
     }
 
     public String getApiVersion() {

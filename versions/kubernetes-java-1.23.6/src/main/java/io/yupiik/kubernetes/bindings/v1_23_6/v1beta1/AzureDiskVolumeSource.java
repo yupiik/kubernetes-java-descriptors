@@ -43,7 +43,12 @@ public class AzureDiskVolumeSource implements Validable<AzureDiskVolumeSource>, 
                                  final String fsType,
                                  final String kind,
                                  final Boolean readOnly) {
-        // no-op
+        this.cachingMode = cachingMode;
+        this.diskName = diskName;
+        this.diskURI = diskURI;
+        this.fsType = fsType;
+        this.kind = kind;
+        this.readOnly = readOnly;
     }
 
     public String getCachingMode() {

@@ -42,7 +42,11 @@ public class CSIVolumeSource implements Validable<CSIVolumeSource>, Exportable {
                            final LocalObjectReference nodePublishSecretRef,
                            final Boolean readOnly,
                            final Map<String, String> volumeAttributes) {
-        // no-op
+        this.driver = driver;
+        this.fsType = fsType;
+        this.nodePublishSecretRef = nodePublishSecretRef;
+        this.readOnly = readOnly;
+        this.volumeAttributes = volumeAttributes;
     }
 
     public String getDriver() {

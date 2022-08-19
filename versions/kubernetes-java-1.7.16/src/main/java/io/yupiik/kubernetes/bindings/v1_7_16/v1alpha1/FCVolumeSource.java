@@ -39,7 +39,10 @@ public class FCVolumeSource implements Validable<FCVolumeSource>, Exportable {
                           final int lun,
                           final Boolean readOnly,
                           final List<String> targetWWNs) {
-        // no-op
+        this.fsType = fsType;
+        this.lun = lun;
+        this.readOnly = readOnly;
+        this.targetWWNs = targetWWNs;
     }
 
     public String getFsType() {

@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_7_13.v1alpha1;
 
 import io.yupiik.kubernetes.bindings.v1_7_13.Exportable;
 import io.yupiik.kubernetes.bindings.v1_7_13.Validable;
-import io.yupiik.kubernetes.bindings.v1_7_13.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -36,7 +33,9 @@ public class VolumeProjection implements Validable<VolumeProjection>, Exportable
     public VolumeProjection(final ConfigMapProjection configMap,
                             final DownwardAPIProjection downwardAPI,
                             final SecretProjection secret) {
-        // no-op
+        this.configMap = configMap;
+        this.downwardAPI = downwardAPI;
+        this.secret = secret;
     }
 
     public ConfigMapProjection getConfigMap() {

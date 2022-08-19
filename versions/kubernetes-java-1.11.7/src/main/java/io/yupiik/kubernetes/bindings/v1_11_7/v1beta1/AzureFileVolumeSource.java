@@ -37,7 +37,9 @@ public class AzureFileVolumeSource implements Validable<AzureFileVolumeSource>, 
     public AzureFileVolumeSource(final Boolean readOnly,
                                  final String secretName,
                                  final String shareName) {
-        // no-op
+        this.readOnly = readOnly;
+        this.secretName = secretName;
+        this.shareName = shareName;
     }
 
     public Boolean getReadOnly() {

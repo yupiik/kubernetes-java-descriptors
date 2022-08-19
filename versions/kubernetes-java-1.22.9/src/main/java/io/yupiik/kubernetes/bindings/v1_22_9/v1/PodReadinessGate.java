@@ -33,7 +33,7 @@ public class PodReadinessGate implements Validable<PodReadinessGate>, Exportable
     }
 
     public PodReadinessGate(final String conditionType) {
-        // no-op
+        this.conditionType = conditionType;
     }
 
     public String getConditionType() {

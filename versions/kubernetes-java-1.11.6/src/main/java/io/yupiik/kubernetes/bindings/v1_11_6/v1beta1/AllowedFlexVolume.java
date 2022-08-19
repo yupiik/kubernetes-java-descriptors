@@ -33,7 +33,7 @@ public class AllowedFlexVolume implements Validable<AllowedFlexVolume>, Exportab
     }
 
     public AllowedFlexVolume(final String driver) {
-        // no-op
+        this.driver = driver;
     }
 
     public String getDriver() {

@@ -39,7 +39,10 @@ public class ServiceReference implements Validable<ServiceReference>, Exportable
                             final String namespace,
                             final String path,
                             final Integer port) {
-        // no-op
+        this.name = name;
+        this.namespace = namespace;
+        this.path = path;
+        this.port = port;
     }
 
     public String getName() {

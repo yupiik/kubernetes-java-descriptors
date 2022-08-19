@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_9_8.v1beta2;
 import io.yupiik.kubernetes.bindings.v1_9_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_9_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_9_8.Validable;
-import io.yupiik.kubernetes.bindings.v1_9_8.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -39,7 +36,10 @@ public class SELinuxOptions implements Validable<SELinuxOptions>, Exportable {
                           final String role,
                           final String type,
                           final String user) {
-        // no-op
+        this.level = level;
+        this.role = role;
+        this.type = type;
+        this.user = user;
     }
 
     public String getLevel() {

@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_13_4.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_13_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_13_4.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_4.Validable;
-import io.yupiik.kubernetes.bindings.v1_13_4.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -49,7 +47,15 @@ public class StatefulSetStatus implements Validable<StatefulSetStatus>, Exportab
                              final int replicas,
                              final String updateRevision,
                              final Integer updatedReplicas) {
-        // no-op
+        this.collisionCount = collisionCount;
+        this.conditions = conditions;
+        this.currentReplicas = currentReplicas;
+        this.currentRevision = currentRevision;
+        this.observedGeneration = observedGeneration;
+        this.readyReplicas = readyReplicas;
+        this.replicas = replicas;
+        this.updateRevision = updateRevision;
+        this.updatedReplicas = updatedReplicas;
     }
 
     public Integer getCollisionCount() {

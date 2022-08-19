@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_23_3.v1;
 import io.yupiik.kubernetes.bindings.v1_23_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_3.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_23_3.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -35,7 +33,8 @@ public class CertificateSigningRequestStatus implements Validable<CertificateSig
 
     public CertificateSigningRequestStatus(final String certificate,
                                            final List<CertificateSigningRequestCondition> conditions) {
-        // no-op
+        this.certificate = certificate;
+        this.conditions = conditions;
     }
 
     public String getCertificate() {

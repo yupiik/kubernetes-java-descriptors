@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_18_11.v1;
 import io.yupiik.kubernetes.bindings.v1_18_11.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_11.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_11.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -35,7 +32,8 @@ public class NetworkPolicyPort implements Validable<NetworkPolicyPort>, Exportab
 
     public NetworkPolicyPort(final String port,
                              final String protocol) {
-        // no-op
+        this.port = port;
+        this.protocol = protocol;
     }
 
     public String getPort() {

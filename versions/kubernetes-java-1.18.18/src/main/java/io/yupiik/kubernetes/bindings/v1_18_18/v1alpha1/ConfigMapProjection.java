@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_18_18.v1alpha1;
 import io.yupiik.kubernetes.bindings.v1_18_18.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_18.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_18_18.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_18.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -37,7 +35,9 @@ public class ConfigMapProjection implements Validable<ConfigMapProjection>, Expo
     public ConfigMapProjection(final List<KeyToPath> items,
                                final String name,
                                final Boolean optional) {
-        // no-op
+        this.items = items;
+        this.name = name;
+        this.optional = optional;
     }
 
     public List<KeyToPath> getItems() {

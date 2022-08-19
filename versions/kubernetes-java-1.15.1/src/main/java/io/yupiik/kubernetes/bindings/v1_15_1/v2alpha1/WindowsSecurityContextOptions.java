@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_15_1.v2alpha1;
 import io.yupiik.kubernetes.bindings.v1_15_1.Exportable;
 import io.yupiik.kubernetes.bindings.v1_15_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_1.Validable;
-import io.yupiik.kubernetes.bindings.v1_15_1.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -35,7 +32,8 @@ public class WindowsSecurityContextOptions implements Validable<WindowsSecurityC
 
     public WindowsSecurityContextOptions(final String gmsaCredentialSpec,
                                          final String gmsaCredentialSpecName) {
-        // no-op
+        this.gmsaCredentialSpec = gmsaCredentialSpec;
+        this.gmsaCredentialSpecName = gmsaCredentialSpecName;
     }
 
     public String getGmsaCredentialSpec() {

@@ -41,7 +41,11 @@ public class VolumeAttachment implements Validable<VolumeAttachment>, Exportable
                             final ObjectMeta metadata,
                             final VolumeAttachmentSpec spec,
                             final VolumeAttachmentStatus status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
     public String getApiVersion() {

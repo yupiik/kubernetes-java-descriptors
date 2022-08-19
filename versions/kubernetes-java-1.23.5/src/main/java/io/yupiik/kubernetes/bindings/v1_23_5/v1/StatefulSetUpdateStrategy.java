@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_23_5.v1;
 
 import io.yupiik.kubernetes.bindings.v1_23_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_23_5.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -34,7 +31,8 @@ public class StatefulSetUpdateStrategy implements Validable<StatefulSetUpdateStr
 
     public StatefulSetUpdateStrategy(final RollingUpdateStatefulSetStrategy rollingUpdate,
                                      final StatefulSetUpdateStrategyType type) {
-        // no-op
+        this.rollingUpdate = rollingUpdate;
+        this.type = type;
     }
 
     public RollingUpdateStatefulSetStrategy getRollingUpdate() {

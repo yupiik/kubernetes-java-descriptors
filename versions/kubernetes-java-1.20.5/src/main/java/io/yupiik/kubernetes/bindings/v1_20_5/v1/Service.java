@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_20_5.v1;
 import io.yupiik.kubernetes.bindings.v1_20_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_20_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_20_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_20_5.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -41,7 +38,11 @@ public class Service implements Validable<Service>, Exportable {
                    final ObjectMeta metadata,
                    final ServiceSpec spec,
                    final ServiceStatus status) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
     public String getApiVersion() {

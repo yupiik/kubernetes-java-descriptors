@@ -384,7 +384,7 @@ public final class GenerateBindings {
                 .generate();
         refRegistry.putAll(bindings);
 
-        logger.info(() -> "Generated #" + bindings.size() + " classes from '" + source + "'");
+        logger.info(() -> "Generated #" + bindings.size() + " classes from '" + source.get() + "'");
         for (final var entry : bindings.entrySet()) {
             final var out = root.resolve("src/main/java").resolve(entry.getKey());
             Files.createDirectories(out.getParent());

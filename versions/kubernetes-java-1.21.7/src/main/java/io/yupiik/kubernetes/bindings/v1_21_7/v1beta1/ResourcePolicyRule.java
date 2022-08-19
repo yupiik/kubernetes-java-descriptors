@@ -41,7 +41,11 @@ public class ResourcePolicyRule implements Validable<ResourcePolicyRule>, Export
                               final List<String> namespaces,
                               final List<String> resources,
                               final List<String> verbs) {
-        // no-op
+        this.apiGroups = apiGroups;
+        this.clusterScope = clusterScope;
+        this.namespaces = namespaces;
+        this.resources = resources;
+        this.verbs = verbs;
     }
 
     public List<String> getApiGroups() {

@@ -42,7 +42,11 @@ public class StorageClass implements Validable<StorageClass>, Exportable {
                         final ObjectMeta metadata,
                         final Map<String, String> parameters,
                         final String provisioner) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.parameters = parameters;
+        this.provisioner = provisioner;
     }
 
     public String getApiVersion() {

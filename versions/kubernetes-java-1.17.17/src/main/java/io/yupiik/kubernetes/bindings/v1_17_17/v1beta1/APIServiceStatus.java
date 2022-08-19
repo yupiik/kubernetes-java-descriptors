@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_17_17.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_17_17.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_17.Validable;
-import io.yupiik.kubernetes.bindings.v1_17_17.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -32,7 +30,7 @@ public class APIServiceStatus implements Validable<APIServiceStatus>, Exportable
     }
 
     public APIServiceStatus(final List<APIServiceCondition> conditions) {
-        // no-op
+        this.conditions = conditions;
     }
 
     public List<APIServiceCondition> getConditions() {

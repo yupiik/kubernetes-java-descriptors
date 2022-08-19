@@ -43,7 +43,12 @@ public class OwnerReference implements Validable<OwnerReference>, Exportable {
                           final String kind,
                           final String name,
                           final String uid) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.blockOwnerDeletion = blockOwnerDeletion;
+        this.controller = controller;
+        this.kind = kind;
+        this.name = name;
+        this.uid = uid;
     }
 
     public String getApiVersion() {

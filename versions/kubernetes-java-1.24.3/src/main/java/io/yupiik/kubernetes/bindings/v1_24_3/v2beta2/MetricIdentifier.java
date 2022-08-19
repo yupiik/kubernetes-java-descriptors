@@ -35,7 +35,8 @@ public class MetricIdentifier implements Validable<MetricIdentifier>, Exportable
 
     public MetricIdentifier(final String name,
                             final LabelSelector selector) {
-        // no-op
+        this.name = name;
+        this.selector = selector;
     }
 
     public String getName() {

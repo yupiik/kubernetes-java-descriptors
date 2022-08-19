@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_19_16.v1;
 import io.yupiik.kubernetes.bindings.v1_19_16.Exportable;
 import io.yupiik.kubernetes.bindings.v1_19_16.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_16.Validable;
-import io.yupiik.kubernetes.bindings.v1_19_16.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -62,7 +60,21 @@ public class ServiceSpec implements Validable<ServiceSpec>, Exportable {
                        final SessionAffinityConfig sessionAffinityConfig,
                        final List<String> topologyKeys,
                        final String type) {
-        // no-op
+        this.clusterIP = clusterIP;
+        this.externalIPs = externalIPs;
+        this.externalName = externalName;
+        this.externalTrafficPolicy = externalTrafficPolicy;
+        this.healthCheckNodePort = healthCheckNodePort;
+        this.ipFamily = ipFamily;
+        this.loadBalancerIP = loadBalancerIP;
+        this.loadBalancerSourceRanges = loadBalancerSourceRanges;
+        this.ports = ports;
+        this.publishNotReadyAddresses = publishNotReadyAddresses;
+        this.selector = selector;
+        this.sessionAffinity = sessionAffinity;
+        this.sessionAffinityConfig = sessionAffinityConfig;
+        this.topologyKeys = topologyKeys;
+        this.type = type;
     }
 
     public String getClusterIP() {

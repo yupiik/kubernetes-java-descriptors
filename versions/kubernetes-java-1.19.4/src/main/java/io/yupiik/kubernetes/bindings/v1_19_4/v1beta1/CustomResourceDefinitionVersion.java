@@ -47,7 +47,14 @@ public class CustomResourceDefinitionVersion implements Validable<CustomResource
                                            final boolean served,
                                            final boolean storage,
                                            final CustomResourceSubresources subresources) {
-        // no-op
+        this.additionalPrinterColumns = additionalPrinterColumns;
+        this.deprecated = deprecated;
+        this.deprecationWarning = deprecationWarning;
+        this.name = name;
+        this.schema = schema;
+        this.served = served;
+        this.storage = storage;
+        this.subresources = subresources;
     }
 
     public List<CustomResourceColumnDefinition> getAdditionalPrinterColumns() {

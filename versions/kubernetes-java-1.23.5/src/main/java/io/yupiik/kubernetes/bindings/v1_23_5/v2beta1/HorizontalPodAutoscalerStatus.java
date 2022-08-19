@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_23_5.v2beta1;
 import io.yupiik.kubernetes.bindings.v1_23_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_5.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_23_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_23_5.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -43,7 +41,12 @@ public class HorizontalPodAutoscalerStatus implements Validable<HorizontalPodAut
                                          final int desiredReplicas,
                                          final String lastScaleTime,
                                          final Integer observedGeneration) {
-        // no-op
+        this.conditions = conditions;
+        this.currentMetrics = currentMetrics;
+        this.currentReplicas = currentReplicas;
+        this.desiredReplicas = desiredReplicas;
+        this.lastScaleTime = lastScaleTime;
+        this.observedGeneration = observedGeneration;
     }
 
     public List<HorizontalPodAutoscalerCondition> getConditions() {

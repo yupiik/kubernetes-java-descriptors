@@ -35,7 +35,8 @@ public class TCPSocketAction implements Validable<TCPSocketAction>, Exportable {
 
     public TCPSocketAction(final String host,
                            final String port) {
-        // no-op
+        this.host = host;
+        this.port = port;
     }
 
     public String getHost() {

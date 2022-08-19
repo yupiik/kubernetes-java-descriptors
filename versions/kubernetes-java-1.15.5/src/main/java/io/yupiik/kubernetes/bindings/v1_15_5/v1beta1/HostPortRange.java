@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_15_5.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_15_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_15_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_15_5.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -34,7 +31,8 @@ public class HostPortRange implements Validable<HostPortRange>, Exportable {
 
     public HostPortRange(final int max,
                          final int min) {
-        // no-op
+        this.max = max;
+        this.min = min;
     }
 
     public int getMax() {

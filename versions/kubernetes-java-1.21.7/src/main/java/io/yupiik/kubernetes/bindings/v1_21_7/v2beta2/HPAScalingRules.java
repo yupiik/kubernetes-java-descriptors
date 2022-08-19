@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_21_7.v2beta2;
 import io.yupiik.kubernetes.bindings.v1_21_7.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_7.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_7.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_7.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -37,7 +35,9 @@ public class HPAScalingRules implements Validable<HPAScalingRules>, Exportable {
     public HPAScalingRules(final List<HPAScalingPolicy> policies,
                            final String selectPolicy,
                            final Integer stabilizationWindowSeconds) {
-        // no-op
+        this.policies = policies;
+        this.selectPolicy = selectPolicy;
+        this.stabilizationWindowSeconds = stabilizationWindowSeconds;
     }
 
     public List<HPAScalingPolicy> getPolicies() {

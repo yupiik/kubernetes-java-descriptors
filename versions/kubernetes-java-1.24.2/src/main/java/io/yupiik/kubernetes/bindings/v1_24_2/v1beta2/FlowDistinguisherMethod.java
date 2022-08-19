@@ -33,7 +33,7 @@ public class FlowDistinguisherMethod implements Validable<FlowDistinguisherMetho
     }
 
     public FlowDistinguisherMethod(final String type) {
-        // no-op
+        this.type = type;
     }
 
     public String getType() {

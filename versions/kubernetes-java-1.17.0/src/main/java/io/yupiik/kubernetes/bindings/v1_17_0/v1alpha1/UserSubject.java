@@ -33,7 +33,7 @@ public class UserSubject implements Validable<UserSubject>, Exportable {
     }
 
     public UserSubject(final String name) {
-        // no-op
+        this.name = name;
     }
 
     public String getName() {

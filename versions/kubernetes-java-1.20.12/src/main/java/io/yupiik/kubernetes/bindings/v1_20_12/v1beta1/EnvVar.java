@@ -37,7 +37,9 @@ public class EnvVar implements Validable<EnvVar>, Exportable {
     public EnvVar(final String name,
                   final String value,
                   final EnvVarSource valueFrom) {
-        // no-op
+        this.name = name;
+        this.value = value;
+        this.valueFrom = valueFrom;
     }
 
     public String getName() {

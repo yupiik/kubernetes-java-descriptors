@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_21_0.v1alpha1;
 import io.yupiik.kubernetes.bindings.v1_21_0.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_0.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_0.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_0.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -37,7 +35,9 @@ public class StorageVersionStatus implements Validable<StorageVersionStatus>, Ex
     public StorageVersionStatus(final String commonEncodingVersion,
                                 final List<StorageVersionCondition> conditions,
                                 final List<ServerStorageVersion> storageVersions) {
-        // no-op
+        this.commonEncodingVersion = commonEncodingVersion;
+        this.conditions = conditions;
+        this.storageVersions = storageVersions;
     }
 
     public String getCommonEncodingVersion() {

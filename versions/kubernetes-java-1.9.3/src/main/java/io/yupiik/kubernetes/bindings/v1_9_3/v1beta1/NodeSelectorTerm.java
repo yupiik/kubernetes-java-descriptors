@@ -32,7 +32,7 @@ public class NodeSelectorTerm implements Validable<NodeSelectorTerm>, Exportable
     }
 
     public NodeSelectorTerm(final List<NodeSelectorRequirement> matchExpressions) {
-        // no-op
+        this.matchExpressions = matchExpressions;
     }
 
     public List<NodeSelectorRequirement> getMatchExpressions() {

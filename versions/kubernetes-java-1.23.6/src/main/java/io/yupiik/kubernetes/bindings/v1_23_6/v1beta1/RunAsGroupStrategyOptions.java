@@ -35,7 +35,8 @@ public class RunAsGroupStrategyOptions implements Validable<RunAsGroupStrategyOp
 
     public RunAsGroupStrategyOptions(final List<IDRange> ranges,
                                      final String rule) {
-        // no-op
+        this.ranges = ranges;
+        this.rule = rule;
     }
 
     public List<IDRange> getRanges() {

@@ -43,7 +43,12 @@ public class EndpointSlice implements Validable<EndpointSlice>, Exportable {
                          final String kind,
                          final ObjectMeta metadata,
                          final List<EndpointPort> ports) {
-        // no-op
+        this.addressType = addressType;
+        this.apiVersion = apiVersion;
+        this.endpoints = endpoints;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.ports = ports;
     }
 
     public String getAddressType() {

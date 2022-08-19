@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_10_4.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_10_4.Exportable;
 import io.yupiik.kubernetes.bindings.v1_10_4.Validable;
-import io.yupiik.kubernetes.bindings.v1_10_4.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -46,7 +43,14 @@ public class SecurityContext implements Validable<SecurityContext>, Exportable {
                            final Boolean runAsNonRoot,
                            final Integer runAsUser,
                            final SELinuxOptions seLinuxOptions) {
-        // no-op
+        this.allowPrivilegeEscalation = allowPrivilegeEscalation;
+        this.capabilities = capabilities;
+        this.privileged = privileged;
+        this.readOnlyRootFilesystem = readOnlyRootFilesystem;
+        this.runAsGroup = runAsGroup;
+        this.runAsNonRoot = runAsNonRoot;
+        this.runAsUser = runAsUser;
+        this.seLinuxOptions = seLinuxOptions;
     }
 
     public Boolean getAllowPrivilegeEscalation() {

@@ -32,7 +32,7 @@ public class LimitRangeSpec implements Validable<LimitRangeSpec>, Exportable {
     }
 
     public LimitRangeSpec(final List<LimitRangeItem> limits) {
-        // no-op
+        this.limits = limits;
     }
 
     public List<LimitRangeItem> getLimits() {

@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_21_14.v1alpha1;
 import io.yupiik.kubernetes.bindings.v1_21_14.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_14.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_14.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_14.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -37,7 +35,9 @@ public class ServerStorageVersion implements Validable<ServerStorageVersion>, Ex
     public ServerStorageVersion(final String apiServerID,
                                 final List<String> decodableVersions,
                                 final String encodingVersion) {
-        // no-op
+        this.apiServerID = apiServerID;
+        this.decodableVersions = decodableVersions;
+        this.encodingVersion = encodingVersion;
     }
 
     public String getApiServerID() {

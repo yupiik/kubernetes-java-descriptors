@@ -37,7 +37,9 @@ public class PodsMetricSource implements Validable<PodsMetricSource>, Exportable
     public PodsMetricSource(final String metricName,
                             final LabelSelector selector,
                             final String targetAverageValue) {
-        // no-op
+        this.metricName = metricName;
+        this.selector = selector;
+        this.targetAverageValue = targetAverageValue;
     }
 
     public String getMetricName() {

@@ -35,7 +35,8 @@ public class IngressServiceBackend implements Validable<IngressServiceBackend>, 
 
     public IngressServiceBackend(final String name,
                                  final ServiceBackendPort port) {
-        // no-op
+        this.name = name;
+        this.port = port;
     }
 
     public String getName() {

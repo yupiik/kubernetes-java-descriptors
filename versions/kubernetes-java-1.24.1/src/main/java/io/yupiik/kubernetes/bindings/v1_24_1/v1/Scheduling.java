@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_24_1.v1;
 import io.yupiik.kubernetes.bindings.v1_24_1.Exportable;
 import io.yupiik.kubernetes.bindings.v1_24_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_24_1.Validable;
-import io.yupiik.kubernetes.bindings.v1_24_1.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -36,7 +34,8 @@ public class Scheduling implements Validable<Scheduling>, Exportable {
 
     public Scheduling(final Map<String, String> nodeSelector,
                       final List<Toleration> tolerations) {
-        // no-op
+        this.nodeSelector = nodeSelector;
+        this.tolerations = tolerations;
     }
 
     public Map<String, String> getNodeSelector() {

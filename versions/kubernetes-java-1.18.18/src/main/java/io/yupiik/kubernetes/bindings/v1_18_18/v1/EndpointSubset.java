@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_18_18.v1;
 
 import io.yupiik.kubernetes.bindings.v1_18_18.Exportable;
 import io.yupiik.kubernetes.bindings.v1_18_18.Validable;
-import io.yupiik.kubernetes.bindings.v1_18_18.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -36,7 +34,9 @@ public class EndpointSubset implements Validable<EndpointSubset>, Exportable {
     public EndpointSubset(final List<EndpointAddress> addresses,
                           final List<EndpointAddress> notReadyAddresses,
                           final List<EndpointPort> ports) {
-        // no-op
+        this.addresses = addresses;
+        this.notReadyAddresses = notReadyAddresses;
+        this.ports = ports;
     }
 
     public List<EndpointAddress> getAddresses() {

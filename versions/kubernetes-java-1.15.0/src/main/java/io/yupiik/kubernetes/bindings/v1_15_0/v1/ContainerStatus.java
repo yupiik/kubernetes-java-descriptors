@@ -47,7 +47,14 @@ public class ContainerStatus implements Validable<ContainerStatus>, Exportable {
                            final boolean ready,
                            final int restartCount,
                            final ContainerState state) {
-        // no-op
+        this.containerID = containerID;
+        this.image = image;
+        this.imageID = imageID;
+        this.lastState = lastState;
+        this.name = name;
+        this.ready = ready;
+        this.restartCount = restartCount;
+        this.state = state;
     }
 
     public String getContainerID() {

@@ -35,7 +35,8 @@ public class PersistentVolumeClaimVolumeSource implements Validable<PersistentVo
 
     public PersistentVolumeClaimVolumeSource(final String claimName,
                                              final Boolean readOnly) {
-        // no-op
+        this.claimName = claimName;
+        this.readOnly = readOnly;
     }
 
     public String getClaimName() {

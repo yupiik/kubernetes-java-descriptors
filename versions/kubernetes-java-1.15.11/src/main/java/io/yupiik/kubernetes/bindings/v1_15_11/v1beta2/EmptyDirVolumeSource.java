@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_15_11.v1beta2;
 import io.yupiik.kubernetes.bindings.v1_15_11.Exportable;
 import io.yupiik.kubernetes.bindings.v1_15_11.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_11.Validable;
-import io.yupiik.kubernetes.bindings.v1_15_11.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -35,7 +32,8 @@ public class EmptyDirVolumeSource implements Validable<EmptyDirVolumeSource>, Ex
 
     public EmptyDirVolumeSource(final String medium,
                                 final String sizeLimit) {
-        // no-op
+        this.medium = medium;
+        this.sizeLimit = sizeLimit;
     }
 
     public String getMedium() {

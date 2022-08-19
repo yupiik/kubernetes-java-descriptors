@@ -35,7 +35,8 @@ public class ContainerImage implements Validable<ContainerImage>, Exportable {
 
     public ContainerImage(final List<String> names,
                           final Integer sizeBytes) {
-        // no-op
+        this.names = names;
+        this.sizeBytes = sizeBytes;
     }
 
     public List<String> getNames() {

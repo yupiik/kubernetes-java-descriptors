@@ -39,7 +39,10 @@ public class CinderVolumeSource implements Validable<CinderVolumeSource>, Export
                               final Boolean readOnly,
                               final LocalObjectReference secretRef,
                               final String volumeID) {
-        // no-op
+        this.fsType = fsType;
+        this.readOnly = readOnly;
+        this.secretRef = secretRef;
+        this.volumeID = volumeID;
     }
 
     public String getFsType() {

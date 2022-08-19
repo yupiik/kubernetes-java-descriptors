@@ -41,7 +41,11 @@ public class RoleBinding implements Validable<RoleBinding>, Exportable {
                        final ObjectMeta metadata,
                        final RoleRef roleRef,
                        final List<Subject> subjects) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.roleRef = roleRef;
+        this.subjects = subjects;
     }
 
     public String getApiVersion() {

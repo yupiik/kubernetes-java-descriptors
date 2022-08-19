@@ -37,7 +37,9 @@ public class TokenRequestSpec implements Validable<TokenRequestSpec>, Exportable
     public TokenRequestSpec(final List<String> audiences,
                             final BoundObjectReference boundObjectRef,
                             final Integer expirationSeconds) {
-        // no-op
+        this.audiences = audiences;
+        this.boundObjectRef = boundObjectRef;
+        this.expirationSeconds = expirationSeconds;
     }
 
     public List<String> getAudiences() {

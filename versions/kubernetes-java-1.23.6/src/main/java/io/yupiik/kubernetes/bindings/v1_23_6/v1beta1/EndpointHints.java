@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_23_6.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_23_6.Exportable;
 import io.yupiik.kubernetes.bindings.v1_23_6.Validable;
-import io.yupiik.kubernetes.bindings.v1_23_6.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -32,7 +30,7 @@ public class EndpointHints implements Validable<EndpointHints>, Exportable {
     }
 
     public EndpointHints(final List<ForZone> forZones) {
-        // no-op
+        this.forZones = forZones;
     }
 
     public List<ForZone> getForZones() {

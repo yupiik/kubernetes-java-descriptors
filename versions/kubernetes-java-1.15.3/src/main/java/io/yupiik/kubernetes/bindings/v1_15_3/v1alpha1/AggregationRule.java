@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_15_3.v1alpha1;
 
 import io.yupiik.kubernetes.bindings.v1_15_3.Exportable;
 import io.yupiik.kubernetes.bindings.v1_15_3.Validable;
-import io.yupiik.kubernetes.bindings.v1_15_3.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -32,7 +30,7 @@ public class AggregationRule implements Validable<AggregationRule>, Exportable {
     }
 
     public AggregationRule(final List<LabelSelector> clusterRoleSelectors) {
-        // no-op
+        this.clusterRoleSelectors = clusterRoleSelectors;
     }
 
     public List<LabelSelector> getClusterRoleSelectors() {

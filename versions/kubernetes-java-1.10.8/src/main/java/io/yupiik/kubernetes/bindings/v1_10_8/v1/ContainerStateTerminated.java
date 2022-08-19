@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_10_8.v1;
 import io.yupiik.kubernetes.bindings.v1_10_8.Exportable;
 import io.yupiik.kubernetes.bindings.v1_10_8.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_10_8.Validable;
-import io.yupiik.kubernetes.bindings.v1_10_8.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -45,7 +42,13 @@ public class ContainerStateTerminated implements Validable<ContainerStateTermina
                                     final String reason,
                                     final Integer signal,
                                     final String startedAt) {
-        // no-op
+        this.containerID = containerID;
+        this.exitCode = exitCode;
+        this.finishedAt = finishedAt;
+        this.message = message;
+        this.reason = reason;
+        this.signal = signal;
+        this.startedAt = startedAt;
     }
 
     public String getContainerID() {

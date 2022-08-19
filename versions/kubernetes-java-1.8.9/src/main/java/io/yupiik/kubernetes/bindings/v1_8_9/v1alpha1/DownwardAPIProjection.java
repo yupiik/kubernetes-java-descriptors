@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_8_9.v1alpha1;
 
 import io.yupiik.kubernetes.bindings.v1_8_9.Exportable;
 import io.yupiik.kubernetes.bindings.v1_8_9.Validable;
-import io.yupiik.kubernetes.bindings.v1_8_9.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -32,7 +30,7 @@ public class DownwardAPIProjection implements Validable<DownwardAPIProjection>, 
     }
 
     public DownwardAPIProjection(final List<DownwardAPIVolumeFile> items) {
-        // no-op
+        this.items = items;
     }
 
     public List<DownwardAPIVolumeFile> getItems() {

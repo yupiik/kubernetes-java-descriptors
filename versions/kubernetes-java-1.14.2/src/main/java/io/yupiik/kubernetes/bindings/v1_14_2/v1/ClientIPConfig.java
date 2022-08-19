@@ -17,9 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_14_2.v1;
 
 import io.yupiik.kubernetes.bindings.v1_14_2.Exportable;
 import io.yupiik.kubernetes.bindings.v1_14_2.Validable;
-import io.yupiik.kubernetes.bindings.v1_14_2.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -32,7 +29,7 @@ public class ClientIPConfig implements Validable<ClientIPConfig>, Exportable {
     }
 
     public ClientIPConfig(final Integer timeoutSeconds) {
-        // no-op
+        this.timeoutSeconds = timeoutSeconds;
     }
 
     public Integer getTimeoutSeconds() {

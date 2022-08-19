@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_17_12.v1;
 import io.yupiik.kubernetes.bindings.v1_17_12.Exportable;
 import io.yupiik.kubernetes.bindings.v1_17_12.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_17_12.Validable;
-import io.yupiik.kubernetes.bindings.v1_17_12.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -39,7 +37,10 @@ public class ComponentStatus implements Validable<ComponentStatus>, Exportable {
                            final List<ComponentCondition> conditions,
                            final String kind,
                            final ObjectMeta metadata) {
-        // no-op
+        this.apiVersion = apiVersion;
+        this.conditions = conditions;
+        this.kind = kind;
+        this.metadata = metadata;
     }
 
     public String getApiVersion() {

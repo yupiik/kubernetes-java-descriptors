@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_15_7.v1;
 import io.yupiik.kubernetes.bindings.v1_15_7.Exportable;
 import io.yupiik.kubernetes.bindings.v1_15_7.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_15_7.Validable;
-import io.yupiik.kubernetes.bindings.v1_15_7.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -33,7 +30,7 @@ public class ContainerStateRunning implements Validable<ContainerStateRunning>, 
     }
 
     public ContainerStateRunning(final String startedAt) {
-        // no-op
+        this.startedAt = startedAt;
     }
 
     public String getStartedAt() {

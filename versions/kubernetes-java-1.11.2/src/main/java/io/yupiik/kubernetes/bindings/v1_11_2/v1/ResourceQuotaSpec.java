@@ -18,9 +18,7 @@ package io.yupiik.kubernetes.bindings.v1_11_2.v1;
 import io.yupiik.kubernetes.bindings.v1_11_2.Exportable;
 import io.yupiik.kubernetes.bindings.v1_11_2.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_11_2.Validable;
-import io.yupiik.kubernetes.bindings.v1_11_2.ValidationException;
 import jakarta.json.JsonObject;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -38,7 +36,9 @@ public class ResourceQuotaSpec implements Validable<ResourceQuotaSpec>, Exportab
     public ResourceQuotaSpec(final JsonObject hard,
                              final ScopeSelector scopeSelector,
                              final List<String> scopes) {
-        // no-op
+        this.hard = hard;
+        this.scopeSelector = scopeSelector;
+        this.scopes = scopes;
     }
 
     public JsonObject getHard() {

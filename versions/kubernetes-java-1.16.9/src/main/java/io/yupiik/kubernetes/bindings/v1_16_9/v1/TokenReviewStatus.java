@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_16_9.v1;
 import io.yupiik.kubernetes.bindings.v1_16_9.Exportable;
 import io.yupiik.kubernetes.bindings.v1_16_9.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_16_9.Validable;
-import io.yupiik.kubernetes.bindings.v1_16_9.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -39,7 +37,10 @@ public class TokenReviewStatus implements Validable<TokenReviewStatus>, Exportab
                              final Boolean authenticated,
                              final String error,
                              final UserInfo user) {
-        // no-op
+        this.audiences = audiences;
+        this.authenticated = authenticated;
+        this.error = error;
+        this.user = user;
     }
 
     public List<String> getAudiences() {

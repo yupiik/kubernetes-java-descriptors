@@ -32,7 +32,7 @@ public class CSINodeSpec implements Validable<CSINodeSpec>, Exportable {
     }
 
     public CSINodeSpec(final List<CSINodeDriver> drivers) {
-        // no-op
+        this.drivers = drivers;
     }
 
     public List<CSINodeDriver> getDrivers() {

@@ -18,8 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_19_15.v1;
 import io.yupiik.kubernetes.bindings.v1_19_15.Exportable;
 import io.yupiik.kubernetes.bindings.v1_19_15.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_19_15.Validable;
-import io.yupiik.kubernetes.bindings.v1_19_15.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -35,7 +33,8 @@ public class IngressTLS implements Validable<IngressTLS>, Exportable {
 
     public IngressTLS(final List<String> hosts,
                       final String secretName) {
-        // no-op
+        this.hosts = hosts;
+        this.secretName = secretName;
     }
 
     public List<String> getHosts() {

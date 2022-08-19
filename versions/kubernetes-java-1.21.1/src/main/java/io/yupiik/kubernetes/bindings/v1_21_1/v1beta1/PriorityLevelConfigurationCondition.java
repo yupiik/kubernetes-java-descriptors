@@ -18,9 +18,6 @@ package io.yupiik.kubernetes.bindings.v1_21_1.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_21_1.Exportable;
 import io.yupiik.kubernetes.bindings.v1_21_1.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_21_1.Validable;
-import io.yupiik.kubernetes.bindings.v1_21_1.ValidationException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -41,7 +38,11 @@ public class PriorityLevelConfigurationCondition implements Validable<PriorityLe
                                                final String reason,
                                                final String status,
                                                final String type) {
-        // no-op
+        this.lastTransitionTime = lastTransitionTime;
+        this.message = message;
+        this.reason = reason;
+        this.status = status;
+        this.type = type;
     }
 
     public String getLastTransitionTime() {

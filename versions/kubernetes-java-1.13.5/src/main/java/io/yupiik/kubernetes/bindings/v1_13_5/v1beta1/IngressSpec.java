@@ -17,8 +17,6 @@ package io.yupiik.kubernetes.bindings.v1_13_5.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_13_5.Exportable;
 import io.yupiik.kubernetes.bindings.v1_13_5.Validable;
-import io.yupiik.kubernetes.bindings.v1_13_5.ValidationException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -36,7 +34,9 @@ public class IngressSpec implements Validable<IngressSpec>, Exportable {
     public IngressSpec(final IngressBackend backend,
                        final List<IngressRule> rules,
                        final List<IngressTLS> tls) {
-        // no-op
+        this.backend = backend;
+        this.rules = rules;
+        this.tls = tls;
     }
 
     public IngressBackend getBackend() {
