@@ -28,5 +28,9 @@
 
   <artifactId>kubernetes-java-1.18.11</artifactId>
   <name>Kubernetes Java Descriptors :: Versions :: 1.18.11</name>
+
+  <properties>
+    <typescript-generator.skip>false</typescript-generator.skip>
+  </properties>
 </project>
 

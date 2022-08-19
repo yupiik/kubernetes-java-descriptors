@@ -28,5 +28,9 @@
 
   <artifactId>kubernetes-java-1.17.15</artifactId>
   <name>Kubernetes Java Descriptors :: Versions :: 1.17.15</name>
+
+  <properties>
+    <typescript-generator.skip>false</typescript-generator.skip>
+  </properties>
 </project>
 

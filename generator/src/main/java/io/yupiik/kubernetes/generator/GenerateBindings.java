@@ -182,6 +182,10 @@ public final class GenerateBindings {
                 "\n" +
                 "  <artifactId>" + artifactId + "</artifactId>\n" +
                 "  <name>Kubernetes Java Descriptors :: Versions :: " + k8sApiVersion + "</name>\n" +
+                "\n" +
+                "  <properties>\n" +
+                "    <typescript-generator.skip>false</typescript-generator.skip>\n" +
+                "  </properties>\n" +
                 "</project>\n" +
                 "\n");
 

@@ -34,6 +34,8 @@
 
     <yupiik-uship.version>1.0.8</yupiik-uship.version>
 
+    <typescript-generator.skip>true</typescript-generator.skip>
+
     <bundlebee.kubernetes.schemas.url>https://github.com/yupiik/bundlebee/archive/refs/heads/gh-pages.zip</bundlebee.kubernetes.schemas.url>
     <bundlebee.kubernetes.schemas.base>generated/kubernetes/jsonschema</bundlebee.kubernetes.schemas.base>
     <bundlebee.schema.extension>.jsonschema.raw.json</bundlebee.schema.extension>
@@ -175,6 +177,71 @@
           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>cz.habarta.typescript-generator</groupId>
+        <artifactId>typescript-generator-maven-plugin</artifactId>
+        <version>2.36-SNAPSHOT</version>
+        <executions>
+          <execution>
+            <id>generate</id>
+            <phase>process-classes</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <skip>${typescript-generator.skip}</skip>
+          <outputKind>module</outputKind>
+          <outputFileType>declarationFile</outputFileType>
+          <outputFile>${project.build.directory}/typescript/${project.artifactId}.d.ts</outputFile>
+          <jsonLibrary>jsonb</jsonLibrary>
+          <mapPackagesToNamespaces>true</mapPackagesToNamespaces>
+          <sortTypeDeclarations>true</sortTypeDeclarations>
+          <generateNpmPackageJson>true</generateNpmPackageJson>
+          <npmName>@yupiik/${project.artifactId}</npmName>
+          <stringQuotes>singleQuotes</stringQuotes>
+          <classPatterns>
+            <classPattern>io.yupiik.kubernetes.bindings.**</classPattern>
+          </classPatterns>
+          <excludeClassPatterns>
+            <excludeClassPattern>**.Exportable</excludeClassPattern>
+            <excludeClassPattern>**.JsonStrings</excludeClassPattern>
+            <excludeClassPattern>**.Validable</excludeClassPattern>
+            <excludeClassPattern>**.ValidationException</excludeClassPattern>
+            <excludeClassPattern>**.ValidationException$ValidationError</excludeClassPattern>
+          </excludeClassPatterns>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>3.3.0</version>
+        <executions>
+          <execution>
+            <id>attach-artifacts</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attach-artifact</goal>
+            </goals>
+            <configuration>
+              <skipAttach>${typescript-generator.skip}</skipAttach>
+              <artifacts>
+                <artifact>
+                  <file>${project.build.directory}/typescript/${project.artifactId}.d.ts</file>
+                  <type>ts</type>
+                  <classifier>d</classifier>
+                </artifact>
+                <artifact>
+                  <file>${project.build.directory}/typescript/package.json</file>
+                  <type>json</type>
+                  <classifier>package</classifier>
+                </artifact>
+              </artifacts>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin><!--  mvn ossindex:audit -->
         <groupId>org.sonatype.ossindex.maven</groupId>

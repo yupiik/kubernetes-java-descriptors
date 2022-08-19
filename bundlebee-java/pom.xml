@@ -29,6 +29,10 @@
   <artifactId>bundlebee-java</artifactId>
   <name>Kubernetes Java Descriptors :: Bundlebee</name>
 
+  <properties>
+    <typescript-generator.skip>false</typescript-generator.skip>
+  </properties>
+
   <dependencies>
     <!-- provided because we let the consumer import the API/impl he wants when needed -->
     <dependency>

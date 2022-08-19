@@ -28,5 +28,9 @@
 
   <artifactId>kubernetes-java-1.19.2</artifactId>
   <name>Kubernetes Java Descriptors :: Versions :: 1.19.2</name>
+
+  <properties>
+    <typescript-generator.skip>false</typescript-generator.skip>
+  </properties>
 </project>
 

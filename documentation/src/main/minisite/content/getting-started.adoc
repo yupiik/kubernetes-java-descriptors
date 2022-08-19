@@ -279,3 +279,9 @@ To ensure you target the right descriptor for your cluster, it is recommended to
 Typically, if you target Kubernetes 1.24.3, you will use the module `kubernetes-java-1.24.3`.
 
 You can check on the xref:kubernetes-java-bindings.adoc[binding list] page the one you need.
+
+== NPM support
+
+We provide an experimental support for typescript applications/scripts.
+It is mainly about providing the model as `.d.ts`.
+For more information, read about xref:npm.adoc[NPM bundles] documentation.
