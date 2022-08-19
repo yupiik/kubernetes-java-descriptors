@@ -100,6 +100,14 @@ include::{partialsdir}/ci.jshell.java[]
 <.> A small trick to write a readable script is to enable multiline snippet by wrapping the code in a block (rest of the code is similar to previous ones),
 <.> Finally when finished we exit JShell.
 
+TIP: a way to write the script as a standard Java code with classes and a final standard main class (`Runner`). This will enable you to setup the dependencies in your IDE and run the main as a standard class (ensure to name your file `<scriptname>.java`).
+Then to execute it through JShell - where `/exit` is needed - use this command: `echo 'Runner.main();/exit' | jshell --class-path .... --startup <scriptname>.java`.
+This will automatically load your script and exeute the main before exiting the shell.
+[source,java]
+----
+include::{partialsdir}/ci.jshell.main.java[]
+----
+
 == JBang Setup
 
 link:https://www.jbang.dev/[JBang] can also be used to generate your descriptors.
