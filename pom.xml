@@ -181,7 +181,7 @@
       <plugin>
         <groupId>cz.habarta.typescript-generator</groupId>
         <artifactId>typescript-generator-maven-plugin</artifactId>
-        <version>2.36-SNAPSHOT</version>
+        <version>2.37.1128</version>
         <executions>
           <execution>
             <id>generate</id>
@@ -324,7 +324,7 @@ under the License.
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
-      <url>https://github.com/yupiik/yupiik-logging/blob/master/LICENSE</url>
+      <url>https://github.com/yupiik/kubernetes-java-descriptors/blob/master/LICENSE</url>
       <distribution>may be downloaded from the Maven repository</distribution>
     </license>
   </licenses>
