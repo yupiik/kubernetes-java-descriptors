@@ -18,6 +18,9 @@ package io.yupiik.kubernetes.bindings.v1_13_10.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_13_10.Exportable;
 import io.yupiik.kubernetes.bindings.v1_13_10.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_13_10.Validable;
+import io.yupiik.kubernetes.bindings.v1_13_10.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -25,15 +28,18 @@ import static java.util.stream.Collectors.joining;
 public class ServiceReference implements Validable<ServiceReference>, Exportable {
     private String name;
     private String namespace;
+    private String path;
 
     public ServiceReference() {
         // no-op
     }
 
     public ServiceReference(final String name,
-                            final String namespace) {
+                            final String namespace,
+                            final String path) {
         this.name = name;
         this.namespace = namespace;
+        this.path = path;
     }
 
     public String getName() {
@@ -52,11 +58,20 @@ public class ServiceReference implements Validable<ServiceReference>, Exportable
         this.namespace = namespace;
     }
 
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(final String path) {
+        this.path = path;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(
                 name,
-                namespace);
+                namespace,
+                path);
     }
 
     @Override
@@ -66,7 +81,8 @@ public class ServiceReference implements Validable<ServiceReference>, Exportable
         }
         final ServiceReference __otherCasted = (ServiceReference) __other;
         return Objects.equals(name, __otherCasted.name) &&
-            Objects.equals(namespace, __otherCasted.namespace);
+            Objects.equals(namespace, __otherCasted.namespace) &&
+            Objects.equals(path, __otherCasted.path);
     }
 
     public ServiceReference name(final String name) {
@@ -79,8 +95,33 @@ public class ServiceReference implements Validable<ServiceReference>, Exportable
         return this;
     }
 
+    public ServiceReference path(final String path) {
+        this.path = path;
+        return this;
+    }
+
     @Override
     public ServiceReference validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (name == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "name", "name",
+                "Missing 'name' attribute.", true));
+        }
+        if (namespace == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "namespace", "namespace",
+                "Missing 'namespace' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
         return this;
     }
 
@@ -88,7 +129,8 @@ public class ServiceReference implements Validable<ServiceReference>, Exportable
     public String asJson() {
         return Stream.of(
                     (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
-                    (namespace != null ? "\"namespace\":\"" +  JsonStrings.escapeJson(namespace) + "\"" : ""))
+                    (namespace != null ? "\"namespace\":\"" +  JsonStrings.escapeJson(namespace) + "\"" : ""),
+                    (path != null ? "\"path\":\"" +  JsonStrings.escapeJson(path) + "\"" : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }

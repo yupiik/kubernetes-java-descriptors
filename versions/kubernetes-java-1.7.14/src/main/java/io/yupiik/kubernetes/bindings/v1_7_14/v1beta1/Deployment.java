@@ -139,7 +139,7 @@ public class Deployment implements Validable<Deployment>, Exportable {
             kind = "Deployment";
         }
         if (apiVersion == null) {
-            apiVersion = "extensions/v1beta1";
+            apiVersion = "apps/v1beta1";
         }
         return this;
     }
