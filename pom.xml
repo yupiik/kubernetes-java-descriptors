@@ -22,7 +22,7 @@
   <groupId>io.yupiik.kubernetes</groupId>
   <artifactId>kubernetes-java-descriptors</artifactId>
   <packaging>pom</packaging>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <name>Kubernetes Java Descriptors</name>
   <description>Java bindings of Kubernetes and Yupiik BundleBee models to ease and harness generation of descriptors.</description>
   <url>https://github.com/yupiik/kubernetes-java-descriptors</url>
@@ -339,7 +339,7 @@ under the License.
     <connection>scm:git:https://github.com/yupiik/kubernetes-java-descriptors.git</connection>
     <developerConnection>scm:git:https://github.com/yupiik/kubernetes-java-descriptors.git</developerConnection>
     <url>https://github.com/yupiik/kubernetes-java-descriptors.git</url>
-    <tag>kubernetes-java-descriptors-1.0.0</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <distributionManagement>
