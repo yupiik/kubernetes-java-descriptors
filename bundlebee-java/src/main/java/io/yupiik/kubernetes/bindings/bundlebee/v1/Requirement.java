@@ -35,7 +35,9 @@ public class Requirement implements Validable<Requirement>, Exportable {
     public Requirement(final List<String> forbiddenVersions,
                        final String maxBundlebeeVersion,
                        final String minBundlebeeVersion) {
-        // no-op
+        this.forbiddenVersions = forbiddenVersions;
+        this.maxBundlebeeVersion = maxBundlebeeVersion;
+        this.minBundlebeeVersion = minBundlebeeVersion;
     }
 
     public List<String> getForbiddenVersions() {

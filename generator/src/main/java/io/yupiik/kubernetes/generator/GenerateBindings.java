@@ -577,17 +577,13 @@ public final class GenerateBindings {
             futures = list
                     .filter(it -> {
                         final var name = it.getFileName().toString();
-                        return name.startsWith("v") && Files.isDirectory(it) && // it is a version folder
-                                !name.contains("-") && // ignore dev/beta/alpha versions
-                                // no openapi in these versions so skip
-                                !name.startsWith("v0.") &&
-                                !name.startsWith("v1.0.") &&
-                                !name.startsWith("v1.1.") &&
-                                !name.startsWith("v1.2.") &&
-                                !name.startsWith("v1.3.") &&
-                                !name.startsWith("v1.4.") &&
-                                !name.startsWith("v1.5.") &&
-                                !name.startsWith("v1.6.");
+                        if (!(name.startsWith("v") && Files.isDirectory(it) && // it is a version folder
+                                !name.contains("-"))) { // ignore dev/beta/alpha versions
+                            return false;
+                        }
+                        final var version = Version.of(name);
+                        // no openapi until v1.7, until v1.22 we consider the cluster to be old
+                        return version.major > 1 || (version.major == 1 && version.minor >= 22);
                     })
                     .sorted(comparing(it -> it.getFileName().toString()))
                     .map(t -> pool.submit(() -> {
@@ -731,17 +727,17 @@ public final class GenerateBindings {
                                     final var logger = Logger.getLogger(getClass().getName());
                                     final var bundlebee = Files.createDirectories(path.resolve("bundlebee"));
                                     final var k8s = Files.createDirectories(bundlebee.resolve("kubernetes"));
-                        
+                                                
                                     final var manifestJson = bundlebee.resolve("manifest.json");
                                     Files.writeString(manifestJson, asJson());
                                     logger.info(() -> "Wrote '" + manifestJson + "'");
-                        
+                                                
                                     if (alveoli != null) {
                                         for (final var alveolus : alveoli) {
                                             if (alveolus.getDescriptors() == null) {
                                                 continue;
                                             }
-                        
+                                                
                                             for (final var desc : alveolus.getDescriptors()) {
                                                 final var file = k8s.resolve(desc.getLocation());
                                                 final var underlyingDescriptor = desc.underlyingDescriptor();
@@ -788,7 +784,8 @@ public final class GenerateBindings {
                     imports.add(InvocationTargetException.class.getName());
                 }
                 case BUNDLEBEE_DESCRIPTOR -> imports.add(JsonbTransient.class.getName());
-                default -> {}
+                default -> {
+                }
             }
 
             // for afterClassName() and beforeClassEnd()
@@ -1082,6 +1079,22 @@ public final class GenerateBindings {
 
         private static String nameFromId(final String id) {
             return id.substring(id.lastIndexOf('_') + 1);
+        }
+    }
+
+    private record Version(int major, int minor, int patch) {
+        public static Version of(String value) {
+            var s = value;
+            if (s.startsWith("v")) {
+                s = s.substring(1);
+            }
+            final var segments = s.split("\\.");
+            if (segments.length >= 2) {
+                return new Version(
+                        Integer.parseInt(segments[0]), Integer.parseInt(segments[1]),
+                        segments.length > 2 ? Integer.parseInt(segments[2]) : 0);
+            }
+            throw new IllegalArgumentException("Unknown version '" + s + "'");
         }
     }
 }

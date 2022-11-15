@@ -27,6 +27,7 @@ import static java.util.stream.Collectors.joining;
 public class Descriptor implements Validable<Descriptor>, Exportable {
     private Boolean await;
     private List<AwaitConditions> awaitConditions;
+    private Boolean awaitOnDelete;
     private Conditions includeIf;
     private Boolean interpolate;
     private String location;
@@ -39,12 +40,20 @@ public class Descriptor implements Validable<Descriptor>, Exportable {
 
     public Descriptor(final Boolean await,
                       final List<AwaitConditions> awaitConditions,
+                      final Boolean awaitOnDelete,
                       final Conditions includeIf,
                       final Boolean interpolate,
                       final String location,
                       final String name,
                       final String type) {
-        // no-op
+        this.await = await;
+        this.awaitConditions = awaitConditions;
+        this.awaitOnDelete = awaitOnDelete;
+        this.includeIf = includeIf;
+        this.interpolate = interpolate;
+        this.location = location;
+        this.name = name;
+        this.type = type;
     }
 
     public Boolean getAwait() {
@@ -61,6 +70,14 @@ public class Descriptor implements Validable<Descriptor>, Exportable {
 
     public void setAwaitConditions(final List<AwaitConditions> awaitConditions) {
         this.awaitConditions = awaitConditions;
+    }
+
+    public Boolean getAwaitOnDelete() {
+        return awaitOnDelete;
+    }
+
+    public void setAwaitOnDelete(final Boolean awaitOnDelete) {
+        this.awaitOnDelete = awaitOnDelete;
     }
 
     public Conditions getIncludeIf() {
@@ -108,6 +125,7 @@ public class Descriptor implements Validable<Descriptor>, Exportable {
         return Objects.hash(
                 await,
                 awaitConditions,
+                awaitOnDelete,
                 includeIf,
                 interpolate,
                 location,
@@ -123,6 +141,7 @@ public class Descriptor implements Validable<Descriptor>, Exportable {
         final Descriptor __otherCasted = (Descriptor) __other;
         return Objects.equals(await, __otherCasted.await) &&
             Objects.equals(awaitConditions, __otherCasted.awaitConditions) &&
+            Objects.equals(awaitOnDelete, __otherCasted.awaitOnDelete) &&
             Objects.equals(includeIf, __otherCasted.includeIf) &&
             Objects.equals(interpolate, __otherCasted.interpolate) &&
             Objects.equals(location, __otherCasted.location) &&
@@ -137,6 +156,11 @@ public class Descriptor implements Validable<Descriptor>, Exportable {
 
     public Descriptor awaitConditions(final List<AwaitConditions> awaitConditions) {
         this.awaitConditions = awaitConditions;
+        return this;
+    }
+
+    public Descriptor awaitOnDelete(final Boolean awaitOnDelete) {
+        this.awaitOnDelete = awaitOnDelete;
         return this;
     }
 
@@ -175,6 +199,7 @@ public class Descriptor implements Validable<Descriptor>, Exportable {
         return Stream.of(
                     (await != null ? "\"await\":" + await : ""),
                     (awaitConditions != null ? "\"awaitConditions\":" + awaitConditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (awaitOnDelete != null ? "\"awaitOnDelete\":" + awaitOnDelete : ""),
                     (includeIf != null ? "\"includeIf\":" + includeIf.asJson() : ""),
                     (interpolate != null ? "\"interpolate\":" + interpolate : ""),
                     (location != null ? "\"location\":\"" +  JsonStrings.escapeJson(location) + "\"" : ""),

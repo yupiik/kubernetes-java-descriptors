@@ -22,73 +22,54 @@ import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
 
-public class DescriptorRef implements Validable<DescriptorRef>, Exportable {
-    private String location;
-    private String name;
+public class ManifestReference implements Validable<ManifestReference>, Exportable {
+    private String path;
 
-    public DescriptorRef() {
+    public ManifestReference() {
         // no-op
     }
 
-    public DescriptorRef(final String location,
-                         final String name) {
-        this.location = location;
-        this.name = name;
+    public ManifestReference(final String path) {
+        this.path = path;
     }
 
-    public String getLocation() {
-        return location;
+    public String getPath() {
+        return path;
     }
 
-    public void setLocation(final String location) {
-        this.location = location;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
+    public void setPath(final String path) {
+        this.path = path;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-                location,
-                name);
+                path);
     }
 
     @Override
     public boolean equals(final Object __other) {
-        if (!(__other instanceof DescriptorRef)) {
+        if (!(__other instanceof ManifestReference)) {
             return false;
         }
-        final DescriptorRef __otherCasted = (DescriptorRef) __other;
-        return Objects.equals(location, __otherCasted.location) &&
-            Objects.equals(name, __otherCasted.name);
+        final ManifestReference __otherCasted = (ManifestReference) __other;
+        return Objects.equals(path, __otherCasted.path);
     }
 
-    public DescriptorRef location(final String location) {
-        this.location = location;
-        return this;
-    }
-
-    public DescriptorRef name(final String name) {
-        this.name = name;
+    public ManifestReference path(final String path) {
+        this.path = path;
         return this;
     }
 
     @Override
-    public DescriptorRef validate() {
+    public ManifestReference validate() {
         return this;
     }
 
     @Override
     public String asJson() {
         return Stream.of(
-                    (location != null ? "\"location\":\"" +  JsonStrings.escapeJson(location) + "\"" : ""),
-                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""))
+                    (path != null ? "\"path\":\"" +  JsonStrings.escapeJson(path) + "\"" : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }

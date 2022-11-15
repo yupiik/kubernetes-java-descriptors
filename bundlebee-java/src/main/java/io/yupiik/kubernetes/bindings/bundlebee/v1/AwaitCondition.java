@@ -39,7 +39,11 @@ public class AwaitCondition implements Validable<AwaitCondition>, Exportable {
                           final String pointer,
                           final AwaitConditionType type,
                           final String value) {
-        // no-op
+        this.conditionType = conditionType;
+        this.operatorType = operatorType;
+        this.pointer = pointer;
+        this.type = type;
+        this.value = value;
     }
 
     public String getConditionType() {

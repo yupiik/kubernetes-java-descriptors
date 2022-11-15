@@ -37,7 +37,10 @@ public class Condition implements Validable<Condition>, Exportable {
                      final Boolean negate,
                      final ConditionType type,
                      final String value) {
-        // no-op
+        this.key = key;
+        this.negate = negate;
+        this.type = type;
+        this.value = value;
     }
 
     public String getKey() {

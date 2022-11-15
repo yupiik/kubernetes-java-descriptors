@@ -29,6 +29,7 @@ import static java.util.stream.Collectors.joining;
 
 public class Manifest implements Validable<Manifest>, Exportable {
     private List<Alveolus> alveoli;
+    private List<ManifestReference> references;
     private List<Requirement> requirements;
 
     public Manifest() {
@@ -36,8 +37,11 @@ public class Manifest implements Validable<Manifest>, Exportable {
     }
 
     public Manifest(final List<Alveolus> alveoli,
+                    final List<ManifestReference> references,
                     final List<Requirement> requirements) {
-        // no-op
+        this.alveoli = alveoli;
+        this.references = references;
+        this.requirements = requirements;
     }
 
     public List<Alveolus> getAlveoli() {
@@ -46,6 +50,14 @@ public class Manifest implements Validable<Manifest>, Exportable {
 
     public void setAlveoli(final List<Alveolus> alveoli) {
         this.alveoli = alveoli;
+    }
+
+    public List<ManifestReference> getReferences() {
+        return references;
+    }
+
+    public void setReferences(final List<ManifestReference> references) {
+        this.references = references;
     }
 
     public List<Requirement> getRequirements() {
@@ -60,6 +72,7 @@ public class Manifest implements Validable<Manifest>, Exportable {
     public int hashCode() {
         return Objects.hash(
                 alveoli,
+                references,
                 requirements);
     }
 
@@ -70,11 +83,17 @@ public class Manifest implements Validable<Manifest>, Exportable {
         }
         final Manifest __otherCasted = (Manifest) __other;
         return Objects.equals(alveoli, __otherCasted.alveoli) &&
+            Objects.equals(references, __otherCasted.references) &&
             Objects.equals(requirements, __otherCasted.requirements);
     }
 
     public Manifest alveoli(final List<Alveolus> alveoli) {
         this.alveoli = alveoli;
+        return this;
+    }
+
+    public Manifest references(final List<ManifestReference> references) {
+        this.references = references;
         return this;
     }
 
@@ -92,6 +111,7 @@ public class Manifest implements Validable<Manifest>, Exportable {
     public String asJson() {
         return Stream.of(
                     (alveoli != null ? "\"alveoli\":" + alveoli.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (references != null ? "\"references\":" + references.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
                     (requirements != null ? "\"requirements\":" + requirements.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));

@@ -25,6 +25,7 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
 
 public class Alveolus implements Validable<Alveolus>, Exportable {
+    private Boolean chainDependencies;
     private List<AlveolusDependency> dependencies;
     private List<Descriptor> descriptors;
     private List<DescriptorRef> excludedDescriptors;
@@ -37,14 +38,30 @@ public class Alveolus implements Validable<Alveolus>, Exportable {
         // no-op
     }
 
-    public Alveolus(final List<AlveolusDependency> dependencies,
+    public Alveolus(final Boolean chainDependencies,
+                    final List<AlveolusDependency> dependencies,
                     final List<Descriptor> descriptors,
                     final List<DescriptorRef> excludedDescriptors,
                     final String name,
                     final List<Patch> patches,
                     final Map<String, String> placeholders,
                     final String version) {
-        // no-op
+        this.chainDependencies = chainDependencies;
+        this.dependencies = dependencies;
+        this.descriptors = descriptors;
+        this.excludedDescriptors = excludedDescriptors;
+        this.name = name;
+        this.patches = patches;
+        this.placeholders = placeholders;
+        this.version = version;
+    }
+
+    public Boolean getChainDependencies() {
+        return chainDependencies;
+    }
+
+    public void setChainDependencies(final Boolean chainDependencies) {
+        this.chainDependencies = chainDependencies;
     }
 
     public List<AlveolusDependency> getDependencies() {
@@ -106,6 +123,7 @@ public class Alveolus implements Validable<Alveolus>, Exportable {
     @Override
     public int hashCode() {
         return Objects.hash(
+                chainDependencies,
                 dependencies,
                 descriptors,
                 excludedDescriptors,
@@ -121,13 +139,19 @@ public class Alveolus implements Validable<Alveolus>, Exportable {
             return false;
         }
         final Alveolus __otherCasted = (Alveolus) __other;
-        return Objects.equals(dependencies, __otherCasted.dependencies) &&
+        return Objects.equals(chainDependencies, __otherCasted.chainDependencies) &&
+            Objects.equals(dependencies, __otherCasted.dependencies) &&
             Objects.equals(descriptors, __otherCasted.descriptors) &&
             Objects.equals(excludedDescriptors, __otherCasted.excludedDescriptors) &&
             Objects.equals(name, __otherCasted.name) &&
             Objects.equals(patches, __otherCasted.patches) &&
             Objects.equals(placeholders, __otherCasted.placeholders) &&
             Objects.equals(version, __otherCasted.version);
+    }
+
+    public Alveolus chainDependencies(final Boolean chainDependencies) {
+        this.chainDependencies = chainDependencies;
+        return this;
     }
 
     public Alveolus dependencies(final List<AlveolusDependency> dependencies) {
@@ -173,6 +197,7 @@ public class Alveolus implements Validable<Alveolus>, Exportable {
     @Override
     public String asJson() {
         return Stream.of(
+                    (chainDependencies != null ? "\"chainDependencies\":" + chainDependencies : ""),
                     (dependencies != null ? "\"dependencies\":" + dependencies.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
                     (descriptors != null ? "\"descriptors\":" + descriptors.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
                     (excludedDescriptors != null ? "\"excludedDescriptors\":" + excludedDescriptors.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),

@@ -35,7 +35,9 @@ public class AwaitConditions implements Validable<AwaitConditions>, Exportable {
     public AwaitConditions(final String command,
                            final List<AwaitCondition> conditions,
                            final ConditionOperator operator) {
-        // no-op
+        this.command = command;
+        this.conditions = conditions;
+        this.operator = operator;
     }
 
     public String getCommand() {

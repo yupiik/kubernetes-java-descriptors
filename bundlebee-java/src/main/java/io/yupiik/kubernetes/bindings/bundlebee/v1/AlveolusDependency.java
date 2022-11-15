@@ -34,7 +34,9 @@ public class AlveolusDependency implements Validable<AlveolusDependency>, Export
     public AlveolusDependency(final Conditions includeIf,
                               final String location,
                               final String name) {
-        // no-op
+        this.includeIf = includeIf;
+        this.location = location;
+        this.name = name;
     }
 
     public Conditions getIncludeIf() {

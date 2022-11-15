@@ -32,7 +32,8 @@ public class Conditions implements Validable<Conditions>, Exportable {
 
     public Conditions(final List<Condition> conditions,
                       final ConditionOperator operator) {
-        // no-op
+        this.conditions = conditions;
+        this.operator = operator;
     }
 
     public List<Condition> getConditions() {

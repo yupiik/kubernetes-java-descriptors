@@ -35,7 +35,9 @@ public class Patch implements Validable<Patch>, Exportable {
     public Patch(final String descriptorName,
                  final Boolean interpolate,
                  final JsonArray patch) {
-        // no-op
+        this.descriptorName = descriptorName;
+        this.interpolate = interpolate;
+        this.patch = patch;
     }
 
     public String getDescriptorName() {
