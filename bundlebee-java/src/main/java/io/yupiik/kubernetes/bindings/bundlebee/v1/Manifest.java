@@ -1,18 +1,3 @@
-/*
- * Copyright (c) 2022 - Yupiik SAS - https://www.yupiik.com
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 package io.yupiik.kubernetes.bindings.bundlebee.v1;
 
 import io.yupiik.kubernetes.bindings.bundlebee.Exportable;
@@ -29,6 +14,8 @@ import static java.util.stream.Collectors.joining;
 
 public class Manifest implements Validable<Manifest>, Exportable {
     private List<Alveolus> alveoli;
+    private List<IgnoredLintingRule> ignoredLintingRules;
+    private Boolean interpolateAlveoli;
     private List<ManifestReference> references;
     private List<Requirement> requirements;
 
@@ -37,9 +24,13 @@ public class Manifest implements Validable<Manifest>, Exportable {
     }
 
     public Manifest(final List<Alveolus> alveoli,
+                    final List<IgnoredLintingRule> ignoredLintingRules,
+                    final Boolean interpolateAlveoli,
                     final List<ManifestReference> references,
                     final List<Requirement> requirements) {
         this.alveoli = alveoli;
+        this.ignoredLintingRules = ignoredLintingRules;
+        this.interpolateAlveoli = interpolateAlveoli;
         this.references = references;
         this.requirements = requirements;
     }
@@ -50,6 +41,22 @@ public class Manifest implements Validable<Manifest>, Exportable {
 
     public void setAlveoli(final List<Alveolus> alveoli) {
         this.alveoli = alveoli;
+    }
+
+    public List<IgnoredLintingRule> getIgnoredLintingRules() {
+        return ignoredLintingRules;
+    }
+
+    public void setIgnoredLintingRules(final List<IgnoredLintingRule> ignoredLintingRules) {
+        this.ignoredLintingRules = ignoredLintingRules;
+    }
+
+    public Boolean getInterpolateAlveoli() {
+        return interpolateAlveoli;
+    }
+
+    public void setInterpolateAlveoli(final Boolean interpolateAlveoli) {
+        this.interpolateAlveoli = interpolateAlveoli;
     }
 
     public List<ManifestReference> getReferences() {
@@ -72,6 +79,8 @@ public class Manifest implements Validable<Manifest>, Exportable {
     public int hashCode() {
         return Objects.hash(
                 alveoli,
+                ignoredLintingRules,
+                interpolateAlveoli,
                 references,
                 requirements);
     }
@@ -83,12 +92,24 @@ public class Manifest implements Validable<Manifest>, Exportable {
         }
         final Manifest __otherCasted = (Manifest) __other;
         return Objects.equals(alveoli, __otherCasted.alveoli) &&
+            Objects.equals(ignoredLintingRules, __otherCasted.ignoredLintingRules) &&
+            Objects.equals(interpolateAlveoli, __otherCasted.interpolateAlveoli) &&
             Objects.equals(references, __otherCasted.references) &&
             Objects.equals(requirements, __otherCasted.requirements);
     }
 
     public Manifest alveoli(final List<Alveolus> alveoli) {
         this.alveoli = alveoli;
+        return this;
+    }
+
+    public Manifest ignoredLintingRules(final List<IgnoredLintingRule> ignoredLintingRules) {
+        this.ignoredLintingRules = ignoredLintingRules;
+        return this;
+    }
+
+    public Manifest interpolateAlveoli(final Boolean interpolateAlveoli) {
+        this.interpolateAlveoli = interpolateAlveoli;
         return this;
     }
 
@@ -111,6 +132,8 @@ public class Manifest implements Validable<Manifest>, Exportable {
     public String asJson() {
         return Stream.of(
                     (alveoli != null ? "\"alveoli\":" + alveoli.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (ignoredLintingRules != null ? "\"ignoredLintingRules\":" + ignoredLintingRules.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (interpolateAlveoli != null ? "\"interpolateAlveoli\":" + interpolateAlveoli : ""),
                     (references != null ? "\"references\":" + references.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
                     (requirements != null ? "\"requirements\":" + requirements.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
                 .filter(__it -> !__it.isBlank())

@@ -1,18 +1,3 @@
-/*
- * Copyright (c) 2022 - Yupiik SAS - https://www.yupiik.com
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 package io.yupiik.kubernetes.bindings.bundlebee.v1;
 
 import io.yupiik.kubernetes.bindings.bundlebee.Exportable;
@@ -25,6 +10,7 @@ import static java.util.stream.Collectors.joining;
 
 public class Patch implements Validable<Patch>, Exportable {
     private String descriptorName;
+    private Conditions includeIf;
     private Boolean interpolate;
     private JsonArray patch;
 
@@ -33,9 +19,11 @@ public class Patch implements Validable<Patch>, Exportable {
     }
 
     public Patch(final String descriptorName,
+                 final Conditions includeIf,
                  final Boolean interpolate,
                  final JsonArray patch) {
         this.descriptorName = descriptorName;
+        this.includeIf = includeIf;
         this.interpolate = interpolate;
         this.patch = patch;
     }
@@ -46,6 +34,14 @@ public class Patch implements Validable<Patch>, Exportable {
 
     public void setDescriptorName(final String descriptorName) {
         this.descriptorName = descriptorName;
+    }
+
+    public Conditions getIncludeIf() {
+        return includeIf;
+    }
+
+    public void setIncludeIf(final Conditions includeIf) {
+        this.includeIf = includeIf;
     }
 
     public Boolean getInterpolate() {
@@ -68,6 +64,7 @@ public class Patch implements Validable<Patch>, Exportable {
     public int hashCode() {
         return Objects.hash(
                 descriptorName,
+                includeIf,
                 interpolate,
                 patch);
     }
@@ -79,12 +76,18 @@ public class Patch implements Validable<Patch>, Exportable {
         }
         final Patch __otherCasted = (Patch) __other;
         return Objects.equals(descriptorName, __otherCasted.descriptorName) &&
+            Objects.equals(includeIf, __otherCasted.includeIf) &&
             Objects.equals(interpolate, __otherCasted.interpolate) &&
             Objects.equals(patch, __otherCasted.patch);
     }
 
     public Patch descriptorName(final String descriptorName) {
         this.descriptorName = descriptorName;
+        return this;
+    }
+
+    public Patch includeIf(final Conditions includeIf) {
+        this.includeIf = includeIf;
         return this;
     }
 
@@ -107,6 +110,7 @@ public class Patch implements Validable<Patch>, Exportable {
     public String asJson() {
         return Stream.of(
                     (descriptorName != null ? "\"descriptorName\":\"" +  JsonStrings.escapeJson(descriptorName) + "\"" : ""),
+                    (includeIf != null ? "\"includeIf\":" + includeIf.asJson() : ""),
                     (interpolate != null ? "\"interpolate\":" + interpolate : ""),
                     (patch != null ? "\"patch\":" + patch : ""))
                 .filter(__it -> !__it.isBlank())

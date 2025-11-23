@@ -1,18 +1,3 @@
-/*
- * Copyright (c) 2022 - Yupiik SAS - https://www.yupiik.com
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 package io.yupiik.kubernetes.bindings.bundlebee.v1;
 
 import io.yupiik.kubernetes.bindings.bundlebee.Exportable;
@@ -29,6 +14,7 @@ public class Alveolus implements Validable<Alveolus>, Exportable {
     private List<AlveolusDependency> dependencies;
     private List<Descriptor> descriptors;
     private List<DescriptorRef> excludedDescriptors;
+    private Boolean interpolateDescriptors;
     private String name;
     private List<Patch> patches;
     private Map<String, String> placeholders;
@@ -42,6 +28,7 @@ public class Alveolus implements Validable<Alveolus>, Exportable {
                     final List<AlveolusDependency> dependencies,
                     final List<Descriptor> descriptors,
                     final List<DescriptorRef> excludedDescriptors,
+                    final Boolean interpolateDescriptors,
                     final String name,
                     final List<Patch> patches,
                     final Map<String, String> placeholders,
@@ -50,6 +37,7 @@ public class Alveolus implements Validable<Alveolus>, Exportable {
         this.dependencies = dependencies;
         this.descriptors = descriptors;
         this.excludedDescriptors = excludedDescriptors;
+        this.interpolateDescriptors = interpolateDescriptors;
         this.name = name;
         this.patches = patches;
         this.placeholders = placeholders;
@@ -86,6 +74,14 @@ public class Alveolus implements Validable<Alveolus>, Exportable {
 
     public void setExcludedDescriptors(final List<DescriptorRef> excludedDescriptors) {
         this.excludedDescriptors = excludedDescriptors;
+    }
+
+    public Boolean getInterpolateDescriptors() {
+        return interpolateDescriptors;
+    }
+
+    public void setInterpolateDescriptors(final Boolean interpolateDescriptors) {
+        this.interpolateDescriptors = interpolateDescriptors;
     }
 
     public String getName() {
@@ -127,6 +123,7 @@ public class Alveolus implements Validable<Alveolus>, Exportable {
                 dependencies,
                 descriptors,
                 excludedDescriptors,
+                interpolateDescriptors,
                 name,
                 patches,
                 placeholders,
@@ -143,6 +140,7 @@ public class Alveolus implements Validable<Alveolus>, Exportable {
             Objects.equals(dependencies, __otherCasted.dependencies) &&
             Objects.equals(descriptors, __otherCasted.descriptors) &&
             Objects.equals(excludedDescriptors, __otherCasted.excludedDescriptors) &&
+            Objects.equals(interpolateDescriptors, __otherCasted.interpolateDescriptors) &&
             Objects.equals(name, __otherCasted.name) &&
             Objects.equals(patches, __otherCasted.patches) &&
             Objects.equals(placeholders, __otherCasted.placeholders) &&
@@ -166,6 +164,11 @@ public class Alveolus implements Validable<Alveolus>, Exportable {
 
     public Alveolus excludedDescriptors(final List<DescriptorRef> excludedDescriptors) {
         this.excludedDescriptors = excludedDescriptors;
+        return this;
+    }
+
+    public Alveolus interpolateDescriptors(final Boolean interpolateDescriptors) {
+        this.interpolateDescriptors = interpolateDescriptors;
         return this;
     }
 
@@ -201,6 +204,7 @@ public class Alveolus implements Validable<Alveolus>, Exportable {
                     (dependencies != null ? "\"dependencies\":" + dependencies.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
                     (descriptors != null ? "\"descriptors\":" + descriptors.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
                     (excludedDescriptors != null ? "\"excludedDescriptors\":" + excludedDescriptors.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (interpolateDescriptors != null ? "\"interpolateDescriptors\":" + interpolateDescriptors : ""),
                     (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
                     (patches != null ? "\"patches\":" + patches.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
                     (placeholders != null ? "\"placeholders\":" + placeholders.entrySet().stream()

@@ -7,26 +7,15 @@ import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
 
-public class DescriptorRef implements Validable<DescriptorRef>, Exportable {
-    private String location;
+public class IgnoredLintingRule implements Validable<IgnoredLintingRule>, Exportable {
     private String name;
 
-    public DescriptorRef() {
+    public IgnoredLintingRule() {
         // no-op
     }
 
-    public DescriptorRef(final String location,
-                         final String name) {
-        this.location = location;
+    public IgnoredLintingRule(final String name) {
         this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(final String location) {
-        this.location = location;
     }
 
     public String getName() {
@@ -40,39 +29,31 @@ public class DescriptorRef implements Validable<DescriptorRef>, Exportable {
     @Override
     public int hashCode() {
         return Objects.hash(
-                location,
                 name);
     }
 
     @Override
     public boolean equals(final Object __other) {
-        if (!(__other instanceof DescriptorRef)) {
+        if (!(__other instanceof IgnoredLintingRule)) {
             return false;
         }
-        final DescriptorRef __otherCasted = (DescriptorRef) __other;
-        return Objects.equals(location, __otherCasted.location) &&
-            Objects.equals(name, __otherCasted.name);
+        final IgnoredLintingRule __otherCasted = (IgnoredLintingRule) __other;
+        return Objects.equals(name, __otherCasted.name);
     }
 
-    public DescriptorRef location(final String location) {
-        this.location = location;
-        return this;
-    }
-
-    public DescriptorRef name(final String name) {
+    public IgnoredLintingRule name(final String name) {
         this.name = name;
         return this;
     }
 
     @Override
-    public DescriptorRef validate() {
+    public IgnoredLintingRule validate() {
         return this;
     }
 
     @Override
     public String asJson() {
         return Stream.of(
-                    (location != null ? "\"location\":\"" +  JsonStrings.escapeJson(location) + "\"" : ""),
                     (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));

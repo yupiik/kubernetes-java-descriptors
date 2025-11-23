@@ -1,18 +1,3 @@
-/*
- * Copyright (c) 2022 - Yupiik SAS - https://www.yupiik.com
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 package io.yupiik.kubernetes.bindings.bundlebee.v1;
 
 import io.yupiik.kubernetes.bindings.bundlebee.Exportable;
@@ -22,7 +7,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
 
-public class Conditions implements Validable<Conditions>, Exportable {
+public class Conditions implements Validable<#/definitions/io_yupiik_bundlebee_core_descriptor_Manifest_Conditions>, Exportable {
     private List<Condition> conditions;
     private ConditionOperator operator;
 
@@ -69,18 +54,18 @@ public class Conditions implements Validable<Conditions>, Exportable {
             Objects.equals(operator, __otherCasted.operator);
     }
 
-    public Conditions conditions(final List<Condition> conditions) {
+    public #/definitions/io_yupiik_bundlebee_core_descriptor_Manifest_Conditions conditions(final List<Condition> conditions) {
         this.conditions = conditions;
         return this;
     }
 
-    public Conditions operator(final ConditionOperator operator) {
+    public #/definitions/io_yupiik_bundlebee_core_descriptor_Manifest_Conditions operator(final ConditionOperator operator) {
         this.operator = operator;
         return this;
     }
 
     @Override
-    public Conditions validate() {
+    public #/definitions/io_yupiik_bundlebee_core_descriptor_Manifest_Conditions validate() {
         return this;
     }
 
