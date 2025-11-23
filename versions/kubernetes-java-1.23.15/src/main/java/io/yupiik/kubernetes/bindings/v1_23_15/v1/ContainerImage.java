@@ -1,0 +1,81 @@
+package io.yupiik.kubernetes.bindings.v1_23_15.v1;
+
+import io.yupiik.kubernetes.bindings.v1_23_15.Exportable;
+import io.yupiik.kubernetes.bindings.v1_23_15.JsonStrings;
+import io.yupiik.kubernetes.bindings.v1_23_15.Validable;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class ContainerImage implements Validable<ContainerImage>, Exportable {
+    private List<String> names;
+    private Integer sizeBytes;
+
+    public ContainerImage() {
+        // no-op
+    }
+
+    public ContainerImage(final List<String> names,
+                          final Integer sizeBytes) {
+        this.names = names;
+        this.sizeBytes = sizeBytes;
+    }
+
+    public List<String> getNames() {
+        return names;
+    }
+
+    public void setNames(final List<String> names) {
+        this.names = names;
+    }
+
+    public Integer getSizeBytes() {
+        return sizeBytes;
+    }
+
+    public void setSizeBytes(final Integer sizeBytes) {
+        this.sizeBytes = sizeBytes;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                names,
+                sizeBytes);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof ContainerImage)) {
+            return false;
+        }
+        final ContainerImage __otherCasted = (ContainerImage) __other;
+        return Objects.equals(names, __otherCasted.names) &&
+            Objects.equals(sizeBytes, __otherCasted.sizeBytes);
+    }
+
+    public ContainerImage names(final List<String> names) {
+        this.names = names;
+        return this;
+    }
+
+    public ContainerImage sizeBytes(final Integer sizeBytes) {
+        this.sizeBytes = sizeBytes;
+        return this;
+    }
+
+    @Override
+    public ContainerImage validate() {
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (names != null ? "\"names\":" + names.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (sizeBytes != null ? "\"sizeBytes\":" + sizeBytes : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

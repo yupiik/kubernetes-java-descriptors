@@ -1,0 +1,143 @@
+package io.yupiik.kubernetes.bindings.v1_30_3.v1;
+
+import io.yupiik.kubernetes.bindings.v1_30_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_30_3.JsonStrings;
+import io.yupiik.kubernetes.bindings.v1_30_3.Validable;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class StatefulSet implements Validable<StatefulSet>, Exportable {
+    private String apiVersion;
+    private String kind;
+    private ObjectMeta metadata;
+    private StatefulSetSpec spec;
+    private StatefulSetStatus status;
+
+    public StatefulSet() {
+        // no-op
+    }
+
+    public StatefulSet(final String apiVersion,
+                       final String kind,
+                       final ObjectMeta metadata,
+                       final StatefulSetSpec spec,
+                       final StatefulSetStatus status) {
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
+    }
+
+    public String getApiVersion() {
+        return apiVersion;
+    }
+
+    public void setApiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(final String kind) {
+        this.kind = kind;
+    }
+
+    public ObjectMeta getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+    }
+
+    public StatefulSetSpec getSpec() {
+        return spec;
+    }
+
+    public void setSpec(final StatefulSetSpec spec) {
+        this.spec = spec;
+    }
+
+    public StatefulSetStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(final StatefulSetStatus status) {
+        this.status = status;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                apiVersion,
+                kind,
+                metadata,
+                spec,
+                status);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof StatefulSet)) {
+            return false;
+        }
+        final StatefulSet __otherCasted = (StatefulSet) __other;
+        return Objects.equals(apiVersion, __otherCasted.apiVersion) &&
+            Objects.equals(kind, __otherCasted.kind) &&
+            Objects.equals(metadata, __otherCasted.metadata) &&
+            Objects.equals(spec, __otherCasted.spec) &&
+            Objects.equals(status, __otherCasted.status);
+    }
+
+    public StatefulSet apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public StatefulSet kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public StatefulSet metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public StatefulSet spec(final StatefulSetSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public StatefulSet status(final StatefulSetStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    @Override
+    public StatefulSet validate() {
+        if (kind == null) {
+            kind = "StatefulSet";
+        }
+        if (apiVersion == null) {
+            apiVersion = "apps/v1";
+        }
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""),
+                    (status != null ? "\"status\":" + status.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

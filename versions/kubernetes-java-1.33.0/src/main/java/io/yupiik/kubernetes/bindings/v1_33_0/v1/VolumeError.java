@@ -1,0 +1,99 @@
+package io.yupiik.kubernetes.bindings.v1_33_0.v1;
+
+import io.yupiik.kubernetes.bindings.v1_33_0.Exportable;
+import io.yupiik.kubernetes.bindings.v1_33_0.JsonStrings;
+import io.yupiik.kubernetes.bindings.v1_33_0.Validable;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class VolumeError implements Validable<VolumeError>, Exportable {
+    private Integer errorCode;
+    private String message;
+    private String time;
+
+    public VolumeError() {
+        // no-op
+    }
+
+    public VolumeError(final Integer errorCode,
+                       final String message,
+                       final String time) {
+        this.errorCode = errorCode;
+        this.message = message;
+        this.time = time;
+    }
+
+    public Integer getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(final Integer errorCode) {
+        this.errorCode = errorCode;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(final String message) {
+        this.message = message;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(final String time) {
+        this.time = time;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                errorCode,
+                message,
+                time);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof VolumeError)) {
+            return false;
+        }
+        final VolumeError __otherCasted = (VolumeError) __other;
+        return Objects.equals(errorCode, __otherCasted.errorCode) &&
+            Objects.equals(message, __otherCasted.message) &&
+            Objects.equals(time, __otherCasted.time);
+    }
+
+    public VolumeError errorCode(final Integer errorCode) {
+        this.errorCode = errorCode;
+        return this;
+    }
+
+    public VolumeError message(final String message) {
+        this.message = message;
+        return this;
+    }
+
+    public VolumeError time(final String time) {
+        this.time = time;
+        return this;
+    }
+
+    @Override
+    public VolumeError validate() {
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (errorCode != null ? "\"errorCode\":" + errorCode : ""),
+                    (message != null ? "\"message\":\"" +  JsonStrings.escapeJson(message) + "\"" : ""),
+                    (time != null ? "\"time\":\"" +  JsonStrings.escapeJson(time) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

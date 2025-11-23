@@ -1,0 +1,60 @@
+package io.yupiik.kubernetes.bindings.v1_28_7.v1;
+
+import io.yupiik.kubernetes.bindings.v1_28_7.Exportable;
+import io.yupiik.kubernetes.bindings.v1_28_7.Validable;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class ScaleSpec implements Validable<ScaleSpec>, Exportable {
+    private Integer replicas;
+
+    public ScaleSpec() {
+        // no-op
+    }
+
+    public ScaleSpec(final Integer replicas) {
+        this.replicas = replicas;
+    }
+
+    public Integer getReplicas() {
+        return replicas;
+    }
+
+    public void setReplicas(final Integer replicas) {
+        this.replicas = replicas;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                replicas);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof ScaleSpec)) {
+            return false;
+        }
+        final ScaleSpec __otherCasted = (ScaleSpec) __other;
+        return Objects.equals(replicas, __otherCasted.replicas);
+    }
+
+    public ScaleSpec replicas(final Integer replicas) {
+        this.replicas = replicas;
+        return this;
+    }
+
+    @Override
+    public ScaleSpec validate() {
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (replicas != null ? "\"replicas\":" + replicas : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

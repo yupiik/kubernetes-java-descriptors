@@ -1,0 +1,175 @@
+package io.yupiik.kubernetes.bindings.v1_33_3.v1;
+
+import io.yupiik.kubernetes.bindings.v1_33_3.Exportable;
+import io.yupiik.kubernetes.bindings.v1_33_3.Validable;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class ReplicaSetStatus implements Validable<ReplicaSetStatus>, Exportable {
+    private Integer availableReplicas;
+    private List<ReplicaSetCondition> conditions;
+    private Integer fullyLabeledReplicas;
+    private Integer observedGeneration;
+    private Integer readyReplicas;
+    private int replicas;
+    private Integer terminatingReplicas;
+
+    public ReplicaSetStatus() {
+        // no-op
+    }
+
+    public ReplicaSetStatus(final Integer availableReplicas,
+                            final List<ReplicaSetCondition> conditions,
+                            final Integer fullyLabeledReplicas,
+                            final Integer observedGeneration,
+                            final Integer readyReplicas,
+                            final int replicas,
+                            final Integer terminatingReplicas) {
+        this.availableReplicas = availableReplicas;
+        this.conditions = conditions;
+        this.fullyLabeledReplicas = fullyLabeledReplicas;
+        this.observedGeneration = observedGeneration;
+        this.readyReplicas = readyReplicas;
+        this.replicas = replicas;
+        this.terminatingReplicas = terminatingReplicas;
+    }
+
+    public Integer getAvailableReplicas() {
+        return availableReplicas;
+    }
+
+    public void setAvailableReplicas(final Integer availableReplicas) {
+        this.availableReplicas = availableReplicas;
+    }
+
+    public List<ReplicaSetCondition> getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(final List<ReplicaSetCondition> conditions) {
+        this.conditions = conditions;
+    }
+
+    public Integer getFullyLabeledReplicas() {
+        return fullyLabeledReplicas;
+    }
+
+    public void setFullyLabeledReplicas(final Integer fullyLabeledReplicas) {
+        this.fullyLabeledReplicas = fullyLabeledReplicas;
+    }
+
+    public Integer getObservedGeneration() {
+        return observedGeneration;
+    }
+
+    public void setObservedGeneration(final Integer observedGeneration) {
+        this.observedGeneration = observedGeneration;
+    }
+
+    public Integer getReadyReplicas() {
+        return readyReplicas;
+    }
+
+    public void setReadyReplicas(final Integer readyReplicas) {
+        this.readyReplicas = readyReplicas;
+    }
+
+    public int getReplicas() {
+        return replicas;
+    }
+
+    public void setReplicas(final int replicas) {
+        this.replicas = replicas;
+    }
+
+    public Integer getTerminatingReplicas() {
+        return terminatingReplicas;
+    }
+
+    public void setTerminatingReplicas(final Integer terminatingReplicas) {
+        this.terminatingReplicas = terminatingReplicas;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                availableReplicas,
+                conditions,
+                fullyLabeledReplicas,
+                observedGeneration,
+                readyReplicas,
+                replicas,
+                terminatingReplicas);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof ReplicaSetStatus)) {
+            return false;
+        }
+        final ReplicaSetStatus __otherCasted = (ReplicaSetStatus) __other;
+        return Objects.equals(availableReplicas, __otherCasted.availableReplicas) &&
+            Objects.equals(conditions, __otherCasted.conditions) &&
+            Objects.equals(fullyLabeledReplicas, __otherCasted.fullyLabeledReplicas) &&
+            Objects.equals(observedGeneration, __otherCasted.observedGeneration) &&
+            Objects.equals(readyReplicas, __otherCasted.readyReplicas) &&
+            Objects.equals(replicas, __otherCasted.replicas) &&
+            Objects.equals(terminatingReplicas, __otherCasted.terminatingReplicas);
+    }
+
+    public ReplicaSetStatus availableReplicas(final Integer availableReplicas) {
+        this.availableReplicas = availableReplicas;
+        return this;
+    }
+
+    public ReplicaSetStatus conditions(final List<ReplicaSetCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public ReplicaSetStatus fullyLabeledReplicas(final Integer fullyLabeledReplicas) {
+        this.fullyLabeledReplicas = fullyLabeledReplicas;
+        return this;
+    }
+
+    public ReplicaSetStatus observedGeneration(final Integer observedGeneration) {
+        this.observedGeneration = observedGeneration;
+        return this;
+    }
+
+    public ReplicaSetStatus readyReplicas(final Integer readyReplicas) {
+        this.readyReplicas = readyReplicas;
+        return this;
+    }
+
+    public ReplicaSetStatus replicas(final int replicas) {
+        this.replicas = replicas;
+        return this;
+    }
+
+    public ReplicaSetStatus terminatingReplicas(final Integer terminatingReplicas) {
+        this.terminatingReplicas = terminatingReplicas;
+        return this;
+    }
+
+    @Override
+    public ReplicaSetStatus validate() {
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (availableReplicas != null ? "\"availableReplicas\":" + availableReplicas : ""),
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (fullyLabeledReplicas != null ? "\"fullyLabeledReplicas\":" + fullyLabeledReplicas : ""),
+                    (observedGeneration != null ? "\"observedGeneration\":" + observedGeneration : ""),
+                    (readyReplicas != null ? "\"readyReplicas\":" + readyReplicas : ""),
+                    "\"replicas\":" + replicas,
+                    (terminatingReplicas != null ? "\"terminatingReplicas\":" + terminatingReplicas : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

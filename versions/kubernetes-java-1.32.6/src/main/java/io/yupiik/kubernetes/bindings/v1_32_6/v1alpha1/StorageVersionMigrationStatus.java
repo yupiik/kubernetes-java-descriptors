@@ -1,0 +1,81 @@
+package io.yupiik.kubernetes.bindings.v1_32_6.v1alpha1;
+
+import io.yupiik.kubernetes.bindings.v1_32_6.Exportable;
+import io.yupiik.kubernetes.bindings.v1_32_6.JsonStrings;
+import io.yupiik.kubernetes.bindings.v1_32_6.Validable;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class StorageVersionMigrationStatus implements Validable<StorageVersionMigrationStatus>, Exportable {
+    private List<MigrationCondition> conditions;
+    private String resourceVersion;
+
+    public StorageVersionMigrationStatus() {
+        // no-op
+    }
+
+    public StorageVersionMigrationStatus(final List<MigrationCondition> conditions,
+                                         final String resourceVersion) {
+        this.conditions = conditions;
+        this.resourceVersion = resourceVersion;
+    }
+
+    public List<MigrationCondition> getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(final List<MigrationCondition> conditions) {
+        this.conditions = conditions;
+    }
+
+    public String getResourceVersion() {
+        return resourceVersion;
+    }
+
+    public void setResourceVersion(final String resourceVersion) {
+        this.resourceVersion = resourceVersion;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                conditions,
+                resourceVersion);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof StorageVersionMigrationStatus)) {
+            return false;
+        }
+        final StorageVersionMigrationStatus __otherCasted = (StorageVersionMigrationStatus) __other;
+        return Objects.equals(conditions, __otherCasted.conditions) &&
+            Objects.equals(resourceVersion, __otherCasted.resourceVersion);
+    }
+
+    public StorageVersionMigrationStatus conditions(final List<MigrationCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public StorageVersionMigrationStatus resourceVersion(final String resourceVersion) {
+        this.resourceVersion = resourceVersion;
+        return this;
+    }
+
+    @Override
+    public StorageVersionMigrationStatus validate() {
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (resourceVersion != null ? "\"resourceVersion\":\"" +  JsonStrings.escapeJson(resourceVersion) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

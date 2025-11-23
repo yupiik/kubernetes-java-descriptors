@@ -1,0 +1,124 @@
+package io.yupiik.kubernetes.bindings.v1_32_5.v1alpha1;
+
+import io.yupiik.kubernetes.bindings.v1_32_5.Exportable;
+import io.yupiik.kubernetes.bindings.v1_32_5.JsonStrings;
+import io.yupiik.kubernetes.bindings.v1_32_5.Validable;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class MutatingAdmissionPolicy implements Validable<MutatingAdmissionPolicy>, Exportable {
+    private String apiVersion;
+    private String kind;
+    private ObjectMeta metadata;
+    private MutatingAdmissionPolicySpec spec;
+
+    public MutatingAdmissionPolicy() {
+        // no-op
+    }
+
+    public MutatingAdmissionPolicy(final String apiVersion,
+                                   final String kind,
+                                   final ObjectMeta metadata,
+                                   final MutatingAdmissionPolicySpec spec) {
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+    }
+
+    public String getApiVersion() {
+        return apiVersion;
+    }
+
+    public void setApiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(final String kind) {
+        this.kind = kind;
+    }
+
+    public ObjectMeta getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+    }
+
+    public MutatingAdmissionPolicySpec getSpec() {
+        return spec;
+    }
+
+    public void setSpec(final MutatingAdmissionPolicySpec spec) {
+        this.spec = spec;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                apiVersion,
+                kind,
+                metadata,
+                spec);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof MutatingAdmissionPolicy)) {
+            return false;
+        }
+        final MutatingAdmissionPolicy __otherCasted = (MutatingAdmissionPolicy) __other;
+        return Objects.equals(apiVersion, __otherCasted.apiVersion) &&
+            Objects.equals(kind, __otherCasted.kind) &&
+            Objects.equals(metadata, __otherCasted.metadata) &&
+            Objects.equals(spec, __otherCasted.spec);
+    }
+
+    public MutatingAdmissionPolicy apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
+        return this;
+    }
+
+    public MutatingAdmissionPolicy kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public MutatingAdmissionPolicy metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public MutatingAdmissionPolicy spec(final MutatingAdmissionPolicySpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    @Override
+    public MutatingAdmissionPolicy validate() {
+        if (kind == null) {
+            kind = "MutatingAdmissionPolicy";
+        }
+        if (apiVersion == null) {
+            apiVersion = "admissionregistration.k8s.io/v1alpha1";
+        }
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

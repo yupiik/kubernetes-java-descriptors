@@ -1,18 +1,3 @@
-/*
- * Copyright (c) 2022 - Yupiik SAS - https://www.yupiik.com
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 package io.yupiik.kubernetes.bindings.v1_23_2.v1;
 
 import io.yupiik.kubernetes.bindings.v1_23_2.Exportable;
@@ -25,8 +10,8 @@ import static java.util.stream.Collectors.joining;
 public class EndpointPort implements Validable<EndpointPort>, Exportable {
     private String appProtocol;
     private String name;
-    private int port;
-    private EndpointPortProtocol protocol;
+    private Integer port;
+    private String protocol;
 
     public EndpointPort() {
         // no-op
@@ -34,8 +19,8 @@ public class EndpointPort implements Validable<EndpointPort>, Exportable {
 
     public EndpointPort(final String appProtocol,
                         final String name,
-                        final int port,
-                        final EndpointPortProtocol protocol) {
+                        final Integer port,
+                        final String protocol) {
         this.appProtocol = appProtocol;
         this.name = name;
         this.port = port;
@@ -58,19 +43,19 @@ public class EndpointPort implements Validable<EndpointPort>, Exportable {
         this.name = name;
     }
 
-    public int getPort() {
+    public Integer getPort() {
         return port;
     }
 
-    public void setPort(final int port) {
+    public void setPort(final Integer port) {
         this.port = port;
     }
 
-    public EndpointPortProtocol getProtocol() {
+    public String getProtocol() {
         return protocol;
     }
 
-    public void setProtocol(final EndpointPortProtocol protocol) {
+    public void setProtocol(final String protocol) {
         this.protocol = protocol;
     }
 
@@ -105,12 +90,12 @@ public class EndpointPort implements Validable<EndpointPort>, Exportable {
         return this;
     }
 
-    public EndpointPort port(final int port) {
+    public EndpointPort port(final Integer port) {
         this.port = port;
         return this;
     }
 
-    public EndpointPort protocol(final EndpointPortProtocol protocol) {
+    public EndpointPort protocol(final String protocol) {
         this.protocol = protocol;
         return this;
     }
@@ -125,8 +110,8 @@ public class EndpointPort implements Validable<EndpointPort>, Exportable {
         return Stream.of(
                     (appProtocol != null ? "\"appProtocol\":\"" +  JsonStrings.escapeJson(appProtocol) + "\"" : ""),
                     (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
-                    "\"port\":" + port,
-                    (protocol != null ? "\"protocol\":" + protocol.asJson() : ""))
+                    (port != null ? "\"port\":" + port : ""),
+                    (protocol != null ? "\"protocol\":\"" +  JsonStrings.escapeJson(protocol) + "\"" : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
