@@ -4,4 +4,6 @@
 :minisite-index-icon: cloud
 :minisite-index-description: How to pick the right dependency to generate your Kubernetes descriptors.
 
+IMPORTANT: since dec. 2025, Kubernetes versions are simplified in the form of `$major.$minor.x` instead of one per patch version (version 1.0.1 of the project).
+
 include::{partialsdir}/generated/bindings.adoc[]

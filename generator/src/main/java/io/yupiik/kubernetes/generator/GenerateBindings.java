@@ -43,10 +43,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -68,6 +69,21 @@ import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toMap;
 
 public final class GenerateBindings {
+    public static final String HEADER = "/*\n" +
+            " * Copyright (c) 2022 - present - Yupiik SAS - https://www.yupiik.com\n" +
+            " * Licensed under the Apache License, Version 2.0 (the \"License\");\n" +
+            " * you may not use this file except in compliance\n" +
+            " * with the License.  You may obtain a copy of the License at\n" +
+            " *\n" +
+            " *  http://www.apache.org/licenses/LICENSE-2.0\n" +
+            " *\n" +
+            " * Unless required by applicable law or agreed to in writing,\n" +
+            " * software distributed under the License is distributed on an\n" +
+            " * \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n" +
+            " * KIND, either express or implied.  See the License for the\n" +
+            " * specific language governing permissions and limitations\n" +
+            " * under the License.\n" +
+            " */\n";
     private final Logger logger = Logger.getLogger(getClass().getName());
 
     private final String url;
@@ -136,7 +152,7 @@ public final class GenerateBindings {
         writeHelpers(root, basePackage);
 
         final var definitions = buildDefinitions(schema);
-        final var refRegistry = new HashMap<String, String>();
+        final var refRegistry = new HashSet<String>();
         try {
             generateFromSchema(
                     () -> "bundlebee.schema.json",
@@ -165,11 +181,29 @@ public final class GenerateBindings {
     }
 
     private String generate(final JsonReaderFactory readerFactory, final Path path, final HttpClient client) throws IOException {
-        final var k8sApiVersion = path.getFileName().toString().substring(1);
-        final var artifactId = "kubernetes-java-" + k8sApiVersion;
+        final var v = Version.of(path.getFileName().toString());
+        final var pomVersion = v.asPomVersion();
+        final var artifactId = "kubernetes-java-" + pomVersion;
         final var root = Files.createDirectories(versionsBase.resolve(artifactId));
         Files.writeString(root.resolve("pom.xml"), "" +
                 "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<!--\n" +
+                "\n" +
+                "    Copyright (c) 2022 - present - Yupiik SAS - https://www.yupiik.com\n" +
+                "    Licensed under the Apache License, Version 2.0 (the \"License\");\n" +
+                "    you may not use this file except in compliance\n" +
+                "    with the License.  You may obtain a copy of the License at\n" +
+                "\n" +
+                "     http://www.apache.org/licenses/LICENSE-2.0\n" +
+                "\n" +
+                "    Unless required by applicable law or agreed to in writing,\n" +
+                "    software distributed under the License is distributed on an\n" +
+                "    \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n" +
+                "    KIND, either express or implied.  See the License for the\n" +
+                "    specific language governing permissions and limitations\n" +
+                "    under the License.\n" +
+                "\n" +
+                "-->\n" +
                 "<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\n" +
                 "         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
                 "         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd\">\n" +
@@ -181,16 +215,26 @@ public final class GenerateBindings {
                 "  <modelVersion>4.0.0</modelVersion>\n" +
                 "\n" +
                 "  <artifactId>" + artifactId + "</artifactId>\n" +
-                "  <name>Kubernetes Java Descriptors :: Versions :: " + k8sApiVersion + "</name>\n" +
+                "  <name>Kubernetes Java Descriptors :: Versions :: " + pomVersion + "</name>\n" +
                 "\n" +
                 "  <properties>\n" +
                 "    <typescript-generator.skip>false</typescript-generator.skip>\n" +
                 "  </properties>\n" +
+                "\n" +
+                "  <build>\n" +
+                "    <plugins>\n" +
+                "      <plugin>\n" +
+                "        <groupId>org.apache.maven.plugins</groupId>\n" +
+                "        <artifactId>maven-shade-plugin</artifactId>\n" +
+                "      </plugin>\n" +
+                "    </plugins>\n" +
+                "  </build>\n" +
                 "</project>\n" +
                 "\n");
 
-        final var swaggerUrl = "https://raw.githubusercontent.com/kubernetes/kubernetes/v" + k8sApiVersion + "/api/openapi-spec/swagger.json";
-        final var cache = work.resolve("cache/swagger/" + k8sApiVersion + ".json");
+        final var k8sVersion = v.asK8sVersion();
+        final var swaggerUrl = "https://raw.githubusercontent.com/kubernetes/kubernetes/v" + k8sVersion + "/api/openapi-spec/swagger.json";
+        final var cache = work.resolve("cache/swagger/" + k8sVersion + ".json");
         final var definitions = new Supplier<JsonObject>() {
             private JsonObject value;
 
@@ -203,10 +247,10 @@ public final class GenerateBindings {
             }
         };
 
-        final var basePackage = "io.yupiik.kubernetes.bindings.v" + k8sApiVersion.replace('.', '_');
+        final var basePackage = "io.yupiik.kubernetes.bindings.v" + pomVersion.replace('.', '_');
         writeHelpers(root, basePackage);
 
-        final var refRegistry = new HashMap<String, String>();
+        final var refRegistry = new HashSet<String>();
         Files.walkFileTree(path, new SimpleFileVisitor<>() {
             @Override
             public FileVisitResult visitFile(final Path schema, final BasicFileAttributes attrs) throws IOException {
@@ -220,7 +264,7 @@ public final class GenerateBindings {
             }
         });
 
-        return k8sApiVersion;
+        return pomVersion;
     }
 
     private void writeHelpers(final Path root, final String basePackage) throws IOException {
@@ -345,13 +389,13 @@ public final class GenerateBindings {
     private void writeJava(final Path root, final String basePackage, final String clazz, final String content) throws IOException {
         final var path = root.resolve("src/main/java").resolve(basePackage.replace('.', '/') + '/' + clazz + ".java");
         Files.createDirectories(path.getParent());
-        Files.writeString(path, content);
+        Files.writeString(path, HEADER + content);
     }
 
     private void onSchema(final Path schema, final String name,
                           final JsonReaderFactory readerFactory, final Path path,
                           final String basePackage, final Supplier<JsonObject> definitions,
-                          final Map<String, String> refRegistry, final Path root) throws IOException {
+                          final Set<String> refRegistry, final Path root) throws IOException {
         try {
             final JsonObject readSchema;
             try (final var reader = readerFactory.createReader(Files.newBufferedReader(schema))) {
@@ -371,7 +415,7 @@ public final class GenerateBindings {
     }
 
     private void generateFromSchema(final Supplier<String> source, final String name, final String basePackage,
-                                    final Supplier<JsonObject> definitions, final Map<String, String> refRegistry,
+                                    final Supplier<JsonObject> definitions, final Set<String> refRegistry,
                                     final Path root, final JsonObject readSchema, final String rel, final boolean useId) throws IOException {
         final var packageName = basePackage + (rel.isEmpty() ? "" : "." + rel);
         final var pojoConfiguration = new PojoGenerator.PojoConfiguration()
@@ -382,13 +426,32 @@ public final class GenerateBindings {
         final var bindings = new K8sPojoGenerator(pojoConfiguration, readSchema, basePackage, useId)
                 .visitSchema(readSchema)
                 .generate();
-        refRegistry.putAll(bindings);
+        refRegistry.addAll(bindings.keySet());
 
         logger.info(() -> "Generated #" + bindings.size() + " classes from '" + source.get() + "'");
         for (final var entry : bindings.entrySet()) {
             final var out = root.resolve("src/main/java").resolve(entry.getKey());
             Files.createDirectories(out.getParent());
-            Files.writeString(out, entry.getValue());
+
+            var code = entry.getValue();
+            // sometimes the import is useless
+            if (code.contains("import jakarta.json.bind.annotation.JsonbProperty;\n") && !code.contains("@JsonbProperty")) {
+                code = code.replace("import jakarta.json.bind.annotation.JsonbProperty;\n", "");
+            }
+            // replace List<JsonValue> by JsonArry to comply to typescript generator which doesn't support it
+            if (code.contains(" List<JsonValue> ")) {
+                code = code.replace(" List<JsonValue> ", " JsonArray ");
+                if (!code.contains("import jakarta.json.JsonArray;\n")) {
+                    code = code.replace(
+                            "import jakarta.json.JsonValue;\n",
+                            "import jakarta.json.JsonArray;\nimport jakarta.json.JsonValue;\n");
+                }
+                if (!code.contains(" JsonValue ")) {
+                    code = code.replace("import jakarta.json.JsonValue;\n", "");
+                }
+            }
+
+            Files.writeString(out, HEADER + code);
         }
     }
 
@@ -438,7 +501,7 @@ public final class GenerateBindings {
     }
 
     private String onRef(final Supplier<JsonObject> definitions, final String packageName, final PojoGenerator.Ref ref,
-                         final Map<String, String> previousRefs, final String basePackage, final boolean useId) {
+                         final Set<String> previousRefs, final String basePackage, final boolean useId) {
         final var refName = ref.getRef().substring(ref.getRef().lastIndexOf('/') + 1);
 
         // check for JSONSchemaProps mainly
@@ -488,15 +551,22 @@ public final class GenerateBindings {
                         case "object" -> {
                             final var nested = ref.getNested();
                             if (schema.containsKey("properties")) {
-                                if (!previousRefs.containsKey(refClassName) && !nested.containsKey(refClassName)) {
-                                    nested.putAll(new K8sPojoGenerator(
-                                            new PojoGenerator.PojoConfiguration()
-                                                    .setClassName(refClassName)
-                                                    .setPackageName(packageName)
-                                                    .setOnRef(r -> onRef(definitions, packageName, r, previousRefs, basePackage, useId)),
-                                            schema, basePackage, useId)
-                                            .visitSchema(schema)
-                                            .generate());
+                                if (previousRefs.add(packageName.replace('.', '/') + '/' + refClassName + ".java") &&
+                                        !nested.containsKey(refClassName)) {
+                                    // sanitize the ref if needed - mainly for bundlebee, k8s should be ok-ish
+                                    final var className = refClassName
+                                            .substring(Math.max(refClassName.lastIndexOf('_'), refClassName.lastIndexOf('/')) + 1);
+                                    if (Objects.equals(className, refClassName) ||
+                                            previousRefs.add(packageName.replace('.', '/') + '/' + className + ".java")) {
+                                        nested.putAll(new K8sPojoGenerator(
+                                                new PojoGenerator.PojoConfiguration()
+                                                        .setClassName(className)
+                                                        .setPackageName(packageName)
+                                                        .setOnRef(r -> onRef(definitions, packageName, r, previousRefs, basePackage, useId)),
+                                                schema, basePackage, useId)
+                                                .visitSchema(schema)
+                                                .generate());
+                                    }
                                 }
                                 yield refClassName;
                             }
@@ -577,13 +647,18 @@ public final class GenerateBindings {
             futures = list
                     .filter(it -> {
                         final var name = it.getFileName().toString();
-                        if (!(name.startsWith("v") && Files.isDirectory(it) && // it is a version folder
-                                !name.contains("-"))) { // ignore dev/beta/alpha versions
+                        if ("v1.30.1".equals(name)) { // known ignored in favor of 1.30, kept for backward compat in bundlebee repo
                             return false;
                         }
-                        final var version = Version.of(name);
-                        // no openapi until v1.7, until v1.22 we consider the cluster to be old
-                        return version.major > 1 || (version.major == 1 && version.minor >= 22);
+                        if (!(name.startsWith("v") && Files.isDirectory(it) && // it is a version folder
+                                !name.contains("-"))) { // ignore dev/beta/alpha versions
+                            try {
+                                return isSupported(Version.of(name));
+                            } catch (final IllegalArgumentException iar) {
+                                return false;
+                            }
+                        }
+                        return isSupported(Version.of(name));
                     })
                     .sorted(comparing(it -> it.getFileName().toString()))
                     .map(t -> pool.submit(() -> {
@@ -627,8 +702,8 @@ public final class GenerateBindings {
             final String[] segments1 = a.split("\\.");
             final String[] segments2 = b.split("\\.");
             for (int i = 0; i < Math.min(segments1.length, segments2.length); i++) {
-                final var v1 = Integer.parseInt(segments1[i]);
-                final var v2 = Integer.parseInt(segments2[i]);
+                final var v1 = "x".equals(segments1[i]) ? 0 : Integer.parseInt(segments1[i]);
+                final var v2 = "x".equals(segments2[i]) ? 0 : Integer.parseInt(segments2[i]);
                 if (v1 < v2) {
                     return -1;
                 }
@@ -639,6 +714,11 @@ public final class GenerateBindings {
             return a.compareTo(b);
         });
         return versions;
+    }
+
+    // no openapi until v1.7, until v1.22 we consider the cluster to be old
+    private boolean isSupported(final Version version) {
+        return version.major > 1 || (version.major == 1 && version.minor >= 22);
     }
 
     private Path unzip(final Path source, final Path temp) throws IOException {
@@ -1082,7 +1162,7 @@ public final class GenerateBindings {
         }
     }
 
-    private record Version(int major, int minor, int patch) {
+    private record Version(int major, int minor, int patch, boolean missesPatch) {
         public static Version of(String value) {
             var s = value;
             if (s.startsWith("v")) {
@@ -1090,11 +1170,21 @@ public final class GenerateBindings {
             }
             final var segments = s.split("\\.");
             if (segments.length >= 2) {
+                final var hasPatch = segments.length > 2;
                 return new Version(
                         Integer.parseInt(segments[0]), Integer.parseInt(segments[1]),
-                        segments.length > 2 ? Integer.parseInt(segments[2]) : 0);
+                        hasPatch ? Integer.parseInt(segments[2]) : 0,
+                        !hasPatch);
             }
             throw new IllegalArgumentException("Unknown version '" + s + "'");
+        }
+
+        public String asK8sVersion() {
+            return major + "." + minor + "." + (missesPatch ? "0" : patch);
+        }
+
+        public String asPomVersion() {
+            return major + "." + minor + "." + (missesPatch ? "x" : patch);
         }
     }
 }

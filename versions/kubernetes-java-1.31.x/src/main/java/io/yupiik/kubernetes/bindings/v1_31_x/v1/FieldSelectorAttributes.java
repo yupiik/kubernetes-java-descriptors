@@ -1,0 +1,96 @@
+/*
+ * Copyright (c) 2022 - present - Yupiik SAS - https://www.yupiik.com
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package io.yupiik.kubernetes.bindings.v1_31_x.v1;
+
+import io.yupiik.kubernetes.bindings.v1_31_x.Exportable;
+import io.yupiik.kubernetes.bindings.v1_31_x.JsonStrings;
+import io.yupiik.kubernetes.bindings.v1_31_x.Validable;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class FieldSelectorAttributes implements Validable<FieldSelectorAttributes>, Exportable {
+    private String rawSelector;
+    private List<FieldSelectorRequirement> requirements;
+
+    public FieldSelectorAttributes() {
+        // no-op
+    }
+
+    public FieldSelectorAttributes(final String rawSelector,
+                                   final List<FieldSelectorRequirement> requirements) {
+        this.rawSelector = rawSelector;
+        this.requirements = requirements;
+    }
+
+    public String getRawSelector() {
+        return rawSelector;
+    }
+
+    public void setRawSelector(final String rawSelector) {
+        this.rawSelector = rawSelector;
+    }
+
+    public List<FieldSelectorRequirement> getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(final List<FieldSelectorRequirement> requirements) {
+        this.requirements = requirements;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                rawSelector,
+                requirements);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof FieldSelectorAttributes)) {
+            return false;
+        }
+        final FieldSelectorAttributes __otherCasted = (FieldSelectorAttributes) __other;
+        return Objects.equals(rawSelector, __otherCasted.rawSelector) &&
+            Objects.equals(requirements, __otherCasted.requirements);
+    }
+
+    public FieldSelectorAttributes rawSelector(final String rawSelector) {
+        this.rawSelector = rawSelector;
+        return this;
+    }
+
+    public FieldSelectorAttributes requirements(final List<FieldSelectorRequirement> requirements) {
+        this.requirements = requirements;
+        return this;
+    }
+
+    @Override
+    public FieldSelectorAttributes validate() {
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (rawSelector != null ? "\"rawSelector\":\"" +  JsonStrings.escapeJson(rawSelector) + "\"" : ""),
+                    (requirements != null ? "\"requirements\":" + requirements.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

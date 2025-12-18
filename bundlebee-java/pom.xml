@@ -31,14 +31,12 @@
     <typescript-generator.skip>false</typescript-generator.skip>
   </properties>
 
-  <dependencies>
-    <!-- provided because we let the consumer import the API/impl he wants when needed -->
-    <dependency>
-      <groupId>io.yupiik.uship</groupId>
-      <artifactId>json-dependencies</artifactId>
-      <version>${yupiik-uship.version}</version>
-      <type>pom</type>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
 </project>

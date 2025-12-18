@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
 
-public class Conditions implements Validable, Exportable {
+public class Conditions implements Validable<Conditions>, Exportable {
     private List<Condition> conditions;
     private ConditionOperator operator;
 
