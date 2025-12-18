@@ -18,7 +18,6 @@ package io.yupiik.kubernetes.bindings.bundlebee.v1;
 import io.yupiik.kubernetes.bindings.bundlebee.Exportable;
 import io.yupiik.kubernetes.bindings.bundlebee.JsonStrings;
 import io.yupiik.kubernetes.bindings.bundlebee.Validable;
-import jakarta.json.bind.annotation.JsonbProperty;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;

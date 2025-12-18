@@ -1,0 +1,194 @@
+/*
+ * Copyright (c) 2022 - present - Yupiik SAS - https://www.yupiik.com
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package io.yupiik.kubernetes.bindings.v1_31_x.v1alpha3;
+
+import io.yupiik.kubernetes.bindings.v1_31_x.Exportable;
+import io.yupiik.kubernetes.bindings.v1_31_x.JsonStrings;
+import io.yupiik.kubernetes.bindings.v1_31_x.Validable;
+import io.yupiik.kubernetes.bindings.v1_31_x.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class io.k8s.api.resource.v1alpha3.DeviceRequest implements Validable<io.k8s.api.resource.v1alpha3.DeviceRequest>, Exportable {
+    private Boolean adminAccess;
+    private String allocationMode;
+    private Integer count;
+    private String deviceClassName;
+    private String name;
+    private List<DeviceSelector> selectors;
+
+    public io.k8s.api.resource.v1alpha3.DeviceRequest() {
+        // no-op
+    }
+
+    public io.k8s.api.resource.v1alpha3.DeviceRequest(final Boolean adminAccess,
+                                                      final String allocationMode,
+                                                      final Integer count,
+                                                      final String deviceClassName,
+                                                      final String name,
+                                                      final List<DeviceSelector> selectors) {
+        this.adminAccess = adminAccess;
+        this.allocationMode = allocationMode;
+        this.count = count;
+        this.deviceClassName = deviceClassName;
+        this.name = name;
+        this.selectors = selectors;
+    }
+
+    public Boolean getAdminAccess() {
+        return adminAccess;
+    }
+
+    public void setAdminAccess(final Boolean adminAccess) {
+        this.adminAccess = adminAccess;
+    }
+
+    public String getAllocationMode() {
+        return allocationMode;
+    }
+
+    public void setAllocationMode(final String allocationMode) {
+        this.allocationMode = allocationMode;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(final Integer count) {
+        this.count = count;
+    }
+
+    public String getDeviceClassName() {
+        return deviceClassName;
+    }
+
+    public void setDeviceClassName(final String deviceClassName) {
+        this.deviceClassName = deviceClassName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public List<DeviceSelector> getSelectors() {
+        return selectors;
+    }
+
+    public void setSelectors(final List<DeviceSelector> selectors) {
+        this.selectors = selectors;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                adminAccess,
+                allocationMode,
+                count,
+                deviceClassName,
+                name,
+                selectors);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof io.k8s.api.resource.v1alpha3.DeviceRequest)) {
+            return false;
+        }
+        final io.k8s.api.resource.v1alpha3.DeviceRequest __otherCasted = (io.k8s.api.resource.v1alpha3.DeviceRequest) __other;
+        return Objects.equals(adminAccess, __otherCasted.adminAccess) &&
+            Objects.equals(allocationMode, __otherCasted.allocationMode) &&
+            Objects.equals(count, __otherCasted.count) &&
+            Objects.equals(deviceClassName, __otherCasted.deviceClassName) &&
+            Objects.equals(name, __otherCasted.name) &&
+            Objects.equals(selectors, __otherCasted.selectors);
+    }
+
+    public io.k8s.api.resource.v1alpha3.DeviceRequest adminAccess(final Boolean adminAccess) {
+        this.adminAccess = adminAccess;
+        return this;
+    }
+
+    public io.k8s.api.resource.v1alpha3.DeviceRequest allocationMode(final String allocationMode) {
+        this.allocationMode = allocationMode;
+        return this;
+    }
+
+    public io.k8s.api.resource.v1alpha3.DeviceRequest count(final Integer count) {
+        this.count = count;
+        return this;
+    }
+
+    public io.k8s.api.resource.v1alpha3.DeviceRequest deviceClassName(final String deviceClassName) {
+        this.deviceClassName = deviceClassName;
+        return this;
+    }
+
+    public io.k8s.api.resource.v1alpha3.DeviceRequest name(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    public io.k8s.api.resource.v1alpha3.DeviceRequest selectors(final List<DeviceSelector> selectors) {
+        this.selectors = selectors;
+        return this;
+    }
+
+    @Override
+    public io.k8s.api.resource.v1alpha3.DeviceRequest validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (deviceClassName == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "deviceClassName", "deviceClassName",
+                "Missing 'deviceClassName' attribute.", true));
+        }
+        if (name == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "name", "name",
+                "Missing 'name' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (adminAccess != null ? "\"adminAccess\":" + adminAccess : ""),
+                    (allocationMode != null ? "\"allocationMode\":\"" +  JsonStrings.escapeJson(allocationMode) + "\"" : ""),
+                    (count != null ? "\"count\":" + count : ""),
+                    (deviceClassName != null ? "\"deviceClassName\":\"" +  JsonStrings.escapeJson(deviceClassName) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (selectors != null ? "\"selectors\":" + selectors.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

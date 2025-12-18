@@ -1,0 +1,75 @@
+/*
+ * Copyright (c) 2022 - present - Yupiik SAS - https://www.yupiik.com
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package io.yupiik.kubernetes.bindings.v1_30_x.v1;
+
+import io.yupiik.kubernetes.bindings.v1_30_x.Exportable;
+import io.yupiik.kubernetes.bindings.v1_30_x.Validable;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class io.k8s.api.core.v1.NodeRuntimeHandlerFeatures implements Validable<io.k8s.api.core.v1.NodeRuntimeHandlerFeatures>, Exportable {
+    private Boolean recursiveReadOnlyMounts;
+
+    public io.k8s.api.core.v1.NodeRuntimeHandlerFeatures() {
+        // no-op
+    }
+
+    public io.k8s.api.core.v1.NodeRuntimeHandlerFeatures(final Boolean recursiveReadOnlyMounts) {
+        this.recursiveReadOnlyMounts = recursiveReadOnlyMounts;
+    }
+
+    public Boolean getRecursiveReadOnlyMounts() {
+        return recursiveReadOnlyMounts;
+    }
+
+    public void setRecursiveReadOnlyMounts(final Boolean recursiveReadOnlyMounts) {
+        this.recursiveReadOnlyMounts = recursiveReadOnlyMounts;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                recursiveReadOnlyMounts);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof io.k8s.api.core.v1.NodeRuntimeHandlerFeatures)) {
+            return false;
+        }
+        final io.k8s.api.core.v1.NodeRuntimeHandlerFeatures __otherCasted = (io.k8s.api.core.v1.NodeRuntimeHandlerFeatures) __other;
+        return Objects.equals(recursiveReadOnlyMounts, __otherCasted.recursiveReadOnlyMounts);
+    }
+
+    public io.k8s.api.core.v1.NodeRuntimeHandlerFeatures recursiveReadOnlyMounts(final Boolean recursiveReadOnlyMounts) {
+        this.recursiveReadOnlyMounts = recursiveReadOnlyMounts;
+        return this;
+    }
+
+    @Override
+    public io.k8s.api.core.v1.NodeRuntimeHandlerFeatures validate() {
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (recursiveReadOnlyMounts != null ? "\"recursiveReadOnlyMounts\":" + recursiveReadOnlyMounts : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

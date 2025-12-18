@@ -1,0 +1,110 @@
+/*
+ * Copyright (c) 2022 - present - Yupiik SAS - https://www.yupiik.com
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package io.yupiik.kubernetes.bindings.v1_32_x.v1alpha1;
+
+import io.yupiik.kubernetes.bindings.v1_32_x.Exportable;
+import io.yupiik.kubernetes.bindings.v1_32_x.JsonStrings;
+import io.yupiik.kubernetes.bindings.v1_32_x.Validable;
+import io.yupiik.kubernetes.bindings.v1_32_x.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class io.k8s.api.storagemigration.v1alpha1.StorageVersionMigrationSpec implements Validable<io.k8s.api.storagemigration.v1alpha1.StorageVersionMigrationSpec>, Exportable {
+    private String continueToken;
+    private GroupVersionResource resource;
+
+    public io.k8s.api.storagemigration.v1alpha1.StorageVersionMigrationSpec() {
+        // no-op
+    }
+
+    public io.k8s.api.storagemigration.v1alpha1.StorageVersionMigrationSpec(final String continueToken,
+                                                                            final GroupVersionResource resource) {
+        this.continueToken = continueToken;
+        this.resource = resource;
+    }
+
+    public String getContinueToken() {
+        return continueToken;
+    }
+
+    public void setContinueToken(final String continueToken) {
+        this.continueToken = continueToken;
+    }
+
+    public GroupVersionResource getResource() {
+        return resource;
+    }
+
+    public void setResource(final GroupVersionResource resource) {
+        this.resource = resource;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                continueToken,
+                resource);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof io.k8s.api.storagemigration.v1alpha1.StorageVersionMigrationSpec)) {
+            return false;
+        }
+        final io.k8s.api.storagemigration.v1alpha1.StorageVersionMigrationSpec __otherCasted = (io.k8s.api.storagemigration.v1alpha1.StorageVersionMigrationSpec) __other;
+        return Objects.equals(continueToken, __otherCasted.continueToken) &&
+            Objects.equals(resource, __otherCasted.resource);
+    }
+
+    public io.k8s.api.storagemigration.v1alpha1.StorageVersionMigrationSpec continueToken(final String continueToken) {
+        this.continueToken = continueToken;
+        return this;
+    }
+
+    public io.k8s.api.storagemigration.v1alpha1.StorageVersionMigrationSpec resource(final GroupVersionResource resource) {
+        this.resource = resource;
+        return this;
+    }
+
+    @Override
+    public io.k8s.api.storagemigration.v1alpha1.StorageVersionMigrationSpec validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (resource == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "resource", "resource",
+                "Missing 'resource' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (continueToken != null ? "\"continueToken\":\"" +  JsonStrings.escapeJson(continueToken) + "\"" : ""),
+                    (resource != null ? "\"resource\":" + resource.asJson() : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

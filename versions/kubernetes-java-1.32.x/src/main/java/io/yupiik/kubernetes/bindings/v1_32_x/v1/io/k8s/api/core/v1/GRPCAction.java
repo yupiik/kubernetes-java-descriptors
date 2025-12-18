@@ -1,0 +1,95 @@
+/*
+ * Copyright (c) 2022 - present - Yupiik SAS - https://www.yupiik.com
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package io.yupiik.kubernetes.bindings.v1_32_x.v1;
+
+import io.yupiik.kubernetes.bindings.v1_32_x.Exportable;
+import io.yupiik.kubernetes.bindings.v1_32_x.JsonStrings;
+import io.yupiik.kubernetes.bindings.v1_32_x.Validable;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class io.k8s.api.core.v1.GRPCAction implements Validable<io.k8s.api.core.v1.GRPCAction>, Exportable {
+    private int port;
+    private String service;
+
+    public io.k8s.api.core.v1.GRPCAction() {
+        // no-op
+    }
+
+    public io.k8s.api.core.v1.GRPCAction(final int port,
+                                         final String service) {
+        this.port = port;
+        this.service = service;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(final int port) {
+        this.port = port;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public void setService(final String service) {
+        this.service = service;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                port,
+                service);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof io.k8s.api.core.v1.GRPCAction)) {
+            return false;
+        }
+        final io.k8s.api.core.v1.GRPCAction __otherCasted = (io.k8s.api.core.v1.GRPCAction) __other;
+        return Objects.equals(port, __otherCasted.port) &&
+            Objects.equals(service, __otherCasted.service);
+    }
+
+    public io.k8s.api.core.v1.GRPCAction port(final int port) {
+        this.port = port;
+        return this;
+    }
+
+    public io.k8s.api.core.v1.GRPCAction service(final String service) {
+        this.service = service;
+        return this;
+    }
+
+    @Override
+    public io.k8s.api.core.v1.GRPCAction validate() {
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    "\"port\":" + port,
+                    (service != null ? "\"service\":\"" +  JsonStrings.escapeJson(service) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

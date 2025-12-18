@@ -1,0 +1,324 @@
+/*
+ * Copyright (c) 2022 - present - Yupiik SAS - https://www.yupiik.com
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package io.yupiik.kubernetes.bindings.v1_29_x.v1;
+
+import io.yupiik.kubernetes.bindings.v1_29_x.Exportable;
+import io.yupiik.kubernetes.bindings.v1_29_x.JsonStrings;
+import io.yupiik.kubernetes.bindings.v1_29_x.Validable;
+import io.yupiik.kubernetes.bindings.v1_29_x.ValidationException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class io.k8s.api.admissionregistration.v1.MutatingWebhook implements Validable<io.k8s.api.admissionregistration.v1.MutatingWebhook>, Exportable {
+    private List<String> admissionReviewVersions;
+    private WebhookClientConfig clientConfig;
+    private String failurePolicy;
+    private List<MatchCondition> matchConditions;
+    private String matchPolicy;
+    private String name;
+    private LabelSelector namespaceSelector;
+    private LabelSelector objectSelector;
+    private String reinvocationPolicy;
+    private List<RuleWithOperations> rules;
+    private String sideEffects;
+    private Integer timeoutSeconds;
+
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook() {
+        // no-op
+    }
+
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook(final List<String> admissionReviewVersions,
+                                                               final WebhookClientConfig clientConfig,
+                                                               final String failurePolicy,
+                                                               final List<MatchCondition> matchConditions,
+                                                               final String matchPolicy,
+                                                               final String name,
+                                                               final LabelSelector namespaceSelector,
+                                                               final LabelSelector objectSelector,
+                                                               final String reinvocationPolicy,
+                                                               final List<RuleWithOperations> rules,
+                                                               final String sideEffects,
+                                                               final Integer timeoutSeconds) {
+        this.admissionReviewVersions = admissionReviewVersions;
+        this.clientConfig = clientConfig;
+        this.failurePolicy = failurePolicy;
+        this.matchConditions = matchConditions;
+        this.matchPolicy = matchPolicy;
+        this.name = name;
+        this.namespaceSelector = namespaceSelector;
+        this.objectSelector = objectSelector;
+        this.reinvocationPolicy = reinvocationPolicy;
+        this.rules = rules;
+        this.sideEffects = sideEffects;
+        this.timeoutSeconds = timeoutSeconds;
+    }
+
+    public List<String> getAdmissionReviewVersions() {
+        return admissionReviewVersions;
+    }
+
+    public void setAdmissionReviewVersions(final List<String> admissionReviewVersions) {
+        this.admissionReviewVersions = admissionReviewVersions;
+    }
+
+    public WebhookClientConfig getClientConfig() {
+        return clientConfig;
+    }
+
+    public void setClientConfig(final WebhookClientConfig clientConfig) {
+        this.clientConfig = clientConfig;
+    }
+
+    public String getFailurePolicy() {
+        return failurePolicy;
+    }
+
+    public void setFailurePolicy(final String failurePolicy) {
+        this.failurePolicy = failurePolicy;
+    }
+
+    public List<MatchCondition> getMatchConditions() {
+        return matchConditions;
+    }
+
+    public void setMatchConditions(final List<MatchCondition> matchConditions) {
+        this.matchConditions = matchConditions;
+    }
+
+    public String getMatchPolicy() {
+        return matchPolicy;
+    }
+
+    public void setMatchPolicy(final String matchPolicy) {
+        this.matchPolicy = matchPolicy;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public LabelSelector getNamespaceSelector() {
+        return namespaceSelector;
+    }
+
+    public void setNamespaceSelector(final LabelSelector namespaceSelector) {
+        this.namespaceSelector = namespaceSelector;
+    }
+
+    public LabelSelector getObjectSelector() {
+        return objectSelector;
+    }
+
+    public void setObjectSelector(final LabelSelector objectSelector) {
+        this.objectSelector = objectSelector;
+    }
+
+    public String getReinvocationPolicy() {
+        return reinvocationPolicy;
+    }
+
+    public void setReinvocationPolicy(final String reinvocationPolicy) {
+        this.reinvocationPolicy = reinvocationPolicy;
+    }
+
+    public List<RuleWithOperations> getRules() {
+        return rules;
+    }
+
+    public void setRules(final List<RuleWithOperations> rules) {
+        this.rules = rules;
+    }
+
+    public String getSideEffects() {
+        return sideEffects;
+    }
+
+    public void setSideEffects(final String sideEffects) {
+        this.sideEffects = sideEffects;
+    }
+
+    public Integer getTimeoutSeconds() {
+        return timeoutSeconds;
+    }
+
+    public void setTimeoutSeconds(final Integer timeoutSeconds) {
+        this.timeoutSeconds = timeoutSeconds;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                admissionReviewVersions,
+                clientConfig,
+                failurePolicy,
+                matchConditions,
+                matchPolicy,
+                name,
+                namespaceSelector,
+                objectSelector,
+                reinvocationPolicy,
+                rules,
+                sideEffects,
+                timeoutSeconds);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof io.k8s.api.admissionregistration.v1.MutatingWebhook)) {
+            return false;
+        }
+        final io.k8s.api.admissionregistration.v1.MutatingWebhook __otherCasted = (io.k8s.api.admissionregistration.v1.MutatingWebhook) __other;
+        return Objects.equals(admissionReviewVersions, __otherCasted.admissionReviewVersions) &&
+            Objects.equals(clientConfig, __otherCasted.clientConfig) &&
+            Objects.equals(failurePolicy, __otherCasted.failurePolicy) &&
+            Objects.equals(matchConditions, __otherCasted.matchConditions) &&
+            Objects.equals(matchPolicy, __otherCasted.matchPolicy) &&
+            Objects.equals(name, __otherCasted.name) &&
+            Objects.equals(namespaceSelector, __otherCasted.namespaceSelector) &&
+            Objects.equals(objectSelector, __otherCasted.objectSelector) &&
+            Objects.equals(reinvocationPolicy, __otherCasted.reinvocationPolicy) &&
+            Objects.equals(rules, __otherCasted.rules) &&
+            Objects.equals(sideEffects, __otherCasted.sideEffects) &&
+            Objects.equals(timeoutSeconds, __otherCasted.timeoutSeconds);
+    }
+
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook admissionReviewVersions(final List<String> admissionReviewVersions) {
+        this.admissionReviewVersions = admissionReviewVersions;
+        return this;
+    }
+
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook clientConfig(final WebhookClientConfig clientConfig) {
+        this.clientConfig = clientConfig;
+        return this;
+    }
+
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook failurePolicy(final String failurePolicy) {
+        this.failurePolicy = failurePolicy;
+        return this;
+    }
+
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook matchConditions(final List<MatchCondition> matchConditions) {
+        this.matchConditions = matchConditions;
+        return this;
+    }
+
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook matchPolicy(final String matchPolicy) {
+        this.matchPolicy = matchPolicy;
+        return this;
+    }
+
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook name(final String name) {
+        this.name = name;
+        return this;
+    }
+
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook namespaceSelector(final LabelSelector namespaceSelector) {
+        this.namespaceSelector = namespaceSelector;
+        return this;
+    }
+
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook objectSelector(final LabelSelector objectSelector) {
+        this.objectSelector = objectSelector;
+        return this;
+    }
+
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook reinvocationPolicy(final String reinvocationPolicy) {
+        this.reinvocationPolicy = reinvocationPolicy;
+        return this;
+    }
+
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook rules(final List<RuleWithOperations> rules) {
+        this.rules = rules;
+        return this;
+    }
+
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook sideEffects(final String sideEffects) {
+        this.sideEffects = sideEffects;
+        return this;
+    }
+
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook timeoutSeconds(final Integer timeoutSeconds) {
+        this.timeoutSeconds = timeoutSeconds;
+        return this;
+    }
+
+    @Override
+    public io.k8s.api.admissionregistration.v1.MutatingWebhook validate() {
+        List<ValidationException.ValidationError> __errors_jsonSchema = null;
+        if (admissionReviewVersions == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "admissionReviewVersions", "admissionReviewVersions",
+                "Missing 'admissionReviewVersions' attribute.", true));
+        }
+        if (clientConfig == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "clientConfig", "clientConfig",
+                "Missing 'clientConfig' attribute.", true));
+        }
+        if (name == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "name", "name",
+                "Missing 'name' attribute.", true));
+        }
+        if (sideEffects == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "sideEffects", "sideEffects",
+                "Missing 'sideEffects' attribute.", true));
+        }
+        if (__errors_jsonSchema != null) {
+            throw new ValidationException(__errors_jsonSchema);
+        }
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (admissionReviewVersions != null ? "\"admissionReviewVersions\":" + admissionReviewVersions.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (clientConfig != null ? "\"clientConfig\":" + clientConfig.asJson() : ""),
+                    (failurePolicy != null ? "\"failurePolicy\":\"" +  JsonStrings.escapeJson(failurePolicy) + "\"" : ""),
+                    (matchConditions != null ? "\"matchConditions\":" + matchConditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (matchPolicy != null ? "\"matchPolicy\":\"" +  JsonStrings.escapeJson(matchPolicy) + "\"" : ""),
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (namespaceSelector != null ? "\"namespaceSelector\":" + namespaceSelector.asJson() : ""),
+                    (objectSelector != null ? "\"objectSelector\":" + objectSelector.asJson() : ""),
+                    (reinvocationPolicy != null ? "\"reinvocationPolicy\":\"" +  JsonStrings.escapeJson(reinvocationPolicy) + "\"" : ""),
+                    (rules != null ? "\"rules\":" + rules.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (sideEffects != null ? "\"sideEffects\":\"" +  JsonStrings.escapeJson(sideEffects) + "\"" : ""),
+                    (timeoutSeconds != null ? "\"timeoutSeconds\":" + timeoutSeconds : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

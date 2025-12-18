@@ -1,0 +1,95 @@
+/*
+ * Copyright (c) 2022 - present - Yupiik SAS - https://www.yupiik.com
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package io.yupiik.kubernetes.bindings.v1_30_x.v1;
+
+import io.yupiik.kubernetes.bindings.v1_30_x.Exportable;
+import io.yupiik.kubernetes.bindings.v1_30_x.JsonStrings;
+import io.yupiik.kubernetes.bindings.v1_30_x.Validable;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class io.k8s.api.apps.v1.RollingUpdateStatefulSetStrategy implements Validable<io.k8s.api.apps.v1.RollingUpdateStatefulSetStrategy>, Exportable {
+    private String maxUnavailable;
+    private Integer partition;
+
+    public io.k8s.api.apps.v1.RollingUpdateStatefulSetStrategy() {
+        // no-op
+    }
+
+    public io.k8s.api.apps.v1.RollingUpdateStatefulSetStrategy(final String maxUnavailable,
+                                                               final Integer partition) {
+        this.maxUnavailable = maxUnavailable;
+        this.partition = partition;
+    }
+
+    public String getMaxUnavailable() {
+        return maxUnavailable;
+    }
+
+    public void setMaxUnavailable(final String maxUnavailable) {
+        this.maxUnavailable = maxUnavailable;
+    }
+
+    public Integer getPartition() {
+        return partition;
+    }
+
+    public void setPartition(final Integer partition) {
+        this.partition = partition;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                maxUnavailable,
+                partition);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof io.k8s.api.apps.v1.RollingUpdateStatefulSetStrategy)) {
+            return false;
+        }
+        final io.k8s.api.apps.v1.RollingUpdateStatefulSetStrategy __otherCasted = (io.k8s.api.apps.v1.RollingUpdateStatefulSetStrategy) __other;
+        return Objects.equals(maxUnavailable, __otherCasted.maxUnavailable) &&
+            Objects.equals(partition, __otherCasted.partition);
+    }
+
+    public io.k8s.api.apps.v1.RollingUpdateStatefulSetStrategy maxUnavailable(final String maxUnavailable) {
+        this.maxUnavailable = maxUnavailable;
+        return this;
+    }
+
+    public io.k8s.api.apps.v1.RollingUpdateStatefulSetStrategy partition(final Integer partition) {
+        this.partition = partition;
+        return this;
+    }
+
+    @Override
+    public io.k8s.api.apps.v1.RollingUpdateStatefulSetStrategy validate() {
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (maxUnavailable != null ? "\"maxUnavailable\":\"" +  JsonStrings.escapeJson(maxUnavailable) + "\"" : ""),
+                    (partition != null ? "\"partition\":" + partition : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

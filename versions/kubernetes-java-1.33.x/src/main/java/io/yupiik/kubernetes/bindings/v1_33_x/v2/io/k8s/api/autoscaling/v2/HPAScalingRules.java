@@ -1,0 +1,134 @@
+/*
+ * Copyright (c) 2022 - present - Yupiik SAS - https://www.yupiik.com
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package io.yupiik.kubernetes.bindings.v1_33_x.v2;
+
+import io.yupiik.kubernetes.bindings.v1_33_x.Exportable;
+import io.yupiik.kubernetes.bindings.v1_33_x.JsonStrings;
+import io.yupiik.kubernetes.bindings.v1_33_x.Validable;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class io.k8s.api.autoscaling.v2.HPAScalingRules implements Validable<io.k8s.api.autoscaling.v2.HPAScalingRules>, Exportable {
+    private List<HPAScalingPolicy> policies;
+    private String selectPolicy;
+    private Integer stabilizationWindowSeconds;
+    private String tolerance;
+
+    public io.k8s.api.autoscaling.v2.HPAScalingRules() {
+        // no-op
+    }
+
+    public io.k8s.api.autoscaling.v2.HPAScalingRules(final List<HPAScalingPolicy> policies,
+                                                     final String selectPolicy,
+                                                     final Integer stabilizationWindowSeconds,
+                                                     final String tolerance) {
+        this.policies = policies;
+        this.selectPolicy = selectPolicy;
+        this.stabilizationWindowSeconds = stabilizationWindowSeconds;
+        this.tolerance = tolerance;
+    }
+
+    public List<HPAScalingPolicy> getPolicies() {
+        return policies;
+    }
+
+    public void setPolicies(final List<HPAScalingPolicy> policies) {
+        this.policies = policies;
+    }
+
+    public String getSelectPolicy() {
+        return selectPolicy;
+    }
+
+    public void setSelectPolicy(final String selectPolicy) {
+        this.selectPolicy = selectPolicy;
+    }
+
+    public Integer getStabilizationWindowSeconds() {
+        return stabilizationWindowSeconds;
+    }
+
+    public void setStabilizationWindowSeconds(final Integer stabilizationWindowSeconds) {
+        this.stabilizationWindowSeconds = stabilizationWindowSeconds;
+    }
+
+    public String getTolerance() {
+        return tolerance;
+    }
+
+    public void setTolerance(final String tolerance) {
+        this.tolerance = tolerance;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                policies,
+                selectPolicy,
+                stabilizationWindowSeconds,
+                tolerance);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof io.k8s.api.autoscaling.v2.HPAScalingRules)) {
+            return false;
+        }
+        final io.k8s.api.autoscaling.v2.HPAScalingRules __otherCasted = (io.k8s.api.autoscaling.v2.HPAScalingRules) __other;
+        return Objects.equals(policies, __otherCasted.policies) &&
+            Objects.equals(selectPolicy, __otherCasted.selectPolicy) &&
+            Objects.equals(stabilizationWindowSeconds, __otherCasted.stabilizationWindowSeconds) &&
+            Objects.equals(tolerance, __otherCasted.tolerance);
+    }
+
+    public io.k8s.api.autoscaling.v2.HPAScalingRules policies(final List<HPAScalingPolicy> policies) {
+        this.policies = policies;
+        return this;
+    }
+
+    public io.k8s.api.autoscaling.v2.HPAScalingRules selectPolicy(final String selectPolicy) {
+        this.selectPolicy = selectPolicy;
+        return this;
+    }
+
+    public io.k8s.api.autoscaling.v2.HPAScalingRules stabilizationWindowSeconds(final Integer stabilizationWindowSeconds) {
+        this.stabilizationWindowSeconds = stabilizationWindowSeconds;
+        return this;
+    }
+
+    public io.k8s.api.autoscaling.v2.HPAScalingRules tolerance(final String tolerance) {
+        this.tolerance = tolerance;
+        return this;
+    }
+
+    @Override
+    public io.k8s.api.autoscaling.v2.HPAScalingRules validate() {
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (policies != null ? "\"policies\":" + policies.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (selectPolicy != null ? "\"selectPolicy\":\"" +  JsonStrings.escapeJson(selectPolicy) + "\"" : ""),
+                    (stabilizationWindowSeconds != null ? "\"stabilizationWindowSeconds\":" + stabilizationWindowSeconds : ""),
+                    (tolerance != null ? "\"tolerance\":\"" +  JsonStrings.escapeJson(tolerance) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

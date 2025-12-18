@@ -33,7 +33,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <yupiik-uship.version>1.0.15</yupiik-uship.version>
+        <yupiik-uship.version>1.0.19</yupiik-uship.version>
 
         <typescript-generator.skip>true</typescript-generator.skip>
 

@@ -1,0 +1,214 @@
+/*
+ * Copyright (c) 2022 - present - Yupiik SAS - https://www.yupiik.com
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package io.yupiik.kubernetes.bindings.v1_30_x.v1;
+
+import io.yupiik.kubernetes.bindings.v1_30_x.Exportable;
+import io.yupiik.kubernetes.bindings.v1_30_x.JsonStrings;
+import io.yupiik.kubernetes.bindings.v1_30_x.Validable;
+import jakarta.json.JsonObject;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class io.k8s.api.core.v1.PersistentVolumeClaimStatus implements Validable<io.k8s.api.core.v1.PersistentVolumeClaimStatus>, Exportable {
+    private List<String> accessModes;
+    private Map<String, String> allocatedResourceStatuses;
+    private JsonObject allocatedResources;
+    private JsonObject capacity;
+    private List<PersistentVolumeClaimCondition> conditions;
+    private String currentVolumeAttributesClassName;
+    private ModifyVolumeStatus modifyVolumeStatus;
+    private String phase;
+
+    public io.k8s.api.core.v1.PersistentVolumeClaimStatus() {
+        // no-op
+    }
+
+    public io.k8s.api.core.v1.PersistentVolumeClaimStatus(final List<String> accessModes,
+                                                          final Map<String, String> allocatedResourceStatuses,
+                                                          final JsonObject allocatedResources,
+                                                          final JsonObject capacity,
+                                                          final List<PersistentVolumeClaimCondition> conditions,
+                                                          final String currentVolumeAttributesClassName,
+                                                          final ModifyVolumeStatus modifyVolumeStatus,
+                                                          final String phase) {
+        this.accessModes = accessModes;
+        this.allocatedResourceStatuses = allocatedResourceStatuses;
+        this.allocatedResources = allocatedResources;
+        this.capacity = capacity;
+        this.conditions = conditions;
+        this.currentVolumeAttributesClassName = currentVolumeAttributesClassName;
+        this.modifyVolumeStatus = modifyVolumeStatus;
+        this.phase = phase;
+    }
+
+    public List<String> getAccessModes() {
+        return accessModes;
+    }
+
+    public void setAccessModes(final List<String> accessModes) {
+        this.accessModes = accessModes;
+    }
+
+    public Map<String, String> getAllocatedResourceStatuses() {
+        return allocatedResourceStatuses;
+    }
+
+    public void setAllocatedResourceStatuses(final Map<String, String> allocatedResourceStatuses) {
+        this.allocatedResourceStatuses = allocatedResourceStatuses;
+    }
+
+    public JsonObject getAllocatedResources() {
+        return allocatedResources;
+    }
+
+    public void setAllocatedResources(final JsonObject allocatedResources) {
+        this.allocatedResources = allocatedResources;
+    }
+
+    public JsonObject getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(final JsonObject capacity) {
+        this.capacity = capacity;
+    }
+
+    public List<PersistentVolumeClaimCondition> getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(final List<PersistentVolumeClaimCondition> conditions) {
+        this.conditions = conditions;
+    }
+
+    public String getCurrentVolumeAttributesClassName() {
+        return currentVolumeAttributesClassName;
+    }
+
+    public void setCurrentVolumeAttributesClassName(final String currentVolumeAttributesClassName) {
+        this.currentVolumeAttributesClassName = currentVolumeAttributesClassName;
+    }
+
+    public ModifyVolumeStatus getModifyVolumeStatus() {
+        return modifyVolumeStatus;
+    }
+
+    public void setModifyVolumeStatus(final ModifyVolumeStatus modifyVolumeStatus) {
+        this.modifyVolumeStatus = modifyVolumeStatus;
+    }
+
+    public String getPhase() {
+        return phase;
+    }
+
+    public void setPhase(final String phase) {
+        this.phase = phase;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                accessModes,
+                allocatedResourceStatuses,
+                allocatedResources,
+                capacity,
+                conditions,
+                currentVolumeAttributesClassName,
+                modifyVolumeStatus,
+                phase);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof io.k8s.api.core.v1.PersistentVolumeClaimStatus)) {
+            return false;
+        }
+        final io.k8s.api.core.v1.PersistentVolumeClaimStatus __otherCasted = (io.k8s.api.core.v1.PersistentVolumeClaimStatus) __other;
+        return Objects.equals(accessModes, __otherCasted.accessModes) &&
+            Objects.equals(allocatedResourceStatuses, __otherCasted.allocatedResourceStatuses) &&
+            Objects.equals(allocatedResources, __otherCasted.allocatedResources) &&
+            Objects.equals(capacity, __otherCasted.capacity) &&
+            Objects.equals(conditions, __otherCasted.conditions) &&
+            Objects.equals(currentVolumeAttributesClassName, __otherCasted.currentVolumeAttributesClassName) &&
+            Objects.equals(modifyVolumeStatus, __otherCasted.modifyVolumeStatus) &&
+            Objects.equals(phase, __otherCasted.phase);
+    }
+
+    public io.k8s.api.core.v1.PersistentVolumeClaimStatus accessModes(final List<String> accessModes) {
+        this.accessModes = accessModes;
+        return this;
+    }
+
+    public io.k8s.api.core.v1.PersistentVolumeClaimStatus allocatedResourceStatuses(final Map<String, String> allocatedResourceStatuses) {
+        this.allocatedResourceStatuses = allocatedResourceStatuses;
+        return this;
+    }
+
+    public io.k8s.api.core.v1.PersistentVolumeClaimStatus allocatedResources(final JsonObject allocatedResources) {
+        this.allocatedResources = allocatedResources;
+        return this;
+    }
+
+    public io.k8s.api.core.v1.PersistentVolumeClaimStatus capacity(final JsonObject capacity) {
+        this.capacity = capacity;
+        return this;
+    }
+
+    public io.k8s.api.core.v1.PersistentVolumeClaimStatus conditions(final List<PersistentVolumeClaimCondition> conditions) {
+        this.conditions = conditions;
+        return this;
+    }
+
+    public io.k8s.api.core.v1.PersistentVolumeClaimStatus currentVolumeAttributesClassName(final String currentVolumeAttributesClassName) {
+        this.currentVolumeAttributesClassName = currentVolumeAttributesClassName;
+        return this;
+    }
+
+    public io.k8s.api.core.v1.PersistentVolumeClaimStatus modifyVolumeStatus(final ModifyVolumeStatus modifyVolumeStatus) {
+        this.modifyVolumeStatus = modifyVolumeStatus;
+        return this;
+    }
+
+    public io.k8s.api.core.v1.PersistentVolumeClaimStatus phase(final String phase) {
+        this.phase = phase;
+        return this;
+    }
+
+    @Override
+    public io.k8s.api.core.v1.PersistentVolumeClaimStatus validate() {
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (accessModes != null ? "\"accessModes\":" + accessModes.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""),
+                    (allocatedResourceStatuses != null ? "\"allocatedResourceStatuses\":" + allocatedResourceStatuses.entrySet().stream()
+                        .map(__it -> "\"" + JsonStrings.escapeJson(__it.getKey()) + "\":" + (__it.getValue() == null ? "null" : ("\"" + JsonStrings.escapeJson(__it.getValue()) + "\"")))
+                        .collect(joining(",", "{", "}")) : ""),
+                    (allocatedResources != null ? "\"allocatedResources\":" + allocatedResources : ""),
+                    (capacity != null ? "\"capacity\":" + capacity : ""),
+                    (conditions != null ? "\"conditions\":" + conditions.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (currentVolumeAttributesClassName != null ? "\"currentVolumeAttributesClassName\":\"" +  JsonStrings.escapeJson(currentVolumeAttributesClassName) + "\"" : ""),
+                    (modifyVolumeStatus != null ? "\"modifyVolumeStatus\":" + modifyVolumeStatus.asJson() : ""),
+                    (phase != null ? "\"phase\":\"" +  JsonStrings.escapeJson(phase) + "\"" : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}

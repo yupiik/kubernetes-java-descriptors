@@ -1,0 +1,134 @@
+/*
+ * Copyright (c) 2022 - present - Yupiik SAS - https://www.yupiik.com
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+package io.yupiik.kubernetes.bindings.v1_29_x.v1;
+
+import io.yupiik.kubernetes.bindings.v1_29_x.Exportable;
+import io.yupiik.kubernetes.bindings.v1_29_x.JsonStrings;
+import io.yupiik.kubernetes.bindings.v1_29_x.Validable;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Stream;
+import static java.util.stream.Collectors.joining;
+
+public class io.k8s.api.networking.v1.IngressSpec implements Validable<io.k8s.api.networking.v1.IngressSpec>, Exportable {
+    private IngressBackend defaultBackend;
+    private String ingressClassName;
+    private List<IngressRule> rules;
+    private List<IngressTLS> tls;
+
+    public io.k8s.api.networking.v1.IngressSpec() {
+        // no-op
+    }
+
+    public io.k8s.api.networking.v1.IngressSpec(final IngressBackend defaultBackend,
+                                                final String ingressClassName,
+                                                final List<IngressRule> rules,
+                                                final List<IngressTLS> tls) {
+        this.defaultBackend = defaultBackend;
+        this.ingressClassName = ingressClassName;
+        this.rules = rules;
+        this.tls = tls;
+    }
+
+    public IngressBackend getDefaultBackend() {
+        return defaultBackend;
+    }
+
+    public void setDefaultBackend(final IngressBackend defaultBackend) {
+        this.defaultBackend = defaultBackend;
+    }
+
+    public String getIngressClassName() {
+        return ingressClassName;
+    }
+
+    public void setIngressClassName(final String ingressClassName) {
+        this.ingressClassName = ingressClassName;
+    }
+
+    public List<IngressRule> getRules() {
+        return rules;
+    }
+
+    public void setRules(final List<IngressRule> rules) {
+        this.rules = rules;
+    }
+
+    public List<IngressTLS> getTls() {
+        return tls;
+    }
+
+    public void setTls(final List<IngressTLS> tls) {
+        this.tls = tls;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                defaultBackend,
+                ingressClassName,
+                rules,
+                tls);
+    }
+
+    @Override
+    public boolean equals(final Object __other) {
+        if (!(__other instanceof io.k8s.api.networking.v1.IngressSpec)) {
+            return false;
+        }
+        final io.k8s.api.networking.v1.IngressSpec __otherCasted = (io.k8s.api.networking.v1.IngressSpec) __other;
+        return Objects.equals(defaultBackend, __otherCasted.defaultBackend) &&
+            Objects.equals(ingressClassName, __otherCasted.ingressClassName) &&
+            Objects.equals(rules, __otherCasted.rules) &&
+            Objects.equals(tls, __otherCasted.tls);
+    }
+
+    public io.k8s.api.networking.v1.IngressSpec defaultBackend(final IngressBackend defaultBackend) {
+        this.defaultBackend = defaultBackend;
+        return this;
+    }
+
+    public io.k8s.api.networking.v1.IngressSpec ingressClassName(final String ingressClassName) {
+        this.ingressClassName = ingressClassName;
+        return this;
+    }
+
+    public io.k8s.api.networking.v1.IngressSpec rules(final List<IngressRule> rules) {
+        this.rules = rules;
+        return this;
+    }
+
+    public io.k8s.api.networking.v1.IngressSpec tls(final List<IngressTLS> tls) {
+        this.tls = tls;
+        return this;
+    }
+
+    @Override
+    public io.k8s.api.networking.v1.IngressSpec validate() {
+        return this;
+    }
+
+    @Override
+    public String asJson() {
+        return Stream.of(
+                    (defaultBackend != null ? "\"defaultBackend\":" + defaultBackend.asJson() : ""),
+                    (ingressClassName != null ? "\"ingressClassName\":\"" +  JsonStrings.escapeJson(ingressClassName) + "\"" : ""),
+                    (rules != null ? "\"rules\":" + rules.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""),
+                    (tls != null ? "\"tls\":" + tls.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
+                .filter(__it -> !__it.isBlank())
+                .collect(joining(",", "{", "}"));
+    }
+}
