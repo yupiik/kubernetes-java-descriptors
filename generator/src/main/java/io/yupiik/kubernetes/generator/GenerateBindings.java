@@ -220,6 +220,15 @@ public final class GenerateBindings {
                 "  <properties>\n" +
                 "    <typescript-generator.skip>false</typescript-generator.skip>\n" +
                 "  </properties>\n" +
+                "\n" +
+                "  <build>\n" +
+                "    <plugins>\n" +
+                "      <plugin>\n" +
+                "        <groupId>org.apache.maven.plugins</groupId>\n" +
+                "        <artifactId>maven-shade-plugin</artifactId>\n" +
+                "      </plugin>\n" +
+                "    </plugins>\n" +
+                "  </build>\n" +
                 "</project>\n" +
                 "\n");
 
