@@ -19,6 +19,7 @@ import io.yupiik.kubernetes.bindings.v1_30_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_30_x.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_30_x.Validable;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonArray;
 import jakarta.json.JsonValue;
 import jakarta.json.bind.annotation.JsonbProperty;
 import java.util.List;
@@ -37,7 +38,7 @@ public class JSONSchemaProps implements Validable<JSONSchemaProps>, Exportable {
     private JsonObject dependencies;
     private String description;
     @JsonbProperty("enum")
-    private List<JsonValue> enumValue;
+    private JsonArray enumValue;
     private JsonValue example;
     private Boolean exclusiveMaximum;
     private Boolean exclusiveMinimum;
@@ -95,7 +96,7 @@ public class JSONSchemaProps implements Validable<JSONSchemaProps>, Exportable {
                            final JsonObject definitions,
                            final JsonObject dependencies,
                            final String description,
-                           final List<JsonValue> enumValue,
+                           final JsonArray enumValue,
                            final JsonValue example,
                            final Boolean exclusiveMaximum,
                            final Boolean exclusiveMinimum,
@@ -241,11 +242,11 @@ public class JSONSchemaProps implements Validable<JSONSchemaProps>, Exportable {
         this.description = description;
     }
 
-    public List<JsonValue> getEnumValue() {
+    public JsonArray getEnumValue() {
         return enumValue;
     }
 
-    public void setEnumValue(final List<JsonValue> enumValue) {
+    public void setEnumValue(final JsonArray enumValue) {
         this.enumValue = enumValue;
     }
 
@@ -670,7 +671,7 @@ public class JSONSchemaProps implements Validable<JSONSchemaProps>, Exportable {
         return this;
     }
 
-    public JSONSchemaProps enumValue(final List<JsonValue> enumValue) {
+    public JSONSchemaProps enumValue(final JsonArray enumValue) {
         this.enumValue = enumValue;
         return this;
     }

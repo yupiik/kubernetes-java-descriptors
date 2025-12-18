@@ -423,10 +423,25 @@ public final class GenerateBindings {
         for (final var entry : bindings.entrySet()) {
             final var out = root.resolve("src/main/java").resolve(entry.getKey());
             Files.createDirectories(out.getParent());
+
             var code = entry.getValue();
+            // sometimes the import is useless
             if (code.contains("import jakarta.json.bind.annotation.JsonbProperty;\n") && !code.contains("@JsonbProperty")) {
                 code = code.replace("import jakarta.json.bind.annotation.JsonbProperty;\n", "");
             }
+            // replace List<JsonValue> by JsonArry to comply to typescript generator which doesn't support it
+            if (code.contains(" List<JsonValue> ")) {
+                code = code.replace(" List<JsonValue> ", " JsonArray ");
+                if (!code.contains("import jakarta.json.JsonArray;\n")) {
+                    code = code.replace(
+                            "import jakarta.json.JsonValue;\n",
+                            "import jakarta.json.JsonArray;\nimport jakarta.json.JsonValue;\n");
+                }
+                if (!code.contains(" JsonValue ")) {
+                    code = code.replace("import jakarta.json.JsonValue;\n", "");
+                }
+            }
+
             Files.writeString(out, HEADER + code);
         }
     }
