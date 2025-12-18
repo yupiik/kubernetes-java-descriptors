@@ -70,6 +70,8 @@ Now to execute this main you can just use this `exec-maven-plugin` in your Apach
 
 Now if you run `mvn prepare-package` you will get your descriptors dumped in `target/k8s-descriptors` folder.
 
+TIP: with java >= 21 you can write an unamed `main()` entrypoint which also simplifies running the generation for a CI build.
+
 == JShell setup
 
 You can use this project with JShell, you just need to ensure the JShell classpath is correct when executing your script.
