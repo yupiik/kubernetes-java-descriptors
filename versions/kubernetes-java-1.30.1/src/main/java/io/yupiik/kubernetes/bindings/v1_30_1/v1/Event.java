@@ -28,20 +28,20 @@ import static java.util.stream.Collectors.joining;
 public class Event implements Validable<Event>, Exportable {
     private String action;
     private String apiVersion;
-    private Integer deprecatedCount;
-    private String deprecatedFirstTimestamp;
-    private String deprecatedLastTimestamp;
-    private EventSource deprecatedSource;
+    private Integer count;
     private String eventTime;
+    private String firstTimestamp;
+    private ObjectReference involvedObject;
     private String kind;
+    private String lastTimestamp;
+    private String message;
     private ObjectMeta metadata;
-    private String note;
     private String reason;
-    private ObjectReference regarding;
     private ObjectReference related;
-    private String reportingController;
+    private String reportingComponent;
     private String reportingInstance;
     private EventSeries series;
+    private EventSource source;
     private String type;
 
     public Event() {
@@ -50,37 +50,37 @@ public class Event implements Validable<Event>, Exportable {
 
     public Event(final String action,
                  final String apiVersion,
-                 final Integer deprecatedCount,
-                 final String deprecatedFirstTimestamp,
-                 final String deprecatedLastTimestamp,
-                 final EventSource deprecatedSource,
+                 final Integer count,
                  final String eventTime,
+                 final String firstTimestamp,
+                 final ObjectReference involvedObject,
                  final String kind,
+                 final String lastTimestamp,
+                 final String message,
                  final ObjectMeta metadata,
-                 final String note,
                  final String reason,
-                 final ObjectReference regarding,
                  final ObjectReference related,
-                 final String reportingController,
+                 final String reportingComponent,
                  final String reportingInstance,
                  final EventSeries series,
+                 final EventSource source,
                  final String type) {
         this.action = action;
         this.apiVersion = apiVersion;
-        this.deprecatedCount = deprecatedCount;
-        this.deprecatedFirstTimestamp = deprecatedFirstTimestamp;
-        this.deprecatedLastTimestamp = deprecatedLastTimestamp;
-        this.deprecatedSource = deprecatedSource;
+        this.count = count;
         this.eventTime = eventTime;
+        this.firstTimestamp = firstTimestamp;
+        this.involvedObject = involvedObject;
         this.kind = kind;
+        this.lastTimestamp = lastTimestamp;
+        this.message = message;
         this.metadata = metadata;
-        this.note = note;
         this.reason = reason;
-        this.regarding = regarding;
         this.related = related;
-        this.reportingController = reportingController;
+        this.reportingComponent = reportingComponent;
         this.reportingInstance = reportingInstance;
         this.series = series;
+        this.source = source;
         this.type = type;
     }
 
@@ -100,36 +100,12 @@ public class Event implements Validable<Event>, Exportable {
         this.apiVersion = apiVersion;
     }
 
-    public Integer getDeprecatedCount() {
-        return deprecatedCount;
+    public Integer getCount() {
+        return count;
     }
 
-    public void setDeprecatedCount(final Integer deprecatedCount) {
-        this.deprecatedCount = deprecatedCount;
-    }
-
-    public String getDeprecatedFirstTimestamp() {
-        return deprecatedFirstTimestamp;
-    }
-
-    public void setDeprecatedFirstTimestamp(final String deprecatedFirstTimestamp) {
-        this.deprecatedFirstTimestamp = deprecatedFirstTimestamp;
-    }
-
-    public String getDeprecatedLastTimestamp() {
-        return deprecatedLastTimestamp;
-    }
-
-    public void setDeprecatedLastTimestamp(final String deprecatedLastTimestamp) {
-        this.deprecatedLastTimestamp = deprecatedLastTimestamp;
-    }
-
-    public EventSource getDeprecatedSource() {
-        return deprecatedSource;
-    }
-
-    public void setDeprecatedSource(final EventSource deprecatedSource) {
-        this.deprecatedSource = deprecatedSource;
+    public void setCount(final Integer count) {
+        this.count = count;
     }
 
     public String getEventTime() {
@@ -140,12 +116,44 @@ public class Event implements Validable<Event>, Exportable {
         this.eventTime = eventTime;
     }
 
+    public String getFirstTimestamp() {
+        return firstTimestamp;
+    }
+
+    public void setFirstTimestamp(final String firstTimestamp) {
+        this.firstTimestamp = firstTimestamp;
+    }
+
+    public ObjectReference getInvolvedObject() {
+        return involvedObject;
+    }
+
+    public void setInvolvedObject(final ObjectReference involvedObject) {
+        this.involvedObject = involvedObject;
+    }
+
     public String getKind() {
         return kind;
     }
 
     public void setKind(final String kind) {
         this.kind = kind;
+    }
+
+    public String getLastTimestamp() {
+        return lastTimestamp;
+    }
+
+    public void setLastTimestamp(final String lastTimestamp) {
+        this.lastTimestamp = lastTimestamp;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(final String message) {
+        this.message = message;
     }
 
     public ObjectMeta getMetadata() {
@@ -156,28 +164,12 @@ public class Event implements Validable<Event>, Exportable {
         this.metadata = metadata;
     }
 
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(final String note) {
-        this.note = note;
-    }
-
     public String getReason() {
         return reason;
     }
 
     public void setReason(final String reason) {
         this.reason = reason;
-    }
-
-    public ObjectReference getRegarding() {
-        return regarding;
-    }
-
-    public void setRegarding(final ObjectReference regarding) {
-        this.regarding = regarding;
     }
 
     public ObjectReference getRelated() {
@@ -188,12 +180,12 @@ public class Event implements Validable<Event>, Exportable {
         this.related = related;
     }
 
-    public String getReportingController() {
-        return reportingController;
+    public String getReportingComponent() {
+        return reportingComponent;
     }
 
-    public void setReportingController(final String reportingController) {
-        this.reportingController = reportingController;
+    public void setReportingComponent(final String reportingComponent) {
+        this.reportingComponent = reportingComponent;
     }
 
     public String getReportingInstance() {
@@ -212,6 +204,14 @@ public class Event implements Validable<Event>, Exportable {
         this.series = series;
     }
 
+    public EventSource getSource() {
+        return source;
+    }
+
+    public void setSource(final EventSource source) {
+        this.source = source;
+    }
+
     public String getType() {
         return type;
     }
@@ -225,20 +225,20 @@ public class Event implements Validable<Event>, Exportable {
         return Objects.hash(
                 action,
                 apiVersion,
-                deprecatedCount,
-                deprecatedFirstTimestamp,
-                deprecatedLastTimestamp,
-                deprecatedSource,
+                count,
                 eventTime,
+                firstTimestamp,
+                involvedObject,
                 kind,
+                lastTimestamp,
+                message,
                 metadata,
-                note,
                 reason,
-                regarding,
                 related,
-                reportingController,
+                reportingComponent,
                 reportingInstance,
                 series,
+                source,
                 type);
     }
 
@@ -250,20 +250,20 @@ public class Event implements Validable<Event>, Exportable {
         final Event __otherCasted = (Event) __other;
         return Objects.equals(action, __otherCasted.action) &&
             Objects.equals(apiVersion, __otherCasted.apiVersion) &&
-            Objects.equals(deprecatedCount, __otherCasted.deprecatedCount) &&
-            Objects.equals(deprecatedFirstTimestamp, __otherCasted.deprecatedFirstTimestamp) &&
-            Objects.equals(deprecatedLastTimestamp, __otherCasted.deprecatedLastTimestamp) &&
-            Objects.equals(deprecatedSource, __otherCasted.deprecatedSource) &&
+            Objects.equals(count, __otherCasted.count) &&
             Objects.equals(eventTime, __otherCasted.eventTime) &&
+            Objects.equals(firstTimestamp, __otherCasted.firstTimestamp) &&
+            Objects.equals(involvedObject, __otherCasted.involvedObject) &&
             Objects.equals(kind, __otherCasted.kind) &&
+            Objects.equals(lastTimestamp, __otherCasted.lastTimestamp) &&
+            Objects.equals(message, __otherCasted.message) &&
             Objects.equals(metadata, __otherCasted.metadata) &&
-            Objects.equals(note, __otherCasted.note) &&
             Objects.equals(reason, __otherCasted.reason) &&
-            Objects.equals(regarding, __otherCasted.regarding) &&
             Objects.equals(related, __otherCasted.related) &&
-            Objects.equals(reportingController, __otherCasted.reportingController) &&
+            Objects.equals(reportingComponent, __otherCasted.reportingComponent) &&
             Objects.equals(reportingInstance, __otherCasted.reportingInstance) &&
             Objects.equals(series, __otherCasted.series) &&
+            Objects.equals(source, __otherCasted.source) &&
             Objects.equals(type, __otherCasted.type);
     }
 
@@ -277,23 +277,8 @@ public class Event implements Validable<Event>, Exportable {
         return this;
     }
 
-    public Event deprecatedCount(final Integer deprecatedCount) {
-        this.deprecatedCount = deprecatedCount;
-        return this;
-    }
-
-    public Event deprecatedFirstTimestamp(final String deprecatedFirstTimestamp) {
-        this.deprecatedFirstTimestamp = deprecatedFirstTimestamp;
-        return this;
-    }
-
-    public Event deprecatedLastTimestamp(final String deprecatedLastTimestamp) {
-        this.deprecatedLastTimestamp = deprecatedLastTimestamp;
-        return this;
-    }
-
-    public Event deprecatedSource(final EventSource deprecatedSource) {
-        this.deprecatedSource = deprecatedSource;
+    public Event count(final Integer count) {
+        this.count = count;
         return this;
     }
 
@@ -302,8 +287,28 @@ public class Event implements Validable<Event>, Exportable {
         return this;
     }
 
+    public Event firstTimestamp(final String firstTimestamp) {
+        this.firstTimestamp = firstTimestamp;
+        return this;
+    }
+
+    public Event involvedObject(final ObjectReference involvedObject) {
+        this.involvedObject = involvedObject;
+        return this;
+    }
+
     public Event kind(final String kind) {
         this.kind = kind;
+        return this;
+    }
+
+    public Event lastTimestamp(final String lastTimestamp) {
+        this.lastTimestamp = lastTimestamp;
+        return this;
+    }
+
+    public Event message(final String message) {
+        this.message = message;
         return this;
     }
 
@@ -312,18 +317,8 @@ public class Event implements Validable<Event>, Exportable {
         return this;
     }
 
-    public Event note(final String note) {
-        this.note = note;
-        return this;
-    }
-
     public Event reason(final String reason) {
         this.reason = reason;
-        return this;
-    }
-
-    public Event regarding(final ObjectReference regarding) {
-        this.regarding = regarding;
         return this;
     }
 
@@ -332,8 +327,8 @@ public class Event implements Validable<Event>, Exportable {
         return this;
     }
 
-    public Event reportingController(final String reportingController) {
-        this.reportingController = reportingController;
+    public Event reportingComponent(final String reportingComponent) {
+        this.reportingComponent = reportingComponent;
         return this;
     }
 
@@ -344,6 +339,11 @@ public class Event implements Validable<Event>, Exportable {
 
     public Event series(final EventSeries series) {
         this.series = series;
+        return this;
+    }
+
+    public Event source(final EventSource source) {
+        this.source = source;
         return this;
     }
 
@@ -358,16 +358,24 @@ public class Event implements Validable<Event>, Exportable {
             kind = "Event";
         }
         if (apiVersion == null) {
-            apiVersion = "events.k8s.io/v1";
+            apiVersion = "v1";
         }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
-        if (eventTime == null) {
+        if (involvedObject == null) {
             if (__errors_jsonSchema == null) {
                 __errors_jsonSchema = new ArrayList<>();
             }
             __errors_jsonSchema.add(new ValidationException.ValidationError(
-                "eventTime", "eventTime",
-                "Missing 'eventTime' attribute.", true));
+                "involvedObject", "involvedObject",
+                "Missing 'involvedObject' attribute.", true));
+        }
+        if (metadata == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "metadata", "metadata",
+                "Missing 'metadata' attribute.", true));
         }
         if (__errors_jsonSchema != null) {
             throw new ValidationException(__errors_jsonSchema);
@@ -380,20 +388,20 @@ public class Event implements Validable<Event>, Exportable {
         return Stream.of(
                     (action != null ? "\"action\":\"" +  JsonStrings.escapeJson(action) + "\"" : ""),
                     (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
-                    (deprecatedCount != null ? "\"deprecatedCount\":" + deprecatedCount : ""),
-                    (deprecatedFirstTimestamp != null ? "\"deprecatedFirstTimestamp\":\"" +  JsonStrings.escapeJson(deprecatedFirstTimestamp) + "\"" : ""),
-                    (deprecatedLastTimestamp != null ? "\"deprecatedLastTimestamp\":\"" +  JsonStrings.escapeJson(deprecatedLastTimestamp) + "\"" : ""),
-                    (deprecatedSource != null ? "\"deprecatedSource\":" + deprecatedSource.asJson() : ""),
+                    (count != null ? "\"count\":" + count : ""),
                     (eventTime != null ? "\"eventTime\":\"" +  JsonStrings.escapeJson(eventTime) + "\"" : ""),
+                    (firstTimestamp != null ? "\"firstTimestamp\":\"" +  JsonStrings.escapeJson(firstTimestamp) + "\"" : ""),
+                    (involvedObject != null ? "\"involvedObject\":" + involvedObject.asJson() : ""),
                     (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (lastTimestamp != null ? "\"lastTimestamp\":\"" +  JsonStrings.escapeJson(lastTimestamp) + "\"" : ""),
+                    (message != null ? "\"message\":\"" +  JsonStrings.escapeJson(message) + "\"" : ""),
                     (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
-                    (note != null ? "\"note\":\"" +  JsonStrings.escapeJson(note) + "\"" : ""),
                     (reason != null ? "\"reason\":\"" +  JsonStrings.escapeJson(reason) + "\"" : ""),
-                    (regarding != null ? "\"regarding\":" + regarding.asJson() : ""),
                     (related != null ? "\"related\":" + related.asJson() : ""),
-                    (reportingController != null ? "\"reportingController\":\"" +  JsonStrings.escapeJson(reportingController) + "\"" : ""),
+                    (reportingComponent != null ? "\"reportingComponent\":\"" +  JsonStrings.escapeJson(reportingComponent) + "\"" : ""),
                     (reportingInstance != null ? "\"reportingInstance\":\"" +  JsonStrings.escapeJson(reportingInstance) + "\"" : ""),
                     (series != null ? "\"series\":" + series.asJson() : ""),
+                    (source != null ? "\"source\":" + source.asJson() : ""),
                     (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));

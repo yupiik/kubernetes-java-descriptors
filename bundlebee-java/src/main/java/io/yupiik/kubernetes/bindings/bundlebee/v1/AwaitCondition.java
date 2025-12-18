@@ -25,6 +25,7 @@ import static java.util.stream.Collectors.joining;
 
 public class AwaitCondition implements Validable<AwaitCondition>, Exportable {
     private String conditionType;
+    private String failMessage;
     private JsonPointerOperator operatorType;
     private String pointer;
     private AwaitConditionType type;
@@ -35,11 +36,13 @@ public class AwaitCondition implements Validable<AwaitCondition>, Exportable {
     }
 
     public AwaitCondition(final String conditionType,
+                          final String failMessage,
                           final JsonPointerOperator operatorType,
                           final String pointer,
                           final AwaitConditionType type,
                           final String value) {
         this.conditionType = conditionType;
+        this.failMessage = failMessage;
         this.operatorType = operatorType;
         this.pointer = pointer;
         this.type = type;
@@ -52,6 +55,14 @@ public class AwaitCondition implements Validable<AwaitCondition>, Exportable {
 
     public void setConditionType(final String conditionType) {
         this.conditionType = conditionType;
+    }
+
+    public String getFailMessage() {
+        return failMessage;
+    }
+
+    public void setFailMessage(final String failMessage) {
+        this.failMessage = failMessage;
     }
 
     public JsonPointerOperator getOperatorType() {
@@ -90,6 +101,7 @@ public class AwaitCondition implements Validable<AwaitCondition>, Exportable {
     public int hashCode() {
         return Objects.hash(
                 conditionType,
+                failMessage,
                 operatorType,
                 pointer,
                 type,
@@ -103,6 +115,7 @@ public class AwaitCondition implements Validable<AwaitCondition>, Exportable {
         }
         final AwaitCondition __otherCasted = (AwaitCondition) __other;
         return Objects.equals(conditionType, __otherCasted.conditionType) &&
+            Objects.equals(failMessage, __otherCasted.failMessage) &&
             Objects.equals(operatorType, __otherCasted.operatorType) &&
             Objects.equals(pointer, __otherCasted.pointer) &&
             Objects.equals(type, __otherCasted.type) &&
@@ -111,6 +124,11 @@ public class AwaitCondition implements Validable<AwaitCondition>, Exportable {
 
     public AwaitCondition conditionType(final String conditionType) {
         this.conditionType = conditionType;
+        return this;
+    }
+
+    public AwaitCondition failMessage(final String failMessage) {
+        this.failMessage = failMessage;
         return this;
     }
 
@@ -143,6 +161,7 @@ public class AwaitCondition implements Validable<AwaitCondition>, Exportable {
     public String asJson() {
         return Stream.of(
                     (conditionType != null ? "\"conditionType\":\"" +  JsonStrings.escapeJson(conditionType) + "\"" : ""),
+                    (failMessage != null ? "\"failMessage\":\"" +  JsonStrings.escapeJson(failMessage) + "\"" : ""),
                     (operatorType != null ? "\"operatorType\":" + operatorType.asJson() : ""),
                     (pointer != null ? "\"pointer\":\"" +  JsonStrings.escapeJson(pointer) + "\"" : ""),
                     (type != null ? "\"type\":" + type.asJson() : ""),

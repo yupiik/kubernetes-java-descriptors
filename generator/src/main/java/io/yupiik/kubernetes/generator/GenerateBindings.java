@@ -388,7 +388,21 @@ public final class GenerateBindings {
         for (final var entry : bindings.entrySet()) {
             final var out = root.resolve("src/main/java").resolve(entry.getKey());
             Files.createDirectories(out.getParent());
-            Files.writeString(out, entry.getValue());
+            Files.writeString(out, "/*\n" +
+                    " * Copyright (c) 2022 - present - Yupiik SAS - https://www.yupiik.com\n" +
+                    " * Licensed under the Apache License, Version 2.0 (the \"License\");\n" +
+                    " * you may not use this file except in compliance\n" +
+                    " * with the License.  You may obtain a copy of the License at\n" +
+                    " *\n" +
+                    " *  http://www.apache.org/licenses/LICENSE-2.0\n" +
+                    " *\n" +
+                    " * Unless required by applicable law or agreed to in writing,\n" +
+                    " * software distributed under the License is distributed on an\n" +
+                    " * \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY\n" +
+                    " * KIND, either express or implied.  See the License for the\n" +
+                    " * specific language governing permissions and limitations\n" +
+                    " * under the License.\n" +
+                    " */\n" + entry.getValue());
         }
     }
 

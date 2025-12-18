@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
 
-public class Conditions implements Validable, Exportable {
+public class Conditions implements Validable<#/definitions/io_yupiik_bundlebee_core_descriptor_Manifest_Conditions>, Exportable {
     private List<Condition> conditions;
     private ConditionOperator operator;
 
@@ -69,18 +69,18 @@ public class Conditions implements Validable, Exportable {
             Objects.equals(operator, __otherCasted.operator);
     }
 
-    public Conditions conditions(final List<Condition> conditions) {
+    public #/definitions/io_yupiik_bundlebee_core_descriptor_Manifest_Conditions conditions(final List<Condition> conditions) {
         this.conditions = conditions;
         return this;
     }
 
-    public Conditions operator(final ConditionOperator operator) {
+    public #/definitions/io_yupiik_bundlebee_core_descriptor_Manifest_Conditions operator(final ConditionOperator operator) {
         this.operator = operator;
         return this;
     }
 
     @Override
-    public Conditions validate() {
+    public #/definitions/io_yupiik_bundlebee_core_descriptor_Manifest_Conditions validate() {
         return this;
     }
 

@@ -26,40 +26,76 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
 
 public class TokenRequest implements Validable<TokenRequest>, Exportable {
-    private String audience;
-    private Integer expirationSeconds;
+    private String apiVersion;
+    private String kind;
+    private ObjectMeta metadata;
+    private TokenRequestSpec spec;
+    private TokenRequestStatus status;
 
     public TokenRequest() {
         // no-op
     }
 
-    public TokenRequest(final String audience,
-                        final Integer expirationSeconds) {
-        this.audience = audience;
-        this.expirationSeconds = expirationSeconds;
+    public TokenRequest(final String apiVersion,
+                        final String kind,
+                        final ObjectMeta metadata,
+                        final TokenRequestSpec spec,
+                        final TokenRequestStatus status) {
+        this.apiVersion = apiVersion;
+        this.kind = kind;
+        this.metadata = metadata;
+        this.spec = spec;
+        this.status = status;
     }
 
-    public String getAudience() {
-        return audience;
+    public String getApiVersion() {
+        return apiVersion;
     }
 
-    public void setAudience(final String audience) {
-        this.audience = audience;
+    public void setApiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
     }
 
-    public Integer getExpirationSeconds() {
-        return expirationSeconds;
+    public String getKind() {
+        return kind;
     }
 
-    public void setExpirationSeconds(final Integer expirationSeconds) {
-        this.expirationSeconds = expirationSeconds;
+    public void setKind(final String kind) {
+        this.kind = kind;
+    }
+
+    public ObjectMeta getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+    }
+
+    public TokenRequestSpec getSpec() {
+        return spec;
+    }
+
+    public void setSpec(final TokenRequestSpec spec) {
+        this.spec = spec;
+    }
+
+    public TokenRequestStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(final TokenRequestStatus status) {
+        this.status = status;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-                audience,
-                expirationSeconds);
+                apiVersion,
+                kind,
+                metadata,
+                spec,
+                status);
     }
 
     @Override
@@ -68,30 +104,54 @@ public class TokenRequest implements Validable<TokenRequest>, Exportable {
             return false;
         }
         final TokenRequest __otherCasted = (TokenRequest) __other;
-        return Objects.equals(audience, __otherCasted.audience) &&
-            Objects.equals(expirationSeconds, __otherCasted.expirationSeconds);
+        return Objects.equals(apiVersion, __otherCasted.apiVersion) &&
+            Objects.equals(kind, __otherCasted.kind) &&
+            Objects.equals(metadata, __otherCasted.metadata) &&
+            Objects.equals(spec, __otherCasted.spec) &&
+            Objects.equals(status, __otherCasted.status);
     }
 
-    public TokenRequest audience(final String audience) {
-        this.audience = audience;
+    public TokenRequest apiVersion(final String apiVersion) {
+        this.apiVersion = apiVersion;
         return this;
     }
 
-    public TokenRequest expirationSeconds(final Integer expirationSeconds) {
-        this.expirationSeconds = expirationSeconds;
+    public TokenRequest kind(final String kind) {
+        this.kind = kind;
+        return this;
+    }
+
+    public TokenRequest metadata(final ObjectMeta metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public TokenRequest spec(final TokenRequestSpec spec) {
+        this.spec = spec;
+        return this;
+    }
+
+    public TokenRequest status(final TokenRequestStatus status) {
+        this.status = status;
         return this;
     }
 
     @Override
     public TokenRequest validate() {
+        if (kind == null) {
+            kind = "TokenRequest";
+        }
+        if (apiVersion == null) {
+            apiVersion = "authentication.k8s.io/v1";
+        }
         List<ValidationException.ValidationError> __errors_jsonSchema = null;
-        if (audience == null) {
+        if (spec == null) {
             if (__errors_jsonSchema == null) {
                 __errors_jsonSchema = new ArrayList<>();
             }
             __errors_jsonSchema.add(new ValidationException.ValidationError(
-                "audience", "audience",
-                "Missing 'audience' attribute.", true));
+                "spec", "spec",
+                "Missing 'spec' attribute.", true));
         }
         if (__errors_jsonSchema != null) {
             throw new ValidationException(__errors_jsonSchema);
@@ -102,8 +162,11 @@ public class TokenRequest implements Validable<TokenRequest>, Exportable {
     @Override
     public String asJson() {
         return Stream.of(
-                    (audience != null ? "\"audience\":\"" +  JsonStrings.escapeJson(audience) + "\"" : ""),
-                    (expirationSeconds != null ? "\"expirationSeconds\":" + expirationSeconds : ""))
+                    (apiVersion != null ? "\"apiVersion\":\"" +  JsonStrings.escapeJson(apiVersion) + "\"" : ""),
+                    (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
+                    (metadata != null ? "\"metadata\":" + metadata.asJson() : ""),
+                    (spec != null ? "\"spec\":" + spec.asJson() : ""),
+                    (status != null ? "\"status\":" + status.asJson() : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
