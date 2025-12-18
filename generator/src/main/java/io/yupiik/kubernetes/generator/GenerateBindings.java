@@ -527,16 +527,22 @@ public final class GenerateBindings {
                         case "object" -> {
                             final var nested = ref.getNested();
                             if (schema.containsKey("properties")) {
-                                if (previousRefs.add(refClassName) && !nested.containsKey(refClassName)) {
-                                    final var className = refName.substring(refName.lastIndexOf('_') + 1);
-                                    nested.putAll(new K8sPojoGenerator(
-                                            new PojoGenerator.PojoConfiguration()
-                                                    .setClassName(className)
-                                                    .setPackageName(packageName)
-                                                    .setOnRef(r -> onRef(definitions, packageName, r, previousRefs, basePackage, useId)),
-                                            schema, basePackage, useId)
-                                            .visitSchema(schema)
-                                            .generate());
+                                if (previousRefs.add(packageName.replace('.', '/') + '/' + refClassName + ".java") &&
+                                        !nested.containsKey(refClassName)) {
+                                    // sanitize the ref if needed - mainly for bundlebee, k8s should be ok-ish
+                                    final var className = refClassName
+                                            .substring(Math.max(refClassName.lastIndexOf('_'), refClassName.lastIndexOf('/')) + 1);
+                                    if (Objects.equals(className, refClassName) ||
+                                            previousRefs.add(packageName.replace('.', '/') + '/' + className + ".java")) {
+                                        nested.putAll(new K8sPojoGenerator(
+                                                new PojoGenerator.PojoConfiguration()
+                                                        .setClassName(className)
+                                                        .setPackageName(packageName)
+                                                        .setOnRef(r -> onRef(definitions, packageName, r, previousRefs, basePackage, useId)),
+                                                schema, basePackage, useId)
+                                                .visitSchema(schema)
+                                                .generate());
+                                    }
                                 }
                                 yield refClassName;
                             }

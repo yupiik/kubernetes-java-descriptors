@@ -25,7 +25,7 @@ import static java.util.stream.Collectors.joining;
 public class EndpointPort implements Validable<EndpointPort>, Exportable {
     private String appProtocol;
     private String name;
-    private Integer port;
+    private int port;
     private String protocol;
 
     public EndpointPort() {
@@ -34,7 +34,7 @@ public class EndpointPort implements Validable<EndpointPort>, Exportable {
 
     public EndpointPort(final String appProtocol,
                         final String name,
-                        final Integer port,
+                        final int port,
                         final String protocol) {
         this.appProtocol = appProtocol;
         this.name = name;
@@ -58,11 +58,11 @@ public class EndpointPort implements Validable<EndpointPort>, Exportable {
         this.name = name;
     }
 
-    public Integer getPort() {
+    public int getPort() {
         return port;
     }
 
-    public void setPort(final Integer port) {
+    public void setPort(final int port) {
         this.port = port;
     }
 
@@ -105,7 +105,7 @@ public class EndpointPort implements Validable<EndpointPort>, Exportable {
         return this;
     }
 
-    public EndpointPort port(final Integer port) {
+    public EndpointPort port(final int port) {
         this.port = port;
         return this;
     }
@@ -125,7 +125,7 @@ public class EndpointPort implements Validable<EndpointPort>, Exportable {
         return Stream.of(
                     (appProtocol != null ? "\"appProtocol\":\"" +  JsonStrings.escapeJson(appProtocol) + "\"" : ""),
                     (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
-                    (port != null ? "\"port\":" + port : ""),
+                    "\"port\":" + port,
                     (protocol != null ? "\"protocol\":\"" +  JsonStrings.escapeJson(protocol) + "\"" : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
