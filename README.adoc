@@ -3,7 +3,7 @@
 :author: Yupiik
 :license: Apache-2.0
 
-image:https://img.shields.io/github/actions/workflow/status/yupiik/kubernetes-java-descriptors/build.yml?branch=main[Build]
+image:https://img.shields.io/github/actions/workflow/status/yupiik/kubernetes-java-descriptors/maven.yml?branch=master[Build]
 image:https://img.shields.io/github/license/yupiik/kubernetes-java-descriptors[License]
 image:https://img.shields.io/maven-central/v/io.yupiik.kubernetes/kubernetes-java-descriptors[Maven Central]
 
