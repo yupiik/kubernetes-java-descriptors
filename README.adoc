@@ -1,3 +1,116 @@
-= Kubernetes Java Descriptors
+= Yupiik Kubernetes Java Descriptors
+:description: Type-safe Java bindings to generate Kubernetes descriptors programmatically.
+:author: Yupiik
+:license: Apache-2.0
 
-Documentation is available at https://www.yupiik.io/kubernetes-java-descriptors/.
+image:https://img.shields.io/github/actions/workflow/status/yupiik/kubernetes-java-descriptors/build.yml?branch=main[Build]
+image:https://img.shields.io/github/license/yupiik/kubernetes-java-descriptors[License]
+image:https://img.shields.io/maven-central/v/io.yupiik.kubernetes/kubernetes-java-descriptors[Maven Central]
+
+== Overview
+
+**Yupiik Kubernetes Java Descriptors** provides **type-safe Java APIs** to generate Kubernetes manifests without writing YAML by hand.
+
+It targets developers who want:
+
+* reproducible Kubernetes descriptors,
+* strong IDE support and compile-time safety,
+* infrastructure generation integrated directly into Java builds and CI/CD pipelines.
+
+Descriptors are generated programmatically and serialized as JSON (or YAML downstream), making them easy to validate, version, and automate.
+
+Documentation:
+https://www.yupiik.io/kubernetes-java-descriptors/
+
+== Why Java Descriptors?
+
+Writing raw YAML does not scale well:
+
+* no refactoring support,
+* late error detection,
+* hard-to-reuse templates.
+
+This project lets you:
+
+* leverage Java types instead of strings,
+* share descriptor logic across projects,
+* generate descriptors dynamically,
+* validate manifests before deployment.
+
+== Features
+
+* Versioned Kubernetes API bindings (aligned with Kubernetes releases)
+* Strongly typed models with fluent builders
+* DSL-friendly design for readable descriptor construction
+* JSON-P / JSON-B based serialization
+* Designed for CI/CD and automation use cases
+* Natural integration with Yupiik BundleBee
+
+== Getting Started
+
+=== Maven Dependency
+
+Choose the artifact matching your target Kubernetes API version:
+
+```xml
+<dependency>
+  <groupId>io.yupiik.kubernetes</groupId>
+  <artifactId>kubernetes-java-${kubernetes-version}</artifactId>
+  <version>1.0.1</version>
+</dependency>
+```
+
+Replace `${kubernetes-version}` with the Kubernetes version you deploy to (for example: `1.34.x`).
+
+=== Example: Generate a Deployment
+
+```java
+final var deployment = new Deployment()
+        .metadata(new ObjectMeta()
+                .name("nginx-deployment")
+                .labels(Map.of("app", "nginx")))
+        .spec(new DeploymentSpec()
+                .replicas(3)
+                .selector(new LabelSelector()
+                        .matchLabels(Map.of("app", "nginx")))
+                .template(new PodTemplateSpec()
+                        .metadata(new ObjectMeta()
+                                .labels(Map.of("app", "nginx")))
+                        .spec(new PodSpec()
+                                .containers(List.of(new Container()
+                                        .name("nginx")
+                                        .image("nginx:1.14.2")
+                                        .ports(List.of(new ContainerPort()
+                                                .containerPort(80))))))));
+
+final String json = deployment.validate().asJson();
+```
+
+Generated descriptors can be written to disk, validated, or post-processed as part of your build.
+
+== CI/CD Usage
+
+A common pattern is to generate Kubernetes descriptors during the build:
+
+```bash
+mvn clean package
+```
+
+Your generator code can output manifests under a target directory, which can then be applied, packaged, or validated by your deployment tooling.
+
+== BundleBee Integration
+
+This project integrates seamlessly with **Yupiik BundleBee**, enabling higher-level Kubernetes packaging and deployment workflows built on top of the same Java descriptors.
+
+== Contributing
+
+Contributions are welcome ❤️  
+Feel free to:
+
+* open issues to discuss ideas or bugs,
+* submit pull requests,
+* improve documentation or examples.
+
+== License
+
+This project is licensed under the Apache License, Version 2.0.
