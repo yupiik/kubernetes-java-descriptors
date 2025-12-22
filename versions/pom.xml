@@ -36,5 +36,6 @@
     <module>kubernetes-java-1.32.x</module>
     <module>kubernetes-java-1.33.x</module>
     <module>kubernetes-java-1.34.x</module>
+    <module>kubernetes-java-1.35.x</module>
   </modules>
 </project>
