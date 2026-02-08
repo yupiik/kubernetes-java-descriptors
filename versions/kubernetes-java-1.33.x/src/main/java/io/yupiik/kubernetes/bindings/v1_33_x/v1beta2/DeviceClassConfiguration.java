@@ -72,4 +72,9 @@ public class DeviceClassConfiguration implements Validable<DeviceClassConfigurat
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

@@ -153,4 +153,9 @@ public class ResourceClassParametersReference implements Validable<ResourceClass
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

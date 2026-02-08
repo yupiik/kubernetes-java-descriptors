@@ -113,4 +113,9 @@ public class DriverRequests implements Validable<DriverRequests>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

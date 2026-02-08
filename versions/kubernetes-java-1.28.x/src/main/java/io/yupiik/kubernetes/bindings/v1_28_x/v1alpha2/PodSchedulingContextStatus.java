@@ -73,4 +73,9 @@ public class PodSchedulingContextStatus implements Validable<PodSchedulingContex
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

@@ -88,4 +88,9 @@ public class NamedResourcesRequest implements Validable<NamedResourcesRequest>, 
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

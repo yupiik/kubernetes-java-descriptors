@@ -134,4 +134,9 @@ public class PodFailurePolicyRule implements Validable<PodFailurePolicyRule>, Ex
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

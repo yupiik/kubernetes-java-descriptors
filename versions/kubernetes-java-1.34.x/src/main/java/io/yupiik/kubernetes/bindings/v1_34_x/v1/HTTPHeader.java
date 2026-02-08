@@ -115,4 +115,9 @@ public class HTTPHeader implements Validable<HTTPHeader>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

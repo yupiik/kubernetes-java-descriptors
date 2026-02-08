@@ -186,4 +186,9 @@ public class LimitRangeItem implements Validable<LimitRangeItem>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

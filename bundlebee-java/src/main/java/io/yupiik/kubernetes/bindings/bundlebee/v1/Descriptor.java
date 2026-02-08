@@ -209,6 +209,11 @@ public class Descriptor implements Validable<Descriptor>, Exportable {
                 .collect(joining(",", "{", "}"));
     }
 
+    @Override
+    public String toString() {
+        return asJson();
+    }
+
     @JsonbTransient
     private transient Object underlyingDescriptor;
 

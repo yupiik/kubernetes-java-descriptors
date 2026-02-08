@@ -107,4 +107,9 @@ public class LimitResponse implements Validable<LimitResponse>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

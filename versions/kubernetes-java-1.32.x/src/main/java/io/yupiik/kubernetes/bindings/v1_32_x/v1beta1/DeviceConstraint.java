@@ -93,4 +93,9 @@ public class DeviceConstraint implements Validable<DeviceConstraint>, Exportable
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

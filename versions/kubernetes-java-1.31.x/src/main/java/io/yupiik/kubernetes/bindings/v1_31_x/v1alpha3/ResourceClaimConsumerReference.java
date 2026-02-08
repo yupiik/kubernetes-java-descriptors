@@ -161,4 +161,9 @@ public class ResourceClaimConsumerReference implements Validable<ResourceClaimCo
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

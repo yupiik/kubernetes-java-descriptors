@@ -41,8 +41,9 @@ public enum JsonPointerOperator implements Exportable {
         this.value = value;
     }
 
+    @Override
     public String toString() {
-        return value;
+        return asJson();
     }
 
     @Override

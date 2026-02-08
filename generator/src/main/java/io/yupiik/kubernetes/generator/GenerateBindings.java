@@ -226,6 +226,33 @@ public final class GenerateBindings {
                 "      <plugin>\n" +
                 "        <groupId>org.apache.maven.plugins</groupId>\n" +
                 "        <artifactId>maven-shade-plugin</artifactId>\n" +
+                "        <executions>\n" +
+                "          <execution>\n" +
+                "            <!-- also JSON-P less to ease it to be embedded, contract is just that the generic instances are toString() friendly -->\n" +
+                "            <id>versionless</id>\n" +
+                "            <phase>package</phase>\n" +
+                "            <goals>\n" +
+                "              <goal>shade</goal>\n" +
+                "            </goals>\n" +
+                "            <configuration>\n" +
+                "              <shadedClassifierName>versionless</shadedClassifierName>\n" +
+                "              <shadeSourcesContent>true</shadeSourcesContent>\n" +
+                "              <relocations>\n" +
+                "                <relocation>\n" +
+                "                  <pattern>io.yupiik.kubernetes.bindings.v" + pomVersion.replace('.', '_') + "</pattern>\n" +
+                "                  <shadedPattern>io.yupiik.kubernetes.bindings</shadedPattern>\n" +
+                "                </relocation>\n" +
+                "              </relocations>\n" +
+                "              <artifactSet>\n" +
+                "                <excludes>\n" +
+                "                  <exclude>jakarta.json:*</exclude>\n" +
+                "                  <exclude>jakarta.json.bind:*</exclude>\n" +
+                "                  <exclude>org.apache.johnzon:*</exclude>\n" +
+                "                </excludes>\n" +
+                "              </artifactSet>\n" +
+                "            </configuration>\n" +
+                "          </execution>\n" +
+                "        </executions>\n" +
                 "      </plugin>\n" +
                 "    </plugins>\n" +
                 "  </build>\n" +
@@ -898,8 +925,27 @@ public final class GenerateBindings {
         }
 
         @Override
+        protected String onEnum(final String javaName, JsonValue enumList, JsonObject schema) {
+            final var res = super.onEnum(javaName, enumList, schema);
+            final var key = conf.getPackageName().replace('.', '/') + '/' + enumName(javaName, schema) + ".java";
+            final var content = requireNonNull(nested.get(key), () -> "Missing '" + key + "', available: " + nested.keySet());
+            // we override the toString() to be asJson() so drop default toString(), see beforeEnumEnd()
+            nested.put(key, content.replace(
+                    "\n" +
+                            "    public String toString() {\n" +
+                            "        return value;\n" +
+                            "    }\n", ""));
+            return res;
+        }
+
+        @Override
         protected String beforeEnumEnd() {
             return (!lastEnumHasInjection ? "    ;\n" : "") +
+                    "\n" +
+                    "    @Override\n" +
+                    "    public String toString() {\n" +
+                    "        return asJson();\n" +
+                    "    }\n" +
                     "\n" +
                     "    @Override\n" +
                     "    public String asJson() {\n" +
@@ -934,6 +980,10 @@ public final class GenerateBindings {
                     "\n" + generateFluentSetter() +
                     "\n" + validator +
                     "\n" + asJson +
+                    "\n    @Override\n" +
+                    "    public String toString() {\n" +
+                    "        return asJson();\n" +
+                    "    }\n" +
                     classSpecificMethods());
         }
 

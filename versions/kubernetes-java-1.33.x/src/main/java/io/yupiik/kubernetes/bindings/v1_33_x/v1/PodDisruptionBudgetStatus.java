@@ -188,4 +188,9 @@ public class PodDisruptionBudgetStatus implements Validable<PodDisruptionBudgetS
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

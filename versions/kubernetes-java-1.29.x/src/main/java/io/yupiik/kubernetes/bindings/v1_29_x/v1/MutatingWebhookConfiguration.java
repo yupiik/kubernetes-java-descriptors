@@ -137,4 +137,9 @@ public class MutatingWebhookConfiguration implements Validable<MutatingWebhookCo
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

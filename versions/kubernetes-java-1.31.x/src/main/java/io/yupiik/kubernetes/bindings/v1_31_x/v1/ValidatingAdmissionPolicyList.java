@@ -151,4 +151,9 @@ public class ValidatingAdmissionPolicyList implements Validable<ValidatingAdmiss
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

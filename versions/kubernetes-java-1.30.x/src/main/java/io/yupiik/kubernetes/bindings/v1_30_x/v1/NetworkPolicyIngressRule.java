@@ -92,4 +92,9 @@ public class NetworkPolicyIngressRule implements Validable<NetworkPolicyIngressR
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

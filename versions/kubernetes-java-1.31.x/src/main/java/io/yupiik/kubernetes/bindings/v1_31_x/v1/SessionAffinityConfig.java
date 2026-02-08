@@ -72,4 +72,9 @@ public class SessionAffinityConfig implements Validable<SessionAffinityConfig>, 
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

@@ -207,4 +207,9 @@ public class CustomResourceDefinitionSpec implements Validable<CustomResourceDef
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

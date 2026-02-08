@@ -72,4 +72,9 @@ public class ScaleSpec implements Validable<ScaleSpec>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

@@ -151,4 +151,9 @@ public class ValidatingAdmissionPolicyBindingList implements Validable<Validatin
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

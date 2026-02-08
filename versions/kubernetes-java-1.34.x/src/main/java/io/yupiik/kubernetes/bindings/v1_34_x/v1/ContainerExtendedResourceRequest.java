@@ -142,4 +142,9 @@ public class ContainerExtendedResourceRequest implements Validable<ContainerExte
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

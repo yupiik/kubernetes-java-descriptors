@@ -73,4 +73,9 @@ public class LoadBalancerStatus implements Validable<LoadBalancerStatus>, Export
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

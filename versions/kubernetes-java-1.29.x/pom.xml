@@ -38,6 +38,33 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
+        <executions>
+          <execution>
+            <!-- also JSON-P less to ease it to be embedded, contract is just that the generic instances are toString() friendly -->
+            <id>versionless</id>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <shadedClassifierName>versionless</shadedClassifierName>
+              <shadeSourcesContent>true</shadeSourcesContent>
+              <relocations>
+                <relocation>
+                  <pattern>io.yupiik.kubernetes.bindings.v1_29_x</pattern>
+                  <shadedPattern>io.yupiik.kubernetes.bindings</shadedPattern>
+                </relocation>
+              </relocations>
+              <artifactSet>
+                <excludes>
+                  <exclude>jakarta.json:*</exclude>
+                  <exclude>jakarta.json.bind:*</exclude>
+                  <exclude>org.apache.johnzon:*</exclude>
+                </excludes>
+              </artifactSet>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

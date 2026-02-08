@@ -149,4 +149,9 @@ public class ContainerPort implements Validable<ContainerPort>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

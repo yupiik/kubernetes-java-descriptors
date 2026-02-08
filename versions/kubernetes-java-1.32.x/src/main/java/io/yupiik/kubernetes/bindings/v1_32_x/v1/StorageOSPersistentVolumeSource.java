@@ -149,4 +149,9 @@ public class StorageOSPersistentVolumeSource implements Validable<StorageOSPersi
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

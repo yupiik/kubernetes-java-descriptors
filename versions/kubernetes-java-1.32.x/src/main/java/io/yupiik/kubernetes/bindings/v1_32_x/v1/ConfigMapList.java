@@ -151,4 +151,9 @@ public class ConfigMapList implements Validable<ConfigMapList>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

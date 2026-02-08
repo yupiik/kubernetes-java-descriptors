@@ -112,4 +112,9 @@ public class CronJobStatus implements Validable<CronJobStatus>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

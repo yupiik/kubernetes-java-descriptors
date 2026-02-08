@@ -129,4 +129,9 @@ public class LifecycleHandler implements Validable<LifecycleHandler>, Exportable
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

@@ -92,4 +92,9 @@ public class ServiceStatus implements Validable<ServiceStatus>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

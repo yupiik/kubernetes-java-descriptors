@@ -72,4 +72,9 @@ public class SelfSubjectReviewStatus implements Validable<SelfSubjectReviewStatu
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

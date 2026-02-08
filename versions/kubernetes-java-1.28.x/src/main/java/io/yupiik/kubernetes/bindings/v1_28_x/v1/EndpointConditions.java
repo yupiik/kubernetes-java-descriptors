@@ -110,4 +110,9 @@ public class EndpointConditions implements Validable<EndpointConditions>, Export
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

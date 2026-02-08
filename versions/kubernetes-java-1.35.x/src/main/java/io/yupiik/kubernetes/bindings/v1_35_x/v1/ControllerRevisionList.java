@@ -151,4 +151,9 @@ public class ControllerRevisionList implements Validable<ControllerRevisionList>
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

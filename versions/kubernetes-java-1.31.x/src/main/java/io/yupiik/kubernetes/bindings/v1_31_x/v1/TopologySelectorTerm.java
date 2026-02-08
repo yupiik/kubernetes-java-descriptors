@@ -73,4 +73,9 @@ public class TopologySelectorTerm implements Validable<TopologySelectorTerm>, Ex
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

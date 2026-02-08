@@ -134,4 +134,9 @@ public class TypedLocalObjectReference implements Validable<TypedLocalObjectRefe
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

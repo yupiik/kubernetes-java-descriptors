@@ -180,4 +180,9 @@ public class ResourcePolicyRule implements Validable<ResourcePolicyRule>, Export
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

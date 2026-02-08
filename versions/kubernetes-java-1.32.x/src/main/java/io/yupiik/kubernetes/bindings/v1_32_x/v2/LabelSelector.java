@@ -96,4 +96,9 @@ public class LabelSelector implements Validable<LabelSelector>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

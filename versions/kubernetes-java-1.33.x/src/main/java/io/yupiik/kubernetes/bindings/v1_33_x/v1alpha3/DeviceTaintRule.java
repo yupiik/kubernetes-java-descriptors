@@ -151,4 +151,9 @@ public class DeviceTaintRule implements Validable<DeviceTaintRule>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

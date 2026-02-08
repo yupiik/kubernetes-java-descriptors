@@ -72,4 +72,9 @@ public class CustomResourceValidation implements Validable<CustomResourceValidat
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

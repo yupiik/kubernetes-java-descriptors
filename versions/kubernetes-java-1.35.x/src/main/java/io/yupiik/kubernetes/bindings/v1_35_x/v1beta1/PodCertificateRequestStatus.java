@@ -150,4 +150,9 @@ public class PodCertificateRequestStatus implements Validable<PodCertificateRequ
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

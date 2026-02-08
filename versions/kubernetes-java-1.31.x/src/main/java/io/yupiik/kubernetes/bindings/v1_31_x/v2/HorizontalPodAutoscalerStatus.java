@@ -169,4 +169,9 @@ public class HorizontalPodAutoscalerStatus implements Validable<HorizontalPodAut
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

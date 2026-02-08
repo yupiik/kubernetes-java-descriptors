@@ -131,4 +131,9 @@ public class SecretVolumeSource implements Validable<SecretVolumeSource>, Export
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

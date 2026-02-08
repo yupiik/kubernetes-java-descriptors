@@ -130,4 +130,9 @@ public class ClusterCIDRSpec implements Validable<ClusterCIDRSpec>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

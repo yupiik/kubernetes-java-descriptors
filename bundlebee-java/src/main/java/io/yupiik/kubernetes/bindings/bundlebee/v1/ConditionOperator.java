@@ -23,6 +23,11 @@ public enum ConditionOperator implements Exportable {
     ;
 
     @Override
+    public String toString() {
+        return asJson();
+    }
+
+    @Override
     public String asJson() {
         return "\"" + name() + "\"";
     }

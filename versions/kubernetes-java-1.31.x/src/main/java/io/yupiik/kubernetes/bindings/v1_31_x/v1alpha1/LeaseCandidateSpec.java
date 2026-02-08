@@ -191,4 +191,9 @@ public class LeaseCandidateSpec implements Validable<LeaseCandidateSpec>, Export
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

@@ -151,4 +151,9 @@ public class StatefulSetList implements Validable<StatefulSetList>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

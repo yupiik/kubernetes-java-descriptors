@@ -229,4 +229,9 @@ public class RBDPersistentVolumeSource implements Validable<RBDPersistentVolumeS
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

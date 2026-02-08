@@ -170,4 +170,9 @@ public class SubjectAccessReviewSpec implements Validable<SubjectAccessReviewSpe
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }
