@@ -350,23 +350,23 @@ public final class GenerateBindings {
                 "public class JsonValue {\n" +
                 "    private final String value;\n" +
                 "\n" +
-                "    private JsonValue(final Boolean value) {\n" +
+                "    public JsonValue(final Boolean value) {\n" +
                 "        this.value = value == null ? null : String.valueOf(value);\n" +
                 "    }\n" +
                 "\n" +
-                "    private JsonValue(final Number value) {\n" +
+                "    public JsonValue(final Number value) {\n" +
                 "        this.value = value == null ? null : String.valueOf(value);\n" +
                 "    }\n" +
                 "\n" +
-                "    private JsonValue(final String value) {\n" +
-                "        this.value = value == null ? null : JsonStrings.escapeJson(value);\n" +
+                "    public JsonValue(final String value) {\n" +
+                "        this.value = value == null ? null : ('\"' + JsonStrings.escapeJson(value) + '\"');\n" +
                 "    }\n" +
                 "\n" +
-                "    private JsonValue(final JsonObject value) {\n" +
+                "    public JsonValue(final JsonObject value) {\n" +
                 "        this.value = value == null ? null : value.toString();\n" +
                 "    }\n" +
                 "\n" +
-                "    private JsonValue(final JsonArray value) {\n" +
+                "    public JsonValue(final JsonArray value) {\n" +
                 "        this.value = value == null ? null : value.toString();\n" +
                 "    }\n" +
                 "\n" +
@@ -537,12 +537,10 @@ public final class GenerateBindings {
                 "                writeJsonValue(keyval.getKey(), keyval.getValue());\n" +
                 "            }\n" +
                 "            writeEnd();\n" +
-                "        } else if (value instanceof JsonValue) {\n" +
-                "            final var v = (JsonValue) value;\n" +
+                "        } else {\n" +
+                "            final var v = tryJsonValue(value);\n" +
                 "            writeKey(name);\n" +
                 "            writeValue(v.toString());\n" +
-                "        } else {\n" +
-                "            throw new IllegalStateException(\"Unsupported type: \" + value);\n" +
                 "        }\n" +
                 "    }\n" +
                 "\n" +
@@ -561,12 +559,31 @@ public final class GenerateBindings {
                 "                writeJsonValue(keyval.getKey(), keyval.getValue());\n" +
                 "            }\n" +
                 "            writeEnd();\n" +
-                "        } else if (value instanceof JsonValue) {\n" +
-                "            final var v = (JsonValue) value;\n" +
-                "            writeValue(v.toString());\n" +
                 "        } else {\n" +
-                "            throw new IllegalStateException(\"Unsupported type: \" + value);\n" +
+                "            writeValue(tryJsonValue(value).toString());\n" +
                 "        }\n" +
+                "    }\n" +
+                "\n" +
+                "    private JsonValue tryJsonValue(final Object value) {\n" +
+                "        if (value instanceof JsonValue) {\n" +
+                "            return (JsonValue) value;\n" +
+                "        }\n" +
+                "        if (value instanceof JsonArray) {\n" +
+                "            return new JsonValue((JsonArray) value);\n" +
+                "        }\n" +
+                "        if (value instanceof JsonObject) {\n" +
+                "            return new JsonValue((JsonObject) value);\n" +
+                "        }\n" +
+                "        if (value instanceof CharSequence) {\n" +
+                "            return new JsonValue(((CharSequence) value).toString());\n" +
+                "        }\n" +
+                "        if (value instanceof Number) {\n" +
+                "            return new JsonValue(((Number) value));\n" +
+                "        }\n" +
+                "        if (value instanceof Boolean) {\n" +
+                "            return new JsonValue(((Boolean) value));\n" +
+                "        }\n" +
+                "        throw new IllegalArgumentException(\"Unsupported type: \" + value + \" (\" + value.getClass() + \")\");\n" +
                 "    }\n" +
                 "\n" +
                 "    public void writeEnd() {\n" +
