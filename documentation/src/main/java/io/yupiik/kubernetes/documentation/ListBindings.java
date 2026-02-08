@@ -68,12 +68,6 @@ public class ListBindings implements Runnable {
                             "  <artifactId>kubernetes-java-" + it + "</artifactId>\n" +
                             "  <version>${kubernetes-java-descriptors.version}</version>\n" +
                             "</dependency>\n" +
-                            "<dependency> <!-- JSON-P/JSON-B dependencies if needed -->\n" +
-                            "  <groupId>io.yupiik.uship</groupId>\n" +
-                            "  <artifactId>backbone-johnzon</artifactId>\n" +
-                            "  <version>" + ushipVersion + "</version>\n" +
-                            "  <type>pom</type>\n" +
-                            "</dependency>\n" +
                             "----\n" +
                             "\n")
                     .collect(joining());

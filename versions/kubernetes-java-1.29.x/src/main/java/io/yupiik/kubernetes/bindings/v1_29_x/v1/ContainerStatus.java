@@ -19,7 +19,7 @@ import io.yupiik.kubernetes.bindings.v1_29_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_29_x.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_29_x.Validable;
 import io.yupiik.kubernetes.bindings.v1_29_x.ValidationException;
-import jakarta.json.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_29_x.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;

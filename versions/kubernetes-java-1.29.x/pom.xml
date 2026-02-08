@@ -55,13 +55,6 @@
                   <shadedPattern>io.yupiik.kubernetes.bindings</shadedPattern>
                 </relocation>
               </relocations>
-              <artifactSet>
-                <excludes>
-                  <exclude>jakarta.json:*</exclude>
-                  <exclude>jakarta.json.bind:*</exclude>
-                  <exclude>org.apache.johnzon:*</exclude>
-                </excludes>
-              </artifactSet>
             </configuration>
           </execution>
         </executions>

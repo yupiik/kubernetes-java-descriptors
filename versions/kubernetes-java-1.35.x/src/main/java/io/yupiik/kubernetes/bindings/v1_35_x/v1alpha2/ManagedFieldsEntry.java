@@ -18,7 +18,7 @@ package io.yupiik.kubernetes.bindings.v1_35_x.v1alpha2;
 import io.yupiik.kubernetes.bindings.v1_35_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_35_x.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_35_x.Validable;
-import jakarta.json.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_35_x.JsonObject;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
