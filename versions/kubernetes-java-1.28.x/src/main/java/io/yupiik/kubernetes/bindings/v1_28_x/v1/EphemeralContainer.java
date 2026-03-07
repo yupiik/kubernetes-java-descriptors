@@ -544,4 +544,9 @@ public class EphemeralContainer implements Validable<EphemeralContainer>, Export
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

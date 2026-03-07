@@ -134,4 +134,9 @@ public class FieldSelectorRequirement implements Validable<FieldSelectorRequirem
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

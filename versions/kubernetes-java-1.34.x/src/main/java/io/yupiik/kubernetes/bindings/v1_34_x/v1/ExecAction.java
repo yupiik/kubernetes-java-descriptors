@@ -74,4 +74,9 @@ public class ExecAction implements Validable<ExecAction>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

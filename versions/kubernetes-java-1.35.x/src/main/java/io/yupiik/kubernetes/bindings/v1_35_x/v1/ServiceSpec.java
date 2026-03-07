@@ -438,4 +438,9 @@ public class ServiceSpec implements Validable<ServiceSpec>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

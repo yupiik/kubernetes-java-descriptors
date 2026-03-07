@@ -151,4 +151,9 @@ public class IngressList implements Validable<IngressList>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

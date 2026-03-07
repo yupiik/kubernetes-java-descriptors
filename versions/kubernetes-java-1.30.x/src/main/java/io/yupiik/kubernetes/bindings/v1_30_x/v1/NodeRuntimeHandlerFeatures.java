@@ -72,4 +72,9 @@ public class NodeRuntimeHandlerFeatures implements Validable<NodeRuntimeHandlerF
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

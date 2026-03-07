@@ -151,4 +151,9 @@ public class SecretList implements Validable<SecretList>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

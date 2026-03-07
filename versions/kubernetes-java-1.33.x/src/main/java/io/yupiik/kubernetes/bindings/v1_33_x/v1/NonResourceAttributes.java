@@ -92,4 +92,9 @@ public class NonResourceAttributes implements Validable<NonResourceAttributes>, 
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

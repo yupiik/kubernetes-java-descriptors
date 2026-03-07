@@ -18,7 +18,7 @@ package io.yupiik.kubernetes.bindings.v1_30_x.v1;
 import io.yupiik.kubernetes.bindings.v1_30_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_30_x.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_30_x.Validable;
-import jakarta.json.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_30_x.JsonObject;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -644,5 +644,10 @@ public class PersistentVolumeSpec implements Validable<PersistentVolumeSpec>, Ex
                     (vsphereVolume != null ? "\"vsphereVolume\":" + vsphereVolume.asJson() : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

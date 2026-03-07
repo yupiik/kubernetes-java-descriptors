@@ -115,4 +115,9 @@ public class ExpressionWarning implements Validable<ExpressionWarning>, Exportab
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

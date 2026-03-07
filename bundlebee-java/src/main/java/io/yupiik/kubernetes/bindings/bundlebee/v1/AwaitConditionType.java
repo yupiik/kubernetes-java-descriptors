@@ -31,8 +31,9 @@ public enum AwaitConditionType implements Exportable {
         this.value = value;
     }
 
+    @Override
     public String toString() {
-        return value;
+        return asJson();
     }
 
     @Override

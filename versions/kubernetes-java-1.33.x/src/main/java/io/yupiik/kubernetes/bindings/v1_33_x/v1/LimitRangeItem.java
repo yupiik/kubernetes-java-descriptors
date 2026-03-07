@@ -19,7 +19,7 @@ import io.yupiik.kubernetes.bindings.v1_33_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_33_x.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_33_x.Validable;
 import io.yupiik.kubernetes.bindings.v1_33_x.ValidationException;
-import jakarta.json.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_33_x.JsonObject;
 import jakarta.json.bind.annotation.JsonbProperty;
 import java.util.ArrayList;
 import java.util.List;
@@ -185,5 +185,10 @@ public class LimitRangeItem implements Validable<LimitRangeItem>, Exportable {
                     (type != null ? "\"type\":\"" +  JsonStrings.escapeJson(type) + "\"" : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

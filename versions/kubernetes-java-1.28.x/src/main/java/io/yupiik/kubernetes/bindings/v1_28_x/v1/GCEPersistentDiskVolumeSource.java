@@ -145,4 +145,9 @@ public class GCEPersistentDiskVolumeSource implements Validable<GCEPersistentDis
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

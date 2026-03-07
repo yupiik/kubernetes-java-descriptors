@@ -151,4 +151,9 @@ public class FlowSchemaList implements Validable<FlowSchemaList>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

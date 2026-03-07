@@ -26,31 +26,31 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
 
 public class Subject implements Validable<Subject>, Exportable {
-    private GroupSubject group;
+    private String apiGroup;
     private String kind;
-    private ServiceAccountSubject serviceAccount;
-    private UserSubject user;
+    private String name;
+    private String namespace;
 
     public Subject() {
         // no-op
     }
 
-    public Subject(final GroupSubject group,
+    public Subject(final String apiGroup,
                    final String kind,
-                   final ServiceAccountSubject serviceAccount,
-                   final UserSubject user) {
-        this.group = group;
+                   final String name,
+                   final String namespace) {
+        this.apiGroup = apiGroup;
         this.kind = kind;
-        this.serviceAccount = serviceAccount;
-        this.user = user;
+        this.name = name;
+        this.namespace = namespace;
     }
 
-    public GroupSubject getGroup() {
-        return group;
+    public String getApiGroup() {
+        return apiGroup;
     }
 
-    public void setGroup(final GroupSubject group) {
-        this.group = group;
+    public void setApiGroup(final String apiGroup) {
+        this.apiGroup = apiGroup;
     }
 
     public String getKind() {
@@ -61,29 +61,29 @@ public class Subject implements Validable<Subject>, Exportable {
         this.kind = kind;
     }
 
-    public ServiceAccountSubject getServiceAccount() {
-        return serviceAccount;
+    public String getName() {
+        return name;
     }
 
-    public void setServiceAccount(final ServiceAccountSubject serviceAccount) {
-        this.serviceAccount = serviceAccount;
+    public void setName(final String name) {
+        this.name = name;
     }
 
-    public UserSubject getUser() {
-        return user;
+    public String getNamespace() {
+        return namespace;
     }
 
-    public void setUser(final UserSubject user) {
-        this.user = user;
+    public void setNamespace(final String namespace) {
+        this.namespace = namespace;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(
-                group,
+                apiGroup,
                 kind,
-                serviceAccount,
-                user);
+                name,
+                namespace);
     }
 
     @Override
@@ -92,14 +92,14 @@ public class Subject implements Validable<Subject>, Exportable {
             return false;
         }
         final Subject __otherCasted = (Subject) __other;
-        return Objects.equals(group, __otherCasted.group) &&
+        return Objects.equals(apiGroup, __otherCasted.apiGroup) &&
             Objects.equals(kind, __otherCasted.kind) &&
-            Objects.equals(serviceAccount, __otherCasted.serviceAccount) &&
-            Objects.equals(user, __otherCasted.user);
+            Objects.equals(name, __otherCasted.name) &&
+            Objects.equals(namespace, __otherCasted.namespace);
     }
 
-    public Subject group(final GroupSubject group) {
-        this.group = group;
+    public Subject apiGroup(final String apiGroup) {
+        this.apiGroup = apiGroup;
         return this;
     }
 
@@ -108,13 +108,13 @@ public class Subject implements Validable<Subject>, Exportable {
         return this;
     }
 
-    public Subject serviceAccount(final ServiceAccountSubject serviceAccount) {
-        this.serviceAccount = serviceAccount;
+    public Subject name(final String name) {
+        this.name = name;
         return this;
     }
 
-    public Subject user(final UserSubject user) {
-        this.user = user;
+    public Subject namespace(final String namespace) {
+        this.namespace = namespace;
         return this;
     }
 
@@ -129,6 +129,14 @@ public class Subject implements Validable<Subject>, Exportable {
                 "kind", "kind",
                 "Missing 'kind' attribute.", true));
         }
+        if (name == null) {
+            if (__errors_jsonSchema == null) {
+                __errors_jsonSchema = new ArrayList<>();
+            }
+            __errors_jsonSchema.add(new ValidationException.ValidationError(
+                "name", "name",
+                "Missing 'name' attribute.", true));
+        }
         if (__errors_jsonSchema != null) {
             throw new ValidationException(__errors_jsonSchema);
         }
@@ -138,11 +146,16 @@ public class Subject implements Validable<Subject>, Exportable {
     @Override
     public String asJson() {
         return Stream.of(
-                    (group != null ? "\"group\":" + group.asJson() : ""),
+                    (apiGroup != null ? "\"apiGroup\":\"" +  JsonStrings.escapeJson(apiGroup) + "\"" : ""),
                     (kind != null ? "\"kind\":\"" +  JsonStrings.escapeJson(kind) + "\"" : ""),
-                    (serviceAccount != null ? "\"serviceAccount\":" + serviceAccount.asJson() : ""),
-                    (user != null ? "\"user\":" + user.asJson() : ""))
+                    (name != null ? "\"name\":\"" +  JsonStrings.escapeJson(name) + "\"" : ""),
+                    (namespace != null ? "\"namespace\":\"" +  JsonStrings.escapeJson(namespace) + "\"" : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

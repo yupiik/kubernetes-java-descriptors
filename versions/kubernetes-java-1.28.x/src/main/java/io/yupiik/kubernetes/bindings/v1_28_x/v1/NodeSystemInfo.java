@@ -331,4 +331,9 @@ public class NodeSystemInfo implements Validable<NodeSystemInfo>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

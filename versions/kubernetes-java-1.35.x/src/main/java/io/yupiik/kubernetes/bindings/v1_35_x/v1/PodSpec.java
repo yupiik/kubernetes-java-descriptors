@@ -19,7 +19,7 @@ import io.yupiik.kubernetes.bindings.v1_35_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_35_x.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_35_x.Validable;
 import io.yupiik.kubernetes.bindings.v1_35_x.ValidationException;
-import jakarta.json.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_35_x.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -870,5 +870,10 @@ public class PodSpec implements Validable<PodSpec>, Exportable {
                     (workloadRef != null ? "\"workloadRef\":" + workloadRef.asJson() : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

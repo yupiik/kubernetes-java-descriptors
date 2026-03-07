@@ -92,4 +92,9 @@ public class ServiceBackendPort implements Validable<ServiceBackendPort>, Export
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

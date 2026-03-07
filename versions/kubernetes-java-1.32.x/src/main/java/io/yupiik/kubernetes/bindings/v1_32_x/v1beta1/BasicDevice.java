@@ -17,7 +17,7 @@ package io.yupiik.kubernetes.bindings.v1_32_x.v1beta1;
 
 import io.yupiik.kubernetes.bindings.v1_32_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_32_x.Validable;
-import jakarta.json.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_32_x.JsonObject;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -91,5 +91,10 @@ public class BasicDevice implements Validable<BasicDevice>, Exportable {
                     (capacity != null ? "\"capacity\":" + capacity : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

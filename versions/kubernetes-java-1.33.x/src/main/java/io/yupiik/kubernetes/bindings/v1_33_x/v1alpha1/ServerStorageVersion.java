@@ -131,4 +131,9 @@ public class ServerStorageVersion implements Validable<ServerStorageVersion>, Ex
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

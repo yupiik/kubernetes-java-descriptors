@@ -193,4 +193,9 @@ public class PriorityClass implements Validable<PriorityClass>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

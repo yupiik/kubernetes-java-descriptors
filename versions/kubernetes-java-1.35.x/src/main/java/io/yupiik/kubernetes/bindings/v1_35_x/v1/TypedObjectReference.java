@@ -153,4 +153,9 @@ public class TypedObjectReference implements Validable<TypedObjectReference>, Ex
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

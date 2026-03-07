@@ -91,4 +91,9 @@ public class SelfSubjectAccessReviewSpec implements Validable<SelfSubjectAccessR
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

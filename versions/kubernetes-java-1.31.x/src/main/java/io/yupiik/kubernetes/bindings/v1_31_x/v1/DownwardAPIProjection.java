@@ -73,4 +73,9 @@ public class DownwardAPIProjection implements Validable<DownwardAPIProjection>, 
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

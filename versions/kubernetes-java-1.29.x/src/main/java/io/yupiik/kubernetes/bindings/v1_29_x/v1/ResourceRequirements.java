@@ -17,7 +17,7 @@ package io.yupiik.kubernetes.bindings.v1_29_x.v1;
 
 import io.yupiik.kubernetes.bindings.v1_29_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_29_x.Validable;
-import jakarta.json.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_29_x.JsonObject;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -111,5 +111,10 @@ public class ResourceRequirements implements Validable<ResourceRequirements>, Ex
                     (requests != null ? "\"requests\":" + requests : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

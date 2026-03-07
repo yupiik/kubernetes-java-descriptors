@@ -1,6 +1,4 @@
-//DEPS org.apache.geronimo.specs:geronimo-json_1.1_spec:1.4:jakarta
-//DEPS org.apache.johnzon:johnzon-core:1.2.18:jakarta
-//DEPS io.yupiik.kubernetes:kubernetes-java-1.24.3:1.0-SNAPSHOT
+//DEPS io.yupiik.kubernetes:kubernetes-java-1.35.x:1.0.2-SNAPSHOT
 
 import io.yupiik.kubernetes.bindings.v1_24_3.v1.*;
 import java.io.*;

@@ -164,4 +164,9 @@ public class PolicyRule implements Validable<PolicyRule>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

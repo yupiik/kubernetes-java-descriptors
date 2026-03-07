@@ -151,4 +151,9 @@ public class EndpointsList implements Validable<EndpointsList>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

@@ -151,4 +151,9 @@ public class PriorityLevelConfigurationList implements Validable<PriorityLevelCo
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

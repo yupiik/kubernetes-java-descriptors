@@ -155,4 +155,9 @@ public class PersistentVolume implements Validable<PersistentVolume>, Exportable
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

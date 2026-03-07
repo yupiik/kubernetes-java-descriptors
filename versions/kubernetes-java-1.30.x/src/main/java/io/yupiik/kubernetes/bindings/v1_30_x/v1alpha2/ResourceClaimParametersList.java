@@ -151,4 +151,9 @@ public class ResourceClaimParametersList implements Validable<ResourceClaimParam
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

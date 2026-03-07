@@ -226,6 +226,26 @@ public final class GenerateBindings {
                 "      <plugin>\n" +
                 "        <groupId>org.apache.maven.plugins</groupId>\n" +
                 "        <artifactId>maven-shade-plugin</artifactId>\n" +
+                "        <executions>\n" +
+                "          <execution>\n" +
+                "            <!-- also JSON-P less to ease it to be embedded, contract is just that the generic instances are toString() friendly -->\n" +
+                "            <id>versionless</id>\n" +
+                "            <phase>package</phase>\n" +
+                "            <goals>\n" +
+                "              <goal>shade</goal>\n" +
+                "            </goals>\n" +
+                "            <configuration>\n" +
+                "              <shadedClassifierName>versionless</shadedClassifierName>\n" +
+                "              <shadeSourcesContent>true</shadeSourcesContent>\n" +
+                "              <relocations>\n" +
+                "                <relocation>\n" +
+                "                  <pattern>io.yupiik.kubernetes.bindings.v" + pomVersion.replace('.', '_') + "</pattern>\n" +
+                "                  <shadedPattern>io.yupiik.kubernetes.bindings</shadedPattern>\n" +
+                "                </relocation>\n" +
+                "              </relocations>\n" +
+                "            </configuration>\n" +
+                "          </execution>\n" +
+                "        </executions>\n" +
                 "      </plugin>\n" +
                 "    </plugins>\n" +
                 "  </build>\n" +
@@ -320,6 +340,390 @@ public final class GenerateBindings {
                 "        }\n" +
                 "\n" +
                 "        return out.toString();\n" +
+                "    }\n" +
+                "}\n" +
+                "\n");
+        writeJava(root, basePackage, "JsonValue", "package " + basePackage + ";\n" +
+                "\n" +
+                "import java.util.Objects;\n" +
+                "\n" +
+                "public class JsonValue {\n" +
+                "    private final String value;\n" +
+                "\n" +
+                "    public JsonValue(final Boolean value) {\n" +
+                "        this.value = value == null ? null : String.valueOf(value);\n" +
+                "    }\n" +
+                "\n" +
+                "    public JsonValue(final Number value) {\n" +
+                "        this.value = value == null ? null : String.valueOf(value);\n" +
+                "    }\n" +
+                "\n" +
+                "    public JsonValue(final String value) {\n" +
+                "        this.value = value == null ? null : ('\"' + JsonStrings.escapeJson(value) + '\"');\n" +
+                "    }\n" +
+                "\n" +
+                "    public JsonValue(final JsonObject value) {\n" +
+                "        this.value = value == null ? null : value.toString();\n" +
+                "    }\n" +
+                "\n" +
+                "    public JsonValue(final JsonArray value) {\n" +
+                "        this.value = value == null ? null : value.toString();\n" +
+                "    }\n" +
+                "\n" +
+                "    @Override\n" +
+                "    public String toString() {\n" +
+                "        return value;\n" +
+                "    }\n" +
+                "\n" +
+                "    @Override\n" +
+                "    public int hashCode() {\n" +
+                "        return Objects.hash(value);\n" +
+                "    }\n" +
+                "\n" +
+                "    @Override\n" +
+                "    public boolean equals(final Object __other) {\n" +
+                "        return __other instanceof JsonValue && Objects.equals(value, ((JsonValue) __other).value);\n" +
+                "    }\n" +
+                "}\n" +
+                "\n");
+        writeJava(root, basePackage, "JsonObject", "package " + basePackage + ";\n" +
+                "\n" +
+                "import java.io.IOException;\n" +
+                "import java.io.StringWriter;\n" +
+                "import java.util.LinkedHashMap;\n" +
+                "import java.util.Map;\n" +
+                "\n" +
+                "public class JsonObject extends LinkedHashMap<String, Object> {\n" +
+                "    /**\n" +
+                "     * @param content object content, values can only be typed as JsonObject | JsonArray | JsonValue..\n" +
+                "     */\n" +
+                "    public JsonObject(final Map<String, Object> content) {\n" +
+                "        putAll(content);\n" +
+                "    }\n" +
+                "\n" +
+                "    @Override\n" +
+                "    public String toString() {\n" +
+                "        if (isEmpty()) {\n" +
+                "            return \"{}\";\n" +
+                "        }\n" +
+                "\n" +
+                "        final var writer = new StringWriter(512);\n" +
+                "        try (writer;\n" +
+                "             final var generator = new JsonGenerator(writer)) {\n" +
+                "            generator.writeStartObject();\n" +
+                "            forEach(generator::writeJsonValue);\n" +
+                "            generator.writeEnd();\n" +
+                "        } catch (final IOException e) {\n" +
+                "            throw new IllegalStateException(e);\n" +
+                "        }\n" +
+                "        return writer.toString();\n" +
+                "    }\n" +
+                "}\n" +
+                "\n");
+        writeJava(root, basePackage, "JsonArray", "package " + basePackage + ";\n" +
+                "\n" +
+                "import java.io.IOException;\n" +
+                "import java.io.StringWriter;\n" +
+                "import java.util.ArrayList;\n" +
+                "import java.util.List;\n" +
+                "\n" +
+                "public class JsonArray extends ArrayList<Object> {\n" +
+                "    /**\n" +
+                "     * @param items list of JsonObject | JsonArray | JsonValue.\n" +
+                "     */\n" +
+                "    public JsonArray(final List<Object> items) {\n" +
+                "        addAll(items);\n" +
+                "    }\n" +
+                "\n" +
+                "    @Override\n" +
+                "    public String toString() {\n" +
+                "        if (isEmpty()) {\n" +
+                "            return \"[]\";\n" +
+                "        }\n" +
+                "\n" +
+                "        final var writer = new StringWriter(512);\n" +
+                "        try (writer;\n" +
+                "             final var generator = new JsonGenerator(writer)) {\n" +
+                "            generator.writeStartArray();\n" +
+                "            forEach(generator::writeJsonValue);\n" +
+                "            generator.writeEnd();\n" +
+                "        } catch (final IOException e) {\n" +
+                "            throw new IllegalStateException(e);\n" +
+                "        }\n" +
+                "        return writer.toString();\n" +
+                "    }\n" +
+                "}\n" +
+                "\n");
+        writeJava(root, basePackage, "JsonGenerator", "package " + basePackage + ";\n" +
+                "\n" +
+                "import java.io.IOException;\n" +
+                "import java.io.Writer;\n" +
+                "import java.util.LinkedList;\n" +
+                "\n" +
+                "// forked from @apache/johnzon\n" +
+                "class JsonGenerator implements AutoCloseable {\n" +
+                "    private final transient Writer writer;\n" +
+                "    private final char[] buffer;\n" +
+                "    private int bufferPos = 0;\n" +
+                "    private boolean closed;\n" +
+                "\n" +
+                "    private final LinkedList<GeneratorState> state = new LinkedList<>();\n" +
+                "\n" +
+                "    private enum GeneratorState {\n" +
+                "        INITIAL(false, false),\n" +
+                "        START_OBJECT(true, true), IN_OBJECT(true, true), AFTER_KEY(false, false),\n" +
+                "        START_ARRAY(false, true), IN_ARRAY(false, true),\n" +
+                "        END(false, false),\n" +
+                "        ROOT_VALUE(false, true);\n" +
+                "\n" +
+                "        private final boolean acceptsKey;\n" +
+                "        private final boolean endable;\n" +
+                "\n" +
+                "        GeneratorState(final boolean acceptsKey, final boolean endable) {\n" +
+                "            this.acceptsKey = acceptsKey;\n" +
+                "            this.endable = endable;\n" +
+                "        }\n" +
+                "    }\n" +
+                "\n" +
+                "    JsonGenerator(final Writer writer) {\n" +
+                "        this.writer = writer;\n" +
+                "        this.buffer = new char[4_096];\n" +
+                "        state.push(GeneratorState.INITIAL);\n" +
+                "    }\n" +
+                "\n" +
+                "    private void doWriteKey(final String name) {\n" +
+                "        justWrite('\"');\n" +
+                "        justWrite(JsonStrings.escapeJson(name));\n" +
+                "        justWrite('\"');\n" +
+                "        justWrite(':');\n" +
+                "    }\n" +
+                "\n" +
+                "    void writeStartObject() {\n" +
+                "        prepareValue();\n" +
+                "        state.push(GeneratorState.START_OBJECT);\n" +
+                "        justWrite('{');\n" +
+                "    }\n" +
+                "\n" +
+                "    public void writeStartObject(final String name) {\n" +
+                "        writeKey(name);\n" +
+                "        justWrite('{');\n" +
+                "        state.push(GeneratorState.START_OBJECT);\n" +
+                "    }\n" +
+                "\n" +
+                "    public void writeStartArray() {\n" +
+                "        prepareValue();\n" +
+                "        state.push(GeneratorState.START_ARRAY);\n" +
+                "        justWrite('[');\n" +
+                "    }\n" +
+                "\n" +
+                "    public void writeStartArray(final String name) {\n" +
+                "        writeKey(name);\n" +
+                "        justWrite('[');\n" +
+                "        state.push(GeneratorState.START_ARRAY);\n" +
+                "    }\n" +
+                "\n" +
+                "    void writeJsonValue(final String name, final Object value) {\n" +
+                "        if (value instanceof JsonArray) {\n" +
+                "            final var array = (JsonArray) value;\n" +
+                "            writeStartArray(name);\n" +
+                "            for (final var jsonValue : array) {\n" +
+                "                writeJsonValue(jsonValue);\n" +
+                "            }\n" +
+                "            writeEnd();\n" +
+                "        } else if (value instanceof JsonObject) {\n" +
+                "            final var object = (JsonObject) value;\n" +
+                "            writeStartObject(name);\n" +
+                "            for (final var keyval : object.entrySet()) {\n" +
+                "                writeJsonValue(keyval.getKey(), keyval.getValue());\n" +
+                "            }\n" +
+                "            writeEnd();\n" +
+                "        } else {\n" +
+                "            final var v = tryJsonValue(value);\n" +
+                "            writeKey(name);\n" +
+                "            writeValue(v.toString());\n" +
+                "        }\n" +
+                "    }\n" +
+                "\n" +
+                "    void writeJsonValue(final Object value) {\n" +
+                "        if (value instanceof JsonArray) {\n" +
+                "            final var array = (JsonArray) value;\n" +
+                "            writeStartArray();\n" +
+                "            for (final var o : array) {\n" +
+                "                writeJsonValue(o);\n" +
+                "            }\n" +
+                "            writeEnd();\n" +
+                "        } else if (value instanceof JsonObject) {\n" +
+                "            final var object = (JsonObject) value;\n" +
+                "            writeStartObject();\n" +
+                "            for (var keyval : object.entrySet()) {\n" +
+                "                writeJsonValue(keyval.getKey(), keyval.getValue());\n" +
+                "            }\n" +
+                "            writeEnd();\n" +
+                "        } else {\n" +
+                "            writeValue(tryJsonValue(value).toString());\n" +
+                "        }\n" +
+                "    }\n" +
+                "\n" +
+                "    private JsonValue tryJsonValue(final Object value) {\n" +
+                "        if (value instanceof JsonValue) {\n" +
+                "            return (JsonValue) value;\n" +
+                "        }\n" +
+                "        if (value instanceof JsonArray) {\n" +
+                "            return new JsonValue((JsonArray) value);\n" +
+                "        }\n" +
+                "        if (value instanceof JsonObject) {\n" +
+                "            return new JsonValue((JsonObject) value);\n" +
+                "        }\n" +
+                "        if (value instanceof CharSequence) {\n" +
+                "            return new JsonValue(((CharSequence) value).toString());\n" +
+                "        }\n" +
+                "        if (value instanceof Number) {\n" +
+                "            return new JsonValue(((Number) value));\n" +
+                "        }\n" +
+                "        if (value instanceof Boolean) {\n" +
+                "            return new JsonValue(((Boolean) value));\n" +
+                "        }\n" +
+                "        throw new IllegalArgumentException(\"Unsupported type: \" + value + \" (\" + value.getClass() + \")\");\n" +
+                "    }\n" +
+                "\n" +
+                "    public void writeEnd() {\n" +
+                "        final var last = state.pop();\n" +
+                "        if (last == null || !last.endable || last == GeneratorState.ROOT_VALUE) {\n" +
+                "            throw new IllegalStateException(\"Can't end current context: \" + last);\n" +
+                "        }\n" +
+                "        if (last == GeneratorState.IN_ARRAY || last == GeneratorState.START_ARRAY) {\n" +
+                "            justWrite(']');\n" +
+                "        } else {\n" +
+                "            justWrite('}');\n" +
+                "        }\n" +
+                "        alignState();\n" +
+                "    }\n" +
+                "\n" +
+                "    public void writeKey(final String key) {\n" +
+                "        final GeneratorState currentState = currentState();\n" +
+                "        if (!currentState.acceptsKey) {\n" +
+                "            throw new IllegalStateException(\"state \" + currentState + \" does not accept a key\");\n" +
+                "        }\n" +
+                "        if (currentState == GeneratorState.IN_OBJECT) {\n" +
+                "            justWrite(',');\n" +
+                "        }\n" +
+                "\n" +
+                "        doWriteKey(key);\n" +
+                "        state.push(GeneratorState.AFTER_KEY);\n" +
+                "    }\n" +
+                "\n" +
+                "    @Override\n" +
+                "    public void close() {\n" +
+                "        if (closed) {\n" +
+                "            return;\n" +
+                "        }\n" +
+                "        IllegalStateException ex = null;\n" +
+                "        final var state = currentState();\n" +
+                "        if (state != GeneratorState.END && state != GeneratorState.ROOT_VALUE) {\n" +
+                "            ex = new IllegalStateException(\"Invalid json, state=\" + state);\n" +
+                "        }\n" +
+                "        try {\n" +
+                "            if (ex == null) {\n" +
+                "                flushBuffer();\n" +
+                "                writer.close();\n" +
+                "            }\n" +
+                "        } catch (final IOException e) {\n" +
+                "            throw new IllegalStateException(e.getMessage(), e);\n" +
+                "        } finally {\n" +
+                "            closed = true;\n" +
+                "        }\n" +
+                "        if (ex != null) {\n" +
+                "            throw ex;\n" +
+                "        }\n" +
+                "    }\n" +
+                "\n" +
+                "    private void flushBuffer() {\n" +
+                "        if (bufferPos > 0) {\n" +
+                "            try {\n" +
+                "                writer.write(buffer, 0, bufferPos);\n" +
+                "                bufferPos = 0;\n" +
+                "            } catch (final IOException e) {\n" +
+                "                throw new IllegalStateException(e.getMessage(), e);\n" +
+                "            }\n" +
+                "        }\n" +
+                "    }\n" +
+                "\n" +
+                "    private void justWrite(final String value) {\n" +
+                "        final int valueLength = value.length();\n" +
+                "        if (bufferPos + valueLength >= buffer.length) {\n" +
+                "            int start = 0;\n" +
+                "            int len = buffer.length - bufferPos;\n" +
+                "            while (true) {\n" +
+                "                int end = start + len;\n" +
+                "                if (end > valueLength) {\n" +
+                "                    end = valueLength;\n" +
+                "                }\n" +
+                "\n" +
+                "                value.getChars(start, end, buffer, bufferPos);\n" +
+                "\n" +
+                "                bufferPos += (end - start);\n" +
+                "                start += (len);\n" +
+                "\n" +
+                "                if (start >= valueLength) {\n" +
+                "                    return;\n" +
+                "                }\n" +
+                "\n" +
+                "                if (bufferPos >= buffer.length) {\n" +
+                "                    flushBuffer();\n" +
+                "                    len = buffer.length;\n" +
+                "                }\n" +
+                "            }\n" +
+                "        } else {\n" +
+                "            value.getChars(0, valueLength, buffer, bufferPos);\n" +
+                "            bufferPos += valueLength;\n" +
+                "        }\n" +
+                "    }\n" +
+                "\n" +
+                "    private void justWrite(final char value) {\n" +
+                "        if (bufferPos >= buffer.length) {\n" +
+                "            flushBuffer();\n" +
+                "        }\n" +
+                "        buffer[bufferPos++] = value;\n" +
+                "    }\n" +
+                "\n" +
+                "    private void prepareValue() {\n" +
+                "        final var currentState = currentState();\n" +
+                "        if (currentState == GeneratorState.IN_ARRAY) {\n" +
+                "            justWrite(',');\n" +
+                "        }\n" +
+                "    }\n" +
+                "\n" +
+                "    private void alignState() {\n" +
+                "        if (currentState() == GeneratorState.AFTER_KEY) {\n" +
+                "            state.pop();\n" +
+                "        }\n" +
+                "        switch (currentState()) {\n" +
+                "            case START_ARRAY:\n" +
+                "                swapState(GeneratorState.IN_ARRAY);\n" +
+                "                break;\n" +
+                "            case START_OBJECT:\n" +
+                "                swapState(GeneratorState.IN_OBJECT);\n" +
+                "                break;\n" +
+                "            case INITIAL:\n" +
+                "                state.push(GeneratorState.ROOT_VALUE);\n" +
+                "                break;\n" +
+                "            default:\n" +
+                "        }\n" +
+                "    }\n" +
+                "\n" +
+                "    private void swapState(final GeneratorState newState) {\n" +
+                "        state.pop();\n" +
+                "        state.push(newState);\n" +
+                "    }\n" +
+                "\n" +
+                "    private GeneratorState currentState() {\n" +
+                "        return state.peek();\n" +
+                "    }\n" +
+                "\n" +
+                "    private void writeValue(final String value) {\n" +
+                "        prepareValue();\n" +
+                "        justWrite(value);\n" +
+                "        alignState();\n" +
                 "    }\n" +
                 "}\n" +
                 "\n");
@@ -450,6 +854,10 @@ public final class GenerateBindings {
                     code = code.replace("import jakarta.json.JsonValue;\n", "");
                 }
             }
+
+            code = code.replace("jakarta.json.JsonArray", basePackage + ".JsonArray");
+            code = code.replace("jakarta.json.JsonObject", basePackage + ".JsonObject");
+            code = code.replace("jakarta.json.JsonValue", basePackage + ".JsonValue");
 
             Files.writeString(out, HEADER + code);
         }
@@ -898,8 +1306,27 @@ public final class GenerateBindings {
         }
 
         @Override
+        protected String onEnum(final String javaName, JsonValue enumList, JsonObject schema) {
+            final var res = super.onEnum(javaName, enumList, schema);
+            final var key = conf.getPackageName().replace('.', '/') + '/' + enumName(javaName, schema) + ".java";
+            final var content = requireNonNull(nested.get(key), () -> "Missing '" + key + "', available: " + nested.keySet());
+            // we override the toString() to be asJson() so drop default toString(), see beforeEnumEnd()
+            nested.put(key, content.replace(
+                    "\n" +
+                            "    public String toString() {\n" +
+                            "        return value;\n" +
+                            "    }\n", ""));
+            return res;
+        }
+
+        @Override
         protected String beforeEnumEnd() {
             return (!lastEnumHasInjection ? "    ;\n" : "") +
+                    "\n" +
+                    "    @Override\n" +
+                    "    public String toString() {\n" +
+                    "        return asJson();\n" +
+                    "    }\n" +
                     "\n" +
                     "    @Override\n" +
                     "    public String asJson() {\n" +
@@ -934,6 +1361,10 @@ public final class GenerateBindings {
                     "\n" + generateFluentSetter() +
                     "\n" + validator +
                     "\n" + asJson +
+                    "\n    @Override\n" +
+                    "    public String toString() {\n" +
+                    "        return asJson();\n" +
+                    "    }\n" +
                     classSpecificMethods());
         }
 

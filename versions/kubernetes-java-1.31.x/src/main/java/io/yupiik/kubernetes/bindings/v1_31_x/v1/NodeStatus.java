@@ -18,7 +18,7 @@ package io.yupiik.kubernetes.bindings.v1_31_x.v1;
 import io.yupiik.kubernetes.bindings.v1_31_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_31_x.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_31_x.Validable;
-import jakarta.json.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_31_x.JsonObject;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -302,5 +302,10 @@ public class NodeStatus implements Validable<NodeStatus>, Exportable {
                     (volumesInUse != null ? "\"volumesInUse\":" + volumesInUse.stream().map(__it -> __it == null ? "null" : ("\"" + JsonStrings.escapeJson(__it) + "\"")).collect(joining(",", "[", "]")) : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

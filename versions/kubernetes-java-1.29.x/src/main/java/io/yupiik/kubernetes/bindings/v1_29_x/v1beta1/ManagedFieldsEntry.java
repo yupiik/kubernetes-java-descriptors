@@ -18,7 +18,7 @@ package io.yupiik.kubernetes.bindings.v1_29_x.v1beta1;
 import io.yupiik.kubernetes.bindings.v1_29_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_29_x.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_29_x.Validable;
-import jakarta.json.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_29_x.JsonObject;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -187,5 +187,10 @@ public class ManagedFieldsEntry implements Validable<ManagedFieldsEntry>, Export
                     (time != null ? "\"time\":\"" +  JsonStrings.escapeJson(time) + "\"" : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

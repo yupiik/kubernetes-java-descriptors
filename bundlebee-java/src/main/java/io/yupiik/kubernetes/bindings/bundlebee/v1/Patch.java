@@ -18,7 +18,7 @@ package io.yupiik.kubernetes.bindings.bundlebee.v1;
 import io.yupiik.kubernetes.bindings.bundlebee.Exportable;
 import io.yupiik.kubernetes.bindings.bundlebee.JsonStrings;
 import io.yupiik.kubernetes.bindings.bundlebee.Validable;
-import jakarta.json.JsonArray;
+import io.yupiik.kubernetes.bindings.bundlebee.JsonArray;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -130,5 +130,10 @@ public class Patch implements Validable<Patch>, Exportable {
                     (patch != null ? "\"patch\":" + patch : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

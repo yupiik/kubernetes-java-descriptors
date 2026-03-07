@@ -150,4 +150,9 @@ public class RuleWithOperations implements Validable<RuleWithOperations>, Export
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

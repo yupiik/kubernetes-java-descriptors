@@ -172,4 +172,9 @@ public class APIServiceCondition implements Validable<APIServiceCondition>, Expo
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

@@ -73,4 +73,9 @@ public class AggregationRule implements Validable<AggregationRule>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

@@ -91,4 +91,9 @@ public class Lifecycle implements Validable<Lifecycle>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

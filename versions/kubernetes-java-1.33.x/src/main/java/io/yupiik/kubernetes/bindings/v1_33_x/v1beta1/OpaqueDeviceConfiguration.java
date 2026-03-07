@@ -19,7 +19,7 @@ import io.yupiik.kubernetes.bindings.v1_33_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_33_x.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_33_x.Validable;
 import io.yupiik.kubernetes.bindings.v1_33_x.ValidationException;
-import jakarta.json.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_33_x.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -115,5 +115,10 @@ public class OpaqueDeviceConfiguration implements Validable<OpaqueDeviceConfigur
                     (parameters != null ? "\"parameters\":" + parameters : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

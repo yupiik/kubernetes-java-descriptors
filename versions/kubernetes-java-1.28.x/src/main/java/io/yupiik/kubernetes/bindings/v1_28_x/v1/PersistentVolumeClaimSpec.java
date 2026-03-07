@@ -207,4 +207,9 @@ public class PersistentVolumeClaimSpec implements Validable<PersistentVolumeClai
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

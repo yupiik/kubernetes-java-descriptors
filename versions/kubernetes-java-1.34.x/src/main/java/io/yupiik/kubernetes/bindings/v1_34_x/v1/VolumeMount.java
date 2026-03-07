@@ -210,4 +210,9 @@ public class VolumeMount implements Validable<VolumeMount>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

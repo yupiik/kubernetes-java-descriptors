@@ -17,7 +17,7 @@ package io.yupiik.kubernetes.bindings.v1_31_x.v1;
 
 import io.yupiik.kubernetes.bindings.v1_31_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_31_x.Validable;
-import jakarta.json.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_31_x.JsonObject;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -187,5 +187,10 @@ public class PodDisruptionBudgetStatus implements Validable<PodDisruptionBudgetS
                     (observedGeneration != null ? "\"observedGeneration\":" + observedGeneration : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

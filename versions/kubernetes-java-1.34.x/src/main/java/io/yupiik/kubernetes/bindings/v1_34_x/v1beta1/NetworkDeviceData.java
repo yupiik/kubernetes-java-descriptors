@@ -112,4 +112,9 @@ public class NetworkDeviceData implements Validable<NetworkDeviceData>, Exportab
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

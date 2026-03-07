@@ -134,4 +134,9 @@ public class KeyToPath implements Validable<KeyToPath>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

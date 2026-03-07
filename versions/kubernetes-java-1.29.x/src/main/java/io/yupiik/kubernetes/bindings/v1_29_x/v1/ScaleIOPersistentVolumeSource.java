@@ -275,4 +275,9 @@ public class ScaleIOPersistentVolumeSource implements Validable<ScaleIOPersisten
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

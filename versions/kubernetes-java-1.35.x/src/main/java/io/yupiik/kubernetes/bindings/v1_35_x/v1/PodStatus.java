@@ -18,7 +18,7 @@ package io.yupiik.kubernetes.bindings.v1_35_x.v1;
 import io.yupiik.kubernetes.bindings.v1_35_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_35_x.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_35_x.Validable;
-import jakarta.json.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_35_x.JsonObject;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -435,5 +435,10 @@ public class PodStatus implements Validable<PodStatus>, Exportable {
                     (startTime != null ? "\"startTime\":\"" +  JsonStrings.escapeJson(startTime) + "\"" : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

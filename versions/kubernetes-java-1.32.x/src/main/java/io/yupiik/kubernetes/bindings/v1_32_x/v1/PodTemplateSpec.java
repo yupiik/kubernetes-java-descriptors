@@ -91,4 +91,9 @@ public class PodTemplateSpec implements Validable<PodTemplateSpec>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

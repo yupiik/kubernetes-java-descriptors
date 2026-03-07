@@ -19,7 +19,7 @@ import io.yupiik.kubernetes.bindings.v1_31_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_31_x.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_31_x.Validable;
 import io.yupiik.kubernetes.bindings.v1_31_x.ValidationException;
-import jakarta.json.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_31_x.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -351,5 +351,10 @@ public class ContainerStatus implements Validable<ContainerStatus>, Exportable {
                     (volumeMounts != null ? "\"volumeMounts\":" + volumeMounts.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

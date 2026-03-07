@@ -107,4 +107,9 @@ public class PodResourceClaimStatus implements Validable<PodResourceClaimStatus>
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

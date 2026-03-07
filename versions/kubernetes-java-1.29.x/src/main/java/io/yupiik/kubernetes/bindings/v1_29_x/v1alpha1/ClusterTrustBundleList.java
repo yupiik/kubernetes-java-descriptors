@@ -151,4 +151,9 @@ public class ClusterTrustBundleList implements Validable<ClusterTrustBundleList>
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

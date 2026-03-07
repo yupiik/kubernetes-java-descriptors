@@ -125,4 +125,9 @@ public class PolicyRulesWithSubjects implements Validable<PolicyRulesWithSubject
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

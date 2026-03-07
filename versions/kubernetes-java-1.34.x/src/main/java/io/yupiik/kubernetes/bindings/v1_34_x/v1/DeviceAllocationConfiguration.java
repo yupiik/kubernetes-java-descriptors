@@ -126,4 +126,9 @@ public class DeviceAllocationConfiguration implements Validable<DeviceAllocation
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

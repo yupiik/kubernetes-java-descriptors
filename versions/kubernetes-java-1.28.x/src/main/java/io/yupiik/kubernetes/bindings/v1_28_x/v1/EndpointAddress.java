@@ -145,4 +145,9 @@ public class EndpointAddress implements Validable<EndpointAddress>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

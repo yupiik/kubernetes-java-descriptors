@@ -92,4 +92,9 @@ public class ScaleStatus implements Validable<ScaleStatus>, Exportable {
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

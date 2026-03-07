@@ -18,9 +18,9 @@ package io.yupiik.kubernetes.bindings.v1_34_x.v1;
 import io.yupiik.kubernetes.bindings.v1_34_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_34_x.JsonStrings;
 import io.yupiik.kubernetes.bindings.v1_34_x.Validable;
-import jakarta.json.JsonObject;
-import jakarta.json.JsonArray;
-import jakarta.json.JsonValue;
+import io.yupiik.kubernetes.bindings.v1_34_x.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_34_x.JsonArray;
+import io.yupiik.kubernetes.bindings.v1_34_x.JsonValue;
 import jakarta.json.bind.annotation.JsonbProperty;
 import java.util.List;
 import java.util.Objects;
@@ -905,5 +905,10 @@ public class JSONSchemaProps implements Validable<JSONSchemaProps>, Exportable {
                     (xKubernetesValidations != null ? "\"x-kubernetes-validations\":" + xKubernetesValidations.stream().map(__it -> __it == null ? "null" : __it.asJson()).collect(joining(",", "[", "]")) : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

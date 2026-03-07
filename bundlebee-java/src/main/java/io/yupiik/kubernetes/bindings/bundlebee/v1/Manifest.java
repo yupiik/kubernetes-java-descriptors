@@ -155,6 +155,11 @@ public class Manifest implements Validable<Manifest>, Exportable {
                 .collect(joining(",", "{", "}"));
     }
 
+    @Override
+    public String toString() {
+        return asJson();
+    }
+
     public Manifest writeTo(final Path path) {
         try {
             final var logger = Logger.getLogger(getClass().getName());

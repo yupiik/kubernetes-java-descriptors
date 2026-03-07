@@ -107,4 +107,9 @@ public class PersistentVolumeClaimVolumeSource implements Validable<PersistentVo
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

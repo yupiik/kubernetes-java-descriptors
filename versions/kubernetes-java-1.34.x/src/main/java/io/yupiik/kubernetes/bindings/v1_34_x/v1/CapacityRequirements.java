@@ -17,7 +17,7 @@ package io.yupiik.kubernetes.bindings.v1_34_x.v1;
 
 import io.yupiik.kubernetes.bindings.v1_34_x.Exportable;
 import io.yupiik.kubernetes.bindings.v1_34_x.Validable;
-import jakarta.json.JsonObject;
+import io.yupiik.kubernetes.bindings.v1_34_x.JsonObject;
 import java.util.Objects;
 import java.util.stream.Stream;
 import static java.util.stream.Collectors.joining;
@@ -72,5 +72,10 @@ public class CapacityRequirements implements Validable<CapacityRequirements>, Ex
                     (requests != null ? "\"requests\":" + requests : ""))
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
+    }
+
+    @Override
+    public String toString() {
+        return asJson();
     }
 }

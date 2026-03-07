@@ -92,4 +92,9 @@ public class ContainerStateWaiting implements Validable<ContainerStateWaiting>, 
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }

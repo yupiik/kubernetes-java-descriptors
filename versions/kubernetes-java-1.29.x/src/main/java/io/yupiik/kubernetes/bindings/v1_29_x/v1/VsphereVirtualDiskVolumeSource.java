@@ -145,4 +145,9 @@ public class VsphereVirtualDiskVolumeSource implements Validable<VsphereVirtualD
                 .filter(__it -> !__it.isBlank())
                 .collect(joining(",", "{", "}"));
     }
+
+    @Override
+    public String toString() {
+        return asJson();
+    }
 }
